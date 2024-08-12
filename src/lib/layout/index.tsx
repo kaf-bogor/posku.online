@@ -20,7 +20,7 @@ const Layout = ({ children }: LayoutProps) => {
           <Flex
             direction="column"
             alignItems="center"
-            justifyContent="center"
+            justifyContent="start"
             minHeight="70vh"
             gap={4}
             mb={8}
