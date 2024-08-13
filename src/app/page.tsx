@@ -20,7 +20,7 @@ const links: {
   },
   {
     label: "Donasi Ta'awun",
-    href: 'https://posku.myr.id',
+    href: '/donasi',
   },
   {
     label: 'Saran & Masukan',

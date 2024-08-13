@@ -14,7 +14,7 @@ import Link from 'next/link';
 import { FaArrowLeft } from 'react-icons/fa';
 import { MdCheckCircle } from 'react-icons/md';
 
-const Home = () => {
+const TentangPage = () => {
   return (
     <Fade in>
       <Link href="/">
@@ -189,4 +189,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default TentangPage;

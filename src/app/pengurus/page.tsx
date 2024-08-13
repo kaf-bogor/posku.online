@@ -12,7 +12,7 @@ import {
 import Link from 'next/link';
 import { FaArrowLeft } from 'react-icons/fa';
 
-const Home = () => {
+const PengurusPage = () => {
   return (
     <Fade in>
       <Link href="/">
@@ -67,4 +67,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default PengurusPage;
