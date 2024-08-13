@@ -11,7 +11,7 @@ const links: {
     href: '/tentang',
   },
   {
-    label: 'Pengurus POSKU 2023/2024',
+    label: 'Pengurus POSKU',
     href: '/pengurus',
   },
   {
