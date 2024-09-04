@@ -30,7 +30,48 @@ const PengurusPage = () => {
 
         <TabPanels>
           <TabPanel>
-            <Text>Data tidak ditemukan</Text>
+            <VStack align="start" gap={6}>
+              <VStack align="start" spacing={0}>
+                <Text>Ketua : Bimo R. Samudro / Tia Restyani</Text>
+              </VStack>
+              <VStack align="start">
+                <Text>Sekretaris 1 : Heru Martin / Annisa</Text>
+                <Text>Sekretaris 2 : Rindio Santoso / Imas Widya</Text>
+              </VStack>
+              <VStack align="start">
+                <Text>Bendahara 1 : Girinda Wardhana / Widya</Text>
+                <Text>Bendahara 2 : Ronny Yerrie / Sasti Ambarawati N.</Text>
+              </VStack>
+              <VStack align="start">
+                <Text>
+                  Media : Rifki Fauzi / Muhlis Prasetyo / Nurlika Cahyani
+                </Text>
+              </VStack>
+              <VStack align="start">
+                <Text fontWeight="bold">Divisi Tarbiyah</Text>
+                <Text>Ketua : Samsam Nurhidayat</Text>
+                <Text>KBO : Febriandy P. H. / Adam Lubis</Text>
+                <Text>Umum : Dede Mukhtar / Rajab</Text>
+                <Text>Kajian Qowamah : Septian A. W.</Text>
+                <Text>Tahsin Qowamah : Achmad Syaefillah</Text>
+                <Text>
+                  Kajian Ummahat : Asti / Nunik / Lintang / Finny / Jati / Erna
+                  / Septiana Destri / Mardiyyah
+                </Text>
+                <Text>Tahsin Ummahat : Ghia / Noor Baity / Yayah / Destri</Text>
+              </VStack>
+              <VStack align="start">
+                <Text fontWeight="bold">Divisi Ukhuwah</Text>
+                <Text>Ketua : Wan Yoga / Pinto Jaya</Text>
+                <Text>
+                  Qowamah Center : Helman Wijaya / Ridwan / Suhardiman
+                </Text>
+                <Text>Muslimah Center : Miska</Text>
+                <Text>Sentra Literasi Ilmu : Leni Melvita</Text>
+                <Text>Sentra Sehat : Noor Baity / Tiani</Text>
+                <Text>Sentra Kreatif : Rety / Yuyun / Fauziah</Text>
+              </VStack>
+            </VStack>
           </TabPanel>
           <TabPanel>
             <VStack align="start" gap={6}>
@@ -59,7 +100,7 @@ const PengurusPage = () => {
             </VStack>
           </TabPanel>
           <TabPanel>
-            <Text>Data tidak ditemukan</Text>
+            <Text>Ketua: Haris Dini / Bude </Text>
           </TabPanel>
         </TabPanels>
       </Tabs>

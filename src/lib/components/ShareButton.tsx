@@ -23,10 +23,12 @@ import { FaShareAlt, FaFacebook, FaWhatsapp } from 'react-icons/fa';
 const ShareButton: React.FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const pathname = usePathname();
-  const [currentUrl, setCurrentUrl] = useState(window.location.href);
+  const [currentUrl, setCurrentUrl] = useState<string>('');
 
   useEffect(() => {
-    setCurrentUrl(window.location.href);
+    if (typeof window !== 'undefined') {
+      setCurrentUrl(window.location.href);
+    }
   }, [pathname]);
 
   return (
