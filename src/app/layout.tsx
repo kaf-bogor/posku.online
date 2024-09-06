@@ -37,6 +37,7 @@ export const viewport: Viewport = {
 const RootLayout = ({ children }: RootLayoutProps) => {
   return (
     <html lang="en">
+      <script async src="https://cdn.pushengage.com/pushengage.js" />
       <body>
         <Providers>
           <Layout>{children}</Layout>
