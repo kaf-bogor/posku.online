@@ -24,14 +24,14 @@ export default function Page() {
   ];
 
   return (
-    <Box p={4}>
+    <Box w="full">
       <Link href="/">
         <HStack my={6}>
           <FaArrowLeft />
           <Text>Kembali</Text>
         </HStack>
       </Link>
-      <SimpleGrid columns={[1, null, 2]} spacing={6}>
+      <SimpleGrid columns={[2, 2, 3]} spacing={6}>
         {data.map((item) => (
           <Box
             key={item.order}
@@ -39,7 +39,13 @@ export default function Page() {
             borderRadius="lg"
             overflow="hidden"
           >
-            <Image src={`${baseUrl}${item.image_url}`} alt={item.title} />
+            <Image
+              src={`${baseUrl}${item.image_url}`}
+              alt={item.title}
+              objectFit="cover"
+              boxSize="100%"
+              height="300px"
+            />
             <Box p={4}>
               <Text fontWeight="bold" fontSize="xl" mb={2}>
                 {item.title}
