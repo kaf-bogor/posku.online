@@ -1,0 +1,60 @@
+import { Box, SimpleGrid, Image, Text, Link, HStack } from '@chakra-ui/react';
+import { FaArrowLeft } from 'react-icons/fa';
+
+export default function Page() {
+  const baseUrl =
+    'https://firebasestorage.googleapis.com/v0/b/posku-76e08.appspot.com/o/';
+  const data = [
+    {
+      order: 1,
+      image_url:
+        '2024%2Fagustus%2Fagustus_thumb.png?alt=media&token=f1213974-9a81-48fb-b131-91085a44aea3',
+      title: 'Agustus 2024',
+      document_url:
+        '2024%2Fagustus%2Fnewsletter_agustus24.pdf?alt=media&token=64404154-5f67-443c-8207-38dbfe4ab1de',
+    },
+    {
+      order: 2,
+      image_url:
+        '2024%2Fjuli%2Fjuli_thumb.png?alt=media&token=c1df173d-2cbb-4257-bb92-1dbc453346f5',
+      title: 'Juli 2024',
+      document_url:
+        '2024%2Fjuli%2Fjuli_thumb.png?alt=media&token=c1df173d-2cbb-4257-bb92-1dbc453346f5',
+    },
+  ];
+
+  return (
+    <Box p={4}>
+      <Link href="/">
+        <HStack my={6}>
+          <FaArrowLeft />
+          <Text>Kembali</Text>
+        </HStack>
+      </Link>
+      <SimpleGrid columns={[1, null, 2]} spacing={6}>
+        {data.map((item) => (
+          <Box
+            key={item.order}
+            borderWidth={1}
+            borderRadius="lg"
+            overflow="hidden"
+          >
+            <Image src={`${baseUrl}${item.image_url}`} alt={item.title} />
+            <Box p={4}>
+              <Text fontWeight="bold" fontSize="xl" mb={2}>
+                {item.title}
+              </Text>
+              <Link
+                href={`${baseUrl}${item.document_url}`}
+                isExternal
+                color="blue.500"
+              >
+                Lihat dokumen
+              </Link>
+            </Box>
+          </Box>
+        ))}
+      </SimpleGrid>
+    </Box>
+  );
+}
