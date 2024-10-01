@@ -31,6 +31,7 @@ export interface Item {
   description: string;
   link: string;
   coverImage: CoverImage;
+  multipleImage: CoverImage[];
   user: User;
 }
 

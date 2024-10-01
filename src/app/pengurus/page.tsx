@@ -50,42 +50,47 @@ const PengurusPage = () => {
               <VStack align="start">
                 <Text fontWeight="bold">Divisi Tarbiyah</Text>
                 <Text>Ketua : Samsam Nurhidayat</Text>
-                <Text>KBO : Febriandy P. H. / Adam Lubis</Text>
-                <Text>Umum : Dede Mukhtar / Rajab</Text>
+                <Text>KBO : Febriandy P. H., Adam Lubis</Text>
+                <Text>Umum : Dede Mukhtar, Rajab</Text>
                 <Text>Kajian Qowamah : Septian A. W.</Text>
                 <Text>Tahsin Qowamah : Achmad Syaefillah</Text>
                 <Text>
-                  Kajian Ummahat : Asti / Nunik / Lintang / Finny / Jati / Erna
-                  / Septiana Destri / Mardiyyah
+                  Kajian Ummahat : Asti, Nunik, Lintang, Finny, Jati, Erna ,
+                  Septiana Destri, Mardiyyah
                 </Text>
-                <Text>Tahsin Ummahat : Ghia / Noor Baity / Yayah / Destri</Text>
+                <Text>
+                  Kajian Ummahat : Asti, Nunik, Lintang, Finny, Jati, Erna,
+                  Yuyun
+                </Text>
+                <Text>
+                  Tahsin Ummahat : Ghia, Noor Baity, Yayah, Destri, Evi Y
+                </Text>
               </VStack>
               <VStack align="start">
                 <Text fontWeight="bold">Divisi Ukhuwah</Text>
-                <Text>Ketua : Wan Yoga / Pinto Jaya</Text>
-                <Text>
-                  Qowamah Center : Helman Wijaya / Ridwan / Suhardiman
-                </Text>
-                <Text>Muslimah Center : Miska</Text>
-                <Text>Sentra Literasi Ilmu : Leni Melvita</Text>
-                <Text>Sentra Sehat : Noor Baity / Tiani</Text>
-                <Text>Sentra Kreatif : Rety / Yuyun / Fauziah</Text>
+                <Text>Ketua : Wan Yoga, Pinto Jaya</Text>
+                <Text>Qowamah Center : Helman Wijaya, Ridwan, Suhardiman</Text>
+                <Text>Muslimah Center : Miska, Ratna</Text>
+                <Text>Sentra Literasi Ilmu : Leni Melvita, Yuliana</Text>
+                <Text>Sentra Sehat : Noor Baity, Tiani, Kinta</Text>
+                <Text>Sentra Bugar : Rety, Yuyun, Dewi </Text>
+                <Text>Sentra Kreatif : Puji</Text>
               </VStack>
             </VStack>
           </TabPanel>
           <TabPanel>
             <VStack align="start" gap={6}>
               <VStack align="start" spacing={0}>
-                <Text>Ketua : Herry Nugraha / Bairanti</Text>
-                <Text>Wk. Ketua : Adi Nurdiansyah / Baidhuri</Text>
+                <Text>Ketua : Herry Nugraha, Bairanti</Text>
+                <Text>Wk. Ketua : Adi Nurdiansyah, Baidhuri</Text>
               </VStack>
               <VStack align="start">
-                <Text>Sekretaris 1 : Dinar / Rangga</Text>
-                <Text>Sekretaris 2 : Annisa / Heru Martin</Text>
+                <Text>Sekretaris 1 : Dinar, Rangga</Text>
+                <Text>Sekretaris 2 : Annisa, Heru Martin</Text>
               </VStack>
               <VStack align="start">
-                <Text>Bendahara 1 : Tia / Bimo </Text>
-                <Text>Bendahara 2 : Elisa / Muslich</Text>
+                <Text>Bendahara 1 : Tia, Bimo </Text>
+                <Text>Bendahara 2 : Elisa, Muslich</Text>
               </VStack>
               <VStack align="start">
                 <Text fontWeight="bold">Bidang Tarbiyah </Text>
@@ -100,7 +105,7 @@ const PengurusPage = () => {
             </VStack>
           </TabPanel>
           <TabPanel>
-            <Text>Ketua: Haris Dini / Bude </Text>
+            <Text>Ketua: Haris Dini, Bude </Text>
           </TabPanel>
         </TabPanels>
       </Tabs>

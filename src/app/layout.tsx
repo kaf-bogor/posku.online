@@ -1,3 +1,4 @@
+import { Analytics } from '@vercel/analytics/react';
 import type { Metadata, Viewport } from 'next';
 
 import Providers from '~/app/providers';
@@ -36,11 +37,12 @@ export const viewport: Viewport = {
 
 const RootLayout = ({ children }: RootLayoutProps) => {
   return (
-    <html lang="en">
+    <html lang="id">
       <body>
         <Providers>
           <Layout>{children}</Layout>
         </Providers>
+        <Analytics />
       </body>
     </html>
   );

@@ -31,6 +31,9 @@ export const GET_PAYMENT_LINK_PAGE_QUERY = gql`
         status
         description
         link
+        multipleImage {
+          url
+        }
         coverImage {
           url
         }

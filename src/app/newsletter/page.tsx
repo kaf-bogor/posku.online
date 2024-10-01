@@ -7,19 +7,15 @@ export default function Page() {
   const data = [
     {
       order: 1,
-      image_url:
-        '2024%2Fagustus%2Fagustus_thumb.png?alt=media&token=f1213974-9a81-48fb-b131-91085a44aea3',
+      image_url: '2024%2Fagustus%2Fagustus_thumb.png?alt=media',
       title: 'Agustus 2024',
-      document_url:
-        '2024%2Fagustus%2Fnewsletter_agustus24.pdf?alt=media&token=64404154-5f67-443c-8207-38dbfe4ab1de',
+      document_url: '2024%2Fagustus%2Fnewsletter_agustus24.pdf?alt=media',
     },
     {
       order: 2,
-      image_url:
-        '2024%2Fjuli%2Fjuli_thumb.png?alt=media&token=c1df173d-2cbb-4257-bb92-1dbc453346f5',
+      image_url: '2024%2Fjuli%2Fjuli_thumb.png?alt=media',
       title: 'Juli 2024',
-      document_url:
-        '2024%2Fjuli%2Fjuli_thumb.png?alt=media&token=c1df173d-2cbb-4257-bb92-1dbc453346f5',
+      document_url: '2024%2Fjuli%2Fnewsletter_juli24.pdf?alt=media',
     },
   ];
 
@@ -31,7 +27,7 @@ export default function Page() {
           <Text>Kembali</Text>
         </HStack>
       </Link>
-      <SimpleGrid columns={[2, 2, 3]} spacing={6}>
+      <SimpleGrid columns={[1, 1, 3]} spacing={6}>
         {data.map((item) => (
           <Box
             key={item.order}
@@ -44,7 +40,7 @@ export default function Page() {
               alt={item.title}
               objectFit="cover"
               boxSize="100%"
-              height="300px"
+              height={['400px', '400px', '300px']}
             />
             <Box p={4}>
               <Text fontWeight="bold" fontSize="xl" mb={2}>

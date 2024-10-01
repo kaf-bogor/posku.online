@@ -40,7 +40,7 @@ export default function Card({ item }: Props) {
   return (
     <Box key={item.id} borderWidth="1px" borderRadius="lg" overflow="hidden">
       <Image
-        src={item.coverImage?.url}
+        src={item.coverImage?.url || item.multipleImage[0].url}
         alt={item.name}
         width="100%"
         height="200px"
@@ -67,7 +67,7 @@ export default function Card({ item }: Props) {
               </Flex>
             </>
           )}
-          <Link href={`https://posku.myr.id/wakaf/${item.link}`}>
+          <Link href={`https://posku.myr.id/donate/${item.link}`}>
             <Button w="full">Lihat</Button>
           </Link>
         </Stack>
