@@ -1,6 +1,6 @@
 import { ArrowUpIcon, ArrowDownIcon } from '@chakra-ui/icons';
 import { Box, Circle, Flex, HStack, VStack, Text } from '@chakra-ui/react';
-import { format, parseISO } from 'date-fns';
+import { compareDesc, format, getDate, parseISO } from 'date-fns';
 import { id } from 'date-fns/locale';
 import { useState, useEffect, useCallback } from 'react';
 
@@ -58,8 +58,11 @@ export default function SalesDataCard({
           throw new Error('Failed to fetch data');
         }
         const data = await response.json();
+        const sortedData = data.sort((a: SalesData, b: SalesData) => {
+          return compareDesc(parseISO(a.date), parseISO(b.date));
+        });
 
-        setSalesData(data);
+        setSalesData(sortedData);
         setIsLoading(false);
       } catch (err) {
         setError('An error occurred while fetching data');
@@ -125,7 +128,7 @@ export default function SalesDataCard({
           return (
             <Flex key={date} alignItems="center">
               <Circle size="40px" bg="blue.500" color="white" mr={4}>
-                {index + 1}
+                {getDate(date)}
               </Circle>
               <Box
                 flex={1}
