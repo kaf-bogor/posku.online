@@ -44,9 +44,8 @@ const DonasiPage = () => {
       {!data && !loading && <Empty />}
       {payment && (
         <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={6} mt={10}>
-          {payment.items.map((item) => (
-            <Card item={item} />
-          ))}
+          {payment.items?.map((item) => <Card item={item} />)}
+          {!payment.items && <Text>Tidak ada donasi aktif</Text>}
         </SimpleGrid>
       )}
     </Box>

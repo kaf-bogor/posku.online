@@ -37,7 +37,7 @@ export interface Item {
 
 export interface GetPaymentLinkPageResponse {
   getPaymentLinkPageByUsername: {
-    items: Item[];
+    items: Item[] | null;
     userDetail: {
       account: Account;
     };

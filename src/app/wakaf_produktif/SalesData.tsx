@@ -118,10 +118,14 @@ export default function SalesDataCard({
         height="400px"
       >
         {salesData.map(({ date, count, price }, index) => {
-          const prevPrice = index > 0 ? salesData[index - 1].price : price;
-          const prevSales = index > 0 ? salesData[index - 1].count : count;
-          const percentageSalesChange = ((count - prevSales) / prevSales) * 100;
-          const percentagePriceChange = ((price - prevPrice) / prevPrice) * 100;
+          const prevPrice =
+            index < salesData.length - 1 ? salesData[index + 1].price : price;
+          const prevSales =
+            index < salesData.length - 1 ? salesData[index + 1].count : count;
+          const percentageSalesChange =
+            prevSales !== 0 ? ((count - prevSales) / prevSales) * 100 : 0;
+          const percentagePriceChange =
+            prevPrice !== 0 ? ((price - prevPrice) / prevPrice) * 100 : 0;
           const isSalesIncrease = percentageSalesChange >= 0;
           const isPriceIncrease = percentagePriceChange >= 0;
 
