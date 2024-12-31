@@ -1,6 +1,12 @@
 import { ArrowUpIcon, ArrowDownIcon } from '@chakra-ui/icons';
 import { Box, Circle, Flex, HStack, VStack, Text } from '@chakra-ui/react';
-import { compareDesc, format, getDate, parseISO } from 'date-fns';
+import {
+  compareDesc,
+  format,
+  getDate,
+  parseISO,
+  lastDayOfMonth,
+} from 'date-fns';
 import { id } from 'date-fns/locale';
 import { useState, useEffect, useCallback } from 'react';
 
@@ -49,7 +55,7 @@ export default function SalesDataCard({
 
   const fetchSalesData = useCallback(
     async (accessToken: string) => {
-      const formattedDate = `${salesDate}-30`;
+      const formattedDate = `${salesDate}-${getDate(lastDayOfMonth(new Date()))}`;
       try {
         const response = await fetch(
           `/api/majoo?date=${formattedDate}&token=${accessToken}`
