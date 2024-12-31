@@ -55,7 +55,15 @@ export default function SalesDataCard({
 
   const fetchSalesData = useCallback(
     async (accessToken: string) => {
-      const formattedDate = `${salesDate}-${getDate(lastDayOfMonth(new Date()))}`;
+      // Parse the year and month from the string
+      const [year, month] = salesDate.split('-').map(Number);
+
+      // Create a Date object for the first day of the given month
+      const firstDayOfMonth = new Date(year, month - 1);
+
+      // Get the last day of the month
+      const lastDateOfMonth = getDate(lastDayOfMonth(firstDayOfMonth));
+      const formattedDate = `${salesDate}-${lastDateOfMonth}`;
       try {
         const response = await fetch(
           `/api/majoo?date=${formattedDate}&token=${accessToken}`
