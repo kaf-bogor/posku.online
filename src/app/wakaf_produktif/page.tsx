@@ -19,7 +19,10 @@ const SalesChart = () => {
     <VStack gap={5}>
       <VStack>
         <Text fontSize="2xl" fontWeight="bold" m={0}>
-          Data Penjualan
+          Data Penjualan (Omset)
+        </Text>
+        <Text fontSize="sm" m={0}>
+          Kentungan sekitar 15%-30% dari omset
         </Text>
         <input
           type="month"
