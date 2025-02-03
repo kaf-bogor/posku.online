@@ -119,7 +119,7 @@ export default function SalesDataCard({
         <Text fontSize="2xl" fontWeight="bold" mb={0}>
           {title}
         </Text>
-        <Text fontSize="xl" fontWeight="bold" mb={0} color="green">
+        <Text fontSize="xl" fontWeight="bold" mb={0} color="green.300">
           Rp. {calculateTotalPrice(salesData).toLocaleString('id')}
         </Text>
       </VStack>
@@ -208,7 +208,7 @@ export default function SalesDataCard({
                     </Flex>
                   )}
                 </HStack>
-                <Text color="purple">
+                <Text color="purple.300">
                   Transaksi avg: {formatToRupiah(price / count)}
                 </Text>
               </Box>
