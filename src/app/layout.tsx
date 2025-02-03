@@ -38,11 +38,17 @@ export const viewport: Viewport = {
 const RootLayout = ({ children }: RootLayoutProps) => {
   return (
     <html lang="id">
+      <script src="https://static.elfsight.com/platform/platform.js" async />
+
       <body>
         <Providers>
           <Layout>{children}</Layout>
         </Providers>
         <Analytics />
+        <div
+          className="elfsight-app-e7956b46-b692-49aa-9de8-dab32f9350be"
+          data-elfsight-app-lazy
+        />
       </body>
     </html>
   );
