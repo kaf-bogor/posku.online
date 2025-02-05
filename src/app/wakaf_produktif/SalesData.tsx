@@ -47,6 +47,7 @@ export default function SalesDataCard({
 
       setToken(data.token);
       setIsLoading(false);
+      /* eslint-disable-next-line */
     } catch (err) {
       setError('An error occurred while fetching data');
       setIsLoading(false);
@@ -78,6 +79,7 @@ export default function SalesDataCard({
 
         setSalesData(sortedData);
         setIsLoading(false);
+        /* eslint-disable-next-line */
       } catch (err) {
         setError('An error occurred while fetching data');
         setIsLoading(false);

@@ -49,6 +49,7 @@ export const GET = async (request: Request) => {
         'Vercel-CDN-Cache-Control': 'max-age=36000',
       },
     });
+    /* eslint-disable-next-line */
   } catch (error) {
     return NextResponse.json(
       { message: 'Error fetching data' },
