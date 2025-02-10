@@ -1,6 +1,6 @@
 'use client';
 
-import { Text, HStack, VStack } from '@chakra-ui/react';
+import { Text, HStack, VStack, useBreakpointValue } from '@chakra-ui/react';
 import { format } from 'date-fns';
 import { useState } from 'react';
 
@@ -14,6 +14,7 @@ const SalesChart = () => {
   const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedDate(event.target.value);
   };
+  const isMobile = useBreakpointValue({ base: true, md: false });
 
   return (
     <VStack gap={5}>
@@ -33,18 +34,38 @@ const SalesChart = () => {
           onChange={handleDateChange}
         />
       </VStack>
-      <HStack justifyContent="start" alignItems="start" gap={8}>
-        <SalesDataCard
-          title="Lingkar Dramaga"
-          branch="LD"
-          salesDate={selectedDate}
-        />
-        <SalesDataCard
-          title="Atang Sanjaya"
-          branch="ATS"
-          salesDate={selectedDate}
-        />
-      </HStack>
+      {isMobile ? (
+        <VStack spacing={4} align="stretch">
+          <SalesDataCard
+            title="Lingkar Dramaga"
+            branch="LD"
+            salesDate={selectedDate}
+          />
+          <SalesDataCard
+            title="Atang Sanjaya"
+            branch="ATS"
+            salesDate={selectedDate}
+          />
+        </VStack>
+      ) : (
+        <HStack
+          justifyContent="start"
+          alignItems="start"
+          spacing={8}
+          wrap="wrap"
+        >
+          <SalesDataCard
+            title="Lingkar Dramaga"
+            branch="LD"
+            salesDate={selectedDate}
+          />
+          <SalesDataCard
+            title="Atang Sanjaya"
+            branch="ATS"
+            salesDate={selectedDate}
+          />
+        </HStack>
+      )}
     </VStack>
   );
 };
