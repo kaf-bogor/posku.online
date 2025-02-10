@@ -1,8 +1,11 @@
 'use client';
 
-import { Box, Flex, Image, Text, VStack } from '@chakra-ui/react';
+import { Box, Divider, Flex, Image, Text, VStack } from '@chakra-ui/react';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
+import { useContext } from 'react';
+
+import { AppContext } from '~/lib/context/app';
 
 import Footer from './Footer';
 import Header from './Header';
@@ -12,10 +15,13 @@ type LayoutProps = {
 };
 
 const Layout = ({ children }: LayoutProps) => {
+  const { image, title, subtitle } = useContext(AppContext);
+
   return (
     <Box margin="0 auto" maxWidth={800} transition="0.5s ease-out">
       <Box margin="8">
         <Header />
+
         <Box as="main" marginY={22}>
           <Flex
             direction="column"
@@ -27,17 +33,16 @@ const Layout = ({ children }: LayoutProps) => {
             w="full"
           >
             <Link href="/">
-              <Image
-                width="100px"
-                src="https://cdn.bio.link/uploads/profile_pictures/2023-09-01/RizW5SRGfiudfwxr6w0kBp1GvarjnLQu.png"
-              />
+              <Image width="100px" src={image} />
             </Link>
             <VStack>
               <Text fontWeight="bold" fontSize="x-large">
-                POSKU Al-Fatih Bogor
+                {title}
               </Text>
-              <Text>Persatuan Orangtua Santri Kuttab Al-Fatih Bogor</Text>
+              <Text>{subtitle}</Text>
             </VStack>
+            <Divider />
+
             {children}
           </Flex>
         </Box>

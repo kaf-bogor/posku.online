@@ -2,6 +2,7 @@ import { Analytics } from '@vercel/analytics/react';
 import type { Metadata, Viewport } from 'next';
 
 import Providers from '~/app/providers';
+import { AppProvider } from '~/lib/context/app';
 import { Layout } from '~/lib/layout';
 
 type RootLayoutProps = {
@@ -42,7 +43,9 @@ const RootLayout = ({ children }: RootLayoutProps) => {
 
       <body>
         <Providers>
-          <Layout>{children}</Layout>
+          <AppProvider>
+            <Layout>{children}</Layout>
+          </AppProvider>
         </Providers>
         <Analytics />
         <div

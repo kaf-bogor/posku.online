@@ -1,0 +1,50 @@
+[
+  {
+    "order": 1,
+    "image_url": "2024%2Fjuli%2Fjuli_thumb.png?alt=media",
+    "title": "Juli 2024",
+    "document_url": "https://bit.ly/r-0125"
+  },
+  {
+    "order": 2,
+    "image_url": "2024%2Fagustus%2Fagustus_thumb.png?alt=media",
+    "title": "Agustus 2024",
+    "document_url": "https://bit.ly/n0824"
+  },
+  {
+    "order": 3,
+    "image_url": "empty_thumb.png?alt=media",
+    "title": "Agustus 2024",
+    "document_url": null
+  },
+  {
+    "order": 4,
+    "image_url": "2024%2Fseptember%2Fsep_thumb.png?alt=media",
+    "title": "September 2024",
+    "document_url": "https://bit.ly/r-0924"
+  },
+  {
+    "order": 5,
+    "image_url": "2024%2Foktober%2Fokt_thumb.png?alt=media",
+    "title": "Oktober 2024",
+    "document_url": "https://bit.ly/r-1024"
+  },
+  {
+    "order": 6,
+    "image_url": "empty_thumb.png?alt=media",
+    "title": "November 2024",
+    "document_url": null
+  },
+  {
+    "order": 7,
+    "image_url": "empty_thumb.png?alt=media",
+    "title": "Desember 2024",
+    "document_url": null
+  },
+  {
+    "order": 8,
+    "image_url": "jan_2025.png?alt=media",
+    "title": "Januari 2025",
+    "document_url": "https://bit.ly/r-0125"
+  }
+]
