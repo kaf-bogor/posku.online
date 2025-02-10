@@ -2,11 +2,15 @@
 
 import { Text, HStack, VStack, useBreakpointValue } from '@chakra-ui/react';
 import { format } from 'date-fns';
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+
+import { AppContext, siteConfig } from '~/lib/context/app';
 
 import SalesDataCard from './SalesData';
 
-const SalesChart = () => {
+const WakafProduktif = () => {
+  const { title, subtitle, setTitle, setSubtitle } = useContext(AppContext);
+
   const [selectedDate, setSelectedDate] = useState(
     format(new Date(), 'yyyy-MM')
   );
@@ -16,12 +20,20 @@ const SalesChart = () => {
   };
   const isMobile = useBreakpointValue({ base: true, md: false });
 
+  useEffect(() => {
+    setTitle('Wakaf produktif');
+    setSubtitle(
+      'Laporan data penjualan (omset) wakaf produktif kuttab Al-Fatih Bogor'
+    );
+    return () => {
+      setTitle(siteConfig.title);
+      setSubtitle(siteConfig.subtitle);
+    };
+  }, [title, subtitle, setTitle, setSubtitle]);
+
   return (
     <VStack gap={5}>
       <VStack>
-        <Text fontSize="2xl" fontWeight="bold" m={0}>
-          Data Penjualan (Omset)
-        </Text>
         <Text fontSize="sm" m={0}>
           Kentungan sekitar 15%-30% dari omset
         </Text>
@@ -70,4 +82,4 @@ const SalesChart = () => {
   );
 };
 
-export default SalesChart;
+export default WakafProduktif;

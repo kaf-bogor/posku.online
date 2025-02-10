@@ -15,7 +15,7 @@ import {
 } from '@chakra-ui/react';
 import { useContext, useEffect } from 'react';
 
-import { AppContext } from '~/lib/context/app';
+import { AppContext, siteConfig } from '~/lib/context/app';
 import { firebaseUrl } from '~/lib/context/baseUrl';
 import data from '~/lib/data/muslimah_center.json';
 
@@ -40,9 +40,9 @@ const MuslimahCenterPage = () => {
       'Muslimah Center memberdayakan muslimah melalui program edukatif, sosial, dan kesehatan.'
     );
     return () => {
-      setImage(`${firebaseUrl}logo_posku.png?alt=media`);
-      setTitle(title);
-      setSubtitle(subtitle);
+      setImage(siteConfig.image);
+      setTitle(siteConfig.title);
+      setSubtitle(siteConfig.subtitle);
     };
   }, [image, logoUrl, title, subtitle, setImage, setTitle, setSubtitle]);
 
