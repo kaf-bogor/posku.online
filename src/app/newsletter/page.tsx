@@ -87,7 +87,11 @@ export default function Page() {
                 </Text>
                 {item.document_url ? (
                   <Link
-                    href={`${baseUrl}${item.document_url}`}
+                    href={
+                      item.document_url.startsWith('https')
+                        ? item.document_url
+                        : `${baseUrl}${item.document_url}`
+                    }
                     isExternal
                     color="blue.500"
                   >
