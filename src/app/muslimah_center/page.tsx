@@ -62,7 +62,7 @@ const MuslimahCenterPage = () => {
         </Text>
       </VStack>
 
-      <Accordion allowMultiple w="450px">
+      <Accordion allowMultiple w={['full', '450px']}>
         {sentras.map((sentra) => (
           <AccordionItem key={sentra.title}>
             <h2>
