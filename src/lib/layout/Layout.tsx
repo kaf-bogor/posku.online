@@ -2,8 +2,9 @@
 
 import { Box, Divider, Flex, Image, Text, VStack } from '@chakra-ui/react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import type { ReactNode } from 'react';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 
 import Promo from '~/lib/components/Promo';
 import { AppContext } from '~/lib/context/app';
@@ -15,13 +16,25 @@ type LayoutProps = {
   children: ReactNode;
 };
 
+const ALLOWED_PROMO_PATH = ['/'];
+
 const Layout = ({ children }: LayoutProps) => {
-  const { image, title, subtitle } = useContext(AppContext);
+  const { image, title, isDisplayPromo, subtitle, setIsDisplayPromo } =
+    useContext(AppContext);
+
+  const pathname = usePathname();
+
+  useEffect(() => {
+    setIsDisplayPromo(ALLOWED_PROMO_PATH.includes(pathname));
+    return () => {
+      setIsDisplayPromo(false);
+    };
+  }, [setIsDisplayPromo, pathname]);
 
   return (
     <Box margin="0 auto" maxWidth={800} transition="0.5s ease-out">
       <Box margin="8">
-        <Promo />
+        {isDisplayPromo && <Promo />}
 
         <Header />
 
