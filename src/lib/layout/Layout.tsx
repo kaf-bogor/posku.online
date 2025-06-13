@@ -16,7 +16,7 @@ type LayoutProps = {
   children: ReactNode;
 };
 
-const ALLOWED_PROMO_PATH = ['/'];
+const ALLOWED_PROMO_PATH = ['/false'];
 
 const Layout = ({ children }: LayoutProps) => {
   const { image, title, isDisplayPromo, subtitle, setIsDisplayPromo } =
