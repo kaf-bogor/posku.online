@@ -13,19 +13,36 @@ import {
   Container,
   VStack,
 } from '@chakra-ui/react';
-import { useState } from 'react';
+import { useState, useEffect, useContext } from 'react';
+
+import { AppContext, siteConfig } from '~/lib/context/app';
+import { firebaseUrl } from '~/lib/context/baseUrl';
 
 import NominalUpdates from './NominalUpdates';
 import ProgressChart from './ProgressChart';
 import Timeline from './Timeline';
 
 const App = () => {
+  // AppContext for title/subtitle
+  const { setTitle, setSubtitle, setImage } = useContext(AppContext);
+
   // Initial data for the chart and display
   const totalGoal = 3100000000; // Rp 3.1 Milyar
   const currentCollected = 1603225000; // Rp 1.6 Milyar (example)
 
   // State for the currently displayed collected amount (can be updated dynamically if needed)
   const [displayedCollected] = useState(currentCollected);
+
+  useEffect(() => {
+    setTitle('Baitul Maal Khatulistiwa');
+    setSubtitle('Bilistiwa - Laporan wakaf ATS');
+    setImage(`${firebaseUrl}bilistiwa.jpg?alt=media`);
+    return () => {
+      setImage(siteConfig.image);
+      setTitle(siteConfig.title);
+      setSubtitle(siteConfig.subtitle);
+    };
+  }, [setImage, setTitle, setSubtitle]);
 
   return (
     <Box p={{ base: 4, sm: 6, md: 8 }} bg="gray.100" minH="100vh">
@@ -40,8 +57,11 @@ const App = () => {
             Wakaf Lahan ATS
           </Heading>
           <Text fontSize={{ base: 'lg', sm: 'xl' }} color="gray.700">
-            Penggalangan Dana untuk Pembebasan dan Renovasi Lahan Sekolah di Jl.
-            Atang Sendjaja, Bogor.
+            Penggalangan Dana untuk Pembebasan dan Renovasi Lahan Sekolah Kuttab
+            Al-Fatih Bogor
+          </Text>
+          <Text fontSize={{ base: 'lg', sm: 'xl' }} color="gray.700">
+            di Jl. Atang Sendjaja, Bogor.
           </Text>
         </VStack>
 
