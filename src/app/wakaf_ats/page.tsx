@@ -12,8 +12,11 @@ import {
   Button,
   Container,
   VStack,
+  HStack,
+  Link,
 } from '@chakra-ui/react';
 import { useState, useEffect, useContext } from 'react';
+import { FaArrowLeft } from 'react-icons/fa';
 
 import { AppContext, siteConfig } from '~/lib/context/app';
 import { firebaseUrl } from '~/lib/context/baseUrl';
@@ -51,6 +54,12 @@ const App = () => {
       minH="100vh"
       overflowX="hidden"
     >
+      <Link href="/" color="black">
+        <HStack my={6}>
+          <FaArrowLeft />
+          <Text>Kembali</Text>
+        </HStack>
+      </Link>
       <Container
         maxW="lg"
         w="full"
