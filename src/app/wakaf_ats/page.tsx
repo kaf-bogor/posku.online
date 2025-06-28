@@ -108,6 +108,22 @@ const App = () => {
               >
                 Donasi Sekarang!
               </Button>
+              <Box mt={4} textAlign="center">
+                <Text fontWeight="bold" color="gray.800" fontSize="lg">
+                  BSI
+                </Text>
+                <Text
+                  fontWeight="extrabold"
+                  color="green.700"
+                  fontSize="2xl"
+                  letterSpacing="wide"
+                >
+                  7123309547
+                </Text>
+                <Text fontWeight="semibold" color="gray.600" fontSize="md">
+                  WAKAF KUTTAB ALFATIH BOGOR
+                </Text>
+              </Box>
             </VStack>
           </Flex>
 
