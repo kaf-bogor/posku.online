@@ -3,7 +3,12 @@ import Link from 'next/link'; // Import the Link component
 
 const menuItems = [
   {
-    title: 'Laporan beasiswa 2024-2025',
+    title: 'Laporan Wakaf ATS',
+    link: '/wakaf_ats',
+    description: null,
+  },
+  {
+    title: 'Laporan beasiswa 2024-2025 (dummy)',
     link: '/reports/beasiswa-2024.html',
     description: null,
   },
