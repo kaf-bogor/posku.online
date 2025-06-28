@@ -58,10 +58,16 @@ export default function ProgressChart({
       display="flex"
       flexDirection="column"
       alignItems="center"
-      h="32rem"
+      h={{ base: '250px', md: '32rem' }}
       position="relative"
     >
-      <Doughnut data={data} options={options} width={300} height={300} />
+      <Doughnut
+        data={data}
+        options={options}
+        width={220}
+        height={220}
+        style={{ maxWidth: '100%', height: 'auto' }}
+      />
     </Box>
   );
 }
