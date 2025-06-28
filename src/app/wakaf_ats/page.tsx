@@ -28,12 +28,7 @@ const App = () => {
   const [displayedCollected] = useState(currentCollected);
 
   return (
-    <Box
-      p={{ base: 4, sm: 6, md: 8 }}
-      fontFamily="Inter"
-      bg="gray.100"
-      minH="100vh"
-    >
+    <Box p={{ base: 4, sm: 6, md: 8 }} bg="gray.100" minH="100vh">
       <Container maxW="4xl" mx="auto">
         <VStack as="header" textAlign="center" mb={10} spacing={4}>
           <Heading
