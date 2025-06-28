@@ -1,13 +1,4 @@
-import {
-  Box,
-  Heading,
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
-} from '@chakra-ui/react';
+import { Box, Heading } from '@chakra-ui/react';
 
 export default function NominalUpdates() {
   const sumberDanaData: { sumber: string; nominal: string }[] = [
@@ -17,7 +8,15 @@ export default function NominalUpdates() {
   ];
 
   return (
-    <Box className="card" bg="white" rounded="xl" shadow="md" p={6} w="full">
+    <Box
+      className="card"
+      bg="white"
+      rounded="xl"
+      shadow="md"
+      p={6}
+      maxW="md"
+      mx="auto"
+    >
       <Heading
         as="h2"
         fontSize="3xl"
@@ -28,69 +27,56 @@ export default function NominalUpdates() {
       >
         Pembaruan Nominal Dana
       </Heading>
-      <Box overflowX="auto">
-        <Table
-          variant="simple"
-          bg="white"
-          border="1px"
+      <Box w="full" display="flex" flexDirection="column" gap={2}>
+        {/* Header Row */}
+        <Box
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
+          bg="gray.100"
+          borderBottom="1px solid"
           borderColor="gray.200"
-          rounded="lg"
+          px={4}
+          py={2}
+          fontWeight="semibold"
+          color="gray.600"
+          fontSize="sm"
+          textTransform="uppercase"
+          letterSpacing="wider"
+          rounded="md"
         >
-          <Thead>
-            <Tr bg="gray.100" borderBottom="1px" borderColor="gray.200">
-              <Th
-                px={6}
-                py={3}
-                textAlign="left"
-                fontSize="sm"
-                fontWeight="semibold"
-                color="gray.600"
-                textTransform="uppercase"
-                letterSpacing="wider"
-              >
-                Sumber Dana
-              </Th>
-              <Th
-                px={6}
-                py={3}
-                textAlign="right"
-                fontSize="sm"
-                fontWeight="semibold"
-                color="gray.600"
-                textTransform="uppercase"
-                letterSpacing="wider"
-              >
-                Nominal
-              </Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {sumberDanaData.map((row) => (
-              <Tr key={row.sumber} _hover={{ bg: 'gray.50' }}>
-                <Td
-                  px={6}
-                  py={4}
-                  whiteSpace="nowrap"
-                  fontSize="lg"
-                  color="gray.900"
-                >
-                  {row.sumber}
-                </Td>
-                <Td
-                  px={6}
-                  py={4}
-                  whiteSpace="nowrap"
-                  textAlign="right"
-                  fontSize="lg"
-                  fontWeight="medium"
-                  color="green.700"
-                >
-                  {row.nominal}
-                </Td>
-              </Tr>
-            ))}
-          </Tbody>
-        </Table>
+          <Box>Sumber Dana</Box>
+          <Box textAlign="right">Nominal</Box>
+        </Box>
+        {/* Data Rows */}
+        {sumberDanaData.map((row) => (
+          <Box
+            key={row.sumber}
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+            bg="white"
+            borderBottom="1px solid"
+            borderColor="gray.100"
+            px={4}
+            py={3}
+            fontSize="md"
+            rounded="md"
+            _hover={{ bg: 'gray.50' }}
+          >
+            <Box color="gray.900" fontWeight="medium">
+              {row.sumber}
+            </Box>
+            <Box
+              color="green.700"
+              fontWeight="bold"
+              textAlign="right"
+              minW="120px"
+            >
+              {row.nominal}
+            </Box>
+          </Box>
+        ))}
       </Box>
     </Box>
   );

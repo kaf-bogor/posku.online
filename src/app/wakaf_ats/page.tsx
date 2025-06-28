@@ -45,9 +45,30 @@ const App = () => {
   }, [setImage, setTitle, setSubtitle]);
 
   return (
-    <Box p={{ base: 4, sm: 6, md: 8 }} bg="gray.100" minH="100vh">
-      <Container maxW="4xl" mx="auto">
-        <VStack as="header" textAlign="center" mb={10} spacing={4}>
+    <Box
+      p={{ base: 4, sm: 6, md: 8 }}
+      bg="gray.100"
+      minH="100vh"
+      overflowX="hidden"
+    >
+      <Container
+        maxW="lg"
+        w="full"
+        mx="auto"
+        px={{ base: 2, sm: 4 }}
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+      >
+        <VStack
+          as="header"
+          textAlign="center"
+          mb={10}
+          spacing={4}
+          w="full"
+          alignItems="center"
+          maxW="md"
+        >
           <Heading
             as="h1"
             fontSize={{ base: '4xl', sm: '5xl' }}
@@ -75,7 +96,10 @@ const App = () => {
             p={6}
             direction="column"
             justifyContent="space-between"
-            w="full"
+            w={{ base: '100%', sm: '90%', md: '80%' }}
+            maxW="md"
+            alignItems="center"
+            textAlign="center"
           >
             <Heading
               as="h2"
