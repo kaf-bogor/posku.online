@@ -1,7 +1,6 @@
 'use client';
 
-import { Box, Divider, Flex, Image, Text, VStack } from '@chakra-ui/react';
-import Link from 'next/link';
+import { Box } from '@chakra-ui/react';
 import { usePathname } from 'next/navigation';
 import type { ReactNode } from 'react';
 import { useContext, useEffect } from 'react';
@@ -41,31 +40,10 @@ const Layout = ({ children }: LayoutProps) => {
     >
       {isDisplayPromo && <Promo />}
 
-      <Header />
+      <Header image={image} title={title} subtitle={subtitle} />
 
       <Box as="main" marginY={22}>
-        <Flex
-          direction="column"
-          alignItems="center"
-          justifyContent="start"
-          minHeight="70vh"
-          gap={4}
-          mb={8}
-          w="full"
-        >
-          <Link href="/">
-            <Image width="100px" src={image} />
-          </Link>
-          <VStack>
-            <Text fontWeight="bold" fontSize="x-large">
-              {title}
-            </Text>
-            <Text>{subtitle}</Text>
-          </VStack>
-          <Divider />
-
-          {children}
-        </Flex>
+        {children}
       </Box>
       <BottomNav />
     </Box>
