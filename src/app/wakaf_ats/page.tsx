@@ -124,23 +124,28 @@ const App = () => {
               currentCollected={displayedCollected}
               remainingNeeded={totalGoal - displayedCollected}
             />
-            <VStack textAlign="center" mt={6} spacing={2}>
-              <Text fontSize="xl" fontWeight="bold" color="gray.800">
-                Dana Terkumpul:
-              </Text>
-              <Text
-                fontSize="4xl"
-                fontWeight="extrabold"
-                color="green.600"
-              >{`Rp ${displayedCollected.toLocaleString('id-ID')}`}</Text>
-              <Text fontSize="xl" fontWeight="bold" color="gray.800">
-                Dari Total Dana yang diperlukan :
-              </Text>
-              <Text
-                fontSize="4xl"
-                fontWeight="extrabold"
-                color="purple.600"
-              >{`Rp ${totalGoal.toLocaleString('id-ID')}`}</Text>
+            <VStack textAlign="center" mt={6} spacing={0} gap={4}>
+              <Box>
+                <Text fontSize="xl" fontWeight="bold" color="gray.800">
+                  Dana Terkumpul:
+                </Text>
+                <Text
+                  fontSize="4xl"
+                  fontWeight="extrabold"
+                  color="green.600"
+                >{`Rp ${displayedCollected.toLocaleString('id-ID')}`}</Text>
+              </Box>
+              <Box>
+                <Text fontSize="xl" fontWeight="bold" color="gray.800">
+                  Dari Total Dana yang diperlukan :
+                </Text>
+                <Text
+                  fontSize="4xl"
+                  fontWeight="extrabold"
+                  color="purple.600"
+                  whiteSpace="nowrap"
+                >{`Rp ${totalGoal.toLocaleString('id-ID')}`}</Text>
+              </Box>
               <Button
                 mt={6}
                 bg="purple.600"
@@ -191,6 +196,7 @@ const App = () => {
               fontWeight="bold"
               color="gray.800"
               mb={6}
+              textAlign="center"
             >
               Target Dana & Kebutuhan
             </Heading>
@@ -270,7 +276,7 @@ const App = () => {
                   Rp 300.000.000
                 </ListItem>
                 <ListItem fontWeight="bold" color="orange.600">
-                  Bangunan sekolah diharapkan bisa ditempati pada 1 Agustus 2026
+                  Bangunan sekolah diharapkan bisa ditempati pada 1 Agustus 2025
                   (Tahun Ajaran 2026/2027).
                 </ListItem>
               </List>

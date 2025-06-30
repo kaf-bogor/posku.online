@@ -42,7 +42,7 @@ export default function ProgressChart({
     plugins: {
       legend: {
         display: true,
-        position: 'right' as const, // legend inline with chart
+        position: 'bottom' as const, // legend inline with chart
         align: 'center' as const, // center legend vertically
         labels: {
           boxWidth: 20,
