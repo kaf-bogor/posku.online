@@ -41,7 +41,7 @@ const RootLayout = ({ children }: RootLayoutProps) => {
     <html lang="id">
       <script src="https://static.elfsight.com/platform/platform.js" async />
 
-      <body>
+      <body style={{ minHeight: '100vh' }}>
         <Providers>
           <AppProvider>
             <Layout>{children}</Layout>

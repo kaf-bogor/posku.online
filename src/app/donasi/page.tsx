@@ -2,7 +2,6 @@
 
 import { useQuery } from '@apollo/client';
 import { Box, HStack, SimpleGrid, Text } from '@chakra-ui/react';
-import Link from 'next/link';
 import { FaArrowLeft } from 'react-icons/fa';
 
 import Card from '~/lib/components/donasi/Card';
@@ -31,12 +30,12 @@ const DonasiPage = () => {
 
   return (
     <Box width="100%">
-      <Link href="/">
+      <Box as="button" onClick={() => window.history.back()}>
         <HStack my={6}>
           <FaArrowLeft />
           <Text>Kembali</Text>
         </HStack>
-      </Link>
+      </Box>
       {error && (
         <ErrorView error={Error('Something went wrong')} onRetry={refetch} />
       )}

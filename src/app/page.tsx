@@ -1,83 +1,104 @@
-import { Button, HStack, Tooltip, VStack } from '@chakra-ui/react';
+'use client';
+
+import {
+  Box,
+  Image,
+  SimpleGrid,
+  Text,
+  Flex,
+  useColorModeValue,
+} from '@chakra-ui/react';
 import Link from 'next/link';
-import { type IconType } from 'react-icons';
-import { CiInstagram } from 'react-icons/ci';
-import { FaWhatsapp } from 'react-icons/fa';
-import { TbWorldWww } from 'react-icons/tb';
+import { FaUsers, FaEnvelopeOpenText, FaRegFileAlt } from 'react-icons/fa';
 
-const getIconComponent = (iconName: string): IconType | null => {
-  switch (iconName) {
-    case 'CiInstagram':
-      return CiInstagram;
-    case 'FaWhatsapp':
-      return FaWhatsapp;
-    case 'TbWorldWww':
-      return TbWorldWww;
-    default:
-      return null;
-  }
-};
+import { firebaseUrl } from '~/lib/context/baseUrl';
 
-// Server component
-const Home = async () => {
-  let topBarLinks: TopBarLink[] = [];
-  let mainLinks: MainLink[] = [];
+const menuItems = [
+  {
+    label: 'Tentang POSKU',
+    href: '/tentang',
+    imageUrl: `${firebaseUrl}logo_posku.png?alt=media`,
+  },
+  {
+    label: 'Pengurus',
+    href: '/pengurus',
+    icon: FaUsers,
+  },
+  {
+    label: 'Newsletter',
+    href: '/newsletter',
+    icon: FaEnvelopeOpenText,
+  },
+  {
+    label: 'Muslimah Center',
+    href: '/muslimah_center',
+    imageUrl: `${firebaseUrl}mc_light.png?alt=media`,
+  },
+  {
+    label: 'Laporan',
+    href: '/reports',
+    icon: FaRegFileAlt,
+  },
+];
 
-  try {
-    // Fetch top bar links from the API
-    const topBarResponse = await fetch(
-      'https://sheetdb.io/api/v1/8xqlqnv3dqkq5'
-    );
-    topBarLinks = await topBarResponse.json();
-
-    // Fetch main links from the API
-    const mainLinksResponse = await fetch(
-      'https://sheetdb.io/api/v1/sod520fi1w5bh'
-    );
-    mainLinks = await mainLinksResponse.json();
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error('Error fetching links:', error);
-  }
-
+const Home = () => {
+  const labelColor = useColorModeValue('gray.800', 'gray.700');
   return (
-    <>
-      <HStack mb={6} mt={4} gap={6}>
-        {topBarLinks.map(({ href, icon: iconName, label }) => {
-          const IconComponent = getIconComponent(iconName);
-          return (
-            <Tooltip
-              key={href}
-              hasArrow
-              aria-label={label}
-              label={label}
-              placement="bottom"
+    <Flex justify="center" align="start" minH="80vh" px={2}>
+      <SimpleGrid
+        columns={{ base: 2, sm: 3 }}
+        spacing={4}
+        w="100%"
+        maxW="600px"
+        pt={6}
+      >
+        {menuItems.map(({ href, label, icon: Icon, imageUrl }) => (
+          <Link href={href} key={href} passHref legacyBehavior>
+            <Box
+              as="a"
+              bg="white"
+              borderRadius="xl"
+              boxShadow="md"
+              display="flex"
+              flexDirection="column"
+              alignItems="center"
+              justifyContent="center"
+              minH="110px"
+              aspectRatio="1"
+              transition="all 0.2s"
+              _hover={{ boxShadow: 'lg', bg: 'purple.50', color: 'purple.600' }}
+              cursor="pointer"
+              p={4}
             >
-              <Link href={href}>
-                {IconComponent ? <IconComponent size="32px" /> : null}
-              </Link>
-            </Tooltip>
-          );
-        })}
-      </HStack>
-      <VStack gap={[6, 3]}>
-        {mainLinks.map(({ href, label }) => (
-          <Link href={href} key={href}>
-            <Button w={['90vw', '400px']}>{label}</Button>
+              {imageUrl && <Image src={imageUrl} width="48px" />}
+              {Icon && (
+                <Box as="span" mb={2}>
+                  <Text
+                    as="span"
+                    color={labelColor}
+                    fontSize="2xl"
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="center"
+                  >
+                    <Icon fontSize={32} />
+                  </Text>
+                </Box>
+              )}
+              <Text
+                fontSize="sm"
+                fontWeight="semibold"
+                textAlign="center"
+                color={labelColor}
+              >
+                {label}
+              </Text>
+            </Box>
           </Link>
         ))}
-      </VStack>
-    </>
+      </SimpleGrid>
+    </Flex>
   );
 };
 
 export default Home;
-
-type TopBarLink = {
-  href: string;
-  icon: string;
-  name: string;
-  label: string;
-};
-
-type MainLink = { href: string; label: string };

@@ -4,7 +4,7 @@ import ThemeToggle from './ThemeToggle';
 
 const Header = () => {
   return (
-    <Flex as="header" width="full" align="center" justify="space-between">
+    <Flex as="header" width="full" align="center" justify="space-between" p={6}>
       <ThemeToggle />
     </Flex>
   );
