@@ -1,6 +1,6 @@
 'use client';
 
-import { Box } from '@chakra-ui/react';
+import { Box, useColorMode } from '@chakra-ui/react';
 import { usePathname } from 'next/navigation';
 import type { ReactNode } from 'react';
 import { useContext, useEffect } from 'react';
@@ -18,6 +18,8 @@ type LayoutProps = {
 const ALLOWED_PROMO_PATH = ['/false'];
 
 const Layout = ({ children }: LayoutProps) => {
+  const { colorMode } = useColorMode();
+
   const { image, title, isDisplayPromo, subtitle, setIsDisplayPromo } =
     useContext(AppContext);
 
@@ -36,7 +38,7 @@ const Layout = ({ children }: LayoutProps) => {
       maxWidth={800}
       transition="0.5s ease-out"
       minH="100vh"
-      bg="gray.100"
+      bg={colorMode === 'light' ? 'gray.100' : 'gray.800'}
       position="relative"
     >
       {isDisplayPromo && <Promo />}

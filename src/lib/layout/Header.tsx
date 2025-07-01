@@ -24,7 +24,7 @@ const Header = ({
   const { colorMode, toggleColorMode } = useColorMode();
   return (
     <VStack
-      bg="gray.100"
+      bg={colorMode === 'light' ? 'gray.100' : 'gray.800'}
       position="fixed"
       w="full"
       zIndex={1000}
@@ -40,7 +40,6 @@ const Header = ({
         justify="space-between"
         p={4}
         boxShadow="md"
-        backgroundColor={colorMode === 'light' ? '#FFFFFF' : '4682A9'}
       >
         <HStack
           direction="column"
