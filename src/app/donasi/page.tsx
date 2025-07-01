@@ -45,7 +45,7 @@ const DonasiPage = () => {
           h={['180px', '220px']}
           mb={4}
         />
-        <Heading as="h2" size="md" mb={2}>
+        <Heading as="h2" size="md" mb={2} color="gray.800">
           {campaign.title}
         </Heading>
         <Text color="gray.700" mb={4}>
