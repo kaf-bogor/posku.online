@@ -1,24 +1,30 @@
 import { Box, Heading } from '@chakra-ui/react';
 
-export default function NominalUpdates() {
-  const sumberDanaData: { sumber: string; nominal: string }[] = [
-    { sumber: 'Kas Bilistiwa', nominal: 'Rp 1.400.000.000' },
-    { sumber: 'Wakaf Hamba Allah', nominal: 'Rp 200.000.000' },
-    { sumber: 'Wakaf Mini Soccer', nominal: 'Rp 3.225.000' },
-  ];
+export const items: { sumber: string; nominal: number }[] = [
+  { sumber: 'Kas Bilistiwa', nominal: 1400000000 },
+  { sumber: 'Dari Hamba Allah', nominal: 200000000 },
+  { sumber: 'Dari Komunitas Mini Soccer', nominal: 3225000 },
+];
 
+export default function NominalUpdates({
+  withHeading = true,
+}: {
+  withHeading?: boolean;
+}) {
   return (
     <Box className="card" bg="white" rounded="xl" shadow="md" p={6} w="full">
-      <Heading
-        as="h2"
-        fontSize="3xl"
-        fontWeight="bold"
-        color="gray.800"
-        mb={6}
-        textAlign="center"
-      >
-        Pembaruan Nominal Dana
-      </Heading>
+      {withHeading && (
+        <Heading
+          as="h2"
+          fontSize="3xl"
+          fontWeight="bold"
+          color="gray.800"
+          mb={6}
+          textAlign="center"
+        >
+          Pembaruan Nominal Dana
+        </Heading>
+      )}
       <Box w="full" display="flex" flexDirection="column" gap={2}>
         {/* Header Row */}
         <Box
@@ -41,7 +47,7 @@ export default function NominalUpdates() {
           <Box textAlign="right">Nominal</Box>
         </Box>
         {/* Data Rows */}
-        {sumberDanaData.map((row) => (
+        {items.map((row) => (
           <Box
             key={row.sumber}
             display="flex"
@@ -65,7 +71,7 @@ export default function NominalUpdates() {
               textAlign="right"
               minW="120px"
             >
-              {row.nominal}
+              Rp {row.nominal.toLocaleString('id-ID')}
             </Box>
           </Box>
         ))}

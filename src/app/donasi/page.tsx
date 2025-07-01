@@ -1,33 +1,32 @@
 'use client';
 
-import { useQuery } from '@apollo/client';
-import { Box, HStack, SimpleGrid, Text } from '@chakra-ui/react';
+import { Box, HStack, Image, Heading, Text, Button } from '@chakra-ui/react';
+import Link from 'next/link';
 import { FaArrowLeft } from 'react-icons/fa';
 
-import Card from '~/lib/components/donasi/Card';
-import { GET_PAYMENT_LINK_PAGE_QUERY } from '~/lib/graphql';
-import {
-  type GetPaymentLinkPageResponse,
-  type GetPaymentLinkPageVariables,
-} from '~/lib/interfaces/donasi';
-import { Error as ErrorView, Empty, Loading } from '~/lib/layout';
+import { firebaseUrl } from '~/lib/context/baseUrl';
+
+const campaign = {
+  title: 'Wakaf Gedung Sekolah Kuttab Al Fatih Bogor',
+  summary:
+    'Bantu wujudkan gedung sekolah Kuttab Al Fatih Bogor. Setiap donasi Anda sangat berarti!',
+  media: [
+    {
+      type: 'image',
+      src: `${firebaseUrl}wakaf_ats%2Fgallery_1.png?alt=media`,
+      alt: 'Wakaf Gedung Sekolah Kuttab Al Fatih Bogor',
+    },
+    {
+      type: 'video',
+      src: 'https://drive.google.com/file/d/1VnuZ8fZfQFJPkm7p7v74pYUOVLfTE3Sq/preview',
+      alt: 'Video Wakaf Gedung Sekolah Kuttab Al Fatih Bogor',
+    },
+  ],
+  target: 3100000000,
+  donors: 120,
+};
 
 const DonasiPage = () => {
-  const { data, loading, error, refetch } = useQuery<
-    GetPaymentLinkPageResponse,
-    GetPaymentLinkPageVariables
-  >(GET_PAYMENT_LINK_PAGE_QUERY, {
-    variables: {
-      username: 'posku',
-      pageSize: 9,
-      page: 1,
-      status: 'active',
-      excludeType: 'bundling',
-    },
-  });
-
-  const payment = data?.getPaymentLinkPageByUsername;
-
   return (
     <Box width="100%">
       <Box as="button" onClick={() => window.history.back()}>
@@ -36,17 +35,28 @@ const DonasiPage = () => {
           <Text>Kembali</Text>
         </HStack>
       </Box>
-      {error && (
-        <ErrorView error={Error('Something went wrong')} onRetry={refetch} />
-      )}
-      {loading && <Loading />}
-      {!data && !loading && <Empty />}
-      {payment && (
-        <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={6} mt={10}>
-          {payment.items?.map((item) => <Card item={item} />)}
-          {!payment.items && <Text>Tidak ada donasi aktif</Text>}
-        </SimpleGrid>
-      )}
+      <Box mx="auto" bg="white" borderRadius="lg" boxShadow="md" p={4}>
+        <Image
+          src={campaign.media[0].src}
+          alt={campaign.media[0].alt}
+          borderRadius="md"
+          objectFit="cover"
+          w="full"
+          h={['180px', '220px']}
+          mb={4}
+        />
+        <Heading as="h2" size="md" mb={2}>
+          {campaign.title}
+        </Heading>
+        <Text color="gray.700" mb={4}>
+          {campaign.summary}
+        </Text>
+        <Link href="/donasi/wakaf_ats" passHref legacyBehavior>
+          <Button colorScheme="green" w="full">
+            Donasi Sekarang
+          </Button>
+        </Link>
+      </Box>
     </Box>
   );
 };
