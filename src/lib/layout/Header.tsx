@@ -24,7 +24,6 @@ const Header = ({
   const { colorMode, toggleColorMode } = useColorMode();
   return (
     <VStack
-      bg={colorMode === 'light' ? 'gray.100' : 'gray.800'}
       position="fixed"
       w="full"
       zIndex={1000}
