@@ -28,7 +28,7 @@ const campaign = {
 
 const DonasiPage = () => {
   return (
-    <Box width="100%">
+    <Box width="100%" mb={12}>
       <Box as="button" onClick={() => window.history.back()}>
         <HStack my={6}>
           <FaArrowLeft />
