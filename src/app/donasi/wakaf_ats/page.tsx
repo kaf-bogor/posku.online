@@ -4,6 +4,7 @@ import {
   Box,
   VStack,
   HStack,
+  Stack,
   Image,
   Heading,
   Text,
@@ -19,6 +20,7 @@ import {
   Tab,
   TabPanels,
   TabPanel,
+  useColorModeValue,
 } from '@chakra-ui/react';
 import { useState } from 'react';
 
@@ -30,19 +32,30 @@ export default function WakafAtsPage() {
   const [amountNumber, setAmountNumber] = useState<number | null>(null);
   const toast = useToast();
 
+  // Color tokens
+  const cardBg = useColorModeValue('white', 'gray.700');
+  const cardShadow = useColorModeValue('md', 'dark-lg');
+  const inputBg = useColorModeValue('gray.50', 'gray.800');
+  const inputText = useColorModeValue('gray.800', 'gray.100');
+  const inputAddonBg = useColorModeValue('gray.100', 'gray.600');
+  const headingColor = useColorModeValue('gray.800', 'white');
+  const textColor = useColorModeValue('gray.700', 'gray.100');
+  const buttonBg = useColorModeValue('green.500', 'green.400');
+  const buttonText = useColorModeValue('white', 'gray.900');
+
   // Placeholder data
   const campaign = {
     title: 'Wakaf Gedung Sekolah Kuttab Al Fatih Bogor',
     media: [
       {
-        type: 'image',
-        src: `${firebaseUrl}wakaf_ats%2Fgallery_1.png?alt=media`,
-        alt: 'Wakaf Gedung Sekolah Kuttab Al Fatih Bogor',
-      },
-      {
         type: 'video',
         src: 'https://drive.google.com/file/d/1VnuZ8fZfQFJPkm7p7v74pYUOVLfTE3Sq/preview',
         alt: 'Video Wakaf Gedung Sekolah Kuttab Al Fatih Bogor',
+      },
+      {
+        type: 'image',
+        src: `${firebaseUrl}wakaf_ats%2Fgallery_1.png?alt=media`,
+        alt: 'Wakaf Gedung Sekolah Kuttab Al Fatih Bogor',
       },
     ],
     summary:
@@ -112,9 +125,9 @@ export default function WakafAtsPage() {
       <VStack
         spacing={4}
         align="stretch"
-        bg="white"
+        bg={cardBg}
         borderRadius="lg"
-        boxShadow="md"
+        boxShadow={cardShadow}
         p={[2, 4]}
       >
         {/* Carousel Start */}
@@ -206,10 +219,10 @@ export default function WakafAtsPage() {
           </HStack>
         </Box>
         {/* Carousel End */}
-        <Heading as="h1" size="lg">
+        <Heading as="h1" size="lg" color={headingColor}>
           {campaign.title}
         </Heading>
-        <Text fontSize="md" color="gray.600">
+        <Text fontSize="md" color={textColor}>
           {campaign.summary}
         </Text>
         {/* Progress Bar */}
@@ -233,9 +246,18 @@ export default function WakafAtsPage() {
           </Text>
         </Box>
         {/* Donation Input */}
-        <HStack spacing={2}>
-          <InputGroup maxW="60%">
-            <InputLeftAddon bg="gray.100" fontWeight="bold">
+        <Stack
+          direction={{ base: 'column', md: 'row' }}
+          spacing={2}
+          align="stretch"
+          w="full"
+        >
+          <InputGroup maxW={{ base: '100%', md: '60%' }}>
+            <InputLeftAddon
+              bg={inputAddonBg}
+              fontWeight="bold"
+              color={inputText}
+            >
               Rp
             </InputLeftAddon>
             <Input
@@ -243,26 +265,43 @@ export default function WakafAtsPage() {
               placeholder="Nominal Donasi"
               value={amount}
               onChange={handleAmountChange}
-              bg="gray.50"
+              bg={inputBg}
+              color={inputText}
               borderLeftRadius={0}
+              _placeholder={{
+                color: useColorModeValue('gray.400', 'gray.400'),
+              }}
             />
           </InputGroup>
-          <Button colorScheme="green" onClick={handleDonate} flex={1}>
+          <Button
+            colorScheme="green"
+            onClick={handleDonate}
+            flex={1}
+            bg={buttonBg}
+            color={buttonText}
+            _hover={{ bg: useColorModeValue('green.600', 'green.500') }}
+            p={[2, 0]}
+            my={[2, 0]}
+          >
             Donasi Sekarang
           </Button>
-        </HStack>
+        </Stack>
       </VStack>
 
       {/* Campaign Description with Tabs */}
       <Box mt={8} bg="white" borderRadius="lg" boxShadow="sm" p={[2, 4]}>
         <Tabs variant="enclosed" colorScheme="green">
           <TabList>
-            <Tab fontWeight="bold">Tentang</Tab>
-            <Tab fontWeight="bold">Laporan</Tab>
+            <Tab fontWeight="bold" color="gray.700">
+              Tentang
+            </Tab>
+            <Tab fontWeight="bold" color="gray.700">
+              Laporan
+            </Tab>
           </TabList>
           <TabPanels>
             <TabPanel>
-              <Box mb={4}>
+              <Box mb={4} color="gray.700">
                 <Text fontWeight="bold" mb={2}>
                   Allah Subhanahu Wa Ta&apos;ala berfirman:
                 </Text>
@@ -297,13 +336,7 @@ export default function WakafAtsPage() {
                   <br />
                   7123309547
                 </Text>
-                <Text
-                  as="i"
-                  color="gray.700"
-                  fontSize="sm"
-                  mt={2}
-                  display="block"
-                >
+                <Text as="i" fontSize="sm" mt={2} display="block">
                   Jazaakumullah ahsanal jazaa kepada segenap wali santri,
                   donatur, Wakif yang sudah menyumbangkan harta, benda, tenaga,
                   pikiran dan waktu demi kelancaran pembebasan dan pembangunan
@@ -326,7 +359,14 @@ export default function WakafAtsPage() {
       </Box>
 
       {/* Organizer Info */}
-      <Box mt={6} bg="white" borderRadius="lg" boxShadow="sm" p={[2, 4]}>
+      <Box
+        mt={6}
+        bg="white"
+        borderRadius="lg"
+        boxShadow="sm"
+        p={[2, 4]}
+        color="gray.500"
+      >
         <Heading as="h3" size="sm" mb={2}>
           Penanggung Jawab
         </Heading>
@@ -337,9 +377,7 @@ export default function WakafAtsPage() {
           />
           <Box>
             <Text fontWeight="bold">{campaign.organizer.name}</Text>
-            <Text fontSize="sm" color="gray.500">
-              {campaign.organizer.tagline}
-            </Text>
+            <Text fontSize="sm">{campaign.organizer.tagline}</Text>
           </Box>
         </HStack>
       </Box>

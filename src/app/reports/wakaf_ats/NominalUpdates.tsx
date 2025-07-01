@@ -12,7 +12,14 @@ export default function NominalUpdates({
   withHeading?: boolean;
 }) {
   return (
-    <Box className="card" bg="white" rounded="xl" shadow="md" p={6} w="full">
+    <Box
+      className="card"
+      bg="white"
+      rounded="xl"
+      shadow="md"
+      p={withHeading ? 6 : 0}
+      w="full"
+    >
       {withHeading && (
         <Heading
           as="h2"

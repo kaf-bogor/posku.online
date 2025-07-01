@@ -39,6 +39,7 @@ const Header = ({
         justify="space-between"
         p={4}
         boxShadow="md"
+        bg={colorMode === 'light' ? 'gray.100' : 'gray.800'}
       >
         <HStack
           direction="column"
