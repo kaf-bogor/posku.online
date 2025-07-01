@@ -101,6 +101,7 @@ const Home = async () => {
                   bg="white"
                   borderRadius="md"
                   boxShadow="md"
+                  color="gray.700"
                 >
                   {label}
                 </Button>
