@@ -36,13 +36,14 @@ const Layout = ({ children }: LayoutProps) => {
       maxWidth={800}
       transition="0.5s ease-out"
       minH="100vh"
+      bg="gray.100"
       position="relative"
     >
       {isDisplayPromo && <Promo />}
 
       <Header image={image} title={title} subtitle={subtitle} />
 
-      <Box as="main" marginY={22}>
+      <Box as="main" padding={6} pt="160px">
         {children}
       </Box>
       <BottomNav />

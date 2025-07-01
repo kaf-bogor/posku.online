@@ -4,7 +4,6 @@
 
 import {
   Box,
-  Flex,
   Text,
   Heading,
   List,
@@ -48,12 +47,7 @@ const App = () => {
   }, [setImage, setTitle, setSubtitle]);
 
   return (
-    <Box
-      p={{ base: 4, sm: 6, md: 8 }}
-      bg="gray.100"
-      minH="100vh"
-      overflowX="hidden"
-    >
+    <Box p={{ base: 4, sm: 6, md: 8 }} minH="100vh" overflowX="hidden">
       <Link href="/" color="black">
         <HStack my={6}>
           <FaArrowLeft />
@@ -97,18 +91,15 @@ const App = () => {
 
         <VStack gap={8}>
           {/* Progress Chart (Top Right Column) */}
-          <Flex
+          <Box
+            as="section"
+            gridColumn={{ base: 'span 1', lg: 'span 2' }}
             className="card"
             bg="white"
             rounded="xl"
             shadow="md"
             p={6}
-            direction="column"
-            justifyContent="space-between"
-            w={{ base: '100%', sm: '90%', md: '80%' }}
-            maxW="md"
-            alignItems="center"
-            textAlign="center"
+            w="full"
           >
             <Heading
               as="h2"
@@ -178,7 +169,9 @@ const App = () => {
                 </Text>
               </Box>
             </VStack>
-          </Flex>
+          </Box>
+
+          <NominalUpdates />
 
           {/* Funding Goal and Details (Full Width Below) */}
           <Box

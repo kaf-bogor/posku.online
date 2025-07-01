@@ -1,6 +1,6 @@
 import { Box, Flex, Text, Link as ChakraLink } from '@chakra-ui/react';
 import Link from 'next/link';
-import { FaHome, FaHandsHelping, FaExternalLinkAlt } from 'react-icons/fa';
+import { FaHome, FaHandsHelping, FaLink } from 'react-icons/fa';
 
 const navItems = [
   {
@@ -55,7 +55,7 @@ export default function BottomNav() {
                 <FaHandsHelping fontSize={24} style={{ marginBottom: 4 }} />
               )}
               {icon === 'links' && (
-                <FaExternalLinkAlt fontSize={24} style={{ marginBottom: 4 }} />
+                <FaLink fontSize={24} style={{ marginBottom: 4 }} />
               )}
               <Text fontSize="xs">{label}</Text>
             </ChakraLink>

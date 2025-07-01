@@ -1,18 +1,11 @@
-import {
-  Box,
-  Heading,
-  Text,
-  VStack,
-  Container,
-  HStack,
-} from '@chakra-ui/react';
+import { Box, Heading, Text, VStack, HStack } from '@chakra-ui/react';
 import Link from 'next/link'; // Import the Link component
 import { FaArrowLeft } from 'react-icons/fa';
 
 const menuItems = [
   {
     title: 'Laporan Wakaf ATS',
-    link: '/wakaf_ats',
+    link: '/reports/wakaf_ats',
     description: null,
   },
   {
@@ -24,7 +17,7 @@ const menuItems = [
 
 export default function HomePage() {
   return (
-    <Container maxW="container.md" py={10}>
+    <>
       <Box w="full" textAlign="left" mb={2}>
         <Link href="/" color="black">
           <HStack
@@ -67,6 +60,6 @@ export default function HomePage() {
           </Link>
         ))}
       </VStack>
-    </Container>
+    </>
   );
 }

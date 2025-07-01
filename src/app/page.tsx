@@ -20,6 +20,11 @@ const menuItems = [
     imageUrl: `${firebaseUrl}logo_posku.png?alt=media`,
   },
   {
+    label: 'Muslimah Center',
+    href: '/muslimah_center',
+    imageUrl: `${firebaseUrl}mc_light.png?alt=media`,
+  },
+  {
     label: 'Pengurus',
     href: '/pengurus',
     icon: FaUsers,
@@ -29,11 +34,7 @@ const menuItems = [
     href: '/newsletter',
     icon: FaEnvelopeOpenText,
   },
-  {
-    label: 'Muslimah Center',
-    href: '/muslimah_center',
-    imageUrl: `${firebaseUrl}mc_light.png?alt=media`,
-  },
+
   {
     label: 'Laporan',
     href: '/reports',
@@ -44,14 +45,8 @@ const menuItems = [
 const Home = () => {
   const labelColor = useColorModeValue('gray.800', 'gray.700');
   return (
-    <Flex justify="center" align="start" minH="80vh" px={2}>
-      <SimpleGrid
-        columns={{ base: 2, sm: 3 }}
-        spacing={4}
-        w="100%"
-        maxW="600px"
-        pt={6}
-      >
+    <Flex justify="center" align="start">
+      <SimpleGrid columns={3} spacing={4} w="100%" maxW="600px" pt={6}>
         {menuItems.map(({ href, label, icon: Icon, imageUrl }) => (
           <Link href={href} key={href} passHref legacyBehavior>
             <Box

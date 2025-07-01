@@ -23,32 +23,43 @@ const Header = ({
 }) => {
   const { colorMode, toggleColorMode } = useColorMode();
   return (
-    <Flex
-      as="header"
-      width="full"
-      align="center"
-      justify="space-between"
-      p={4}
-      boxShadow="md"
-      backgroundColor={colorMode === 'light' ? '#FFFFFF' : '4682A9'}
+    <VStack
+      bg="gray.100"
+      position="fixed"
+      w="full"
+      zIndex={1000}
+      top={0}
+      maxWidth={800}
+      left="50%"
+      transform="translateX(-50%)"
     >
-      <HStack
-        direction="column"
-        alignItems="start"
-        justifyContent="start"
-        gap={4}
-        w="full"
+      <Flex
+        as="header"
+        width="full"
+        align="center"
+        justify="space-between"
+        p={4}
+        boxShadow="md"
+        backgroundColor={colorMode === 'light' ? '#FFFFFF' : '4682A9'}
       >
-        <Link href="/">
-          <Image width="64px" src={image} />
-        </Link>
-        <VStack alignItems="start" justifyContent="start" spacing={0}>
-          <Text fontWeight="bold" fontSize="x-large">
-            {title}
-          </Text>
-          <Text>{subtitle}</Text>
-        </VStack>
-      </HStack>
+        <HStack
+          direction="column"
+          alignItems="center"
+          justifyContent="start"
+          gap={4}
+          w="full"
+        >
+          <Link href="/">
+            <Image width="64px" src={image} />
+          </Link>
+          <VStack alignItems="start" justifyContent="start" spacing={0}>
+            <Text fontWeight="bold" fontSize="x-large">
+              {title}
+            </Text>
+            <Text>{subtitle}</Text>
+          </VStack>
+        </HStack>
+      </Flex>
       <HStack>
         <ShareButton />
         <IconButton
@@ -57,7 +68,7 @@ const Header = ({
           onClick={toggleColorMode}
         />
       </HStack>
-    </Flex>
+    </VStack>
   );
 };
 

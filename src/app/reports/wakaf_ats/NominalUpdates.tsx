@@ -8,15 +8,7 @@ export default function NominalUpdates() {
   ];
 
   return (
-    <Box
-      className="card"
-      bg="white"
-      rounded="xl"
-      shadow="md"
-      p={6}
-      maxW="md"
-      mx="auto"
-    >
+    <Box className="card" bg="white" rounded="xl" shadow="md" p={6} w="full">
       <Heading
         as="h2"
         fontSize="3xl"

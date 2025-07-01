@@ -58,7 +58,7 @@ export default function ProgressChart({
       display="flex"
       flexDirection="column"
       alignItems="center"
-      h={{ base: '250px', md: '32rem' }}
+      h="250px"
       position="relative"
     >
       <Doughnut

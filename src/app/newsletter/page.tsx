@@ -26,7 +26,7 @@ export default function Page() {
               <Image
                 src={`${firebaseUrl}${item.image_url}`}
                 alt={item.title}
-                objectFit="cover"
+                objectFit="contain"
                 boxSize="100%"
                 height={['400px', '400px', '300px']}
               />
