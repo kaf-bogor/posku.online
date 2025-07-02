@@ -11,18 +11,18 @@ import {
 import Link from 'next/link';
 import { FaUsers, FaEnvelopeOpenText, FaRegFileAlt } from 'react-icons/fa';
 
-import { firebaseUrl } from '~/lib/context/baseUrl';
+import { storageUrl } from '~/lib/context/baseUrl';
 
 const menuItems = [
   {
     label: 'Tentang POSKU',
     href: '/tentang',
-    imageUrl: `${firebaseUrl}logo_posku.png?alt=media`,
+    imageUrl: `${storageUrl}/logo_posku.png?alt=media`,
   },
   {
     label: 'Muslimah Center',
     href: '/muslimah_center',
-    imageUrl: `${firebaseUrl}mc_light.png?alt=media`,
+    imageUrl: `${storageUrl}/mc_light.png?alt=media`,
   },
   {
     label: 'Pengurus',

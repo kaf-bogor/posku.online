@@ -8,7 +8,7 @@ import {
 } from '@chakra-ui/react';
 import React from 'react';
 
-import { firebaseUrl } from '~/lib/context/baseUrl';
+import { storageUrl } from '~/lib/context/baseUrl';
 
 export default function Promo() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -28,7 +28,7 @@ export default function Promo() {
           display="flex"
         >
           <Image
-            src={`${firebaseUrl}promo%20maqom%202025.webp?alt=media`}
+            src={`${storageUrl}/promo%20maqom%202025.webp?alt=media`}
             alt="Promo"
             objectFit="contain"
             w="500px"

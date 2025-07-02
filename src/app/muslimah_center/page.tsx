@@ -16,7 +16,7 @@ import {
 import { useContext, useEffect } from 'react';
 
 import { AppContext, siteConfig } from '~/lib/context/app';
-import { firebaseUrl } from '~/lib/context/baseUrl';
+import { storageUrl } from '~/lib/context/baseUrl';
 import data from '~/lib/data/muslimah_center.json';
 
 const MuslimahCenterPage = () => {
@@ -24,8 +24,8 @@ const MuslimahCenterPage = () => {
     useContext(AppContext);
 
   const logoUrl = useColorModeValue(
-    `${firebaseUrl}mc_light.png?alt=media`,
-    `${firebaseUrl}mc_dark.png?alt=media`
+    `${storageUrl}/mc_light.png?alt=media`,
+    `${storageUrl}/mc_dark.png?alt=media`
   );
 
   const accordionBg = useColorModeValue('gray.100', 'gray.700');

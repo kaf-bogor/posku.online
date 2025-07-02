@@ -18,7 +18,7 @@ import { useState, useEffect, useContext } from 'react';
 import { FaArrowLeft } from 'react-icons/fa';
 
 import { AppContext, siteConfig } from '~/lib/context/app';
-import { firebaseUrl } from '~/lib/context/baseUrl';
+import { storageUrl } from '~/lib/context/baseUrl';
 
 import NominalUpdates from './NominalUpdates';
 import ProgressChart from './ProgressChart';
@@ -38,7 +38,7 @@ const App = () => {
   useEffect(() => {
     setTitle('Baitul Maal Khatulistiwa');
     setSubtitle('Bilistiwa - Laporan wakaf ATS');
-    setImage(`${firebaseUrl}bilistiwa.jpg?alt=media`);
+    setImage(`${storageUrl}/bilistiwa.jpg?alt=media`);
     return () => {
       setImage(siteConfig.image);
       setTitle(siteConfig.title);

@@ -25,7 +25,7 @@ import {
 import { useState } from 'react';
 
 import NominalUpdates, { items } from '~/app/reports/wakaf_ats/NominalUpdates';
-import { firebaseUrl } from '~/lib/context/baseUrl';
+import { storageUrl } from '~/lib/context/baseUrl';
 
 export default function WakafAtsPage() {
   const [amount, setAmount] = useState('');
@@ -54,7 +54,7 @@ export default function WakafAtsPage() {
       },
       {
         type: 'image',
-        src: `${firebaseUrl}wakaf_ats%2Fgallery_1.png?alt=media`,
+        src: `${storageUrl}/wakaf_ats%2Fgallery_1.png?alt=media`,
         alt: 'Wakaf Gedung Sekolah Kuttab Al Fatih Bogor',
       },
     ],

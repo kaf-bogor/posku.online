@@ -3,12 +3,12 @@
 import { createContext, useState, useMemo } from 'react';
 import type { FC, ReactNode } from 'react';
 
-import { firebaseUrl } from '~/lib/context/baseUrl';
+import { storageUrl } from '~/lib/context/baseUrl';
 
 export const siteConfig = {
   title: 'POSKU Al-Fatih Bogor',
   subtitle: 'Persatuan Orang tua Santri Kuttab Al-Fatih Bogor',
-  image: `${firebaseUrl}logo_posku.png?alt=media`,
+  image: `${storageUrl}/logo_posku.png?alt=media`,
   isDisplayPromo: false,
 };
 

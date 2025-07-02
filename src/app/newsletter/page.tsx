@@ -1,7 +1,7 @@
 import { Box, SimpleGrid, Image, Text, Link, HStack } from '@chakra-ui/react';
 import { FaArrowLeft } from 'react-icons/fa';
 
-import { firebaseUrl } from '~/lib/context/baseUrl';
+import { storageUrl } from '~/lib/context/baseUrl';
 import newsletters from '~/lib/data/newsletter.json';
 
 export default function Page() {
@@ -24,7 +24,7 @@ export default function Page() {
               overflow="hidden"
             >
               <Image
-                src={`${firebaseUrl}${item.image_url}`}
+                src={`${storageUrl}/${item.image_url}`}
                 alt={item.title}
                 objectFit="contain"
                 boxSize="100%"
@@ -39,7 +39,7 @@ export default function Page() {
                     href={
                       item.document_url.startsWith('https')
                         ? item.document_url
-                        : `${firebaseUrl}${item.document_url}`
+                        : `${storageUrl}/${item.document_url}`
                     }
                     isExternal
                     color="blue.500"

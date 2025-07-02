@@ -4,7 +4,7 @@ import { Box, HStack, Image, Heading, Text, Button } from '@chakra-ui/react';
 import Link from 'next/link';
 import { FaArrowLeft } from 'react-icons/fa';
 
-import { firebaseUrl } from '~/lib/context/baseUrl';
+import { storageUrl } from '~/lib/context/baseUrl';
 
 const campaign = {
   title: 'Wakaf Gedung Sekolah Kuttab Al Fatih Bogor',
@@ -13,7 +13,7 @@ const campaign = {
   media: [
     {
       type: 'image',
-      src: `${firebaseUrl}wakaf_ats%2Fgallery_1.png?alt=media`,
+      src: `${storageUrl}/wakaf_ats%2Fgallery_1.png?alt=media`,
       alt: 'Wakaf Gedung Sekolah Kuttab Al Fatih Bogor',
     },
     {
