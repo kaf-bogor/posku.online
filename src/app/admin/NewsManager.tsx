@@ -255,7 +255,7 @@ export default function NewsManager() {
                         {item.summary}
                       </Text>
                       <Box w="200px" h="120px" mt={2}>
-                        <SimpleCarousel imageUrls={item.imageUrls} />
+                        <SimpleCarousel images={item.imageUrls} />
                       </Box>
                     </Box>
                     <HStack>
