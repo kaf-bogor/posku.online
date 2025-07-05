@@ -1,0 +1,226 @@
+'use client';
+
+/* eslint-disable no-console */
+
+import { useToast } from '@chakra-ui/react';
+import {
+  collection,
+  getDocs,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+  doc as firestoreDoc,
+  query,
+  orderBy,
+} from 'firebase/firestore';
+import { useState, useEffect, useRef, useCallback } from 'react';
+
+import { db } from '~/lib/firebase';
+import { uploadImages } from '~/lib/helpers/uploadHelpers';
+
+// Placeholder untuk tipe data generik
+// Nantinya akan diganti dengan tipe spesifik seperti Donation, News, atau Event
+export type ManagedItem = {
+  id: string;
+  title: string;
+  summary: string;
+  imageUrls: string[];
+};
+
+// Properti yang dibutuhkan oleh hook
+export interface UseCrudManagerProps<T extends ManagedItem> {
+  collectionName: string;
+  blobFolderName: string;
+  itemSchema: Omit<T, 'id'>;
+}
+
+export function useCrudManager<T extends ManagedItem>({
+  collectionName,
+  blobFolderName,
+  itemSchema,
+}: UseCrudManagerProps<T>) {
+  const toast = useToast();
+  const [items, setItems] = useState<T[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [showForm, setShowForm] = useState(false);
+  const [form, setForm] = useState<Omit<T, 'id'>>(itemSchema);
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+  const [editId, setEditId] = useState<string | null>(null);
+  const [editForm, setEditForm] = useState<T | null>(null);
+  const [editSelectedFiles, setEditSelectedFiles] = useState<File[]>([]);
+  const [pendingDeleteId, setPendingDeleteId] = useState<string | null>(null);
+  const cancelRef = useRef(null);
+
+  const fetchItems = useCallback(async () => {
+    setLoading(true);
+    try {
+      const q = query(
+        collection(db, collectionName),
+        orderBy('createdAt', 'desc')
+      );
+      const querySnapshot = await getDocs(q);
+      const itemsData = querySnapshot.docs.map(
+        (doc) => ({ ...doc.data(), id: doc.id }) as T
+      );
+      setItems(itemsData);
+    } catch (error) {
+      console.error('Error fetching items:', error);
+      toast({
+        title: 'Error fetching data',
+        description: 'Could not retrieve data from the server.',
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
+    } finally {
+      setLoading(false);
+    }
+  }, [collectionName, toast]);
+
+  useEffect(() => {
+    fetchItems();
+  }, [fetchItems]);
+
+  const toggleForm = () => setShowForm(!showForm);
+
+  const handleAdd = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const imageUrls = await uploadImages(selectedFiles, blobFolderName);
+      const docData = { ...form, imageUrls, createdAt: new Date() };
+      await addDoc(collection(db, collectionName), docData);
+      toast({
+        title: 'Success',
+        description: 'Item added successfully.',
+        status: 'success',
+        duration: 3000,
+        isClosable: true,
+      });
+      setForm(itemSchema);
+      setSelectedFiles([]);
+      setShowForm(false);
+      fetchItems();
+    } catch (error) {
+      console.error('Error adding item:', error);
+      toast({
+        title: 'Error',
+        description: 'There was an error adding the item.',
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleEdit = (item: T) => {
+    setEditId(item.id);
+    setEditForm(item);
+  };
+
+  const handleCancelEdit = () => {
+    setEditId(null);
+    setEditForm(null);
+    setEditSelectedFiles([]);
+  };
+
+  const handleSaveEdit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editForm || !editId) return;
+    setLoading(true);
+    try {
+      let { imageUrls } = editForm;
+      if (editSelectedFiles.length > 0) {
+        imageUrls = await uploadImages(editSelectedFiles, blobFolderName);
+      }
+      const docRef = firestoreDoc(db, collectionName, editId);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { id, ...updatedData } = { ...editForm, imageUrls };
+      await updateDoc(docRef, updatedData);
+
+      toast({
+        title: 'Success',
+        description: 'Item updated successfully.',
+        status: 'success',
+        duration: 3000,
+        isClosable: true,
+      });
+      handleCancelEdit();
+      fetchItems();
+    } catch (error) {
+      console.error('Error updating item:', error);
+      toast({
+        title: 'Error',
+        description: 'There was an error updating the item.',
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDelete = (id: string) => {
+    setPendingDeleteId(id);
+  };
+
+  const cancelDelete = () => {
+    setPendingDeleteId(null);
+  };
+
+  const confirmDelete = async () => {
+    if (!pendingDeleteId) return;
+    setLoading(true);
+    try {
+      await deleteDoc(firestoreDoc(db, collectionName, pendingDeleteId));
+      toast({
+        title: 'Success',
+        description: 'Item deleted successfully.',
+        status: 'success',
+        duration: 3000,
+        isClosable: true,
+      });
+      setPendingDeleteId(null);
+      fetchItems();
+    } catch (error) {
+      console.error('Error deleting item:', error);
+      toast({
+        title: 'Error',
+        description: 'There was an error deleting the item.',
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return {
+    items,
+    loading,
+    showForm,
+    form,
+    setForm,
+    selectedFiles,
+    setSelectedFiles,
+    editId,
+    editForm,
+    setEditForm,
+    editSelectedFiles,
+    setEditSelectedFiles,
+    pendingDeleteId,
+    cancelRef,
+    toggleForm,
+    handleAdd,
+    handleEdit,
+    handleCancelEdit,
+    handleSaveEdit,
+    handleDelete,
+    confirmDelete,
+    cancelDelete,
+  };
+}

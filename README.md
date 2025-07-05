@@ -1,58 +1,108 @@
-<img src="https://og.sznm.dev/api/generate?heading=nextarter-chakra&text=Next.js+template+with+Chakra-UI+and+TypeScript+setup.&template=color&center=true&height=330" />
+# POSKU Al‑Fatih Bogor
 
-<div align="center">
-  <a href="https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fsozonome%2Fnextarter-chakra" target="_blank"><img src="https://vercel.com/button" alt="Deploy with Vercel" /></a> <a href="https://app.netlify.com/start/deploy?repository=https://github.com/sozonome/nextarter-chakra" target="_blank"><img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" /></a> <a href="https://railway.app/new/template/aqmmai?referralCode=9lKVVo" target="_blank"><img src="https://railway.app/button.svg" alt="Deploy on Railway" height="32px" /></a>
+**POSKU** (Persatuan Orang tua Santri Kuttab Al‑Fatih Bogor) adalah **wadah informal** untuk memfasilitasi orang tua santri (OTS) dalam mendukung proses belajar di Kuttab Al‑Fatih.
 
-<a href="https://stackblitz.com/github/sozonome/nextarter-chakra" target="_blank"><img src="https://developer.stackblitz.com/img/open_in_stackblitz.svg" alt="Open in StackBlitz" /></a>
+---
 
-  <p>This is a <a href="https://nextjs.org/" target="_blank">Next.js</a> project bootstrapped with <code>create-next-app</code>, added with <a href="https://chakra-ui.com" target="_blank"><b>Chakra UI</b></a> and <a href="https://www.typescriptlang.org" target="_blank"><b>TypeScript</b></a> setup. <br/> Start developing right away!</p>
+## Apa Tujuan dan Tugasnya?
 
-</div>
+- 🌱 **Tujuan**: Membantu para Orang Tua Santri (OTS) untuk ikut berperan aktif dalam pendidikan anak-anak, tidak hanya sekadar mengantar jemput, tapi juga berkontribusi nyata.
+- 💬 **Koordinasi & Fasilitasi**: Menjadi jembatan antara pihak Kuttab dan OTS, membantu kelancaran kegiatan belajar, kebersihan, kajian, dan aktivitas sosial lainnya.
+- 🤝 **Berbagi Inspirasi**: Menjadi forum bagi para OTS untuk saling belajar, berbagi pengalaman, ide, dan langkah-langkah positif.
 
-## 🔋 ⚡ Battery Packed template
+---
 
-- 🚀 **Next.js 13** - **React 18**
-- ⛓️ **TypeScript**
-- **Chakra-UI** v2
-- ✔️ **toolings** for linting, formatting, and conventions configured
-  - `eslint`, `prettier`, `husky`, `lint-staged`, `commitlint`, `commitizen`, and `standard-version`
-  - `pre-commit`, `pre-push`, `commit-msg`, `prepare-commit-msg` hook configured
-- 📱 **PWA-ready** - `next-pwa` configured, enabled by default, just disable it through `next.config.js`
-- 🔎 SEO optimization configured - with `next-sitemap`.
-  - you'll need to reconfigure or tinker with it to get it right according to your needs, but it's there if you need it.
-- 🎨 basic responsive layout configured - don't need it? just remove it 😃
-- 🤖 **Automatic Dependency Update** with [Renovate](https://renovatebot.com/)
-- 🏎️ **Turbo** setup
-- 🧪 **Playwright** E2E Test
+## Contoh Program Kerja POSKU
 
-[![CodeFactor](https://www.codefactor.io/repository/github/sozonome/nextarter-chakra/badge)](https://www.codefactor.io/repository/github/sozonome/nextarter-chakra)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=sozonome_nextarter-chakra&metric=alert_status)](https://sonarcloud.io/dashboard?id=sozonome_nextarter-chakra) [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=sozonome_nextarter-chakra&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=sozonome_nextarter-chakra) [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=sozonome_nextarter-chakra&metric=bugs)](https://sonarcloud.io/dashboard?id=sozonome_nextarter-chakra) [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=sozonome_nextarter-chakra&metric=code_smells)](https://sonarcloud.io/dashboard?id=sozonome_nextarter-chakra) [![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=sozonome_nextarter-chakra&metric=duplicated_lines_density)](https://sonarcloud.io/dashboard?id=sozonome_nextarter-chakra)
+- Membantu kegiatan belajar-mengajar santri
+- Membuat website/blog & menyebarkan info via SMS blast
+- Mengadakan gerakan kebersihan lingkungan Kuttab
+- Menyelenggarakan kajian rutin untuk Ayah dan Bunda (Bahasa Arab, Tajwid, Adab, Akhlak)
+- Membentuk Koordinator Kelas (Korlas) untuk setiap kelas
+- Mengadakan kegiatan olahraga, camping, dan bazar
+- Memfasilitasi forum usaha & mentoring bisnis
+- Mengadakan Iftar bersama & I’tikaf di bulan Ramadhan
 
-[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
+---
 
-## Pre-requisites
+## Kontak & Info Lebih Lanjut
 
-1. [Node.js](https://nodejs.org/en/) or nvm installed.
-2. `pnpm` installed.
+- 🌐 Kunjungi website kami di [posku.online](https://www.posku.online)
+- Cari menu: *Tentang POSKU*, *Pengurus*, *Newsletter*, atau *Muslimah Center*
 
-## Getting Started
+---
 
-1. You can either click `Use this template` button on this repository and clone the repo or directly from your terminal:
+## 🚀 Bismillah: Panduan Kontribusi Teknis
 
-```bash
-npx degit sozonome/nextarter-chakra <YOUR_APP_NAME>
+Alhamdulillah, kami sangat bersyukur dan berterima kasih atas niat Ayah/Bunda untuk ikut berkontribusi dalam pengembangan proyek ini. Semoga setiap baris kode dan usaha yang dicurahkan menjadi ladang amal jariyah. Aamiin.
+
+Berikut adalah panduan teknis untuk memulai.
+
+### Teknologi yang Digunakan
+
+- **Next.js**: Framework React untuk production.
+- **Chakra UI**: Komponen UI yang modern dan aksesibel.
+- **Firebase**: Untuk otentikasi dan database (Firestore).
+- **Vercel Blob**: Untuk hosting dan manajemen gambar.
+- **TypeScript**: Untuk menjaga kualitas dan struktur kode.
+
+### Cara Setup Proyek Lokal
+
+1.  **Clone Repositori**
+
+    ```bash
+    # Ganti YOUR_USERNAME dengan username Github Antum
+    git clone https://github.com/YOUR_USERNAME/posku.online.git
+    cd posku.online
+    ```
+
+2.  **Install Dependencies**
+
+    ```bash
+    pnpm install
+    ```
+
+3.  **Konfigurasi Environment Variables**
+
+    Salin file `.env.example` menjadi `.env.local` (jika ada), atau buat file `.env.local` secara manual di root proyek. Isi semua variabel yang dibutuhkan seperti pada panduan di bawah.
+
+4.  **Jalankan Server Development**
+
+    ```bash
+    pnpm dev
+    ```
+
+    Silakan buka [http://localhost:3000](http://localhost:3000) di browser Antum untuk melihat hasilnya.
+
+### Kebutuhan Environment Variables
+
+Pastikan semua variabel ini telah diatur di dalam file `.env.local` Antum agar aplikasi dapat berjalan dengan baik.
+
+#### Konfigurasi Firebase
+Nilai untuk variabel-variabel ini bisa didapatkan dari Firebase Console project Antum.
+
+```
+NEXT_PUBLIC_FIREBASE_API_KEY=...
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=...
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=...
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=...
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=...
+NEXT_PUBLIC_FIREBASE_APP_ID=...
 ```
 
-2. After cloning the project, run this command: `pnpm` or `pnpm install`
+#### Konfigurasi Vercel Blob Storage
+Agar fitur unggah gambar dapat berfungsi, Antum perlu melakukan setup Vercel Blob Storage.
 
-3. Then, run the development server:
+1.  **Buat Vercel Blob Store**: Silakan ikuti [dokumentasi resmi Vercel](https://vercel.com/docs/storage/vercel-blob/quickstart) untuk membuat Blob Store baru di proyek Vercel Antum.
+2.  **Buat Read-Write Token**: Di dasbor proyek Vercel, masuk ke pengaturan Blob Store, lalu buat token *read-write* yang baru.
+3.  **Tambahkan ke .env.local**:
 
-```bash
-pnpm dev
-```
+    ```
+    BLOB_READ_WRITE_TOKEN=isi-dengan-token-dari-vercel
+    ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+    Mohon ganti `isi-dengan-token-dari-vercel` dengan token yang baru saja Antum buat.
 
-You can start editing the page by modifying `src/lib/pages/index.tsx`. The page auto-updates as you edit the file.
+---
 
-- [References](/references.md)
+Jazakumullah khairan katsiran atas kontribusinya. Mari kita bangun platform ini bersama demi mendukung pendidikan generasi rabbani. Barakallahu fiikum.

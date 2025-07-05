@@ -20,27 +20,28 @@ import {
   FormControl,
   FormLabel,
   Input,
-  NumberInput,
-  NumberInputField,
+  Switch,
+  Badge,
 } from '@chakra-ui/react';
 
 import { useCrudManager } from '~/lib/hooks/useCrudManager';
-import type { DonationPage } from '~/lib/types/donation';
+import type { NewsItem } from '~/lib/types/news';
 
 import ManagerForm from './ManagerForm';
 import SimpleCarousel from './SimpleCarousel';
 
-const initialDonationState: Omit<DonationPage, 'id'> = {
+const initialNewsState: Omit<NewsItem, 'id'> = {
   title: '',
-  summary: '',
+  summary: '', // summary will be used for content
   imageUrls: [],
-  target: 0,
-  link: '',
+  publishDate: new Date().toISOString().split('T')[0],
+  author: '',
+  isPublished: false,
 };
 
-export default function DonationManager() {
+export default function NewsManager() {
   const {
-    items: donations,
+    items: newsItems,
     loading,
     showForm,
     form,
@@ -62,38 +63,41 @@ export default function DonationManager() {
     handleDelete,
     confirmDelete,
     cancelDelete,
-  } = useCrudManager<DonationPage>({
-    collectionName: 'donations',
-    blobFolderName: 'donation',
-    itemSchema: initialDonationState,
+  } = useCrudManager<NewsItem>({
+    collectionName: 'news',
+    blobFolderName: 'news',
+    itemSchema: initialNewsState,
   });
 
   const handleFormChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    const { name, value, type } = e.target;
+    const isCheckbox = type === 'checkbox';
+    setForm({
+      ...form,
+      [name]: isCheckbox ? (e.target as HTMLInputElement).checked : value,
+    });
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) setSelectedFiles(Array.from(e.target.files));
   };
 
-  const handleNumberChange = (value: string) => {
-    setForm({ ...form, target: Number(value) });
-  };
-
   const handleEditFormChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    if (editForm) setEditForm({ ...editForm, [e.target.name]: e.target.value });
+    if (!editForm) return;
+    const { name, value, type } = e.target;
+    const isCheckbox = type === 'checkbox';
+    setEditForm({
+      ...editForm,
+      [name]: isCheckbox ? (e.target as HTMLInputElement).checked : value,
+    });
   };
 
   const handleEditFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) setEditSelectedFiles(Array.from(e.target.files));
-  };
-
-  const handleEditNumberChange = (value: string) => {
-    if (editForm) setEditForm({ ...editForm, target: Number(value) });
   };
 
   return (
@@ -106,7 +110,7 @@ export default function DonationManager() {
         <AlertDialogOverlay>
           <AlertDialogContent>
             <AlertDialogHeader fontSize="lg" fontWeight="bold">
-              Delete Donation Page
+              Delete News Item
             </AlertDialogHeader>
             <AlertDialogBody>
               Are you sure? This action cannot be undone.
@@ -125,20 +129,20 @@ export default function DonationManager() {
 
       <Box>
         <HStack justify="space-between" mb={4}>
-          <Heading size="md">Donation Management</Heading>
+          <Heading size="md">News Management</Heading>
           <Button
             leftIcon={<AddIcon />}
             colorScheme="teal"
             size="sm"
             onClick={toggleForm}
           >
-            {showForm ? 'Hide Form' : 'Add Donation Page'}
+            {showForm ? 'Hide Form' : 'Add News Item'}
           </Button>
         </HStack>
 
         <Collapse in={showForm} animateOpacity>
           <ManagerForm
-            title="Add New Donation Page"
+            title="Add New News Item"
             formState={form}
             onFormChange={handleFormChange}
             onFileChange={handleFileChange}
@@ -147,20 +151,30 @@ export default function DonationManager() {
             onCancel={toggleForm}
           >
             <FormControl isRequired>
-              <FormLabel>Target (Rp)</FormLabel>
-              <NumberInput
-                value={form.target}
-                min={0}
-                onChange={handleNumberChange}
-              >
-                <NumberInputField name="target" />
-              </NumberInput>
+              <FormLabel>Publish Date</FormLabel>
+              <Input
+                type="date"
+                name="publishDate"
+                value={form.publishDate}
+                onChange={handleFormChange}
+              />
             </FormControl>
             <FormControl isRequired>
-              <FormLabel>Link</FormLabel>
+              <FormLabel>Author</FormLabel>
               <Input
-                name="link"
-                value={form.link}
+                name="author"
+                value={form.author}
+                onChange={handleFormChange}
+              />
+            </FormControl>
+            <FormControl display="flex" alignItems="center">
+              <FormLabel htmlFor="isPublished-add" mb="0">
+                Publish
+              </FormLabel>
+              <Switch
+                id="isPublished-add"
+                name="isPublished"
+                isChecked={form.isPublished}
                 onChange={handleFormChange}
               />
             </FormControl>
@@ -168,18 +182,24 @@ export default function DonationManager() {
         </Collapse>
 
         <Heading size="sm" mb={2}>
-          Existing Donation Pages
+          Existing News
         </Heading>
         {loading ? (
           <Spinner />
         ) : (
           <VStack align="stretch" spacing={3}>
-            {donations.map((d) => (
-              <Box key={d.id} p={3} bg="white" borderRadius="md" boxShadow="sm">
-                {editId === d.id ? (
+            {newsItems.map((item) => (
+              <Box
+                key={item.id}
+                p={3}
+                bg="white"
+                borderRadius="md"
+                boxShadow="sm"
+              >
+                {editId === item.id ? (
                   <ManagerForm
                     isEdit
-                    title={`Edit: ${d.title}`}
+                    title={`Edit: ${item.title}`}
                     formState={editForm}
                     onFormChange={handleEditFormChange}
                     onFileChange={handleEditFileChange}
@@ -188,20 +208,30 @@ export default function DonationManager() {
                     onCancel={handleCancelEdit}
                   >
                     <FormControl isRequired>
-                      <FormLabel>Target (Rp)</FormLabel>
-                      <NumberInput
-                        value={editForm?.target}
-                        min={0}
-                        onChange={handleEditNumberChange}
-                      >
-                        <NumberInputField name="target" />
-                      </NumberInput>
+                      <FormLabel>Publish Date</FormLabel>
+                      <Input
+                        type="date"
+                        name="publishDate"
+                        value={editForm?.publishDate}
+                        onChange={handleEditFormChange}
+                      />
                     </FormControl>
                     <FormControl isRequired>
-                      <FormLabel>Link</FormLabel>
+                      <FormLabel>Author</FormLabel>
                       <Input
-                        name="link"
-                        value={editForm?.link}
+                        name="author"
+                        value={editForm?.author}
+                        onChange={handleEditFormChange}
+                      />
+                    </FormControl>
+                    <FormControl display="flex" alignItems="center">
+                      <FormLabel htmlFor={`isPublished-edit-${item.id}`} mb="0">
+                        Publish
+                      </FormLabel>
+                      <Switch
+                        id={`isPublished-edit-${item.id}`}
+                        name="isPublished"
+                        isChecked={editForm?.isPublished}
                         onChange={handleEditFormChange}
                       />
                     </FormControl>
@@ -209,27 +239,36 @@ export default function DonationManager() {
                 ) : (
                   <HStack justify="space-between">
                     <Box flex={1}>
-                      <Heading size="sm">{d.title}</Heading>
-                      <Text>
-                        <strong>Summary:</strong> {d.summary}
+                      <HStack>
+                        <Heading size="sm">{item.title}</Heading>
+                        <Badge
+                          colorScheme={item.isPublished ? 'green' : 'yellow'}
+                        >
+                          {item.isPublished ? 'Published' : 'Draft'}
+                        </Badge>
+                      </HStack>
+                      <Text fontSize="xs" color="gray.500">
+                        By {item.author} on{' '}
+                        {new Date(item.publishDate).toLocaleDateString()}
                       </Text>
-                      <SimpleCarousel images={d.imageUrls} />
-                      <Text>
-                        <strong>Target:</strong> Rp
-                        {d.target.toLocaleString()}
+                      <Text fontSize="sm" noOfLines={2} mt={1}>
+                        {item.summary}
                       </Text>
+                      <Box w="200px" h="120px" mt={2}>
+                        <SimpleCarousel imageUrls={item.imageUrls} />
+                      </Box>
                     </Box>
                     <HStack>
                       <IconButton
                         aria-label="Edit"
                         icon={<EditIcon />}
-                        onClick={() => handleEdit(d)}
+                        onClick={() => handleEdit(item)}
                       />
                       <IconButton
                         aria-label="Delete"
                         icon={<DeleteIcon />}
                         colorScheme="red"
-                        onClick={() => handleDelete(d.id)}
+                        onClick={() => handleDelete(item.id)}
                       />
                     </HStack>
                   </HStack>
