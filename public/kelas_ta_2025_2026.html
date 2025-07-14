@@ -103,10 +103,10 @@
     >
       <div class="flex justify-between items-center mb-2">
         <div>
-          <h1 class="text-3xl sm:text-4xl font-extrabold text-gray-900">
+          <h1 class="text-[5vw] sm:text-[3vw] font-extrabold text-gray-900">
             Pembagian Kelas dan Pengajar
           </h1>
-          <h2 class="text-xl sm:text-2xl font-semibold text-gray-700">
+          <h2 class="text-[4vw] sm:text-[2.5vw] font-semibold text-gray-700">
             Kuttab Al-Fatih Bogor
           </h2>
           <p class="text-lg text-gray-500">TA. 2025-2026</p>
@@ -201,16 +201,16 @@
           button.dataset.accordionTarget = accordionBodyId;
 
           const classNameAndCount = document.createElement('div');
-          classNameAndCount.className = 'flex items-center gap-3';
+          classNameAndCount.className = 'flex items-center gap-3 flex-1';
 
           const h3 = document.createElement('h3');
-          h3.className = 'text-2xl font-bold text-blue-700';
+          h3.className = 'text-[4vw] sm:text-[2vw] font-bold text-blue-700';
           h3.innerHTML = highlightText(classInfo.name, currentSearchTerm); // Highlight class name
           classNameAndCount.appendChild(h3);
 
           const studentCountSpan = document.createElement('span');
           studentCountSpan.className =
-            'text-lg font-medium text-gray-600 bg-blue-100 px-3 py-1 rounded-full';
+            'text-lg font-medium text-gray-600 bg-blue-100 px-3 py-1 rounded-full ml-auto';
           studentCountSpan.textContent = `${classInfo.students.length} Santri`;
           classNameAndCount.appendChild(studentCountSpan);
 
@@ -253,7 +253,7 @@
           classInfo.teachers.forEach((teacher) => {
             const teacherDiv = document.createElement('div');
             teacherDiv.className =
-              'teacher-info rounded-lg p-3 mb-2 flex flex-col sm:flex-row justify-between items-start sm:items-center';
+              'teacher-info rounded-lg p-3 mb-2 flex justify-between items-center';
 
             const teacherNameRole = document.createElement('p');
             teacherNameRole.className = 'font-semibold text-gray-800';
@@ -272,6 +272,7 @@
               whatsappLink.href = `https://wa.me/${formattedPhoneNumber}`;
               whatsappLink.target = '_blank';
               whatsappLink.rel = 'noopener noreferrer';
+              whatsappLink.className = 'ml-auto';
 
               const whatsappIconImg = document.createElement('img');
               whatsappIconImg.src =
