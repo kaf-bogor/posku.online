@@ -3,6 +3,7 @@
 /* eslint-disable no-console */
 
 import { useToast } from '@chakra-ui/react';
+import type { DocumentData } from 'firebase/firestore';
 import {
   collection,
   getDocs,
@@ -60,7 +61,7 @@ export function useCrudManager<T extends ManagedItem>({
       );
       const querySnapshot = await getDocs(q);
       const itemsData = querySnapshot.docs.map(
-        (doc) => ({ ...doc.data(), id: doc.id }) as T
+        (doc: DocumentData) => ({ ...doc.data(), id: doc.id }) as T
       );
       setItems(itemsData);
     } catch (error) {

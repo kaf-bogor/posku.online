@@ -93,9 +93,15 @@ importers:
       '@types/c3':
         specifier: ^0.7.11
         version: 0.7.11
+      '@types/chart.js':
+        specifier: ^4.0.1
+        version: 4.0.1
       '@types/react':
         specifier: ^18.3.3
         version: 18.3.3
+      '@types/react-chartjs-2':
+        specifier: ^2.5.7
+        version: 2.5.7(chart.js@4.5.0)(react@18.3.1)
       commitizen:
         specifier: ^4.3.0
         version: 4.3.0(@types/node@20.12.12)(typescript@5.5.4)
@@ -1854,6 +1860,10 @@ packages:
   '@types/c3@0.7.11':
     resolution: {integrity: sha512-i5V30aQK6q21gtczyk3ti7sB3mbEt1TrP5YpWX8EFg4o7PyCu5ZHm9S1waZWXnNSHs+2GGgMOxae2VMbgh4gWg==}
 
+  '@types/chart.js@4.0.1':
+    resolution: {integrity: sha512-OwXJ6Eg14eFpCsTG6sljiGnvVpit5R9rapG7nwDnQlljsdplVIOYVuCSwy07IduCtihrOwvOnbhXKLyp3nvPcw==}
+    deprecated: This is a stub types definition. chart.js provides its own type definitions, so you do not need this installed.
+
   '@types/conventional-commits-parser@5.0.0':
     resolution: {integrity: sha512-loB369iXNmAZglwWATL+WRe+CRMmmBPtpolYzIebFaX4YA3x+BEfLqhUAV9WanycKI3TG1IMr5bMJDajDKLlUQ==}
 
@@ -2003,6 +2013,10 @@ packages:
 
   '@types/prop-types@15.7.12':
     resolution: {integrity: sha512-5zvhXYtRNRluoE/jAp4GVsSduVUzNWKkOZrCDBWYtE7biZywwdC2AcEzg+cSMLFRfVgeAFqpfNabiPjxFddV1Q==}
+
+  '@types/react-chartjs-2@2.5.7':
+    resolution: {integrity: sha512-waqYqiNULIVUqaKO7MGUpFmWrVtH7gVPOzqwV4y4zgUyu/JiDwC005PpveO442HKnby9kLgp3t1SB2sld+ACLw==}
+    deprecated: This is a stub types definition for react-chartjs-2 (https://github.com/gor181/react-chartjs-2). react-chartjs-2 provides its own type definitions, so you don't need @types/react-chartjs-2 installed!
 
   '@types/react-copy-to-clipboard@5.0.7':
     resolution: {integrity: sha512-Gft19D+as4M+9Whq1oglhmK49vqPhcLzk8WfvfLvaYMIPYanyfLy0+CwFucMJfdKoSFyySPmkkWn8/E6voQXjQ==}
@@ -7566,6 +7580,10 @@ snapshots:
     dependencies:
       '@types/d3': 4.13.15
 
+  '@types/chart.js@4.0.1':
+    dependencies:
+      chart.js: 4.5.0
+
   '@types/conventional-commits-parser@5.0.0':
     dependencies:
       '@types/node': 20.12.7
@@ -7736,6 +7754,13 @@ snapshots:
   '@types/parse-json@4.0.2': {}
 
   '@types/prop-types@15.7.12': {}
+
+  '@types/react-chartjs-2@2.5.7(chart.js@4.5.0)(react@18.3.1)':
+    dependencies:
+      react-chartjs-2: 5.3.0(chart.js@4.5.0)(react@18.3.1)
+    transitivePeerDependencies:
+      - chart.js
+      - react
 
   '@types/react-copy-to-clipboard@5.0.7':
     dependencies:
