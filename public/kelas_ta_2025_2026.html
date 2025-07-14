@@ -109,7 +109,7 @@
           <h2 class="text-xl sm:text-2xl md:text-3xl font-semibold text-gray-700">
             Kuttab Al-Fatih Bogor
           </h2>
-          <p class="text-lg text-gray-500">TA. 2025-2026</p>
+          <p class="text-lg text-gray-500">TA. 2025-2026, Total Santri: <span id="totalSantri"></span></p>
         </div>
         <button
           id="toggleAllButton"
@@ -143,6 +143,7 @@
       const classListContainer = document.getElementById('classList'); // Changed ID to classList
       const searchInput = document.getElementById('searchInput');
       const toggleAllButton = document.getElementById('toggleAllButton');
+      const totalSantriSpan = document.getElementById('totalSantri');
       let allAccordionsOpen = false; // Track the state of all accordions
 
       // Function to get class group color
@@ -425,11 +426,13 @@
               targetElement.classList.add('hidden-content');
               button.setAttribute('aria-expanded', 'false');
               svgIcon.classList.add('rotate-180'); // Point down
+              targetElement.parentElement.classList.remove('expanded'); // Ensure the class card is not expanded
             } else {
               // If currently closed, open them
               targetElement.classList.remove('hidden-content');
               button.setAttribute('aria-expanded', 'true');
               svgIcon.classList.remove('rotate-180'); // Point up
+              targetElement.parentElement.classList.add('expanded'); // Ensure the class card is expanded
             }
           }
         });
@@ -457,6 +460,8 @@
           }
           allSchoolData = await response.json(); // Store fetched data
           displayClasses(allSchoolData, searchInput.value); // Display all data initially, with potential initial search term
+          const totalSantri = allSchoolData.reduce((total, classInfo) => total + classInfo.students.length, 0);
+          totalSantriSpan.textContent = totalSantri;
         } catch (err) {
           const errorDiv = document.createElement('div');
           errorDiv.className =
