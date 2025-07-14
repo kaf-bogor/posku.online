@@ -100,7 +100,7 @@
             <input
                 type="text"
                 id="searchInput"
-                placeholder="Cari nama kelas, guru, atau siswa..."
+                placeholder="Cari nama kelas, guru, atau santri..."
                 class="search-input w-full text-gray-700 placeholder-gray-400 focus:ring focus:ring-blue-200"
             />
         </div>
@@ -184,7 +184,7 @@
 
                 const studentCountSpan = document.createElement('span');
                 studentCountSpan.className = 'text-lg font-medium text-gray-600 bg-blue-100 px-3 py-1 rounded-full';
-                studentCountSpan.textContent = `${classInfo.students.length} Siswa`;
+                studentCountSpan.textContent = `${classInfo.students.length} Santri`;
                 classNameAndCount.appendChild(studentCountSpan);
 
                 button.appendChild(classNameAndCount);
@@ -250,7 +250,7 @@
                 // Student List
                 const studentListTitle = document.createElement('h4');
                 studentListTitle.className = 'text-xl font-semibold text-gray-800 mb-3';
-                studentListTitle.textContent = 'Daftar Siswa:';
+                studentListTitle.textContent = 'Daftar Santri:';
                 accordionBodyContent.appendChild(studentListTitle);
 
                 const studentList = document.createElement('ul');
