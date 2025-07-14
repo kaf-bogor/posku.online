@@ -298,11 +298,11 @@
 
           const studentList = document.createElement('ul');
           studentList.className =
-            'student-list rounded-lg p-4 grid grid-cols-1 sm:grid-cols-2 gap-2 text-gray-700';
+            'student-list rounded-lg p-4 grid grid-cols-1 gap-2 text-gray-700';
           classInfo.students.forEach((student, studentIndex) => {
             const studentItem = document.createElement('li');
             studentItem.className =
-              'py-1 px-2 rounded-md hover:bg-gray-50 transition-colors duration-150';
+              'px-2 rounded-md hover:bg-gray-50 transition-colors duration-150';
             studentItem.innerHTML = highlightText(
               `${studentIndex + 1}. ${student}`,
               currentSearchTerm
