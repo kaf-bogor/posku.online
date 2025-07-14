@@ -1,13 +1,16 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pembagian Kelas Kuttab Al-Fatih Bogor TA. 2025-2026</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Flowbite CSS CDN (for general styling, not accordion JS) -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css"
+      rel="stylesheet"
+    />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
@@ -20,7 +23,9 @@
       .class-card {
         border: 1px solid #e0e0e0;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        transition: transform 0.2s ease-in-out, background-color 0.3s ease;
+        transition:
+          transform 0.2s ease-in-out,
+          background-color 0.3s ease;
         overflow: hidden;
       }
       .class-card:hover {
@@ -38,7 +43,9 @@
         padding: 0.75rem 1rem;
         border-radius: 0.5rem;
         box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
-        transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        transition:
+          border-color 0.2s ease-in-out,
+          box-shadow 0.2s ease-in-out;
       }
       .search-input:focus {
         outline: none;
@@ -63,11 +70,13 @@
       .accordion-button svg {
         transition: transform 0.3s ease-in-out;
       }
-      .accordion-button[aria-expanded="false"] svg {
+      .accordion-button[aria-expanded='false'] svg {
         transform: rotate(180deg); /* Point down when collapsed */
       }
       .accordion-content {
-        transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+        transition:
+          max-height 0.3s ease-out,
+          opacity 0.3s ease-out;
         max-height: 1000px; /* Large enough to accommodate content when open */
         opacity: 1;
         overflow: hidden;
@@ -77,329 +86,392 @@
         opacity: 0;
         display: none; /* Completely hide the element */
       }
+      .class-card {
+        height: 77px;
+        overflow: hidden;
+        transition: height 0.3s ease;
+      }
+
+      .class-card.expanded {
+        height: auto;
+      }
     </style>
-</head>
-<body class="p-4 sm:p-6 lg:p-8">
-    <div class="max-w-4xl mx-auto bg-white p-6 sm:p-8 lg:p-10 rounded-xl shadow-lg">
-        <div class="flex justify-between items-center mb-2">
-            <div>
-                <h1 class="text-3xl sm:text-4xl font-extrabold text-gray-900">Pembagian Kelas dan Pengajar</h1>
-                <h2 class="text-xl sm:text-2xl font-semibold text-gray-700">Kuttab Al-Fatih Bogor</h2>
-                <p class="text-lg text-gray-500">TA. 2025-2026</p>
-            </div>
-            <button
-                id="toggleAllButton"
-                class="px-4 py-2 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-150 ease-in-out"
-            >
-                Buka Semua
-            </button>
+  </head>
+  <body class="p-4 sm:p-6 lg:p-8">
+    <div
+      class="max-w-4xl mx-auto bg-white p-6 sm:p-8 lg:p-10 rounded-xl shadow-lg"
+    >
+      <div class="flex justify-between items-center mb-2">
+        <div>
+          <h1 class="text-3xl sm:text-4xl font-extrabold text-gray-900">
+            Pembagian Kelas dan Pengajar
+          </h1>
+          <h2 class="text-xl sm:text-2xl font-semibold text-gray-700">
+            Kuttab Al-Fatih Bogor
+          </h2>
+          <p class="text-lg text-gray-500">TA. 2025-2026</p>
         </div>
+        <button
+          id="toggleAllButton"
+          class="px-4 py-2 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-150 ease-in-out"
+        >
+          Buka Semua
+        </button>
+      </div>
 
-        <!-- Search Bar -->
-        <div class="mb-8">
-            <input
-                type="text"
-                id="searchInput"
-                placeholder="Cari nama kelas, guru, atau santri..."
-                class="search-input w-full text-gray-700 placeholder-gray-400 focus:ring focus:ring-blue-200"
-            />
-        </div>
+      <!-- Search Bar -->
+      <div class="mb-8">
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Cari nama kelas, guru, atau santri..."
+          class="search-input w-full text-gray-700 placeholder-gray-400 focus:ring focus:ring-blue-200"
+        />
+      </div>
 
-        <!-- Class List Container -->
-        <div id="classList" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <!-- Class cards will be rendered here by JavaScript -->
-        </div>
+      <!-- Class List Container -->
+      <div id="classList" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Class cards will be rendered here by JavaScript -->
+      </div>
     </div>
 
     <!-- Flowbite JS CDN is NOT needed for custom accordion logic -->
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script> -->
 
     <script>
-        let allSchoolData = []; // To store the fetched data
-        const classListContainer = document.getElementById('classList'); // Changed ID to classList
-        const searchInput = document.getElementById('searchInput');
-        const toggleAllButton = document.getElementById('toggleAllButton');
-        let allAccordionsOpen = false; // Track the state of all accordions
+      let allSchoolData = []; // To store the fetched data
+      const classListContainer = document.getElementById('classList'); // Changed ID to classList
+      const searchInput = document.getElementById('searchInput');
+      const toggleAllButton = document.getElementById('toggleAllButton');
+      let allAccordionsOpen = false; // Track the state of all accordions
 
-        // Function to get class group color
-        const getClassGroupColor = (className) => {
-            className = className.toLowerCase();
-            if (className.includes('kuttab awal 1')) return 'bg-blue-50';
-            if (className.includes('kuttab awal 2')) return 'bg-green-50';
-            if (className.includes('kuttab awal 3')) return 'bg-yellow-50';
-            if (className.includes('qonuni 1')) return 'bg-purple-50';
-            if (className.includes('qonuni 2')) return 'bg-pink-50';
-            if (className.includes('qonuni 3')) return 'bg-indigo-50';
-            if (className.includes('qonuni 4')) return 'bg-red-50';
-            return 'bg-white'; // Default color if no match
-        };
+      // Function to get class group color
+      const getClassGroupColor = (className) => {
+        className = className.toLowerCase();
+        if (className.includes('kuttab awal 1')) return 'bg-blue-50';
+        if (className.includes('kuttab awal 2')) return 'bg-green-50';
+        if (className.includes('kuttab awal 3')) return 'bg-yellow-50';
+        if (className.includes('qonuni 1')) return 'bg-purple-50';
+        if (className.includes('qonuni 2')) return 'bg-pink-50';
+        if (className.includes('qonuni 3')) return 'bg-indigo-50';
+        if (className.includes('qonuni 4')) return 'bg-red-50';
+        return 'bg-white'; // Default color if no match
+      };
 
-        // Helper function to highlight text
-        function highlightText(text, searchTerm) {
-            if (!searchTerm) {
-                return text;
-            }
-            // Use a regex with 'gi' for global and case-insensitive matching
-            const regex = new RegExp(`(${searchTerm})`, 'gi');
-            // Replace matched term with a span for highlighting
-            return text.replace(regex, '<span class="highlight">$1</span>');
+      // Helper function to highlight text
+      function highlightText(text, searchTerm) {
+        if (!searchTerm) {
+          return text;
+        }
+        // Use a regex with 'gi' for global and case-insensitive matching
+        const regex = new RegExp(`(${searchTerm})`, 'gi');
+        // Replace matched term with a span for highlighting
+        return text.replace(regex, '<span class="highlight">$1</span>');
+      }
+
+      // Function to display classes
+      function displayClasses(classesToDisplay, currentSearchTerm = '') {
+        classListContainer.innerHTML = ''; // Clear existing content
+
+        if (classesToDisplay.length === 0) {
+          classListContainer.innerHTML =
+            '<p class="text-center text-gray-500 text-lg col-span-full">Tidak ada hasil yang ditemukan.</p>';
+          // Reset toggle all button state if no classes are displayed
+          allAccordionsOpen = false;
+          toggleAllButton.textContent = 'Buka Semua';
+          return;
         }
 
-        // Function to display classes
-        function displayClasses(classesToDisplay, currentSearchTerm = '') {
-            classListContainer.innerHTML = ''; // Clear existing content
+        classesToDisplay.forEach((classInfo, index) => {
+          const backgroundColorClass = getClassGroupColor(classInfo.name);
+          const accordionBodyId = `accordion-body-${index}`; // Simpler ID for body
 
-            if (classesToDisplay.length === 0) {
-                classListContainer.innerHTML = '<p class="text-center text-gray-500 text-lg col-span-full">Tidak ada hasil yang ditemukan.</p>';
-                // Reset toggle all button state if no classes are displayed
-                allAccordionsOpen = false;
-                toggleAllButton.textContent = 'Buka Semua';
-                return;
+          const classCard = document.createElement('div');
+          classCard.className = `class-card rounded-xl mb-4 ${backgroundColorClass}`;
+
+          // Accordion Header (button)
+          const button = document.createElement('button');
+          button.type = 'button';
+          button.className =
+            'accordion-button flex items-center justify-between w-full p-5 font-medium rtl:text-right text-gray-900 border border-b-0 border-gray-200 rounded-t-xl focus:ring-4 focus:ring-gray-200 hover:bg-gray-100 gap-3';
+          button.setAttribute('aria-expanded', 'false'); // Default to collapsed
+          button.setAttribute('aria-controls', accordionBodyId);
+
+          // Store a reference to the body for the click handler
+          button.dataset.accordionTarget = accordionBodyId;
+
+          const classNameAndCount = document.createElement('div');
+          classNameAndCount.className = 'flex items-center gap-3';
+
+          const h3 = document.createElement('h3');
+          h3.className = 'text-2xl font-bold text-blue-700';
+          h3.innerHTML = highlightText(classInfo.name, currentSearchTerm); // Highlight class name
+          classNameAndCount.appendChild(h3);
+
+          const studentCountSpan = document.createElement('span');
+          studentCountSpan.className =
+            'text-lg font-medium text-gray-600 bg-blue-100 px-3 py-1 rounded-full';
+          studentCountSpan.textContent = `${classInfo.students.length} Santri`;
+          classNameAndCount.appendChild(studentCountSpan);
+
+          button.appendChild(classNameAndCount);
+
+          const svg = document.createElementNS(
+            'http://www.w3.org/2000/svg',
+            'svg'
+          );
+          svg.setAttribute('class', 'w-3 h-3 shrink-0'); // Removed rotate-180 default
+          svg.setAttribute('aria-hidden', 'true');
+          svg.setAttribute('fill', 'none');
+          svg.setAttribute('viewBox', '0 0 10 6');
+          const path = document.createElementNS(
+            'http://www.w3.org/2000/svg',
+            'path'
+          );
+          path.setAttribute('stroke', 'currentColor');
+          path.setAttribute('stroke-linecap', 'round');
+          path.setAttribute('stroke-linejoin', 'round');
+          path.setAttribute('stroke-width', '2');
+          path.setAttribute('d', 'M9 5 5 1 1 5');
+          svg.appendChild(path);
+          button.appendChild(svg);
+
+          classCard.appendChild(button);
+
+          // Accordion Body (div)
+          const accordionBody = document.createElement('div');
+          accordionBody.id = accordionBodyId;
+          accordionBody.className = 'accordion-content hidden-content'; // Custom classes for toggle
+
+          const accordionBodyContent = document.createElement('div');
+          accordionBodyContent.className =
+            'p-5 border border-b-0 border-gray-200';
+
+          // Teacher Info
+          const teacherSection = document.createElement('div');
+          teacherSection.className = 'mb-4';
+          classInfo.teachers.forEach((teacher) => {
+            const teacherDiv = document.createElement('div');
+            teacherDiv.className =
+              'teacher-info rounded-lg p-3 mb-2 flex flex-col sm:flex-row justify-between items-start sm:items-center';
+
+            const teacherNameRole = document.createElement('p');
+            teacherNameRole.className = 'font-semibold text-gray-800';
+            teacherNameRole.innerHTML = highlightText(
+              `${teacher.role}: ${teacher.name}`,
+              currentSearchTerm
+            ); // Highlight teacher info
+            teacherDiv.appendChild(teacherNameRole);
+
+            if (teacher.phone) {
+              const whatsappLink = document.createElement('a');
+              const formattedPhoneNumber = teacher.phone.replace(
+                /\s|-|\+/g,
+                ''
+              );
+              whatsappLink.href = `https://wa.me/${formattedPhoneNumber}`;
+              whatsappLink.target = '_blank';
+              whatsappLink.rel = 'noopener noreferrer';
+
+              const whatsappIconImg = document.createElement('img');
+              whatsappIconImg.src =
+                'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/WhatsApp.svg/250px-WhatsApp.svg.png';
+              whatsappIconImg.alt = 'WhatsApp';
+              whatsappIconImg.className = 'whatsapp-icon';
+              whatsappIconImg.onerror = function () {
+                this.onerror = null;
+                this.src = 'https://placehold.co/28x28/cccccc/ffffff?text=WA';
+              };
+              whatsappLink.appendChild(whatsappIconImg);
+              teacherDiv.appendChild(whatsappLink);
             }
+            teacherSection.appendChild(teacherDiv);
+          });
+          accordionBodyContent.appendChild(teacherSection);
 
-            classesToDisplay.forEach((classInfo, index) => {
-                const backgroundColorClass = getClassGroupColor(classInfo.name);
-                const accordionBodyId = `accordion-body-${index}`; // Simpler ID for body
+          // Student List
+          const studentListTitle = document.createElement('h4');
+          studentListTitle.className =
+            'text-xl font-semibold text-gray-800 mb-3';
+          studentListTitle.textContent = 'Daftar Santri:';
+          accordionBodyContent.appendChild(studentListTitle);
 
-                const classCard = document.createElement('div');
-                classCard.className = `class-card rounded-xl mb-4 ${backgroundColorClass}`;
+          const studentList = document.createElement('ul');
+          studentList.className =
+            'student-list rounded-lg p-4 grid grid-cols-1 sm:grid-cols-2 gap-2 text-gray-700';
+          classInfo.students.forEach((student, studentIndex) => {
+            const studentItem = document.createElement('li');
+            studentItem.className =
+              'py-1 px-2 rounded-md hover:bg-gray-50 transition-colors duration-150';
+            studentItem.innerHTML = highlightText(
+              `${studentIndex + 1}. ${student}`,
+              currentSearchTerm
+            ); // Highlight student name
+            studentList.appendChild(studentItem);
+          });
+          accordionBodyContent.appendChild(studentList);
 
-                // Accordion Header (button)
-                const button = document.createElement('button');
-                button.type = 'button';
-                button.className = 'accordion-button flex items-center justify-between w-full p-5 font-medium rtl:text-right text-gray-900 border border-b-0 border-gray-200 rounded-t-xl focus:ring-4 focus:ring-gray-200 hover:bg-gray-100 gap-3';
-                button.setAttribute('aria-expanded', 'false'); // Default to collapsed
-                button.setAttribute('aria-controls', accordionBodyId);
-                
-                // Store a reference to the body for the click handler
-                button.dataset.accordionTarget = accordionBodyId;
+          accordionBody.appendChild(accordionBodyContent);
+          classCard.appendChild(accordionBody);
 
-                const classNameAndCount = document.createElement('div');
-                classNameAndCount.className = 'flex items-center gap-3';
+          classListContainer.appendChild(classCard);
 
-                const h3 = document.createElement('h3');
-                h3.className = 'text-2xl font-bold text-blue-700';
-                h3.innerHTML = highlightText(classInfo.name, currentSearchTerm); // Highlight class name
-                classNameAndCount.appendChild(h3);
+          // Add click listener for individual accordion toggle
+          button.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isExpanded = button.getAttribute('aria-expanded') === 'true';
+            
+            // Close all other accordions first
+            const allAccordionButtons = document.querySelectorAll('.accordion-button');
+            allAccordionButtons.forEach(otherButton => {
+                if (otherButton !== button) {
+                    const otherTargetId = otherButton.dataset.accordionTarget;
+                    const otherTargetElement = document.getElementById(otherTargetId);
+                    const otherSvgIcon = otherButton.querySelector('svg');
+                    const otherCard = otherButton.closest('.class-card');
 
-                const studentCountSpan = document.createElement('span');
-                studentCountSpan.className = 'text-lg font-medium text-gray-600 bg-blue-100 px-3 py-1 rounded-full';
-                studentCountSpan.textContent = `${classInfo.students.length} Santri`;
-                classNameAndCount.appendChild(studentCountSpan);
-
-                button.appendChild(classNameAndCount);
-
-                const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-                svg.setAttribute('class', 'w-3 h-3 shrink-0'); // Removed rotate-180 default
-                svg.setAttribute('aria-hidden', 'true');
-                svg.setAttribute('fill', 'none');
-                svg.setAttribute('viewBox', '0 0 10 6');
-                const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-                path.setAttribute('stroke', 'currentColor');
-                path.setAttribute('stroke-linecap', 'round');
-                path.setAttribute('stroke-linejoin', 'round');
-                path.setAttribute('stroke-width', '2');
-                path.setAttribute('d', 'M9 5 5 1 1 5');
-                svg.appendChild(path);
-                button.appendChild(svg);
-
-                classCard.appendChild(button);
-
-                // Accordion Body (div)
-                const accordionBody = document.createElement('div');
-                accordionBody.id = accordionBodyId;
-                accordionBody.className = 'accordion-content hidden-content'; // Custom classes for toggle
-                
-                const accordionBodyContent = document.createElement('div');
-                accordionBodyContent.className = 'p-5 border border-b-0 border-gray-200';
-
-                // Teacher Info
-                const teacherSection = document.createElement('div');
-                teacherSection.className = 'mb-4';
-                classInfo.teachers.forEach(teacher => {
-                    const teacherDiv = document.createElement('div');
-                    teacherDiv.className = 'teacher-info rounded-lg p-3 mb-2 flex flex-col sm:flex-row justify-between items-start sm:items-center';
-                    
-                    const teacherNameRole = document.createElement('p');
-                    teacherNameRole.className = 'font-semibold text-gray-800';
-                    teacherNameRole.innerHTML = highlightText(`${teacher.role}: ${teacher.name}`, currentSearchTerm); // Highlight teacher info
-                    teacherDiv.appendChild(teacherNameRole);
-
-                    if (teacher.phone) {
-                        const whatsappLink = document.createElement('a');
-                        const formattedPhoneNumber = teacher.phone.replace(/\s|-|\+/g, '');
-                        whatsappLink.href = `https://wa.me/${formattedPhoneNumber}`;
-                        whatsappLink.target = '_blank';
-                        whatsappLink.rel = 'noopener noreferrer';
-
-                        const whatsappIconImg = document.createElement('img');
-                        whatsappIconImg.src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/WhatsApp.svg/250px-WhatsApp.svg.png';
-                        whatsappIconImg.alt = 'WhatsApp';
-                        whatsappIconImg.className = 'whatsapp-icon';
-                        whatsappIconImg.onerror = function() {
-                            this.onerror=null;
-                            this.src='https://placehold.co/28x28/cccccc/ffffff?text=WA';
-                        };
-                        whatsappLink.appendChild(whatsappIconImg);
-                        teacherDiv.appendChild(whatsappLink);
-                    }
-                    teacherSection.appendChild(teacherDiv);
-                });
-                accordionBodyContent.appendChild(teacherSection);
-
-                // Student List
-                const studentListTitle = document.createElement('h4');
-                studentListTitle.className = 'text-xl font-semibold text-gray-800 mb-3';
-                studentListTitle.textContent = 'Daftar Santri:';
-                accordionBodyContent.appendChild(studentListTitle);
-
-                const studentList = document.createElement('ul');
-                studentList.className = 'student-list rounded-lg p-4 grid grid-cols-1 sm:grid-cols-2 gap-2 text-gray-700';
-                classInfo.students.forEach((student, studentIndex) => {
-                    const studentItem = document.createElement('li');
-                    studentItem.className = 'py-1 px-2 rounded-md hover:bg-gray-50 transition-colors duration-150';
-                    studentItem.innerHTML = highlightText(`${studentIndex + 1}. ${student}`, currentSearchTerm); // Highlight student name
-                    studentList.appendChild(studentItem);
-                });
-                accordionBodyContent.appendChild(studentList);
-
-                accordionBody.appendChild(accordionBodyContent);
-                classCard.appendChild(accordionBody);
-
-                classListContainer.appendChild(classCard);
-
-                // Add click listener for individual accordion toggle
-                button.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    const isExpanded = button.getAttribute('aria-expanded') === 'true';
-                    
-                    // Close all other accordions first
-                    const allAccordionButtons = document.querySelectorAll('.accordion-button');
-                    allAccordionButtons.forEach(otherButton => {
-                        if (otherButton !== button) {
-                            const otherTargetId = otherButton.dataset.accordionTarget;
-                            const otherTargetElement = document.getElementById(otherTargetId);
-                            const otherSvgIcon = otherButton.querySelector('svg');
-                            
-                            if (otherTargetElement && otherSvgIcon) {
-                                otherTargetElement.classList.add('hidden-content');
-                                otherButton.setAttribute('aria-expanded', 'false');
-                                otherSvgIcon.classList.add('rotate-180');
-                            }
+                    if (otherTargetElement && otherSvgIcon) {
+                        otherTargetElement.classList.add('hidden-content');
+                        otherButton.setAttribute('aria-expanded', 'false');
+                        otherSvgIcon.classList.add('rotate-180');
+                        if (otherCard) {
+                            otherCard.classList.remove('expanded');
                         }
-                    });
-                    
-                    // Toggle the clicked accordion
-                    if (isExpanded) {
-                        // If it was expanded, close it
-                        accordionBody.classList.add('hidden-content');
-                        button.setAttribute('aria-expanded', 'false');
-                        svg.classList.add('rotate-180');
-                    } else {
-                        // If it was closed, open it
-                        accordionBody.classList.remove('hidden-content');
-                        button.setAttribute('aria-expanded', 'true');
-                        svg.classList.remove('rotate-180');
-                    }
-                });
-
-                // Auto-expand if search term matches
-                const lowerCaseSearchTerm = currentSearchTerm.toLowerCase();
-                const matchesClassName = classInfo.name.toLowerCase().includes(lowerCaseSearchTerm);
-                const matchesTeacher = classInfo.teachers.some(teacher =>
-                    teacher.name.toLowerCase().includes(lowerCaseSearchTerm) ||
-                    teacher.role.toLowerCase().includes(lowerCaseSearchTerm)
-                );
-                const matchesStudent = classInfo.students.some(student =>
-                    student.toLowerCase().includes(lowerCaseSearchTerm)
-                );
-
-                if (currentSearchTerm && (matchesClassName || matchesTeacher || matchesStudent)) {
-                    // Manually expand the accordion
-                    accordionBody.classList.remove('hidden-content');
-                    button.setAttribute('aria-expanded', 'true');
-                    svg.classList.remove('rotate-180'); // Ensure SVG points up
-                }
-            });
-
-            // Reset the global toggle state after re-rendering all accordions
-            allAccordionsOpen = false;
-            toggleAllButton.textContent = 'Buka Semua';
-        }
-
-        // Function to handle search
-        function searchClasses() {
-            const searchTerm = searchInput.value; // Get raw search term
-            const filteredClasses = allSchoolData.filter(classInfo => {
-                const lowerCaseSearchTerm = searchTerm.toLowerCase();
-                // Check if any part of the class info contains the search term
-                const matchesClassName = classInfo.name.toLowerCase().includes(lowerCaseSearchTerm);
-                const matchesTeacher = classInfo.teachers.some(teacher =>
-                    teacher.name.toLowerCase().includes(lowerCaseSearchTerm) ||
-                    teacher.role.toLowerCase().includes(lowerCaseSearchTerm)
-                );
-                const matchesStudent = classInfo.students.some(student =>
-                    student.toLowerCase().includes(lowerCaseSearchTerm)
-                );
-                return matchesClassName || matchesTeacher || matchesStudent;
-            });
-            displayClasses(filteredClasses, searchTerm); // Pass the raw search term for highlighting and auto-expansion
-        }
-
-        // Function to toggle all accordions
-        function toggleAllAccordions() {
-            const accordionButtons = document.querySelectorAll('.accordion-button'); // Select all custom accordion buttons
-            accordionButtons.forEach(button => {
-                const targetId = button.dataset.accordionTarget; // Get target ID from data-attribute
-                const targetElement = document.getElementById(targetId);
-                const svgIcon = button.querySelector('svg'); // Select the SVG icon within the button
-
-                if (targetElement && svgIcon) {
-                    if (allAccordionsOpen) { // If currently open, close them
-                        targetElement.classList.add('hidden-content');
-                        button.setAttribute('aria-expanded', 'false');
-                        svgIcon.classList.add('rotate-180'); // Point down
-                    } else { // If currently closed, open them
-                        targetElement.classList.remove('hidden-content');
-                        button.setAttribute('aria-expanded', 'true');
-                        svgIcon.classList.remove('rotate-180'); // Point up
                     }
                 }
             });
-            allAccordionsOpen = !allAccordionsOpen; // Invert the state
-            toggleAllButton.textContent = allAccordionsOpen ? 'Tutup Semua' : 'Buka Semua';
-        }
-
-        // Fetch school data on page load
-        window.onload = async () => {
-            const mainContentDiv = document.querySelector('.max-w-4xl');
-            const loadingDiv = document.createElement('div');
-            loadingDiv.className = 'flex justify-center items-center h-screen text-xl text-gray-700';
-            loadingDiv.textContent = 'Memuat data kelas...';
-            document.body.appendChild(loadingDiv);
-
-            try {
-                const response = await fetch('https://gtxkitey0g3yotdg.public.blob.vercel-storage.com/data_ta_2025_2026.json');
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                allSchoolData = await response.json(); // Store fetched data
-                displayClasses(allSchoolData, searchInput.value); // Display all data initially, with potential initial search term
-            } catch (err) {
-                const errorDiv = document.createElement('div');
-                errorDiv.className = 'flex justify-center items-center h-screen text-xl text-red-600';
-                errorDiv.textContent = `Error: ${err.message}. Gagal memuat data kelas.`;
-                document.body.appendChild(errorDiv);
-            } finally {
-                loadingDiv.remove(); // Remove loading indicator
+            
+            // Toggle the clicked accordion
+            if (isExpanded) {
+                // If it was expanded, close it
+                accordionBody.classList.add('hidden-content');
+                button.setAttribute('aria-expanded', 'false');
+                svg.classList.add('rotate-180');
+                classCard.classList.remove('expanded');
+            } else {
+                // If it was collapsed, expand it
+                accordionBody.classList.remove('hidden-content');
+                button.setAttribute('aria-expanded', 'true');
+                svg.classList.remove('rotate-180');
+                classCard.classList.add('expanded');
             }
-        };
+          });
 
-        // Event listener for search input
-        searchInput.addEventListener('input', searchClasses);
+          // Auto-expand if search term matches
+          const lowerCaseSearchTerm = currentSearchTerm.toLowerCase();
+          const matchesClassName = classInfo.name
+            .toLowerCase()
+            .includes(lowerCaseSearchTerm);
+          const matchesTeacher = classInfo.teachers.some(
+            (teacher) =>
+              teacher.name.toLowerCase().includes(lowerCaseSearchTerm) ||
+              teacher.role.toLowerCase().includes(lowerCaseSearchTerm)
+          );
+          const matchesStudent = classInfo.students.some((student) =>
+            student.toLowerCase().includes(lowerCaseSearchTerm)
+          );
 
-        // Event listener for toggle all button
-        toggleAllButton.addEventListener('click', toggleAllAccordions);
+          if (
+            currentSearchTerm &&
+            (matchesClassName || matchesTeacher || matchesStudent)
+          ) {
+            // Manually expand the accordion
+            accordionBody.classList.remove('hidden-content');
+            button.setAttribute('aria-expanded', 'true');
+            svg.classList.remove('rotate-180'); // Ensure SVG points up
+            classCard.classList.add('expanded');
+          }
+        });
+
+        // Reset the global toggle state after re-rendering all accordions
+        allAccordionsOpen = false;
+        toggleAllButton.textContent = 'Buka Semua';
+      }
+
+      // Function to handle search
+      function searchClasses() {
+        const searchTerm = searchInput.value; // Get raw search term
+        const filteredClasses = allSchoolData.filter((classInfo) => {
+          const lowerCaseSearchTerm = searchTerm.toLowerCase();
+          // Check if any part of the class info contains the search term
+          const matchesClassName = classInfo.name
+            .toLowerCase()
+            .includes(lowerCaseSearchTerm);
+          const matchesTeacher = classInfo.teachers.some(
+            (teacher) =>
+              teacher.name.toLowerCase().includes(lowerCaseSearchTerm) ||
+              teacher.role.toLowerCase().includes(lowerCaseSearchTerm)
+          );
+          const matchesStudent = classInfo.students.some((student) =>
+            student.toLowerCase().includes(lowerCaseSearchTerm)
+          );
+          return matchesClassName || matchesTeacher || matchesStudent;
+        });
+        displayClasses(filteredClasses, searchTerm); // Pass the raw search term for highlighting and auto-expansion
+      }
+
+      // Function to toggle all accordions
+      function toggleAllAccordions() {
+        const accordionButtons = document.querySelectorAll('.accordion-button'); // Select all custom accordion buttons
+        accordionButtons.forEach((button) => {
+          const targetId = button.dataset.accordionTarget; // Get target ID from data-attribute
+          const targetElement = document.getElementById(targetId);
+          const svgIcon = button.querySelector('svg'); // Select the SVG icon within the button
+
+          if (targetElement && svgIcon) {
+            if (allAccordionsOpen) {
+              // If currently open, close them
+              targetElement.classList.add('hidden-content');
+              button.setAttribute('aria-expanded', 'false');
+              svgIcon.classList.add('rotate-180'); // Point down
+            } else {
+              // If currently closed, open them
+              targetElement.classList.remove('hidden-content');
+              button.setAttribute('aria-expanded', 'true');
+              svgIcon.classList.remove('rotate-180'); // Point up
+            }
+          }
+        });
+        allAccordionsOpen = !allAccordionsOpen; // Invert the state
+        toggleAllButton.textContent = allAccordionsOpen
+          ? 'Tutup Semua'
+          : 'Buka Semua';
+      }
+
+      // Fetch school data on page load
+      window.onload = async () => {
+        const mainContentDiv = document.querySelector('.max-w-4xl');
+        const loadingDiv = document.createElement('div');
+        loadingDiv.className =
+          'flex justify-center items-center h-screen text-xl text-gray-700';
+        loadingDiv.textContent = 'Memuat data kelas...';
+        document.body.appendChild(loadingDiv);
+
+        try {
+          const response = await fetch(
+            'https://gtxkitey0g3yotdg.public.blob.vercel-storage.com/data_ta_2025_2026.json'
+          );
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          allSchoolData = await response.json(); // Store fetched data
+          displayClasses(allSchoolData, searchInput.value); // Display all data initially, with potential initial search term
+        } catch (err) {
+          const errorDiv = document.createElement('div');
+          errorDiv.className =
+            'flex justify-center items-center h-screen text-xl text-red-600';
+          errorDiv.textContent = `Error: ${err.message}. Gagal memuat data kelas.`;
+          document.body.appendChild(errorDiv);
+        } finally {
+          loadingDiv.remove(); // Remove loading indicator
+        }
+      };
+
+      // Event listener for search input
+      searchInput.addEventListener('input', searchClasses);
+
+      // Event listener for toggle all button
+      toggleAllButton.addEventListener('click', toggleAllAccordions);
     </script>
-</body>
+  </body>
 </html>
