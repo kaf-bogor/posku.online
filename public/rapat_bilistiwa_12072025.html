@@ -1,276 +1,270 @@
-import React, { useState, useEffect } from 'react';
-
-// Main App component
-const App = () => {
-const [transcript, setTranscript] = useState(null);
-const [loading, setLoading] = useState(true);
-const [error, setError] = useState(null);
-const [activeTab, setActiveTab] = useState('notulen'); // Default to 'notulen' as requested
-
-// Function to format time from seconds (e.g., "3.700s") to HH:MM:SS.ms
-const formatTime = (timeString) => {
-// Remove 's' suffix and parse as float
-const seconds = parseFloat(timeString.replace('s', ''));
-if (isNaN(seconds)) return 'N/A';
-
-const h = Math.floor(seconds / 3600);
-const m = Math.floor((seconds % 3600) / 60);
-const s = Math.floor(seconds % 60);
-const ms = Math.round((seconds - Math.floor(seconds)) * 1000); // Get milliseconds
-
-// Format to HH:MM:SS.ms (or just SS.ms if less than a minute)
-const parts = [];
-if (h > 0) parts.push(String(h).padStart(2, '0'));
-if (m > 0 || h > 0) parts.push(String(m).padStart(2, '0'));
-parts.push(String(s).padStart(2, '0'));
-
-let formattedTime = parts.join(':');
-if (ms > 0) {
-formattedTime += `.${String(ms).padStart(3, '0')}`;
-}
-return formattedTime;
-};
-
-useEffect(() => {
-const fetchTranscript = async () => {
-try {
-// Fetch the transcript data from the provided URL
-const response = await fetch('https://gtxkitey0g3yotdg.public.blob.vercel-storage.com/transcripts_rapat-bilistiwa');
-if (!response.ok) {
-throw new Error(`HTTP error! status: ${response.status}`);
-}
-const data = await response.json();
-console.log("Fetched Transcript Data:", data); // Log the fetched data for inspection
-setTranscript(data); // Set the fetched transcript data
-} catch (e) {
-setError(e.message); // Catch and display any errors
-} finally {
-setLoading(false); // Set loading to false once data is fetched or an error occurs
-}
-};
-
-fetchTranscript(); // Call the fetch function
-}, []); // Empty dependency array means this effect runs once on mount
-
-if (loading) {
-return (
-<div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
-    <div className="text-xl font-semibold text-gray-700">Loading transcript...</div>
-</div>
-);
-}
-
-if (error) {
-return (
-<div className="min-h-screen flex items-center justify-center bg-red-100 p-4">
-    <div className="text-xl font-semibold text-red-700">Error: {error}</div>
-</div>
-);
-}
-
-// Check for the expected structure of the transcript data
-const transcriptResults = transcript?.results;
-
-return (
-<div className="min-h-screen bg-gray-50 font-sans antialiased p-4 sm:p-6 lg:p-8">
-    <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-xl p-6 sm:p-8">
-        <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-8 text-center">
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Rapat</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles for better readability and aesthetics */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .tab-button.active {
+            border-bottom-color: #6366f1; /* Indigo-500 */
+            color: #4f46e5; /* Indigo-600 */
+        }
+    </style>
+</head>
+<body class="bg-gray-50 antialiased p-4 sm:p-6 lg:p-8">
+    <div class="max-w-4xl mx-auto bg-white shadow-lg rounded-xl p-6 sm:p-8">
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-8 text-center">
             Dashboard Rapat
         </h1>
 
-        {/* Tab Navigation */}
-        <div className="flex border-b border-gray-200 mb-6">
-            <button className={`py-2 px-4 text-lg font-medium ${ activeTab==='notulen'
-                ? 'border-b-2 border-indigo-500 text-indigo-600' : 'text-gray-500 hover:text-gray-700' }
-                focus:outline-none`} onClick={()=> setActiveTab('notulen')}
-                >
+        <!-- Tab Navigation -->
+        <div class="flex border-b border-gray-200 mb-6">
+            <button id="notulen-tab"
+                    class="tab-button py-2 px-4 text-lg font-medium text-gray-500 hover:text-gray-700 focus:outline-none active"
+                    onclick="showTab('notulen')">
                 Notulen Rapat
             </button>
-            <button className={`py-2 px-4 text-lg font-medium ${ activeTab==='transcript'
-                ? 'border-b-2 border-indigo-500 text-indigo-600' : 'text-gray-500 hover:text-gray-700' }
-                focus:outline-none`} onClick={()=> setActiveTab('transcript')}
-                >
+            <button id="transcript-tab"
+                    class="tab-button py-2 px-4 text-lg font-medium text-gray-500 hover:text-gray-700 focus:outline-none"
+                    onclick="showTab('transcript')">
                 Penampil Transkrip
             </button>
         </div>
 
-        {/* Tab Content */}
-        {activeTab === 'notulen' && (
-        <div className="p-4 bg-gray-50 rounded-lg shadow-inner">
-            <h2 className="text-2xl font-bold text-gray-800 mb-4">Notulen Rapat: Rapat Bilistiwa</h2>
-            <p className="text-gray-700 leading-relaxed mb-4">
+        <!-- Tab Content -->
+        <div id="notulen-content" class="tab-content p-4 bg-gray-50 rounded-lg shadow-inner">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Notulen Rapat: Rapat Bilistiwa</h2>
+            <p class="text-gray-700 leading-relaxed mb-4">
                 Notulen ini merangkum diskusi dan poin-poin penting dari transkrip rapat.
             </p>
 
-            <div className="mb-6">
-                <h3 className="text-xl font-semibold text-gray-800 mb-2">Detail Rapat:</h3>
-                <ul className="list-none p-0 m-0 text-gray-700">
+            <div class="mb-6">
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">Detail Rapat:</h3>
+                <ul class="list-none p-0 m-0 text-gray-700">
                     <li><strong>Tanggal:</strong> Sabtu, 12 Juli 2025</li>
                     <li><strong>Waktu:</strong> 14.30 - 15.30 WIB</li>
-                    <li><strong>Peserta:</strong> Ust Ari, Pak A. Indrawan, Pak Catur Basuki R, Pak Danil, Pak Febriandy
-                        Hasry, Pak Helman, Pak Indra, Pak Indra Mukti, Pak Rifki Fauzi, Pak Suhardiman, Pak Verry Aria
-                        Firmansyah</li>
+                    <li><strong>Peserta:</strong> Ust Ari, Pak A. Indrawan, Pak Catur Basuki R, Pak Danil, Pak Febriandy Hasry, Pak Helman, Pak Indra, Pak Indra Mukti, Pak Rifki Fauzi, Pak Suhardiman, Pak Verry Aria Firmansyah</li>
                     <li><strong>Pimpinan Rapat:</strong> [Untuk diisi jika diketahui]</li>
                     <li><strong>Pencatat Notulen:</strong> AI oleh Pak Rifki</li>
                 </ul>
             </div>
 
-            <div className="mb-6">
-                <h3 className="text-xl font-semibold text-gray-800 mb-2">Pembukaan:</h3>
-                <p className="text-gray-700 leading-relaxed">
-                    Rapat dimulai dengan salam: "Bismillahirrahmanirrahim, Assalamualaikum Warahmatullahi Wabarakatuh."
-                    Dicatat bahwa Pak Herman telah tiba, dan rapat siap dimulai. Pembicara meminta maaf atas kebisingan
-                    karena renovasi yang sedang berlangsung.
+            <div class="mb-6">
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">Pembukaan:</h3>
+                <p class="text-gray-700 leading-relaxed">
+                    Rapat dimulai dengan salam: "Bismillahirrahmanirrahim, Assalamualaikum Warahmatullahi Wabarakatuh." Dicatat bahwa Pak Herman telah tiba, dan rapat siap dimulai. Pembicara meminta maaf atas kebisingan karena renovasi yang sedang berlangsung.
                 </p>
             </div>
 
-            <div className="mb-6">
-                <h3 className="text-xl font-semibold text-gray-800 mb-2">Agenda & Tujuan:</h3>
-                <p className="text-gray-700 leading-relaxed">
-                    Tujuan utama rapat adalah untuk melakukan evaluasi kegiatan yang telah lalu dan merumuskan
-                    program-program ke depan, khususnya untuk tahun ajaran yang akan datang. Pembicara menekankan
-                    pentingnya amal kebaikan yang berkelanjutan dan mencari berkah dari Allah.
+            <div class="mb-6">
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">Agenda & Tujuan:</h3>
+                <p class="text-gray-700 leading-relaxed">
+                    Tujuan utama rapat adalah untuk melakukan evaluasi kegiatan yang telah lalu dan merumuskan program-program ke depan, khususnya untuk tahun ajaran yang akan datang. Pembicara menekankan pentingnya amal kebaikan yang berkelanjutan dan mencari berkah dari Allah.
                 </p>
             </div>
 
-            <div className="mb-6">
-                <h3 className="text-xl font-semibold text-gray-800 mb-2">Diskusi Utama:</h3>
-                <ul className="list-disc list-inside space-y-2 text-gray-700">
+            <div class="mb-6">
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">Diskusi Utama:</h3>
+                <ul class="list-disc list-inside space-y-2 text-gray-700">
                     <li>
                         <strong>Program Beasiswa:</strong>
-                        <ul className="list-circle list-inside ml-4 space-y-1">
-                            <li>Program beasiswa telah berhasil melunasi semua utang dua tahun sebelumnya, dengan total
-                                sekitar 160 juta IDR.</li>
-                            <li>Beasiswa beroperasi dengan sistem BSW (Beasiswa Wali Santri), yang dengan jelas
-                                mendefinisikan jumlah yang harus dibayar oleh wali dan jumlah yang ditanggung oleh
-                                organisasi.</li>
-                            <li>Beasiswa tahun berjalan didanai dari upaya penggalangan dana. Meskipun 500.000 IDR
-                                mungkin diminta, pembayaran tergantung pada dana yang tersedia.</li>
-                            <li>Aplikasi beasiswa diprioritaskan (1-5). Saat ini, hanya prioritas 1 dan 2 yang telah
-                                dicakup.</li>
-                            <li>Total aplikasi beasiswa untuk tahun yang akan datang berjumlah 178 juta IDR (tidak
-                                termasuk beasiswa reguler).</li>
+                        <ul class="list-circle list-inside ml-4 space-y-1">
+                            <li>Program beasiswa telah berhasil melunasi semua utang dua tahun sebelumnya, dengan total sekitar 160 juta IDR.</li>
+                            <li>Beasiswa beroperasi dengan sistem BSW (Beasiswa Wali Santri), yang dengan jelas mendefinisikan jumlah yang harus dibayar oleh wali dan jumlah yang ditanggung oleh organisasi.</li>
+                            <li>Beasiswa tahun berjalan didanai dari upaya penggalangan dana. Meskipun 500.000 IDR mungkin diminta, pembayaran tergantung pada dana yang tersedia.</li>
+                            <li>Aplikasi beasiswa diprioritaskan (1-5). Saat ini, hanya prioritas 1 dan 2 yang telah dicakup.</li>
+                            <li>Total aplikasi beasiswa untuk tahun yang akan datang berjumlah 178 juta IDR (tidak termasuk beasiswa reguler).</li>
                             <li>Ada beasiswa khusus untuk wali/orang tua yang aktif.</li>
                             <li>Nama penerima beasiswa dirahasiakan.</li>
-                            <li>Kebutuhan untuk meningkatkan komunikasi dengan wali terkait pembaruan beasiswa
-                                diidentifikasi, memastikan transparansi tanpa mengorbankan privasi.</li>
-                            <li>Ditegaskan bahwa jika organisasi tidak dapat menutupi seluruh jumlah beasiswa, tanggung
-                                jawab keuangan yang tersisa berada pada orang tua/wali, bukan organisasi.</li>
+                            <li>Kebutuhan untuk meningkatkan komunikasi dengan wali terkait pembaruan beasiswa diidentifikasi, memastikan transparansi tanpa mengorbankan privasi.</li>
+                            <li>Ditegaskan bahwa jika organisasi tidak dapat menutupi seluruh jumlah beasiswa, tanggung jawab keuangan yang tersisa berada pada orang tua/wali, bukan organisasi.</li>
                         </ul>
                     </li>
                     <li>
                         <strong>Wakaf Produktif & Pengembangan Bazaar:</strong>
-                        <ul className="list-circle list-inside ml-4 space-y-1">
-                            <li>35 juta IDR dari dana produktif dialokasikan untuk beasiswa (khususnya untuk "BAF
-                                Kitchen").</li>
+                        <ul class="list-circle list-inside ml-4 space-y-1">
+                            <li>35 juta IDR dari dana produktif dialokasikan untuk beasiswa (khususnya untuk "BAF Kitchen").</li>
                             <li>20 juta IDR dialokasikan untuk pengembangan tanah wakaf.</li>
-                            <li>Upaya sedang dilakukan untuk meningkatkan sistem keuangan bazaar karena laporan keuangan
-                                sebelumnya yang tidak jelas.</li>
-                            <li>Perkiraan biaya pengembangan bazaar: 278 juta IDR untuk satu lantai, 560 juta IDR untuk
-                                dua lantai.</li>
-                            <li>Tambahan 35 juta IDR diterima dari Bazaf pada bulan Desember sebagai kontribusi
-                                sementara, di mana 15 juta IDR telah dikembalikan.</li>
-                            <li>Sekitar 20-30 juta IDR dalam pendapatan bersih telah dikumpulkan dari CMD (diduga unit
-                                bisnis) sejak Oktober.</li>
-                            <li>Diskusi tentang kelayakan untuk meningkatkan target wakaf dari 160 juta menjadi 200 juta
-                                IDR, dengan kekhawatiran tentang keberlanjutan jika dana hanya bertahan beberapa bulan.
-                            </li>
+                            <li>Upaya sedang dilakukan untuk meningkatkan sistem keuangan bazaar karena laporan keuangan sebelumnya yang tidak jelas.</li>
+                            <li>Perkiraan biaya pengembangan bazaar: 278 juta IDR untuk satu lantai, 560 juta IDR untuk dua lantai.</li>
+                            <li>Tambahan 35 juta IDR diterima dari Bazaf pada bulan Desember sebagai kontribusi sementara, di mana 15 juta IDR telah dikembalikan.</li>
+                            <li>Sekitar 20-30 juta IDR dalam pendapatan bersih telah dikumpulkan dari CMD (diduga unit bisnis) sejak Oktober.</li>
+                            <li>Diskusi tentang kelayakan untuk meningkatkan target wakaf dari 160 juta menjadi 200 juta IDR, dengan kekhawatiran tentang keberlanjutan jika dana hanya bertahan beberapa bulan.</li>
                         </ul>
                     </li>
                     <li>
                         <strong>Kesejahteraan Guru:</strong>
-                        <ul className="list-circle list-inside ml-4 space-y-1">
+                        <ul class="list-circle list-inside ml-4 space-y-1">
                             <li>Kesejahteraan guru adalah prioritas.</li>
-                            <li>Anggota tim baru diharapkan dapat memberikan ide dan upaya untuk meningkatkan inisiatif
-                                produktif, yang pada akhirnya bertujuan untuk mencapai tujuan yang ditetapkan oleh
-                                pimpinan pusat dan guru, dimulai dengan kesejahteraan guru.</li>
+                            <li>Anggota tim baru diharapkan dapat memberikan ide dan upaya untuk meningkatkan inisiatif produktif, yang pada akhirnya bertujuan untuk mencapai tujuan yang ditetapkan oleh pimpinan pusat dan guru, dimulai dengan kesejahteraan guru.</li>
                         </ul>
                     </li>
                     <li>
                         <strong>Peran Organisasi & Pelaporan:</strong>
-                        <ul className="list-circle list-inside ml-4 space-y-1">
-                            <li>Pentingnya pencatatan yang tepat oleh bendahara dan sekretaris untuk penggalangan dana
-                                dan pelaporan keuangan (kepada pusat dan wali) disorot.</li>
-                            <li>Peran tim IT/media dalam mempromosikan program dan berinteraksi dengan kelompok
-                                ditekankan.</li>
-                            <li>Kebutuhan akan proses verifikasi yang jelas untuk pelamar beasiswa dan pendekatan yang
-                                tepat kepada wali disebutkan.</li>
+                        <ul class="list-circle list-inside ml-4 space-y-1">
+                            <li>Pentingnya pencatatan yang tepat oleh bendahara dan sekretaris untuk penggalangan dana dan pelaporan keuangan (kepada pusat dan wali) disorot.</li>
+                            <li>Peran tim IT/media dalam mempromosikan program dan berinteraksi dengan kelompok ditekankan.</li>
+                            <li>Kebutuhan akan proses verifikasi yang jelas untuk pelamar beasiswa dan pendekatan yang tepat kepada wali disebutkan.</li>
                         </ul>
                     </li>
                 </ul>
             </div>
 
-            <div className="mb-6">
-                <h3 className="text-xl font-semibold text-gray-800 mb-2">Keputusan & Tindak Lanjut:</h3>
-                <ul className="list-disc list-inside space-y-2 text-gray-700">
+            <div class="mb-6">
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">Keputusan & Tindak Lanjut:</h3>
+                <ul class="list-disc list-inside space-y-2 text-gray-700">
                     <li>Melanjutkan upaya untuk menyelesaikan sisa prioritas beasiswa (3, 4, 5).</li>
                     <li>Mengembangkan sistem keuangan baru yang lebih jelas untuk bazaar.</li>
-                    <li>Mendiskusikan lebih lanjut dan merencanakan peningkatan target wakaf produktif (dari 160 juta
-                        menjadi 200 juta IDR), dengan mempertimbangkan keberlanjutan.</li>
+                    <li>Mendiskusikan lebih lanjut dan merencanakan peningkatan target wakaf produktif (dari 160 juta menjadi 200 juta IDR), dengan mempertimbangkan keberlanjutan.</li>
                     <li>Meningkatkan strategi komunikasi untuk pembaruan beasiswa kepada wali, memastikan privasi.</li>
                     <li>Merumuskan prosedur verifikasi yang jelas untuk pelamar beasiswa.</li>
-                    <li>Memanfaatkan ide dan upaya anggota tim baru untuk mendorong inisiatif produktif demi
-                        kesejahteraan guru.</li>
-                    <li>Memastikan pelaporan keuangan yang akurat dan tepat waktu dari semua divisi kepada pemangku
-                        kepentingan pusat dan wali.</li>
+                    <li>Memanfaatkan ide dan upaya anggota tim baru untuk mendorong inisiatif produktif demi kesejahteraan guru.</li>
+                    <li>Memastikan pelaporan keuangan yang akurat dan tepat waktu dari semua divisi kepada pemangku kepentingan pusat dan wali.</li>
                 </ul>
             </div>
 
-            <div className="mb-6">
-                <h3 className="text-xl font-semibold text-gray-800 mb-2">Penutup:</h3>
-                <p className="text-gray-700 leading-relaxed">
+            <div class="mb-6">
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">Penutup:</h3>
+                <p class="text-gray-700 leading-relaxed">
                     Rapat diakhiri dengan izin informal bagi para peserta untuk beristirahat sholat.
                 </p>
             </div>
         </div>
-        )}
 
-        {activeTab === 'transcript' && (
-        <>
-            {(!transcriptResults || transcriptResults.length === 0) ? (
-            <div
-                className="min-h-[200px] flex flex-col items-center justify-center bg-yellow-100 p-4 text-center rounded-lg shadow-inner">
-                <div className="text-xl font-semibold text-yellow-700">Tidak ada data transkrip yang tersedia atau
-                    format tidak valid.</div>
-                <p className="text-gray-600 mt-2">Silakan periksa konsol untuk struktur data yang diambil untuk
-                    memastikan sesuai dengan format yang diharapkan.</p>
+        <div id="transcript-content" class="tab-content p-4 bg-gray-50 rounded-lg shadow-inner hidden">
+            <div id="loading-message" class="min-h-[200px] flex items-center justify-center text-xl font-semibold text-gray-700">
+                Memuat transkrip...
             </div>
-            ) : (
-            <div className="space-y-6">
-                {transcriptResults.map((result, index) => {
-                // Assuming the first alternative contains the primary transcript
-                const alternative = result.alternatives && result.alternatives[0];
-                if (!alternative || !alternative.transcript) {
-                return null; // Skip if no valid alternative/transcript
+            <div id="error-message" class="min-h-[200px] flex items-center justify-center text-xl font-semibold text-red-700 hidden">
+                Terjadi kesalahan saat memuat transkrip.
+            </div>
+            <div id="no-data-message" class="min-h-[200px] flex flex-col items-center justify-center bg-yellow-100 p-4 text-center rounded-lg shadow-inner hidden">
+                <div class="text-xl font-semibold text-yellow-700">Tidak ada data transkrip yang tersedia atau format tidak valid.</div>
+                <p class="text-gray-600 mt-2">Silakan periksa konsol untuk struktur data yang diambil untuk memastikan sesuai dengan format yang diharapkan.</p>
+            </div>
+            <div id="transcript-list" class="space-y-6">
+                <!-- Transcript items will be injected here by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Function to format time from seconds (e.g., "3.700s") to HH:MM:SS.ms
+        function formatTime(timeString) {
+            // Remove 's' suffix and parse as float
+            const seconds = parseFloat(timeString.replace('s', ''));
+            if (isNaN(seconds)) return 'N/A';
+
+            const h = Math.floor(seconds / 3600);
+            const m = Math.floor((seconds % 3600) / 60);
+            const s = Math.floor(seconds % 60);
+            const ms = Math.round((seconds - Math.floor(seconds)) * 1000); // Get milliseconds
+
+            // Format to HH:MM:SS.ms (or just SS.ms if less than a minute)
+            const parts = [];
+            if (h > 0) parts.push(String(h).padStart(2, '0'));
+            if (m > 0 || h > 0) parts.push(String(m).padStart(2, '0'));
+            parts.push(String(s).padStart(2, '0'));
+
+            let formattedTime = parts.join(':');
+            if (ms > 0) {
+                formattedTime += `.${String(ms).padStart(3, '0')}`;
+            }
+            return formattedTime;
+        }
+
+        // Function to handle tab switching
+        function showTab(tabId) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.add('hidden');
+            });
+            // Deactivate all tab buttons
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('active', 'border-b-2', 'border-indigo-500', 'text-indigo-600');
+                button.classList.add('text-gray-500', 'hover:text-gray-700');
+            });
+
+            // Show the selected tab content
+            document.getElementById(`${tabId}-content`).classList.remove('hidden');
+            // Activate the selected tab button
+            const activeTabButton = document.getElementById(`${tabId}-tab`);
+            activeTabButton.classList.add('active', 'border-b-2', 'border-indigo-500', 'text-indigo-600');
+            activeTabButton.classList.remove('text-gray-500', 'hover:text-gray-700');
+        }
+
+        // Function to fetch and render transcript
+        async function fetchAndRenderTranscript() {
+            const loadingMessage = document.getElementById('loading-message');
+            const errorMessage = document.getElementById('error-message');
+            const noDataMessage = document.getElementById('no-data-message');
+            const transcriptList = document.getElementById('transcript-list');
+
+            loadingMessage.classList.remove('hidden');
+            errorMessage.classList.add('hidden');
+            noDataMessage.classList.add('hidden');
+            transcriptList.innerHTML = ''; // Clear previous content
+
+            try {
+                const response = await fetch('https://gtxkitey0g3yotdg.public.blob.vercel-storage.com/transcripts_rapat-bilistiwa');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                console.log("Fetched Transcript Data:", data); // Log the fetched data for inspection
+
+                const transcriptResults = data?.results;
+
+                if (!transcriptResults || transcriptResults.length === 0) {
+                    noDataMessage.classList.remove('hidden');
+                    loadingMessage.classList.add('hidden');
+                    return;
                 }
 
-                // Use the resultEndTime for the segment end time
-                const segmentEndTime = result.resultEndTime;
-                // Use the startTime of the first word for the segment start time
-                const segmentStartTime = alternative.words && alternative.words.length > 0 ?
-                alternative.words[0].startTime : "0.000s";
+                transcriptResults.forEach((result, index) => {
+                    const alternative = result.alternatives && result.alternatives[0];
+                    if (!alternative || !alternative.transcript) {
+                        return; // Skip if no valid alternative/transcript
+                    }
 
-                return (
-                <div key={index} className="flex items-start space-x-4">
-                    <div className="flex-1 bg-gray-100 rounded-lg p-4 shadow-sm">
-                        <p className="text-gray-800 leading-relaxed">
-                            {alternative.transcript}
-                        </p>
-                        <div className="text-sm text-gray-500 mt-2">
-                            <span className="font-medium">Mulai:</span> {formatTime(segmentStartTime)}{' '}
-                            <span className="font-medium ml-2">Akhir:</span> {formatTime(segmentEndTime)}
+                    const segmentEndTime = result.resultEndTime;
+                    const segmentStartTime = alternative.words && alternative.words.length > 0 ? alternative.words[0].startTime : "0.000s";
+
+                    const div = document.createElement('div');
+                    div.className = 'flex items-start space-x-4';
+                    div.innerHTML = `
+                        <div class="flex-1 bg-gray-100 rounded-lg p-4 shadow-sm">
+                            <p class="text-gray-800 leading-relaxed">
+                                ${alternative.transcript}
+                            </p>
+                            <div class="text-sm text-gray-500 mt-2">
+                                <span class="font-medium">Mulai:</span> ${formatTime(segmentStartTime)}
+                                <span class="font-medium ml-2">Akhir:</span> ${formatTime(segmentEndTime)}
+                            </div>
                         </div>
-                    </div>
-                </div>
-                );
-                })}
-            </div>
-            )}
-        </>
-        )}
-    </div>
-</div>
-);
-};
+                    `;
+                    transcriptList.appendChild(div);
+                });
 
-export default App;
+            } catch (e) {
+                errorMessage.textContent = `Terjadi kesalahan: ${e.message}`;
+                errorMessage.classList.remove('hidden');
+            } finally {
+                loadingMessage.classList.add('hidden');
+            }
+        }
+
+        // Initialize on DOMContentLoaded
+        document.addEventListener('DOMContentLoaded', () => {
+            showTab('notulen'); // Show notulen tab by default
+            fetchAndRenderTranscript(); // Fetch and render transcript when DOM is ready
+        });
+    </script>
+</body>
+</html>
