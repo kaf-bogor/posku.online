@@ -5,5 +5,14 @@ export interface DonationPage {
   imageUrls: string[];
   target: number;
   link: string;
-  // Add more fields as needed
+  organizer: {
+    avatar: string;
+    name: string;
+    tagline: string;
+  };
+  donors: Array<{
+    name: string;
+    value: number;
+    datetime: string;
+  }>;
 }

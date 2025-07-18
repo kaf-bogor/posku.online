@@ -10,15 +10,22 @@ import {
   Box,
   Heading,
 } from '@chakra-ui/react';
+import dynamic from 'next/dynamic';
 import Image from 'next/image';
-import type { ChangeEvent, ReactNode, FormEvent } from 'react';
-import ReactQuill from 'react-quill';
+import type { ReactNode, FormEvent } from 'react';
 import 'react-quill/dist/quill.snow.css';
+
+import type { DonationPage } from '~/lib/types/donation';
+
+import DonorsFormSection from './ManagerForm/DonorsForm';
+import OrganizerFormSection from './ManagerForm/OrganizerForm';
+
+const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 const BOX_SHADOW = '0 2px 8px rgba(0,0,0,0.1)';
 
-interface ManagerFormProps<T> {
-  formState: Omit<T, 'id'> | null;
+interface ManagerFormProps {
+  formState: Omit<DonationPage, 'id'> | null;
   onFormChange: (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => void;
@@ -31,9 +38,7 @@ interface ManagerFormProps<T> {
   title: string;
 }
 
-export default function ManagerForm<
-  T extends { title: string; summary: string; imageUrls: string[] },
->({
+export default function ManagerForm({
   formState,
   onFormChange,
   onFileChange,
@@ -43,7 +48,7 @@ export default function ManagerForm<
   isEdit = false,
   children,
   title,
-}: ManagerFormProps<T>) {
+}: ManagerFormProps) {
   if (!formState) return null;
 
   return (
@@ -87,6 +92,15 @@ export default function ManagerForm<
 
           {/* Slot untuk field-field tambahan yang spesifik */}
           {children}
+
+          {/* Organizer Section */}
+          <OrganizerFormSection onFormChange={onFormChange} />
+
+          {/* Donors Section */}
+          <DonorsFormSection
+            donors={formState.donors || []}
+            onFormChange={onFormChange}
+          />
 
           <FormControl isRequired={!isEdit || formState.imageUrls.length === 0}>
             <FormLabel>Images</FormLabel>

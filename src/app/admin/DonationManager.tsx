@@ -34,6 +34,12 @@ const initialDonationState: Omit<DonationPage, 'id'> = {
   imageUrls: [],
   target: 0,
   link: '',
+  organizer: {
+    avatar: '',
+    name: '',
+    tagline: '',
+  },
+  donors: [],
 };
 
 export default function DonationManager() {
