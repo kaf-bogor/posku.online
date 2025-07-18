@@ -12,4 +12,7 @@ module.exports = withPWA({
   eslint: {
     dirs: ['src'],
   },
+  images: {
+    domains: ['gtxkitey0g3yotdg.public.blob.vercel-storage.com'],
+  },
 });

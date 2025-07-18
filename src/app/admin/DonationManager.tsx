@@ -1,15 +1,13 @@
 'use client';
 
-import { EditIcon, DeleteIcon, AddIcon } from '@chakra-ui/icons';
+import { AddIcon } from '@chakra-ui/icons';
 import {
   Box,
   Button,
   Heading,
-  Text,
   VStack,
   Spinner,
   HStack,
-  IconButton,
   AlertDialog,
   AlertDialogOverlay,
   AlertDialogContent,
@@ -27,8 +25,8 @@ import {
 import { useCrudManager } from '~/lib/hooks/useCrudManager';
 import type { DonationPage } from '~/lib/types/donation';
 
+import DonationCard from './components/DonationCard';
 import ManagerForm from './ManagerForm';
-import SimpleCarousel from './SimpleCarousel';
 
 const initialDonationState: Omit<DonationPage, 'id'> = {
   title: '',
@@ -168,7 +166,7 @@ export default function DonationManager() {
         </Collapse>
 
         <Heading size="sm" mb={2}>
-          Existing Donation Pages
+          Donasi yang Sedang Berjalan
         </Heading>
         {loading ? (
           <Spinner />
@@ -207,32 +205,13 @@ export default function DonationManager() {
                     </FormControl>
                   </ManagerForm>
                 ) : (
-                  <HStack justify="space-between">
-                    <Box flex={1}>
-                      <Heading size="sm">{d.title}</Heading>
-                      <Text>
-                        <strong>Summary:</strong> {d.summary}
-                      </Text>
-                      <SimpleCarousel images={d.imageUrls} />
-                      <Text>
-                        <strong>Target:</strong> Rp
-                        {d.target.toLocaleString()}
-                      </Text>
-                    </Box>
-                    <HStack>
-                      <IconButton
-                        aria-label="Edit"
-                        icon={<EditIcon />}
-                        onClick={() => handleEdit(d)}
-                      />
-                      <IconButton
-                        aria-label="Delete"
-                        icon={<DeleteIcon />}
-                        colorScheme="red"
-                        onClick={() => handleDelete(d.id)}
-                      />
-                    </HStack>
-                  </HStack>
+                  <DonationCard
+                    donation={d}
+                    currentAmount={200000000}
+                    onEdit={() => handleEdit(d)}
+                    onDelete={() => handleDelete(d.id)}
+                    actionEnabled={false}
+                  />
                 )}
               </Box>
             ))}

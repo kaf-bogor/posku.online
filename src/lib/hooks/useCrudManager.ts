@@ -1,5 +1,3 @@
-'use client';
-
 /* eslint-disable no-console */
 
 import { useToast } from '@chakra-ui/react';
@@ -117,8 +115,9 @@ export function useCrudManager<T extends ManagedItem>({
   };
 
   const handleEdit = (item: T) => {
+    const plainItem = { ...item };
     setEditId(item.id);
-    setEditForm(item);
+    setEditForm(plainItem);
   };
 
   const handleCancelEdit = () => {
@@ -127,18 +126,47 @@ export function useCrudManager<T extends ManagedItem>({
     setEditSelectedFiles([]);
   };
 
+  const uploadImagesToServer = async (files: File[], category: string) => {
+    const formData = new FormData();
+    files.forEach((file) => formData.append('files', file));
+    formData.append('category', category);
+    const response = await fetch('/api/upload/images', {
+      method: 'POST',
+      body: formData,
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to upload images');
+    }
+
+    const data = await response.json();
+    return data.imageUrls;
+  };
+
   const handleSaveEdit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!editForm || !editId) return;
     setLoading(true);
     try {
       let { imageUrls } = editForm;
+
       if (editSelectedFiles.length > 0) {
-        imageUrls = await uploadImages(editSelectedFiles, blobFolderName);
+        const newImageUrls = await uploadImagesToServer(
+          editSelectedFiles,
+          blobFolderName
+        );
+        imageUrls = [...imageUrls, ...newImageUrls];
       }
+
+      // Sanitize editForm into a plain object
       const docRef = firestoreDoc(db, collectionName, editId);
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { id, ...updatedData } = { ...editForm, imageUrls };
+      const { id, ...rest } = editForm;
+
+      const updatedData = {
+        ...JSON.parse(JSON.stringify(rest)), // safely strip any prototype
+        imageUrls,
+      };
+
       await updateDoc(docRef, updatedData);
 
       toast({
@@ -148,6 +176,7 @@ export function useCrudManager<T extends ManagedItem>({
         duration: 3000,
         isClosable: true,
       });
+
       handleCancelEdit();
       fetchItems();
     } catch (error) {

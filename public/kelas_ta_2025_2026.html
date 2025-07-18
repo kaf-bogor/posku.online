@@ -64,7 +64,7 @@
       .highlight {
         background-color: #fcd34d; /* Tailwind yellow-300 */
         border-radius: 0.25rem; /* Rounded corners for highlight */
-        padding: 0 0.25rem; /* Small padding */
+        padding: 0 0 0 0.25rem; /* Small padding */
       }
       /* Custom accordion toggle styles */
       .accordion-button svg {
@@ -127,6 +127,7 @@
           placeholder="Cari nama kelas, guru, atau santri..."
           class="search-input w-full text-gray-700 placeholder-gray-400 focus:ring focus:ring-blue-200"
         />
+        <div id="searchResultCount" class="text-lg text-gray-600 mb-4"></div>
       </div>
 
       <!-- Class List Container -->
@@ -181,6 +182,14 @@
           allAccordionsOpen = false;
           toggleAllButton.textContent = 'Buka Semua';
           return;
+        }
+
+        const totalMatches = allSchoolData.reduce((count, classInfo) => count + classInfo.students.filter(student => student.toLowerCase().includes(currentSearchTerm.toLowerCase())).length, 0);
+        const searchResultCount = document.getElementById('searchResultCount');
+        if (currentSearchTerm) {
+          searchResultCount.textContent = `${totalMatches} santri ditemukan`;
+        } else {
+          searchResultCount.textContent = '';
         }
 
         classesToDisplay.forEach((classInfo, index) => {
@@ -300,17 +309,25 @@
 
           const studentList = document.createElement('ul');
           studentList.className =
-            'student-list rounded-lg p-4 grid grid-cols-1 gap-2 text-gray-700';
+            'student-list rounded-lg p-4 grid grid-cols-1 gap-2 text-gray-700 overflow-y-auto max-h-64';
+          let lastMatchedStudent = null;
           classInfo.students.forEach((student, studentIndex) => {
+            const isMatch = student.toLowerCase().includes(currentSearchTerm.toLowerCase());
             const studentItem = document.createElement('li');
             studentItem.className =
-              'px-2 rounded-md hover:bg-gray-50 transition-colors duration-150';
+              `py-1 px-2 rounded-md hover:bg-gray-50 transition-colors duration-150 ${isMatch ? 'text-gray-900' : 'text-gray-400'}`;
             studentItem.innerHTML = highlightText(
               `${studentIndex + 1}. ${student}`,
               currentSearchTerm
             ); // Highlight student name
+            if (isMatch) {
+              lastMatchedStudent = studentItem;
+            }
             studentList.appendChild(studentItem);
           });
+          if (lastMatchedStudent) {
+            lastMatchedStudent.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          }
           accordionBodyContent.appendChild(studentList);
 
           accordionBody.appendChild(accordionBodyContent);

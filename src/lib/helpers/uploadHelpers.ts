@@ -1,5 +1,3 @@
-'use server';
-
 import { put } from '@vercel/blob';
 
 /**
@@ -19,6 +17,7 @@ export async function uploadImages(
 
       const blob = await put(pathname, file, {
         access: 'public',
+        token: process.env.NEXT_PUBLIC_VERCEL_TOKEN,
       });
 
       return blob.url;

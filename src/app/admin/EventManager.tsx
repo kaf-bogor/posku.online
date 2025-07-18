@@ -28,8 +28,8 @@ import {
 import { useCrudManager } from '~/lib/hooks/useCrudManager';
 import type { EventItem } from '~/lib/types/event';
 
+import SimpleCarousel from './components/SimpleCarousel';
 import ManagerForm from './ManagerForm';
-import SimpleCarousel from './SimpleCarousel';
 
 const initialEventState: Omit<EventItem, 'id'> = {
   title: '',

@@ -27,8 +27,8 @@ import {
 import { useCrudManager } from '~/lib/hooks/useCrudManager';
 import type { NewsItem } from '~/lib/types/news';
 
+import SimpleCarousel from './components/SimpleCarousel';
 import ManagerForm from './ManagerForm';
-import SimpleCarousel from './SimpleCarousel';
 
 const initialNewsState: Omit<NewsItem, 'id'> = {
   title: '',

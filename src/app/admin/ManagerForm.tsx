@@ -5,7 +5,6 @@ import {
   FormControl,
   FormLabel,
   Input,
-  Textarea,
   Button,
   HStack,
   Box,
@@ -13,6 +12,8 @@ import {
 } from '@chakra-ui/react';
 import Image from 'next/image';
 import type { ChangeEvent, ReactNode, FormEvent } from 'react';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 const BOX_SHADOW = '0 2px 8px rgba(0,0,0,0.1)';
 
@@ -70,11 +71,21 @@ export default function ManagerForm<
 
           <FormControl isRequired>
             <FormLabel>Summary</FormLabel>
-            <Textarea
-              name="summary"
+            return{' '}
+            <ReactQuill
+              theme="snow"
               value={formState.summary}
-              onChange={onFormChange}
+              onChange={(value) => {
+                const event = {
+                  target: {
+                    name: 'summary',
+                    value,
+                  },
+                } as ChangeEvent<HTMLInputElement | HTMLTextAreaElement>;
+                onFormChange(event);
+              }}
             />
+            ;
           </FormControl>
 
           {/* Slot untuk field-field tambahan yang spesifik */}
@@ -89,41 +100,78 @@ export default function ManagerForm<
               multiple
               onChange={onFileChange}
             />
-            {/* Pratinjau untuk gambar yang baru dipilih */}
-            {selectedFiles.length > 0 && (
-              <HStack mt={2} spacing={2} wrap="wrap">
-                {selectedFiles.map((file) => (
-                  <Image
-                    key={file.name + file.lastModified}
-                    src={URL.createObjectURL(file)}
-                    alt="Preview"
-                    width={100}
-                    height={70}
-                    style={{
-                      borderRadius: 8,
-                      boxShadow: BOX_SHADOW,
-                      objectFit: 'cover',
-                    }}
-                  />
-                ))}
-              </HStack>
-            )}
             {/* Pratinjau untuk gambar yang sudah ada (mode edit) */}
             {isEdit && formState.imageUrls.length > 0 && (
               <HStack mt={2} spacing={2} wrap="wrap">
-                {formState.imageUrls.map((url) => (
-                  <Image
-                    key={url}
-                    src={url}
-                    alt="Existing image"
-                    width={100}
-                    height={70}
-                    style={{
-                      borderRadius: 8,
-                      boxShadow: BOX_SHADOW,
-                      objectFit: 'cover',
-                    }}
-                  />
+                {formState.imageUrls.map((url, index) => (
+                  <Box key={url} position="relative">
+                    <Image
+                      src={url}
+                      alt={`image-${index}`}
+                      width={100}
+                      height={100}
+                      style={{
+                        borderRadius: 8,
+                        boxShadow: BOX_SHADOW,
+                        objectFit: 'cover',
+                      }}
+                    />
+                    <Button
+                      size="xs"
+                      colorScheme="red"
+                      position="absolute"
+                      top={0}
+                      right={0}
+                      onClick={() => {
+                        const updatedImageUrls = formState.imageUrls.filter(
+                          (_, i) => i !== index
+                        );
+                        onFormChange({
+                          target: {
+                            name: 'imageUrls',
+                            value: updatedImageUrls,
+                          },
+                        });
+                      }}
+                    >
+                      Remove
+                    </Button>
+                  </Box>
+                ))}
+              </HStack>
+            )}
+            {/* Pratinjau untuk gambar yang baru dipilih */}
+            {selectedFiles.length > 0 && (
+              <HStack mt={2} spacing={2} wrap="wrap">
+                {selectedFiles.map((file, index) => (
+                  <Box key={file.name} position="relative">
+                    <Image
+                      src={URL.createObjectURL(file)}
+                      alt={`new-image-${index}`}
+                      width={100}
+                      height={100}
+                      style={{
+                        borderRadius: 8,
+                        boxShadow: BOX_SHADOW,
+                        objectFit: 'cover',
+                      }}
+                    />
+                    <Button
+                      size="xs"
+                      colorScheme="red"
+                      position="absolute"
+                      top={0}
+                      right={0}
+                      onClick={() => {
+                        const updatedFiles = selectedFiles.filter(
+                          (_, i) => i !== index
+                        );
+                        onFileChange({ target: { files: updatedFiles } });
+                      }}
+                    >
+                      Remove
+                    </Button>
+                  </Box>
                 ))}
               </HStack>
             )}
