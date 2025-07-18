@@ -15,7 +15,6 @@ import {
 import { useState, useEffect, useRef, useCallback } from 'react';
 
 import { db } from '~/lib/firebase';
-import { uploadImages } from '~/lib/helpers/uploadHelpers';
 
 // Placeholder untuk tipe data generik
 // Nantinya akan diganti dengan tipe spesifik seperti Donation, News, atau Event
@@ -57,6 +56,8 @@ export function useCrudManager<T extends ManagedItem>({
         collection(db, collectionName),
         orderBy('createdAt', 'desc')
       );
+
+      console.log(q, collectionName);
       const querySnapshot = await getDocs(q);
       const itemsData = querySnapshot.docs.map(
         (doc: DocumentData) => ({ ...doc.data(), id: doc.id }) as T
@@ -82,12 +83,33 @@ export function useCrudManager<T extends ManagedItem>({
 
   const toggleForm = () => setShowForm(!showForm);
 
+  const uploadImagesToServer = async (files: File[], category: string) => {
+    const formData = new FormData();
+    files.forEach((file) => formData.append('files', file));
+    formData.append('category', category);
+    const response = await fetch('/api/upload/images', {
+      method: 'POST',
+      body: formData,
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to upload images');
+    }
+
+    const data = await response.json();
+    return data.imageUrls;
+  };
+
   const handleAdd = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const imageUrls = await uploadImages(selectedFiles, blobFolderName);
+      const imageUrls = await uploadImagesToServer(
+        selectedFiles,
+        blobFolderName
+      );
       const docData = { ...form, imageUrls, createdAt: new Date() };
+      console.log('Adding item:', docData);
       await addDoc(collection(db, collectionName), docData);
       toast({
         title: 'Success',
@@ -124,23 +146,6 @@ export function useCrudManager<T extends ManagedItem>({
     setEditId(null);
     setEditForm(null);
     setEditSelectedFiles([]);
-  };
-
-  const uploadImagesToServer = async (files: File[], category: string) => {
-    const formData = new FormData();
-    files.forEach((file) => formData.append('files', file));
-    formData.append('category', category);
-    const response = await fetch('/api/upload/images', {
-      method: 'POST',
-      body: formData,
-    });
-
-    if (!response.ok) {
-      throw new Error('Failed to upload images');
-    }
-
-    const data = await response.json();
-    return data.imageUrls;
   };
 
   const handleSaveEdit = async (e: React.FormEvent) => {

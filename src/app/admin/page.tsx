@@ -205,12 +205,6 @@ function useAdminAuthorization(user: User | null) {
 
   // Check if user is authorized
   useEffect(() => {
-    console.log('Authorization check:', {
-      adminsLoading,
-      user: user?.email,
-      adminEmails,
-      isAdmin: user ? adminEmails.includes(user.email || '') : false,
-    });
     if (!adminsLoading && user && !adminEmails.includes(user.email || '')) {
       console.log('User not allowed:', user.email);
       setNotAllowed(true);
