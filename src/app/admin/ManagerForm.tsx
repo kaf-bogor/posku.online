@@ -20,9 +20,9 @@ const BOX_SHADOW = '0 2px 8px rgba(0,0,0,0.1)';
 interface ManagerFormProps<T> {
   formState: Omit<T, 'id'> | null;
   onFormChange: (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => void;
-  onFileChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  onFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   selectedFiles: File[];
   onSubmit: (e: FormEvent) => void;
   onCancel: () => void;
@@ -71,21 +71,18 @@ export default function ManagerForm<
 
           <FormControl isRequired>
             <FormLabel>Summary</FormLabel>
-            return{' '}
             <ReactQuill
               theme="snow"
               value={formState.summary}
               onChange={(value) => {
-                const event = {
+                onFormChange({
                   target: {
                     name: 'summary',
                     value,
                   },
-                } as ChangeEvent<HTMLInputElement | HTMLTextAreaElement>;
-                onFormChange(event);
+                } as React.ChangeEvent<HTMLTextAreaElement>);
               }}
             />
-            ;
           </FormControl>
 
           {/* Slot untuk field-field tambahan yang spesifik */}
@@ -129,9 +126,9 @@ export default function ManagerForm<
                         onFormChange({
                           target: {
                             name: 'imageUrls',
-                            value: updatedImageUrls,
+                            value: updatedImageUrls.join(','),
                           },
-                        });
+                        } as React.ChangeEvent<HTMLInputElement>);
                       }}
                     >
                       Remove
@@ -143,10 +140,10 @@ export default function ManagerForm<
             {/* Pratinjau untuk gambar yang baru dipilih */}
             {selectedFiles.length > 0 && (
               <HStack mt={2} spacing={2} wrap="wrap">
-                {selectedFiles.map((file, index) => (
-                  <Box key={file.name} position="relative">
+                {selectedFiles.map((fileItem, index) => (
+                  <Box key={fileItem.name} position="relative">
                     <Image
-                      src={URL.createObjectURL(file)}
+                      src={URL.createObjectURL(fileItem)}
                       alt={`new-image-${index}`}
                       width={100}
                       height={100}
@@ -166,7 +163,13 @@ export default function ManagerForm<
                         const updatedFiles = selectedFiles.filter(
                           (_, i) => i !== index
                         );
-                        onFileChange({ target: { files: updatedFiles } });
+                        const dataTransfer = new DataTransfer();
+                        updatedFiles.forEach((uploadedFileItem) =>
+                          dataTransfer.items.add(uploadedFileItem)
+                        );
+                        onFileChange({
+                          target: { files: dataTransfer.files },
+                        } as React.ChangeEvent<HTMLInputElement>);
                       }}
                     >
                       Remove

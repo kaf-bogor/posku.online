@@ -138,8 +138,16 @@ export default function DonationManager() {
           <ManagerForm
             title="Add New Donation Page"
             formState={form}
-            onFormChange={handleFormChange}
-            onFileChange={handleFileChange}
+            onFormChange={
+              handleFormChange as (
+                e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+              ) => void
+            }
+            onFileChange={
+              handleFileChange as (
+                e: React.ChangeEvent<HTMLInputElement>
+              ) => void
+            }
             selectedFiles={selectedFiles}
             onSubmit={handleAdd}
             onCancel={toggleForm}
@@ -179,8 +187,18 @@ export default function DonationManager() {
                     isEdit
                     title={`Edit: ${d.title}`}
                     formState={editForm}
-                    onFormChange={handleEditFormChange}
-                    onFileChange={handleEditFileChange}
+                    onFormChange={
+                      handleEditFormChange as (
+                        e: React.ChangeEvent<
+                          HTMLInputElement | HTMLTextAreaElement
+                        >
+                      ) => void
+                    }
+                    onFileChange={
+                      handleEditFileChange as (
+                        e: React.ChangeEvent<HTMLInputElement>
+                      ) => void
+                    }
                     selectedFiles={editSelectedFiles}
                     onSubmit={handleSaveEdit}
                     onCancel={handleCancelEdit}
