@@ -27,6 +27,8 @@ import type { DonationPage } from '~/lib/types/donation';
 
 import DonationCard from './components/DonationCard';
 import ManagerForm from './ManagerForm';
+import DonorsFormSection from './ManagerForm/DonorsForm';
+import OrganizerFormSection from './ManagerForm/OrganizerForm';
 
 const initialDonationState: Omit<DonationPage, 'id'> = {
   title: '',
@@ -176,6 +178,18 @@ export default function DonationManager() {
                 onChange={handleFormChange}
               />
             </FormControl>
+
+            {/* Organizer Section */}
+            <OrganizerFormSection
+              organizer={form.organizer}
+              onFormChange={handleFormChange}
+            />
+
+            {/* Donors Section */}
+            <DonorsFormSection
+              donors={form.donors || []}
+              onFormChange={handleFormChange}
+            />
           </ManagerForm>
         </Collapse>
 

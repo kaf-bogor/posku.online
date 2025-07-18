@@ -16,16 +16,15 @@ import type { ReactNode, FormEvent } from 'react';
 import 'react-quill/dist/quill.snow.css';
 
 import type { DonationPage } from '~/lib/types/donation';
-
-import DonorsFormSection from './ManagerForm/DonorsForm';
-import OrganizerFormSection from './ManagerForm/OrganizerForm';
+import type { EventItem } from '~/lib/types/event';
+import type { NewsItem } from '~/lib/types/news';
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 const BOX_SHADOW = '0 2px 8px rgba(0,0,0,0.1)';
 
 interface ManagerFormProps {
-  formState: Omit<DonationPage, 'id'> | null;
+  formState: Omit<DonationPage | EventItem | NewsItem, 'id'> | null;
   onFormChange: (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => void;
@@ -92,18 +91,6 @@ export default function ManagerForm({
 
           {/* Slot untuk field-field tambahan yang spesifik */}
           {children}
-
-          {/* Organizer Section */}
-          <OrganizerFormSection
-            organizer={formState.organizer}
-            onFormChange={onFormChange}
-          />
-
-          {/* Donors Section */}
-          <DonorsFormSection
-            donors={formState.donors || []}
-            onFormChange={onFormChange}
-          />
 
           <FormControl isRequired={!isEdit || formState.imageUrls.length === 0}>
             <FormLabel>Images</FormLabel>

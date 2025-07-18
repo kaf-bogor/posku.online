@@ -171,7 +171,7 @@ const App = () => {
             </VStack>
           </Box>
 
-          <NominalUpdates />
+          <NominalUpdates donors={[]} />
 
           {/* Funding Goal and Details (Full Width Below) */}
           <Box
@@ -277,7 +277,7 @@ const App = () => {
           </Box>
 
           {/* Nominal Updates Section */}
-          <NominalUpdates />
+          <NominalUpdates donors={[]} />
 
           {/* Timeline Section */}
           <Timeline />
