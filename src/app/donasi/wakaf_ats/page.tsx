@@ -24,7 +24,7 @@ import {
 } from '@chakra-ui/react';
 import { useState } from 'react';
 
-import NominalUpdates, { items } from '~/app/reports/wakaf_ats/NominalUpdates';
+import NominalUpdates from '~/app/reports/wakaf_ats/Donors';
 import { storageUrl } from '~/lib/context/baseUrl';
 
 export default function WakafAtsPage() {
@@ -60,7 +60,7 @@ export default function WakafAtsPage() {
     ],
     summary:
       'Bantu wujudkan gedung sekolah Kuttab Al Fatih Bogor. Setiap donasi Anda sangat berarti!',
-    raised: items.reduce((total, item) => total + item.nominal, 0),
+    raised: 0,
     target: 3100000000,
     donors: 120,
     organizer: {
@@ -352,7 +352,7 @@ export default function WakafAtsPage() {
               </Box>
             </TabPanel>
             <TabPanel>
-              <NominalUpdates withHeading={false} />
+              <NominalUpdates withHeading={false} donors={[]} />
             </TabPanel>
           </TabPanels>
         </Tabs>

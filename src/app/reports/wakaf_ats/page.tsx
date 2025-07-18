@@ -20,7 +20,7 @@ import { FaArrowLeft } from 'react-icons/fa';
 import { AppContext, siteConfig } from '~/lib/context/app';
 import { storageUrl } from '~/lib/context/baseUrl';
 
-import NominalUpdates from './NominalUpdates';
+import NominalUpdates from './Donors';
 import ProgressChart from './ProgressChart';
 import Timeline from './Timeline';
 

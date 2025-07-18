@@ -10,9 +10,12 @@ export interface DonationPage {
     name: string;
     tagline: string;
   };
-  donors: Array<{
-    name: string;
-    value: number;
-    datetime: string;
-  }>;
+  donors: Array<Donor>;
+}
+
+export interface Donor {
+  id: number;
+  name: string;
+  value: number;
+  datetime: string;
 }

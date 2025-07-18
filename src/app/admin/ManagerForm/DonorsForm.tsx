@@ -8,19 +8,24 @@ import {
   Input,
   Button,
 } from '@chakra-ui/react';
+import { id } from 'date-fns/locale';
 import { useState } from 'react';
 import type React from 'react';
+
+import Donors from '~/app/reports/wakaf_ats/Donors';
+import type { Donor } from '~/lib/types/donation';
 
 export default function DonorsFormSection({
   donors,
   onFormChange,
 }: {
-  donors: { name: string; value: number; datetime: string }[];
+  donors: Donor[];
   onFormChange: (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => void;
 }) {
   const [newDonor, setNewDonor] = useState({
+    id: donors.length + 1,
     name: '',
     value: '',
     datetime: '',
@@ -34,11 +39,12 @@ export default function DonorsFormSection({
     }));
   };
 
-  const handleAddDonor = () => {
+  const handleAddDonor = (donorId: number) => {
     if (!newDonor.name || !newDonor.value || !newDonor.datetime) return;
     const newDonors = [
       ...(donors || []),
       {
+        id,
         name: newDonor.name,
         value: Number(newDonor.value),
         datetime: newDonor.datetime,
@@ -50,7 +56,7 @@ export default function DonorsFormSection({
         value: newDonors,
       },
     } as unknown as React.ChangeEvent<HTMLInputElement>);
-    setNewDonor({ name: '', value: '', datetime: '' });
+    setNewDonor({ id: donorId + 1, name: '', value: '', datetime: '' });
   };
 
   const handleRemoveDonor = (idx: number) => {
@@ -77,25 +83,17 @@ export default function DonorsFormSection({
       </Heading>
       <VStack align="stretch" spacing={2}>
         {donors && donors.length > 0 ? (
-          donors.map(
-            (
-              donor: { name: string; value: number; datetime: string },
-              idx: number
-            ) => (
-              <HStack key={`${donor.name}-${donor.datetime}`} align="center">
-                <Box minW="120px">{donor.name}</Box>
-                <Box minW="80px">{donor.value}</Box>
-                <Box minW="180px">{donor.datetime}</Box>
-                <Button
-                  colorScheme="red"
-                  size="sm"
-                  onClick={() => handleRemoveDonor(idx)}
-                >
-                  Remove
-                </Button>
-              </HStack>
-            )
-          )
+          <Box overflowX="auto">
+            <Donors
+              donors={donors.map((d) => ({
+                ...d,
+                value: Number(d.value),
+                datetime: new Date(d.datetime).toISOString(),
+              }))}
+              withHeading={false}
+              onRemove={(donorId) => handleRemoveDonor(donorId)}
+            />
+          </Box>
         ) : (
           <Box color="gray.400" fontSize="sm">
             No donors yet.
@@ -137,7 +135,7 @@ export default function DonorsFormSection({
           <Button
             colorScheme="green"
             size="sm"
-            onClick={handleAddDonor}
+            onClick={() => handleAddDonor(donors.length + 1)}
             isDisabled={!newDonor.name || !newDonor.value || !newDonor.datetime}
           >
             Add

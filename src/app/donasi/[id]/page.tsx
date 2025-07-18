@@ -29,6 +29,7 @@ import { doc, getDoc } from 'firebase/firestore';
 import { useParams, useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 
+import Donors from '~/app/reports/wakaf_ats/Donors';
 import { db } from '~/lib/firebase';
 import type { DonationPage } from '~/lib/types/donation';
 
@@ -345,7 +346,7 @@ export default function DonationDetailPage() {
               </Box>
             </TabPanel>
             <TabPanel>
-              <Text>Laporan donasi akan ditampilkan di sini.</Text>
+              <Donors donors={campaign.donors || []} withHeading={false} />
             </TabPanel>
           </TabPanels>
         </Tabs>

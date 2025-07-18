@@ -94,7 +94,10 @@ export default function ManagerForm({
           {children}
 
           {/* Organizer Section */}
-          <OrganizerFormSection onFormChange={onFormChange} />
+          <OrganizerFormSection
+            organizer={formState.organizer}
+            onFormChange={onFormChange}
+          />
 
           {/* Donors Section */}
           <DonorsFormSection
