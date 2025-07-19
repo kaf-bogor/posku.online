@@ -8,9 +8,7 @@ import {
   Input,
   Button,
 } from '@chakra-ui/react';
-import { id } from 'date-fns/locale';
-import { useState } from 'react';
-import type React from 'react';
+import { useState, useEffect } from 'react';
 
 import Donors from '~/app/reports/wakaf_ats/Donors';
 import type { Donor } from '~/lib/types/donation';
@@ -20,12 +18,16 @@ export default function DonorsFormSection({
   onFormChange,
 }: {
   donors: Donor[];
-  onFormChange: (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => void;
+  onFormChange: (donors: Donor[]) => void;
 }) {
+  const [localDonors, setLocalDonors] = useState<Donor[]>(donors);
+
+  useEffect(() => {
+    setLocalDonors(donors);
+  }, [donors]);
+
   const [newDonor, setNewDonor] = useState({
-    id: donors.length + 1,
+    id: localDonors.length + 1,
     name: '',
     value: '',
     datetime: '',
@@ -39,34 +41,31 @@ export default function DonorsFormSection({
     }));
   };
 
-  const handleAddDonor = (donorId: number) => {
+  const handleAddDonor = () => {
     if (!newDonor.name || !newDonor.value || !newDonor.datetime) return;
     const newDonors = [
-      ...(donors || []),
+      ...localDonors,
       {
-        id,
+        id: localDonors.length + 1,
         name: newDonor.name,
         value: Number(newDonor.value),
         datetime: newDonor.datetime,
       },
     ];
-    onFormChange({
-      target: {
-        name: 'donors',
-        value: newDonors,
-      },
-    } as unknown as React.ChangeEvent<HTMLInputElement>);
-    setNewDonor({ id: donorId + 1, name: '', value: '', datetime: '' });
+    setLocalDonors(newDonors);
+    onFormChange(newDonors);
+    setNewDonor({
+      id: newDonors.length + 1,
+      name: '',
+      value: '',
+      datetime: '',
+    });
   };
 
-  const handleRemoveDonor = (idx: number) => {
-    const updatedDonors = donors.filter((_, i) => i !== idx);
-    onFormChange({
-      target: {
-        name: 'donors',
-        value: updatedDonors,
-      },
-    } as unknown as React.ChangeEvent<HTMLInputElement>);
+  const handleRemoveDonor = (donorId: number) => {
+    const updatedDonors = localDonors.filter((donor) => donor.id !== donorId);
+    setLocalDonors(updatedDonors);
+    onFormChange(updatedDonors);
   };
 
   return (
@@ -82,10 +81,10 @@ export default function DonorsFormSection({
         Donors
       </Heading>
       <VStack align="stretch" spacing={2}>
-        {donors && donors.length > 0 ? (
+        {localDonors && localDonors.length > 0 ? (
           <Box overflowX="auto">
             <Donors
-              donors={donors.map((d) => ({
+              donors={localDonors.map((d) => ({
                 ...d,
                 value: Number(d.value),
                 datetime: new Date(d.datetime).toISOString(),
@@ -135,7 +134,7 @@ export default function DonorsFormSection({
           <Button
             colorScheme="green"
             size="sm"
-            onClick={() => handleAddDonor(donors.length + 1)}
+            onClick={handleAddDonor}
             isDisabled={!newDonor.name || !newDonor.value || !newDonor.datetime}
           >
             Add

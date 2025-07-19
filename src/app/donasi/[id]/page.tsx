@@ -10,11 +10,7 @@ import {
   Text,
   Progress,
   Button,
-  Input,
-  InputGroup,
-  InputLeftAddon,
   Avatar,
-  useToast,
   Tabs,
   TabList,
   Tab,
@@ -38,22 +34,14 @@ export default function DonationDetailPage() {
   const router = useRouter();
   const [campaign, setCampaign] = useState<DonationPage | null>(null);
   const [loading, setLoading] = useState(true);
-  const [amount, setAmount] = useState('');
-  const [amountNumber, setAmountNumber] = useState<number | null>(null);
-  const toast = useToast();
 
   // Color tokens
   const cardBg = useColorModeValue('white', 'gray.700');
   const cardShadow = useColorModeValue('md', 'dark-lg');
-  const inputBg = useColorModeValue('gray.50', 'gray.800');
-  const inputText = useColorModeValue('gray.800', 'gray.100');
-  const inputAddonBg = useColorModeValue('gray.100', 'gray.600');
   const headingColor = useColorModeValue('gray.800', 'white');
   const textColor = useColorModeValue('gray.700', 'gray.100');
   const buttonBg = useColorModeValue('green.500', 'green.400');
   const buttonText = useColorModeValue('white', 'gray.900');
-  // Fix: move useColorModeValue out of render
-  const placeholderColor = useColorModeValue('gray.400', 'gray.400');
   const buttonHoverBg = useColorModeValue('green.600', 'green.500');
 
   // Carousel state
@@ -79,37 +67,6 @@ export default function DonationDetailPage() {
     };
     fetchCampaign();
   }, [id]);
-
-  // Format input as Rupiah on change
-  const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const raw = e.target.value.replace(/[^\d]/g, '');
-    if (!raw) {
-      setAmount('');
-      setAmountNumber(null);
-      return;
-    }
-    const num = parseInt(raw, 10);
-    setAmountNumber(num);
-    setAmount(num.toLocaleString('id-ID'));
-  };
-
-  const handleDonate = () => {
-    if (!amountNumber || Number.isNaN(amountNumber) || amountNumber < 1) {
-      toast({
-        title: 'Masukkan nominal donasi yang valid.',
-        status: 'warning',
-        duration: 2000,
-      });
-      return;
-    }
-    toast({
-      title: `Terima kasih atas donasi sebesar Rp${amountNumber.toLocaleString('id-ID')}!`,
-      status: 'success',
-      duration: 3000,
-    });
-    setAmount('');
-    setAmountNumber(null);
-  };
 
   if (loading) {
     return (
@@ -281,30 +238,9 @@ export default function DonationDetailPage() {
           align="stretch"
           w="full"
         >
-          <InputGroup maxW={{ base: '100%', md: '60%' }}>
-            <InputLeftAddon
-              bg={inputAddonBg}
-              fontWeight="bold"
-              color={inputText}
-            >
-              Rp
-            </InputLeftAddon>
-            <Input
-              inputMode="numeric"
-              placeholder="Nominal Donasi"
-              value={amount}
-              onChange={handleAmountChange}
-              bg={inputBg}
-              color={inputText}
-              borderLeftRadius={0}
-              _placeholder={{
-                color: placeholderColor,
-              }}
-            />
-          </InputGroup>
           <Button
             colorScheme="green"
-            onClick={handleDonate}
+            onClick={() => router.push(campaign.link)}
             flex={1}
             bg={buttonBg}
             color={buttonText}

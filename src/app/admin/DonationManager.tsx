@@ -178,18 +178,6 @@ export default function DonationManager() {
                 onChange={handleFormChange}
               />
             </FormControl>
-
-            {/* Organizer Section */}
-            <OrganizerFormSection
-              organizer={form.organizer}
-              onFormChange={handleFormChange}
-            />
-
-            {/* Donors Section */}
-            <DonorsFormSection
-              donors={form.donors || []}
-              onFormChange={handleFormChange}
-            />
           </ManagerForm>
         </Collapse>
 
@@ -241,6 +229,19 @@ export default function DonationManager() {
                         onChange={handleEditFormChange}
                       />
                     </FormControl>
+                    {/* Organizer Section */}
+                    <OrganizerFormSection
+                      organizer={d.organizer}
+                      onFormChange={handleFormChange}
+                    />
+
+                    {/* Donors Section */}
+                    <DonorsFormSection
+                      donors={d.donors || []}
+                      onFormChange={(donors) => {
+                        if (editForm) setEditForm({ ...editForm, donors });
+                      }}
+                    />
                   </ManagerForm>
                 ) : (
                   <DonationCard
