@@ -142,7 +142,8 @@ export function useCrudManager<T extends ManagedItem>({
 
   const handleSaveEdit = async (
     e: React.FormEvent<HTMLFormElement | Element>,
-    editId: string
+    editId: string,
+    onSucces: () => void = () => {}
   ) => {
     e.preventDefault();
     if (!editForm || !editId) return;
@@ -180,7 +181,7 @@ export function useCrudManager<T extends ManagedItem>({
       });
 
       handleCancelEdit();
-      fetchItems();
+      onSucces();
     } catch (error) {
       console.error('Error updating item:', error);
       toast({

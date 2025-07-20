@@ -1,6 +1,7 @@
 'use client';
 
 import {
+  Box,
   FormControl,
   FormLabel,
   NumberInput,
@@ -14,6 +15,7 @@ import {
 } from '@chakra-ui/react';
 import { doc, getDoc } from 'firebase/firestore';
 import dynamic from 'next/dynamic';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import type React from 'react';
 
@@ -30,6 +32,7 @@ const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 const DonationDetailPage = ({ params }: { params: { id: string } }) => {
   const { id } = params;
+  const router = useRouter();
 
   const [donation, setDonation] = useState<DonationPage | null>(null);
 
@@ -82,7 +85,9 @@ const DonationDetailPage = ({ params }: { params: { id: string } }) => {
       isEdit
       title={`Edit: ${donation.title}`}
       formState={editForm}
-      onSubmit={(e) => handleSaveEdit(e, donation.id)}
+      onSubmit={(e) =>
+        handleSaveEdit(e, donation.id, () => router.push(`/admin/donations`))
+      }
       onCancel={handleCancelEdit}
     >
       <Tabs variant="enclosed">
@@ -101,69 +106,78 @@ const DonationDetailPage = ({ params }: { params: { id: string } }) => {
             />
           </TabPanel>
           <TabPanel>
-            <FormControl isRequired>
-              <FormLabel>Title</FormLabel>
-              <Input
-                name="title"
-                value={editForm?.title}
-                onChange={handleEditFormChange}
-              />
-            </FormControl>
-
-            <FormControl isRequired>
-              <FormLabel>Summary</FormLabel>
-              <ReactQuill
-                theme="snow"
-                value={editForm?.summary}
-                onChange={(value) => {
-                  handleEditFormChange({
-                    target: {
-                      name: 'summary',
-                      value,
-                    },
-                  } as React.ChangeEvent<HTMLTextAreaElement>);
-                }}
-              />
-            </FormControl>
-
-            <FormControl isRequired>
-              <FormLabel>Target (Rp)</FormLabel>
-              <NumberInput
-                value={editForm?.target}
-                min={0}
-                onChange={handleEditNumberChange}
-              >
-                <NumberInputField name="target" />
-              </NumberInput>
-            </FormControl>
-            <FormControl isRequired>
-              <FormLabel>Link</FormLabel>
-              <Input
-                name="link"
-                value={editForm?.link}
-                onChange={handleEditFormChange}
-              />
-
-              <FormControl isRequired={donation.imageUrls.length === 0}>
-                <FormLabel>Images</FormLabel>
+            <Box
+              mt={4}
+              p={3}
+              borderWidth="1px"
+              borderRadius="md"
+              borderColor="gray.200"
+              bg="white"
+            >
+              <FormControl isRequired>
+                <FormLabel>Title</FormLabel>
                 <Input
-                  type="file"
-                  name="images"
-                  accept="image/*"
-                  multiple
-                  onChange={handleEditFileChange}
+                  name="title"
+                  value={editForm?.title}
+                  onChange={handleEditFormChange}
                 />
               </FormControl>
 
-              <FormImagePreview
-                imageUrls={donation.imageUrls}
-                onFileChange={handleEditFileChange}
-              />
-              <FormImageFilePreview
-                files={editSelectedFiles}
-                onFileChange={handleEditFileChange}
-              />
-            </FormControl>
+              <FormControl isRequired>
+                <FormLabel>Summary</FormLabel>
+                <ReactQuill
+                  theme="snow"
+                  value={editForm?.summary}
+                  onChange={(value) => {
+                    handleEditFormChange({
+                      target: {
+                        name: 'summary',
+                        value,
+                      },
+                    } as React.ChangeEvent<HTMLTextAreaElement>);
+                  }}
+                />
+              </FormControl>
+
+              <FormControl isRequired>
+                <FormLabel>Target (Rp)</FormLabel>
+                <NumberInput
+                  value={editForm?.target}
+                  min={0}
+                  onChange={handleEditNumberChange}
+                >
+                  <NumberInputField name="target" />
+                </NumberInput>
+              </FormControl>
+              <FormControl isRequired>
+                <FormLabel>Link</FormLabel>
+                <Input
+                  name="link"
+                  value={editForm?.link}
+                  onChange={handleEditFormChange}
+                />
+
+                <FormControl isRequired={donation.imageUrls.length === 0}>
+                  <FormLabel>Images</FormLabel>
+                  <Input
+                    type="file"
+                    name="images"
+                    accept="image/*"
+                    multiple
+                    onChange={handleEditFileChange}
+                  />
+                </FormControl>
+
+                <FormImagePreview
+                  imageUrls={donation.imageUrls}
+                  onFileChange={handleEditFileChange}
+                />
+                <FormImageFilePreview
+                  files={editSelectedFiles}
+                  onFileChange={handleEditFileChange}
+                />
+              </FormControl>
+            </Box>
             <OrganizerFormSection
               organizer={donation.organizer}
               onFormChange={handleEditFormChange}
