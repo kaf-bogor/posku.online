@@ -43,7 +43,6 @@ export function useCrudManager<T extends ManagedItem>({
   const [showForm, setShowForm] = useState(false);
   const [form, setForm] = useState<Omit<T, 'id'>>(itemSchema);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
-  const [editId, setEditId] = useState<string | null>(null);
   const [editForm, setEditForm] = useState<T | null>(null);
   const [editSelectedFiles, setEditSelectedFiles] = useState<File[]>([]);
   const [pendingDeleteId, setPendingDeleteId] = useState<string | null>(null);
@@ -136,22 +135,20 @@ export function useCrudManager<T extends ManagedItem>({
     }
   };
 
-  const handleEdit = (item: T) => {
-    const plainItem = { ...item };
-    setEditId(item.id);
-    setEditForm(plainItem);
-  };
-
   const handleCancelEdit = () => {
-    setEditId(null);
     setEditForm(null);
     setEditSelectedFiles([]);
   };
 
-  const handleSaveEdit = async (e: React.FormEvent) => {
+  const handleSaveEdit = async (
+    e: React.FormEvent<HTMLFormElement | Element>,
+    editId: string
+  ) => {
     e.preventDefault();
     if (!editForm || !editId) return;
     setLoading(true);
+
+    console.log('Saving edit for item:', editForm);
     try {
       let { imageUrls } = editForm;
 
@@ -242,7 +239,6 @@ export function useCrudManager<T extends ManagedItem>({
     setForm,
     selectedFiles,
     setSelectedFiles,
-    editId,
     editForm,
     setEditForm,
     editSelectedFiles,
@@ -251,7 +247,6 @@ export function useCrudManager<T extends ManagedItem>({
     cancelRef,
     toggleForm,
     handleAdd,
-    handleEdit,
     handleCancelEdit,
     handleSaveEdit,
     handleDelete,

@@ -11,11 +11,6 @@ import {
   Text,
   Alert,
   AlertIcon,
-  Tabs,
-  TabList,
-  TabPanels,
-  Tab,
-  TabPanel,
   HStack,
   Avatar,
 } from '@chakra-ui/react';
@@ -28,12 +23,12 @@ import {
 import type { User } from 'firebase/auth';
 import { doc, getDoc, getDocs, collection, setDoc } from 'firebase/firestore';
 import { useEffect, useState, useCallback } from 'react';
+import { FaDonate, FaNewspaper, FaCalendarAlt } from 'react-icons/fa';
 
+import MainMenus from '../components/MainMenus';
 import { auth, db } from '~/lib/firebase';
 
-import DonationManager from './DonationManager';
-import EventManager from './EventManager';
-import NewsManager from './NewsManager';
+// Component for admin panel
 
 // Component for loading state
 const LoadingView = () => (
@@ -57,52 +52,6 @@ const UnauthorizedView = () => (
     <Spinner size="xl" />
     <Text>Not allowed. Logging out...</Text>
   </VStack>
-);
-
-// Component for admin panel
-const AdminPanelView = ({
-  user,
-  onLogout,
-}: {
-  user: User;
-  onLogout: () => Promise<void>;
-}) => (
-  <Box p={4}>
-    <HStack mb={4} justify="space-between">
-      <Heading size="lg">Admin Panel</Heading>
-      <HStack>
-        <Avatar size="sm" src={user.photoURL || undefined} />
-        <Text>{user.displayName || user.email}</Text>
-        <Button
-          size="sm"
-          colorScheme="red"
-          variant="outline"
-          onClick={onLogout}
-        >
-          Logout
-        </Button>
-      </HStack>
-    </HStack>
-
-    <Tabs variant="enclosed" colorScheme="teal">
-      <TabList>
-        <Tab>Donations</Tab>
-        <Tab>News</Tab>
-        <Tab>Events</Tab>
-      </TabList>
-      <TabPanels>
-        <TabPanel>
-          <DonationManager />
-        </TabPanel>
-        <TabPanel>
-          <NewsManager />
-        </TabPanel>
-        <TabPanel>
-          <EventManager />
-        </TabPanel>
-      </TabPanels>
-    </Tabs>
-  </Box>
 );
 
 // Custom hook for authentication
@@ -244,5 +193,45 @@ export default function AdminPage() {
     );
   }
 
-  return <AdminPanelView user={user} onLogout={logout} />;
+  return (
+    <Box p={4}>
+      <HStack mb={4} justify="space-between">
+        <Heading size="lg">Admin Panel</Heading>
+        <HStack>
+          <Avatar size="sm" src={user.photoURL || undefined} />
+          <Text>{user.displayName || user.email}</Text>
+          <Button
+            size="sm"
+            colorScheme="red"
+            variant="outline"
+            onClick={logout}
+          >
+            Logout
+          </Button>
+        </HStack>
+      </HStack>
+
+      <MainMenus
+        items={[
+          {
+            label: 'Donasi',
+            href: '/admin/donations',
+            icon: FaDonate,
+          },
+          {
+            label: 'Event',
+            href: '/admin/events',
+            icon: FaCalendarAlt,
+          },
+          {
+            label: 'Berita',
+            href: '/admin/news',
+            icon: FaNewspaper,
+          },
+        ]}
+      />
+
+      <Box mt={4} />
+    </Box>
+  );
 }

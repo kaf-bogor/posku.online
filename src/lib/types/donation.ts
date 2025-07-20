@@ -5,6 +5,7 @@ export interface DonationPage {
   imageUrls: string[];
   target: number;
   link: string;
+  published: boolean;
   organizer: {
     avatar: string;
     name: string;
@@ -19,3 +20,18 @@ export interface Donor {
   value: number;
   datetime: string;
 }
+
+export const initialDonationState: Omit<DonationPage, 'id'> = {
+  title: '',
+  summary: '',
+  imageUrls: [],
+  target: 0,
+  link: '',
+  published: false,
+  organizer: {
+    avatar: '',
+    name: '',
+    tagline: '',
+  },
+  donors: [],
+};
