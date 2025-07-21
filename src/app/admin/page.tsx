@@ -23,7 +23,12 @@ import {
 import type { User } from 'firebase/auth';
 import { doc, getDoc, getDocs, collection, setDoc } from 'firebase/firestore';
 import { useEffect, useState, useCallback } from 'react';
-import { FaDonate, FaNewspaper, FaCalendarAlt } from 'react-icons/fa';
+import {
+  FaDonate,
+  FaNewspaper,
+  FaCalendarAlt,
+  FaChalkboardTeacher,
+} from 'react-icons/fa';
 
 import MainMenus from '../components/MainMenus';
 import { auth, db } from '~/lib/firebase';
@@ -227,6 +232,11 @@ export default function AdminPage() {
             label: 'Berita',
             href: '/admin/news',
             icon: FaNewspaper,
+          },
+          {
+            label: 'Fund raise kelas',
+            href: '/admin/kelas',
+            icon: FaChalkboardTeacher,
           },
         ]}
       />
