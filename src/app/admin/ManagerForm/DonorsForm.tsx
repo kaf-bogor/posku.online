@@ -2,7 +2,7 @@ import {
   Box,
   Heading,
   VStack,
-  HStack,
+  Flex,
   FormControl,
   FormLabel,
   Input,
@@ -75,7 +75,7 @@ export default function DonorsFormSection({
       borderWidth="1px"
       borderRadius="md"
       borderColor="gray.200"
-      bg="white"
+      bg="chakra-body-bg._light"
     >
       <Heading size="xs" mb={2}>
         Donors
@@ -99,9 +99,14 @@ export default function DonorsFormSection({
           </Box>
         )}
         {/* Add Donor Form */}
-        <HStack align="flex-end" mt={2}>
+        <Flex
+          align="flex-end"
+          mt={2}
+          gap={2}
+          direction={{ base: 'column', md: 'row' }}
+        >
           <FormControl>
-            <FormLabel mb={1}>Name</FormLabel>
+            <FormLabel mb={1}>Nama</FormLabel>
             <Input
               name="name"
               value={newDonor.name}
@@ -111,7 +116,7 @@ export default function DonorsFormSection({
             />
           </FormControl>
           <FormControl>
-            <FormLabel mb={1}>Value</FormLabel>
+            <FormLabel mb={1}>Nominal</FormLabel>
             <Input
               name="value"
               type="number"
@@ -122,7 +127,7 @@ export default function DonorsFormSection({
             />
           </FormControl>
           <FormControl>
-            <FormLabel mb={1}>Datetime</FormLabel>
+            <FormLabel mb={1}>Waktu</FormLabel>
             <Input
               name="datetime"
               type="datetime-local"
@@ -136,10 +141,12 @@ export default function DonorsFormSection({
             size="sm"
             onClick={handleAddDonor}
             isDisabled={!newDonor.name || !newDonor.value || !newDonor.datetime}
+            borderRadius="md"
+            w={{ base: '100%', md: '30px' }}
           >
             Add
           </Button>
-        </HStack>
+        </Flex>
       </VStack>
     </Box>
   );

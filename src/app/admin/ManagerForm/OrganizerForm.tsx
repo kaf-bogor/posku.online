@@ -41,7 +41,7 @@ function OrganizerFormSection({ organizer, onFormChange }: OrganizerFormProps) {
       borderWidth="1px"
       borderRadius="md"
       borderColor="gray.200"
-      bg="white"
+      bg="chakra-body-bg._light"
     >
       <Heading size="xs" mb={2}>
         Organizer

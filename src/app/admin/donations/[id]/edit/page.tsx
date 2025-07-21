@@ -1,7 +1,6 @@
 'use client';
 
 import {
-  Box,
   FormControl,
   FormLabel,
   NumberInput,
@@ -12,6 +11,8 @@ import {
   TabPanels,
   Tab,
   TabPanel,
+  HStack,
+  VStack,
 } from '@chakra-ui/react';
 import { doc, getDoc } from 'firebase/firestore';
 import dynamic from 'next/dynamic';
@@ -19,7 +20,6 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import type React from 'react';
 
-import FormImageFilePreview from '~/app/admin/components/FormImageFilePreview';
 import FormImagePreview from '~/app/admin/components/FormImagePreview';
 import ManagerForm from '~/app/admin/ManagerForm';
 import DonorsFormSection from '~/app/admin/ManagerForm/DonorsForm';
@@ -90,7 +90,7 @@ const DonationDetailPage = ({ params }: { params: { id: string } }) => {
       }
       onCancel={handleCancelEdit}
     >
-      <Tabs variant="enclosed">
+      <Tabs variant="soft-rounded" isFitted>
         <TabList>
           <Tab>Laporan</Tab>
           <Tab>Donation Details</Tab>
@@ -106,13 +106,14 @@ const DonationDetailPage = ({ params }: { params: { id: string } }) => {
             />
           </TabPanel>
           <TabPanel>
-            <Box
+            <VStack
+              gap={6}
               mt={4}
               p={3}
               borderWidth="1px"
               borderRadius="md"
               borderColor="gray.200"
-              bg="white"
+              bg="chakra-body-bg._dark"
             >
               <FormControl isRequired>
                 <FormLabel>Title</FormLabel>
@@ -149,6 +150,7 @@ const DonationDetailPage = ({ params }: { params: { id: string } }) => {
                   <NumberInputField name="target" />
                 </NumberInput>
               </FormControl>
+
               <FormControl isRequired>
                 <FormLabel>Link</FormLabel>
                 <Input
@@ -156,28 +158,57 @@ const DonationDetailPage = ({ params }: { params: { id: string } }) => {
                   value={editForm?.link}
                   onChange={handleEditFormChange}
                 />
-
-                <FormControl isRequired={donation.imageUrls.length === 0}>
-                  <FormLabel>Images</FormLabel>
-                  <Input
-                    type="file"
-                    name="images"
-                    accept="image/*"
-                    multiple
-                    onChange={handleEditFileChange}
-                  />
-                </FormControl>
-
-                <FormImagePreview
-                  imageUrls={donation.imageUrls}
-                  onFileChange={handleEditFileChange}
-                />
-                <FormImageFilePreview
-                  files={editSelectedFiles}
-                  onFileChange={handleEditFileChange}
-                />
               </FormControl>
-            </Box>
+
+              <FormControl isRequired={donation.imageUrls.length === 0}>
+                <FormLabel>Images</FormLabel>
+                <Input
+                  type="file"
+                  name="images"
+                  accept="image/*"
+                  multiple
+                  onChange={handleEditFileChange}
+                />
+
+                <HStack mt={2} spacing={2} wrap="wrap">
+                  {/* Display existing images and new files */}
+                  {donation.imageUrls.map((imageUrl, index) => (
+                    <FormImagePreview
+                      imageUrl={imageUrl}
+                      onRemoveImage={() => {
+                        const updatedImageUrls = donation.imageUrls.filter(
+                          (_, i) => i !== index
+                        );
+                        handleEditFileChange({
+                          target: {
+                            name: 'imageUrls',
+                            value: updatedImageUrls.join(','),
+                          },
+                        } as React.ChangeEvent<HTMLInputElement>);
+                      }}
+                    />
+                  ))}
+
+                  {/* Display newly selected files */}
+                  {editSelectedFiles.map((file, index) => (
+                    <FormImagePreview
+                      imageUrl={URL.createObjectURL(file)}
+                      onRemoveImage={() => {
+                        const updatedImageUrls = editSelectedFiles.filter(
+                          (_, i) => i !== index
+                        );
+                        handleEditFileChange({
+                          target: {
+                            name: 'imageUrls',
+                            value: updatedImageUrls.join(','),
+                          },
+                        } as React.ChangeEvent<HTMLInputElement>);
+                      }}
+                    />
+                  ))}
+                </HStack>
+              </FormControl>
+            </VStack>
             <OrganizerFormSection
               organizer={donation.organizer}
               onFormChange={handleEditFormChange}

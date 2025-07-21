@@ -30,11 +30,11 @@ export default function ManagerForm({
   return (
     <Box
       p={4}
-      mb={4}
+      mb={8}
       borderWidth="1px"
       borderRadius="md"
       borderColor="gray.200"
-      bg="gray.50"
+      bg="chakra-body-bg._dark"
     >
       <form onSubmit={onSubmit}>
         <Heading size="sm" mb={4}>
