@@ -157,7 +157,7 @@ export default function KelasDetailPage() {
           mr={2}
         />
         <Text fontSize="sm" color="blue.600" minW="45px" textAlign="right">
-          {percent}%
+          {percent.toFixed(2)}%
         </Text>
       </Flex>
       <Text>Jumlah Santri: {kelas.santriCount}</Text>

@@ -120,25 +120,27 @@ export default function Page() {
 
   return (
     <VStack align="stretch" spacing={4}>
-      <InputGroup>
-        <InputLeftElement pointerEvents="none">
-          <SearchIcon color="gray.400" />
-        </InputLeftElement>
-        <Input
-          placeholder="Cari kelas..."
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-        />
-      </InputGroup>
+      <HStack>
+        <InputGroup>
+          <InputLeftElement pointerEvents="none">
+            <SearchIcon color="gray.400" />
+          </InputLeftElement>
+          <Input
+            placeholder="Cari kelas..."
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+          />
+        </InputGroup>
 
-      <Select
-        maxW="200px"
-        value={sortBy}
-        onChange={(e) => setSortBy(e.target.value as 'peringkat' | 'name')}
-      >
-        <option value="peringkat">Peringkat</option>
-        <option value="name">Nama</option>
-      </Select>
+        <Select
+          maxW="200px"
+          value={sortBy}
+          onChange={(e) => setSortBy(e.target.value as 'peringkat' | 'name')}
+        >
+          <option value="peringkat">Peringkat</option>
+          <option value="name">Nama</option>
+        </Select>
+      </HStack>
 
       <SimpleGrid columns={{ base: 1, md: 2 }} spacing={4}>
         {sortedKelas.map((k) => {
@@ -187,7 +189,7 @@ export default function Page() {
                     mr={2}
                   />
                   <Text fontSize="sm" minW="45px" textAlign="right">
-                    {percent}%
+                    {percent.toFixed(2)}%
                   </Text>
                 </Flex>
 
