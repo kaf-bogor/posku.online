@@ -1,7 +1,7 @@
 import { Box, Flex, Text, Link as ChakraLink } from '@chakra-ui/react';
 import Link from 'next/link';
 import { useContext } from 'react';
-import { FaHome, FaHandsHelping, FaLink } from 'react-icons/fa';
+import { FaHome, FaHandsHelping, FaLink, FaUser } from 'react-icons/fa';
 
 import { AppContext } from '~/lib/context/app';
 
@@ -20,6 +20,11 @@ const navItems = [
     label: 'Links',
     href: '/links',
     icon: 'links',
+  },
+  {
+    label: 'Admin',
+    href: '/admin',
+    icon: 'admin',
   },
 ];
 
@@ -60,6 +65,9 @@ export default function BottomNav() {
               )}
               {icon === 'links' && (
                 <FaLink fontSize={24} style={{ marginBottom: 4 }} />
+              )}
+              {icon === 'admin' && (
+                <FaUser fontSize={24} style={{ marginBottom: 4 }} />
               )}
               <Text fontSize="xs">{label}</Text>
             </ChakraLink>
