@@ -4,7 +4,7 @@ import { FaArrowLeft } from 'react-icons/fa';
 
 const menuItems = [
   {
-    title: 'Laporan Wakaf ATS',
+    title: 'Laporan Wakaf ATS (deprecated: last update was 2025-06-27)',
     link: '/reports/wakaf_ats',
     description: null,
   },

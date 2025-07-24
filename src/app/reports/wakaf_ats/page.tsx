@@ -27,6 +27,7 @@ import Timeline from './Timeline';
 const App = () => {
   // AppContext for title/subtitle
   const { setTitle, setSubtitle, setImage } = useContext(AppContext);
+  const { textColor } = useContext(AppContext);
 
   // Initial data for the chart and display
   const totalGoal = 3100000000; // Rp 3.1 Milyar
@@ -48,7 +49,7 @@ const App = () => {
 
   return (
     <Box p={{ base: 4, sm: 6, md: 8 }} minH="100vh" overflowX="hidden">
-      <Link href="/" color="black">
+      <Link href="/" color={textColor}>
         <HStack my={6}>
           <FaArrowLeft />
           <Text>Kembali</Text>
@@ -76,15 +77,15 @@ const App = () => {
             as="h1"
             fontSize={{ base: '4xl', sm: '5xl' }}
             fontWeight="extrabold"
-            color="blue.800"
+            color={textColor}
           >
             Wakaf Lahan ATS
           </Heading>
-          <Text fontSize={{ base: 'lg', sm: 'xl' }} color="gray.700">
+          <Text fontSize={{ base: 'lg', sm: 'xl' }} color={textColor}>
             Penggalangan Dana untuk Pembebasan dan Renovasi Lahan Sekolah Kuttab
             Al-Fatih Bogor
           </Text>
-          <Text fontSize={{ base: 'lg', sm: 'xl' }} color="gray.700">
+          <Text fontSize={{ base: 'lg', sm: 'xl' }} color={textColor}>
             di Jl. Atang Sendjaja, Bogor.
           </Text>
         </VStack>
