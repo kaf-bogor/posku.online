@@ -15,10 +15,22 @@ import {
   InputGroup,
   InputLeftElement,
   Select,
+  Tabs,
+  TabList,
+  Tab,
+  Switch,
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  Icon,
 } from '@chakra-ui/react';
 import { collection, doc, setDoc, onSnapshot } from 'firebase/firestore';
 import Link from 'next/link';
 import { useContext, useEffect, useState, useMemo } from 'react';
+import { FaMedal } from 'react-icons/fa';
 
 import { AppContext } from '~/lib/context/app';
 import { db } from '~/lib/firebase';
@@ -57,6 +69,10 @@ export default function Page() {
   const [kelasList, setKelasList] = useState<Kelas[]>([]);
   const [query, setQuery] = useState('');
   const [sortBy, setSortBy] = useState<'peringkat' | 'name'>('peringkat');
+  const [leaderboardMetric, setLeaderboardMetric] = useState<
+    'total' | 'percent' | 'participants'
+  >('total');
+  const [anonymize, setAnonymize] = useState(false);
   const { bgColor, textColor } = useContext(AppContext);
 
   // Seed Firestore and subscribe to changes
@@ -110,6 +126,25 @@ export default function Page() {
     k.name?.toLowerCase().includes(query.toLowerCase())
   );
 
+  const leaderboardSorted = useMemo(() => {
+    const list = [...kelasList];
+    switch (leaderboardMetric) {
+      case 'percent':
+        return list.sort(
+          (a, b) =>
+            (b.collected ?? 0) / (b.target ?? 1) -
+            (a.collected ?? 0) / (a.target ?? 1)
+        );
+      case 'participants':
+        return list.sort(
+          (a, b) =>
+            (b.participants?.length ?? 0) - (a.participants?.length ?? 0)
+        );
+      default:
+        return list.sort((a, b) => (b.collected ?? 0) - (a.collected ?? 0));
+    }
+  }, [kelasList, leaderboardMetric]);
+
   const sortedKelas = useMemo(() => {
     const list = [...filtered];
     if (sortBy === 'peringkat') {
@@ -141,6 +176,92 @@ export default function Page() {
           <option value="name">Nama</option>
         </Select>
       </HStack>
+
+      {/* Leaderboard */}
+      <Box
+        borderWidth="1px"
+        borderRadius="md"
+        p={4}
+        mb={4}
+        bg={bgColor}
+        color={textColor}
+      >
+        <Flex mb={2} align="center" justify="space-between">
+          <Box>
+            <Text fontSize="xl" fontWeight="bold">
+              Peringkat
+            </Text>
+            <Text fontSize="sm" color="gray.500">
+              Peringkat kelas berdasarkan berbagai metrik.
+            </Text>
+          </Box>
+          <HStack>
+            <Switch
+              size="md"
+              isChecked={anonymize}
+              onChange={(e) => setAnonymize(e.target.checked)}
+            />
+            <Text fontSize="sm">Anonymize</Text>
+          </HStack>
+        </Flex>
+        <Tabs
+          variant="soft-rounded"
+          colorScheme="blue"
+          onChange={(idx) => {
+            const metrics: ('total' | 'percent' | 'participants')[] = [
+              'total',
+              'percent',
+              'participants',
+            ];
+            setLeaderboardMetric(metrics[idx]);
+          }}
+        >
+          <TabList mb={4}>
+            <Tab>Total Raised</Tab>
+            <Tab>% Target</Tab>
+            <Tab>Participation</Tab>
+          </TabList>
+        </Tabs>
+        <Table variant="simple">
+          <Thead>
+            <Tr>
+              <Th>Peringkat</Th>
+              <Th>Kelas</Th>
+              <Th isNumeric>Terkumpul</Th>
+              <Th isNumeric>% Target</Th>
+              <Th isNumeric>Partisipan</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            {leaderboardSorted.slice(0, 4).map((k, idx) => {
+              const percent = ((k.collected ?? 0) / (k.target ?? 1)) * 100;
+              const medalColors = [
+                'yellow.400',
+                'gray.400',
+                'orange.400',
+              ] as const;
+              const medalColor = medalColors[idx] ?? undefined;
+              return (
+                <Tr key={k.name}>
+                  <Td>
+                    {idx < 3 ? (
+                      <Icon as={FaMedal} color={medalColor} />
+                    ) : (
+                      `#${idx + 1}`
+                    )}
+                  </Td>
+                  <Td>{anonymize ? `Class #${idx + 1}` : k.name}</Td>
+                  <Td isNumeric>
+                    Rp {(k.collected ?? 0).toLocaleString('id-ID')}
+                  </Td>
+                  <Td isNumeric>{percent.toFixed(1)}%</Td>
+                  <Td isNumeric>{k.participants?.length ?? 0}</Td>
+                </Tr>
+              );
+            })}
+          </Tbody>
+        </Table>
+      </Box>
 
       <SimpleGrid columns={{ base: 1, md: 2 }} spacing={4}>
         {sortedKelas.map((k) => {
