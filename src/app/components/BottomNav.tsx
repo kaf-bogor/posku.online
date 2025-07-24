@@ -1,6 +1,9 @@
 import { Box, Flex, Text, Link as ChakraLink } from '@chakra-ui/react';
 import Link from 'next/link';
+import { useContext } from 'react';
 import { FaHome, FaHandsHelping, FaLink } from 'react-icons/fa';
+
+import { AppContext } from '~/lib/context/app';
 
 const navItems = [
   {
@@ -21,13 +24,14 @@ const navItems = [
 ];
 
 export default function BottomNav() {
+  const { bgColor, borderColor, textColor } = useContext(AppContext);
   return (
     <Box
       position="fixed"
       bottom={0}
       w="100%"
-      bg="white"
-      borderTop="1px solid #eee"
+      bg={bgColor}
+      borderTop={`1px solid ${borderColor}`}
       zIndex={100}
       boxShadow="0 -2px 8px rgba(0,0,0,0.04)"
       px={2}
@@ -44,7 +48,7 @@ export default function BottomNav() {
               flexDirection="column"
               alignItems="center"
               fontSize="xs"
-              color="gray.600"
+              color={textColor}
               _hover={{ color: 'purple.600' }}
               minW="60px"
             >
