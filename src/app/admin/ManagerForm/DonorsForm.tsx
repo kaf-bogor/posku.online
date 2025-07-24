@@ -8,9 +8,10 @@ import {
   Input,
   Button,
 } from '@chakra-ui/react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 
 import Donors from '~/app/reports/wakaf_ats/Donors';
+import { AppContext } from '~/lib/context/app';
 import type { Donor } from '~/lib/types/donation';
 
 export default function DonorsFormSection({
@@ -21,6 +22,7 @@ export default function DonorsFormSection({
   onFormChange: (donors: Donor[]) => void;
 }) {
   const [localDonors, setLocalDonors] = useState<Donor[]>(donors);
+  const { bgColor, borderColor, textColor } = useContext(AppContext);
 
   useEffect(() => {
     setLocalDonors(donors);
@@ -74,8 +76,9 @@ export default function DonorsFormSection({
       p={3}
       borderWidth="1px"
       borderRadius="md"
-      borderColor="gray.200"
-      bg="chakra-body-bg._light"
+      borderColor={borderColor}
+      bg={bgColor}
+      color={textColor}
     >
       <Heading size="xs" mb={2}>
         Donors

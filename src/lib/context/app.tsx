@@ -12,6 +12,7 @@ export const siteConfig = {
   image: `${storageUrl}/logo_posku.png?alt=media`,
   isDisplayPromo: false,
   bgColor: 'white',
+  borderColor: 'gray.200',
   textColor: 'black',
 };
 
@@ -21,6 +22,7 @@ type LayoutContextType = {
   image: string;
   isDisplayPromo: boolean;
   bgColor: string;
+  borderColor: string;
   textColor: string;
   setTitle: (title: string) => void;
   setSubtitle: (subtitle: string) => void;
@@ -34,6 +36,7 @@ export const AppContext = createContext<LayoutContextType>({
   image: siteConfig.image,
   isDisplayPromo: siteConfig.isDisplayPromo,
   bgColor: siteConfig.bgColor,
+  borderColor: siteConfig.borderColor,
   textColor: siteConfig.textColor,
   setTitle: () => {},
   setSubtitle: () => {},
@@ -54,11 +57,13 @@ export const AppProvider: FC<LayoutProviderProps> = ({ children }) => {
   );
 
   const bgColor = useColorModeValue('white', 'gray.900');
+  const borderColor = useColorModeValue('gray.200', 'gray.700');
   const textColor = useColorModeValue('black', 'gray.100');
 
   const contextValue = useMemo(
     () => ({
       bgColor,
+      borderColor,
       textColor,
       image,
       isDisplayPromo,
@@ -69,7 +74,7 @@ export const AppProvider: FC<LayoutProviderProps> = ({ children }) => {
       setTitle,
       setSubtitle,
     }),
-    [bgColor, textColor, image, isDisplayPromo, title, subtitle]
+    [bgColor, borderColor, textColor, image, isDisplayPromo, title, subtitle]
   );
 
   return (

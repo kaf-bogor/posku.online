@@ -70,7 +70,7 @@ interface Kelas {
 export default function KelasDetailPage() {
   const { id } = useParams<{ id: string }>();
   const router = useRouter();
-  const { bgColor, textColor } = useContext(AppContext);
+  const { bgColor, textColor, borderColor } = useContext(AppContext);
 
   const kelasName = decodeURIComponent(id);
 
@@ -285,7 +285,7 @@ export default function KelasDetailPage() {
               <ListItem
                 key={p.name}
                 borderBottom="1px"
-                borderColor="gray.100"
+                borderColor={borderColor}
                 pb={2}
               >
                 <HStack justify="space-between">

@@ -23,9 +23,10 @@ import {
 import DOMPurify from 'dompurify';
 import { doc, getDoc } from 'firebase/firestore';
 import { useParams, useRouter } from 'next/navigation';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 
 import Donors from '~/app/reports/wakaf_ats/Donors';
+import { AppContext } from '~/lib/context/app';
 import { db } from '~/lib/firebase';
 import type { DonationPage } from '~/lib/types/donation';
 
@@ -35,11 +36,11 @@ export default function DonationDetailPage() {
   const [campaign, setCampaign] = useState<DonationPage | null>(null);
   const [loading, setLoading] = useState(true);
 
+  const { bgColor, textColor } = useContext(AppContext);
+
   // Color tokens
-  const cardBg = useColorModeValue('white', 'gray.700');
   const cardShadow = useColorModeValue('md', 'dark-lg');
   const headingColor = useColorModeValue('gray.800', 'white');
-  const textColor = useColorModeValue('gray.700', 'gray.100');
   const buttonBg = useColorModeValue('green.500', 'green.400');
   const buttonText = useColorModeValue('white', 'gray.900');
   const buttonHoverBg = useColorModeValue('green.600', 'green.500');
@@ -119,7 +120,7 @@ export default function DonationDetailPage() {
       <VStack
         spacing={4}
         align="stretch"
-        bg={cardBg}
+        bg={bgColor}
         borderRadius="lg"
         boxShadow={cardShadow}
         p={[2, 4]}
@@ -254,19 +255,19 @@ export default function DonationDetailPage() {
       </VStack>
 
       {/* Campaign Description with Tabs */}
-      <Box mt={8} bg="white" borderRadius="lg" boxShadow="sm" p={[2, 4]}>
+      <Box mt={8} bg={bgColor} borderRadius="lg" boxShadow="sm" p={[2, 4]}>
         <Tabs variant="enclosed" colorScheme="green">
           <TabList>
-            <Tab fontWeight="bold" color="gray.700">
+            <Tab fontWeight="bold" color={textColor}>
               Tentang
             </Tab>
-            <Tab fontWeight="bold" color="gray.700">
+            <Tab fontWeight="bold" color={textColor}>
               Laporan
             </Tab>
           </TabList>
           <TabPanels>
             <TabPanel>
-              <Box mb={4} color="gray.700">
+              <Box mb={4} color={textColor}>
                 {campaign.summary ? (
                   <Box
                     as="div"
@@ -291,11 +292,11 @@ export default function DonationDetailPage() {
       {/* Organizer Info */}
       <Box
         mt={6}
-        bg="white"
+        bg={bgColor}
         borderRadius="lg"
         boxShadow="sm"
         p={[2, 4]}
-        color="gray.500"
+        color={textColor}
       >
         <Heading as="h3" size="sm" mb={2}>
           Penanggung Jawab

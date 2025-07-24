@@ -1,9 +1,10 @@
 'use client';
 
 import { VStack, Button, HStack, Box, Heading } from '@chakra-ui/react';
-import type { ReactNode, FormEvent } from 'react';
-import 'react-quill/dist/quill.snow.css';
+import { type ReactNode, type FormEvent, useContext } from 'react';
 
+import 'react-quill/dist/quill.snow.css';
+import { AppContext } from '~/lib/context/app';
 import type { DonationPage } from '~/lib/types/donation';
 import type { EventItem } from '~/lib/types/event';
 import type { NewsItem } from '~/lib/types/news';
@@ -25,6 +26,7 @@ export default function ManagerForm({
   children,
   title,
 }: ManagerFormProps) {
+  const { borderColor } = useContext(AppContext);
   if (!formState) return null;
 
   return (
@@ -33,7 +35,7 @@ export default function ManagerForm({
       mb={8}
       borderWidth="1px"
       borderRadius="md"
-      borderColor="gray.200"
+      borderColor={borderColor}
       bg="chakra-body-bg._dark"
     >
       <form onSubmit={onSubmit}>

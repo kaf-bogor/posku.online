@@ -22,13 +22,14 @@ import {
 import { doc, getDoc } from 'firebase/firestore';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import type React from 'react';
 
 import FormImagePreview from '~/app/admin/components/FormImagePreview';
 import ManagerForm from '~/app/admin/ManagerForm';
 import DonorsFormSection from '~/app/admin/ManagerForm/DonorsForm';
 import OrganizerFormSection from '~/app/admin/ManagerForm/OrganizerForm';
+import { AppContext } from '~/lib/context/app';
 import { db } from '~/lib/firebase'; // adjust the import path to your firebase config
 import { useCrudManager } from '~/lib/hooks/useCrudManager';
 import type { Activity, DonationPage } from '~/lib/types/donation';
@@ -41,6 +42,7 @@ const DonationDetailPage = ({ params }: { params: { id: string } }) => {
   const router = useRouter();
 
   const [donation, setDonation] = useState<DonationPage | null>(null);
+  const { bgColor, textColor, borderColor } = useContext(AppContext);
 
   const {
     editForm,
@@ -119,8 +121,8 @@ const DonationDetailPage = ({ params }: { params: { id: string } }) => {
               p={3}
               borderWidth="1px"
               borderRadius="md"
-              borderColor="gray.200"
-              bg="chakra-body-bg._dark"
+              borderColor={borderColor}
+              bg={bgColor}
             >
               <FormControl isRequired>
                 <FormLabel>Title</FormLabel>
@@ -223,7 +225,7 @@ const DonationDetailPage = ({ params }: { params: { id: string } }) => {
           </TabPanel>
           <TabPanel>
             {/* Activities Panel */}
-            <Box mt={6}>
+            <Box mt={6} p={4} bg={bgColor} color={textColor}>
               {donation.activities && donation.activities.length > 0 ? (
                 <List spacing={3} maxH="300px" overflowY="auto">
                   {donation.activities

@@ -1,6 +1,8 @@
 import { Box, Button, Heading, Flex, Text } from '@chakra-ui/react';
+import { useContext } from 'react';
 import { FaTrash } from 'react-icons/fa';
 
+import { AppContext } from '~/lib/context/app';
 import type { Donor } from '~/lib/types/donation';
 
 /**
@@ -19,10 +21,13 @@ export default function Donors({
   withHeading?: boolean;
   onRemove?: (donorId: number) => void;
 }) {
+  const { bgColor, borderColor, textColor } = useContext(AppContext);
+
   return (
     <Box
       className="card"
-      bg="chakra-redbody-bg._dark"
+      bg={bgColor}
+      color={textColor}
       rounded="xl"
       shadow="md"
       p={withHeading ? 6 : 0}
@@ -34,7 +39,7 @@ export default function Donors({
           as="h2"
           fontSize="3xl"
           fontWeight="bold"
-          color="gray.800"
+          color={textColor}
           mb={6}
           textAlign="center"
         >
@@ -47,9 +52,9 @@ export default function Donors({
         <Flex
           display={{ base: 'none', md: 'flex' }}
           fontWeight="bold"
-          color="chakra-body-text._dark"
+          color={textColor}
           borderBottom="1px solid"
-          borderColor="gray.200"
+          borderColor={borderColor}
           py={2}
           px={2}
           gap={2}
@@ -89,7 +94,7 @@ export default function Donors({
                 direction={{ base: 'column', md: 'row' }}
                 align={{ base: 'flex-start', md: 'center' }}
                 borderBottom="1px solid"
-                borderColor="gray.100"
+                borderColor={borderColor}
                 py={3}
                 px={2}
                 gap={{ base: 0, md: 2 }}
@@ -97,7 +102,7 @@ export default function Donors({
                 bg={{ base: 'gray.50', md: 'transparent' }}
                 borderRadius={{ base: 'md', md: 'none' }}
                 mb={{ base: 3, md: 0 }}
-                color="chakra-body-text._dark"
+                color={textColor}
               >
                 {/* Name */}
                 <Box flex="2" w="100%">
@@ -144,7 +149,7 @@ export default function Donors({
                     <Box
                       as="span"
                       display={{ base: 'inline', md: 'none' }}
-                      color="gray.500"
+                      color={textColor}
                       fontWeight="normal"
                       mr={2}
                     >

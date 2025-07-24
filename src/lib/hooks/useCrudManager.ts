@@ -6,6 +6,7 @@ import type { DocumentData } from 'firebase/firestore';
 import {
   collection,
   getDocs,
+  getDoc,
   addDoc,
   updateDoc,
   deleteDoc,
@@ -179,9 +180,30 @@ export function useCrudManager<T extends ManagedItem>({
         imageUrls = [...imageUrls, ...newImageUrls];
       }
 
-      // Sanitize editForm into a plain object
+      // Prepare reference and plain object of editForm
       const docRef = firestoreDoc(db, collectionName, editId);
       const { id, ...rest } = editForm;
+
+      // Fetch previous data for diff
+      const prevSnap = await getDoc(docRef);
+      const prevData = prevSnap.exists()
+        ? prevSnap.data()
+        : ({} as Record<string, unknown>);
+
+      // Build description of changed fields
+      const changedFields: string[] = [];
+      Object.entries(rest).forEach(([key, value]) => {
+        const prevVal = (prevData as Record<string, unknown>)[key];
+        if (JSON.stringify(prevVal) !== JSON.stringify(value)) {
+          changedFields.push(`${key}: ${prevVal ?? '–'} → ${value}`);
+        }
+      });
+      const changeDesc =
+        changedFields.length > 0
+          ? changedFields.join('; ')
+          : 'No visible field change';
+
+      // Sanitize editForm into a plain object
 
       const updatedData = {
         ...JSON.parse(JSON.stringify(rest)), // safely strip any prototype
@@ -193,7 +215,7 @@ export function useCrudManager<T extends ManagedItem>({
         userId: user?.uid ?? 'anonymous',
         userName: user?.displayName ?? user?.email ?? 'Anonymous',
         type: 'edit',
-        description: `Mengubah ${collectionName} ${editForm.title}`,
+        description: `Mengubah ${collectionName}: ${changeDesc}`,
         datetime: new Date().toISOString(),
       };
       await updateDoc(docRef, {

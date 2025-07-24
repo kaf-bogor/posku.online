@@ -6,9 +6,10 @@ import {
   FormLabel,
   Input,
 } from '@chakra-ui/react';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import type React from 'react';
 
+import { AppContext } from '~/lib/context/app';
 import type { DonationPage } from '~/lib/types/donation';
 
 type OrganizerFormProps = {
@@ -24,6 +25,7 @@ function OrganizerFormSection({ organizer, onFormChange }: OrganizerFormProps) {
     name: organizer?.name || '',
     tagline: organizer?.tagline || '',
   });
+  const { bgColor, textColor, borderColor } = useContext(AppContext);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -40,8 +42,9 @@ function OrganizerFormSection({ organizer, onFormChange }: OrganizerFormProps) {
       p={3}
       borderWidth="1px"
       borderRadius="md"
-      borderColor="gray.200"
-      bg="chakra-body-bg._light"
+      borderColor={borderColor}
+      bg={bgColor}
+      color={textColor}
     >
       <Heading size="xs" mb={2}>
         Organizer
