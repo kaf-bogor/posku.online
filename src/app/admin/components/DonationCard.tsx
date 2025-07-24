@@ -12,8 +12,9 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react';
 import DOMPurify from 'dompurify'; // Importing dompurify
-import { useState } from 'react'; // Import useState
+import { useContext, useState } from 'react'; // Import useState
 
+import { AppContext } from '~/lib/context/app';
 import type { DonationPage } from '~/lib/types/donation';
 
 interface DonationCardProps {
@@ -33,14 +34,22 @@ export default function DonationCard({
 }: DonationCardProps) {
   const { title, summary, target, imageUrls } = donation;
   const [isExpanded, setIsExpanded] = useState(false); // New state for toggling summary
-
+  const { textColor, borderColor } = useContext(AppContext);
   const percentage = Math.min((currentAmount / target) * 100, 100).toFixed(0);
   const bg = useColorModeValue('white', 'gray.800');
 
   const sanitizedSummary = DOMPurify.sanitize(summary);
 
   return (
-    <Box bg={bg} borderRadius="lg" overflow="hidden" boxShadow="md" w="100%">
+    <Box
+      bg={bg}
+      borderRadius="lg"
+      overflow="hidden"
+      boxShadow="md"
+      w="100%"
+      border="1px solid"
+      borderColor={borderColor}
+    >
       <Image
         src={imageUrls[0] || '/placeholder.png'}
         alt={title}
@@ -53,10 +62,10 @@ export default function DonationCard({
         <Heading fontSize="lg">{title}</Heading>
 
         <Box>
-          <Text fontWeight="medium" fontSize="sm" color="gray.600">
+          <Text fontWeight="medium" fontSize="sm" color={textColor}>
             Target: Rp {target.toLocaleString()}
           </Text>
-          <Text fontWeight="medium" fontSize="sm" color="gray.600">
+          <Text fontWeight="medium" fontSize="sm" color={textColor}>
             Terkumpul: Rp {currentAmount.toLocaleString()} ({percentage}%)
           </Text>
         </Box>
@@ -69,7 +78,7 @@ export default function DonationCard({
 
         <Text
           fontSize="sm"
-          color="gray.700"
+          color={textColor}
           dangerouslySetInnerHTML={{
             __html: isExpanded
               ? sanitizedSummary

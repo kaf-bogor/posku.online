@@ -100,9 +100,9 @@ const DonationDetailPage = ({ params }: { params: { id: string } }) => {
     >
       <Tabs variant="soft-rounded" isFitted>
         <TabList>
-          <Tab>Laporan</Tab>
-          <Tab>Donation Details</Tab>
-          <Tab>Aktivitas</Tab>
+          <Tab color={textColor}>Laporan</Tab>
+          <Tab color={textColor}>Donation Details</Tab>
+          <Tab color={textColor}>Aktivitas</Tab>
         </TabList>
         <TabPanels>
           <TabPanel>

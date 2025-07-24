@@ -20,7 +20,7 @@ const DonationsPage = () => {
   return (
     <SimpleGrid columns={{ base: 1, md: 2 }} spacing={4}>
       {donations.map((d) => (
-        <Box key={d.id} p={3} bg="white" borderRadius="md" boxShadow="sm">
+        <Box key={d.id} p={3} borderRadius="md" boxShadow="sm">
           <DonationCard
             donation={d}
             currentAmount={
