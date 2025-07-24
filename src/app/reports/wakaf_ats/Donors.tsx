@@ -73,7 +73,7 @@ export default function Donors({
         {donors.length === 0 ? (
           <Box
             textAlign="center"
-            color="gray.500"
+            color={textColor}
             py={6}
             fontSize="md"
             borderRadius="md"
@@ -99,7 +99,7 @@ export default function Donors({
                 px={2}
                 gap={{ base: 0, md: 2 }}
                 _last={{ borderBottom: 'none' }}
-                bg={{ base: 'gray.50', md: 'transparent' }}
+                bg={{ base: bgColor, md: 'transparent' }}
                 borderRadius={{ base: 'md', md: 'none' }}
                 mb={{ base: 3, md: 0 }}
                 color={textColor}
