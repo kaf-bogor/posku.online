@@ -13,6 +13,11 @@ import {
   TabPanel,
   HStack,
   VStack,
+  Box,
+  List,
+  ListItem,
+  Text,
+  Badge,
 } from '@chakra-ui/react';
 import { doc, getDoc } from 'firebase/firestore';
 import dynamic from 'next/dynamic';
@@ -26,7 +31,8 @@ import DonorsFormSection from '~/app/admin/ManagerForm/DonorsForm';
 import OrganizerFormSection from '~/app/admin/ManagerForm/OrganizerForm';
 import { db } from '~/lib/firebase'; // adjust the import path to your firebase config
 import { useCrudManager } from '~/lib/hooks/useCrudManager';
-import { initialDonationState, type DonationPage } from '~/lib/types/donation';
+import type { Activity, DonationPage } from '~/lib/types/donation';
+import { initialDonationState } from '~/lib/types/donation';
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
@@ -94,6 +100,7 @@ const DonationDetailPage = ({ params }: { params: { id: string } }) => {
         <TabList>
           <Tab>Laporan</Tab>
           <Tab>Donation Details</Tab>
+          <Tab>Aktivitas</Tab>
         </TabList>
         <TabPanels>
           <TabPanel>
@@ -213,6 +220,42 @@ const DonationDetailPage = ({ params }: { params: { id: string } }) => {
               organizer={donation.organizer}
               onFormChange={handleEditFormChange}
             />
+          </TabPanel>
+          <TabPanel>
+            {/* Activities Panel */}
+            <Box mt={6}>
+              {donation.activities && donation.activities.length > 0 ? (
+                <List spacing={3} maxH="300px" overflowY="auto">
+                  {donation.activities
+                    .slice()
+                    .sort(
+                      (a: Activity, b: Activity) =>
+                        new Date(b.datetime).getTime() -
+                        new Date(a.datetime).getTime()
+                    )
+                    .map((act: Activity) => (
+                      <ListItem
+                        key={act.datetime}
+                        borderBottomWidth="1px"
+                        pb={2}
+                      >
+                        <VStack align="start" spacing={0}>
+                          <Text fontSize="sm" fontWeight="bold">
+                            {act.userName ?? 'Unknown'}{' '}
+                            <Badge colorScheme="purple">{act.type}</Badge>
+                          </Text>
+                          <Text fontSize="sm">{act.description}</Text>
+                          <Text fontSize="xs" color="gray.500">
+                            {new Date(act.datetime).toLocaleString('id-ID')}
+                          </Text>
+                        </VStack>
+                      </ListItem>
+                    ))}
+                </List>
+              ) : (
+                <Text>Tidak ada aktivitas.</Text>
+              )}
+            </Box>
           </TabPanel>
         </TabPanels>
       </Tabs>

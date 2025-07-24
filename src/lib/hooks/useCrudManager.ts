@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 
 import { useToast } from '@chakra-ui/react';
+import { getAuth } from 'firebase/auth';
 import type { DocumentData } from 'firebase/firestore';
 import {
   collection,
@@ -11,10 +12,12 @@ import {
   doc as firestoreDoc,
   query,
   orderBy,
+  arrayUnion,
 } from 'firebase/firestore';
 import { useState, useEffect, useRef, useCallback } from 'react';
 
 import { db } from '~/lib/firebase';
+import type { Activity } from '~/lib/types/donation';
 
 // Placeholder untuk tipe data generik
 // Nantinya akan diganti dengan tipe spesifik seperti Donation, News, atau Event
@@ -107,7 +110,22 @@ export function useCrudManager<T extends ManagedItem>({
         selectedFiles,
         blobFolderName
       );
-      const docData = { ...form, imageUrls, createdAt: new Date() };
+      const auth = getAuth();
+      const user = auth.currentUser;
+      const activity: Activity = {
+        userId: user?.uid ?? 'anonymous',
+        userName: user?.displayName ?? user?.email ?? 'Anonymous',
+        type: 'add',
+        description: `Menambahkan ${collectionName} ${form.title}`,
+        datetime: new Date().toISOString(),
+      };
+
+      const docData = {
+        ...form,
+        imageUrls,
+        createdAt: new Date(),
+        activities: [activity],
+      };
       console.log('Adding item:', docData);
       await addDoc(collection(db, collectionName), docData);
       toast({
@@ -170,7 +188,18 @@ export function useCrudManager<T extends ManagedItem>({
         imageUrls,
       };
 
-      await updateDoc(docRef, updatedData);
+      const user = getAuth().currentUser;
+      const activity: Activity = {
+        userId: user?.uid ?? 'anonymous',
+        userName: user?.displayName ?? user?.email ?? 'Anonymous',
+        type: 'edit',
+        description: `Mengubah ${collectionName} ${editForm.title}`,
+        datetime: new Date().toISOString(),
+      };
+      await updateDoc(docRef, {
+        ...updatedData,
+        activities: arrayUnion(activity),
+      });
 
       toast({
         title: 'Success',
@@ -208,7 +237,17 @@ export function useCrudManager<T extends ManagedItem>({
     if (!pendingDeleteId) return;
     setLoading(true);
     try {
-      await deleteDoc(firestoreDoc(db, collectionName, pendingDeleteId));
+      const delRef = firestoreDoc(db, collectionName, pendingDeleteId);
+      const user = getAuth().currentUser;
+      const activity: Activity = {
+        userId: user?.uid ?? 'anonymous',
+        userName: user?.displayName ?? user?.email ?? 'Anonymous',
+        type: 'delete',
+        description: `Menghapus item ${pendingDeleteId}`,
+        datetime: new Date().toISOString(),
+      };
+      await updateDoc(delRef, { activities: arrayUnion(activity) });
+      await deleteDoc(delRef);
       toast({
         title: 'Success',
         description: 'Item deleted successfully.',

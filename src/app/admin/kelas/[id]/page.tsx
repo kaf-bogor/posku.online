@@ -2,6 +2,7 @@
 
 import {
   Box,
+  Badge,
   Button,
   Flex,
   FormControl,
@@ -16,6 +17,7 @@ import {
   Text,
   VStack,
 } from '@chakra-ui/react';
+import { getAuth } from 'firebase/auth';
 import {
   arrayUnion,
   arrayRemove,
@@ -34,9 +36,25 @@ import { AppContext } from '~/lib/context/app';
 import { db } from '~/lib/firebase';
 import { formatIDR } from '~/lib/utils/currency';
 
+const getUserInfo = () => {
+  const u = getAuth().currentUser;
+  return {
+    userId: u?.uid ?? 'anonymous',
+    userName: u?.displayName ?? u?.email ?? 'Anonymous',
+  };
+};
+
 interface Participant {
   name: string;
   value: number;
+  datetime: string;
+}
+
+interface Activity {
+  userId: string;
+  userName: string | null;
+  type: 'add' | 'remove' | 'update_target';
+  description: string;
   datetime: string;
 }
 
@@ -44,6 +62,7 @@ interface Kelas {
   name: string;
   santriCount: number;
   target?: number;
+  activities?: Activity[];
   participants?: Participant[];
   collected?: number;
 }
@@ -81,6 +100,7 @@ export default function KelasDetailPage() {
           santriCount: 0,
           target: 0,
           participants: [],
+          activities: [],
           collected: 0,
         } as Kelas);
       }
@@ -101,6 +121,15 @@ export default function KelasDetailPage() {
     setSaving(true);
     const ref = doc(db, 'kelas', kelasName);
     const valueNum = Number(participantValue);
+    const { userId, userName } = getUserInfo();
+
+    const newActivity: Activity = {
+      userId,
+      userName,
+      type: 'add',
+      description: `Menambah peserta ${participantName} dengan nominal Rp ${valueNum.toLocaleString('id-ID')}`,
+      datetime: new Date().toISOString(),
+    };
     await updateDoc(ref, {
       participants: arrayUnion({
         name: participantName,
@@ -108,6 +137,7 @@ export default function KelasDetailPage() {
         datetime: new Date().toISOString(),
       } as Participant),
       collected: increment(valueNum),
+      activities: arrayUnion(newActivity),
     });
     setParticipantName('');
     setParticipantValue('');
@@ -118,9 +148,18 @@ export default function KelasDetailPage() {
     if (!participant) return;
     setSaving(true);
     const ref = doc(db, 'kelas', kelasName);
+    const { userId: delUid, userName: delName } = getUserInfo();
+    const delActivity: Activity = {
+      userId: delUid,
+      userName: delName,
+      type: 'remove',
+      description: `Menghapus peserta ${participant.name} dengan nominal Rp ${participant.value.toLocaleString('id-ID')}`,
+      datetime: new Date().toISOString(),
+    };
     await updateDoc(ref, {
       participants: arrayRemove(participant),
       collected: increment(-participant.value),
+      activities: arrayUnion(delActivity),
     });
     setSaving(false);
   };
@@ -129,7 +168,18 @@ export default function KelasDetailPage() {
     if (!newTarget) return;
     setSaving(true);
     const ref = doc(db, 'kelas', kelasName);
-    await updateDoc(ref, { target: Number(newTarget) });
+    const { userId: updUid, userName: updName } = getUserInfo();
+    const updActivity: Activity = {
+      userId: updUid,
+      userName: updName,
+      type: 'update_target',
+      description: `Mengubah target dari Rp ${(kelas?.target ?? 0).toLocaleString('id-ID')} ke Rp ${Number(newTarget).toLocaleString('id-ID')}`,
+      datetime: new Date().toISOString(),
+    };
+    await updateDoc(ref, {
+      target: Number(newTarget),
+      activities: arrayUnion(updActivity),
+    });
     setSaving(false);
   };
 
@@ -265,6 +315,40 @@ export default function KelasDetailPage() {
           </List>
         ) : (
           <Text>Tidak ada peserta.</Text>
+        )}
+      </Box>
+
+      {/* Activities Panel */}
+      <Box>
+        <Heading size="md" mb={2} mt={4}>
+          Aktivitas
+        </Heading>
+        {kelas.activities && kelas.activities.length > 0 ? (
+          <List spacing={3} maxH="300px" overflowY="auto">
+            {kelas.activities
+              .slice() // copy
+              .sort(
+                (a, b) =>
+                  new Date(b.datetime).getTime() -
+                  new Date(a.datetime).getTime()
+              )
+              .map((act) => (
+                <ListItem key={act.datetime} borderBottomWidth="1px" pb={2}>
+                  <VStack align="start" spacing={0}>
+                    <Text fontSize="sm" fontWeight="bold">
+                      {act.userName ?? 'Unknown'}{' '}
+                      <Badge colorScheme="purple">{act.type}</Badge>
+                    </Text>
+                    <Text fontSize="sm">{act.description}</Text>
+                    <Text fontSize="xs" color="gray.500">
+                      {new Date(act.datetime).toLocaleString('id-ID')}
+                    </Text>
+                  </VStack>
+                </ListItem>
+              ))}
+          </List>
+        ) : (
+          <Text>Tidak ada aktivitas.</Text>
         )}
       </Box>
     </VStack>

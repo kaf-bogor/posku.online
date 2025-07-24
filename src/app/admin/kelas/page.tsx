@@ -26,6 +26,7 @@ import {
   Th,
   Td,
   Icon,
+  TableContainer,
 } from '@chakra-ui/react';
 import { collection, doc, setDoc, onSnapshot } from 'firebase/firestore';
 import Link from 'next/link';
@@ -166,7 +167,7 @@ export default function Page() {
   return (
     <VStack align="stretch" spacing={4}>
       <HStack>
-        <InputGroup>
+        <InputGroup bg={bgColor} color={textColor}>
           <InputLeftElement pointerEvents="none">
             <SearchIcon color="gray.400" />
           </InputLeftElement>
@@ -178,6 +179,8 @@ export default function Page() {
         </InputGroup>
 
         <Select
+          bg={bgColor}
+          color={textColor}
           maxW="200px"
           value={sortBy}
           onChange={(e) => setSortBy(e.target.value as 'peringkat' | 'name')}
@@ -235,48 +238,50 @@ export default function Page() {
             <Tab>Participation</Tab>
           </TabList>
         </Tabs>
-        <Table variant="simple">
-          <Thead>
-            <Tr>
-              <Th>Peringkat</Th>
-              <Th>Kelas</Th>
-              <Th isNumeric>Terkumpul</Th>
-              <Th isNumeric>% Target</Th>
-              <Th isNumeric>Partisipan</Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {leaderboardSorted.slice(0, 4).map((k, idx) => {
-              const percent = ((k.collected ?? 0) / (k.target ?? 1)) * 100;
-              const medalColors = [
-                'yellow.400',
-                'gray.400',
-                'orange.400',
-              ] as const;
-              const medalColor = medalColors[idx] ?? undefined;
-              return (
-                <Tr key={k.name}>
-                  <Td>
-                    {idx < 3 ? (
-                      <Icon as={FaMedal} color={medalColor} />
-                    ) : (
-                      `#${idx + 1}`
-                    )}
-                  </Td>
-                  <Td>{anonymize ? `Class #${idx + 1}` : k.name}</Td>
-                  <Td isNumeric>
-                    Rp {(k.collected ?? 0).toLocaleString('id-ID')}
-                  </Td>
-                  <Td isNumeric>{percent.toFixed(1)}%</Td>
-                  <Td isNumeric>{k.participants?.length ?? 0}</Td>
-                </Tr>
-              );
-            })}
-          </Tbody>
-        </Table>
+        <TableContainer overflowX="auto">
+          <Table variant="simple" size="sm">
+            <Thead>
+              <Tr>
+                <Th>Peringkat</Th>
+                <Th>Kelas</Th>
+                <Th isNumeric>Terkumpul</Th>
+                <Th isNumeric>% Target</Th>
+                <Th isNumeric>Partisipan</Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              {leaderboardSorted.slice(0, 4).map((k, idx) => {
+                const percent = ((k.collected ?? 0) / (k.target ?? 1)) * 100;
+                const medalColors = [
+                  'yellow.400',
+                  'gray.400',
+                  'orange.400',
+                ] as const;
+                const medalColor = medalColors[idx] ?? undefined;
+                return (
+                  <Tr key={k.name}>
+                    <Td>
+                      {idx < 3 ? (
+                        <Icon as={FaMedal} color={medalColor} />
+                      ) : (
+                        `#${idx + 1}`
+                      )}
+                    </Td>
+                    <Td>{anonymize ? `Class #${idx + 1}` : k.name}</Td>
+                    <Td isNumeric>
+                      Rp {(k.collected ?? 0).toLocaleString('id-ID')}
+                    </Td>
+                    <Td isNumeric>{percent.toFixed(1)}%</Td>
+                    <Td isNumeric>{k.participants?.length ?? 0}</Td>
+                  </Tr>
+                );
+              })}
+            </Tbody>
+          </Table>
+        </TableContainer>
       </Box>
 
-      <SimpleGrid columns={{ base: 1, md: 2 }} spacing={4}>
+      <SimpleGrid columns={{ base: 1, md: 2 }} spacing={4} mb={12}>
         {sortedKelas.map((k) => {
           const { collected = 0, target = 0 } = k;
           const percent = (collected / target) * 100;

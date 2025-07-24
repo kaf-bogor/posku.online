@@ -12,6 +12,7 @@ export interface DonationPage {
     tagline: string;
   };
   donors: Array<Donor>;
+  activities: Array<Activity>;
 }
 
 export interface Donor {
@@ -34,4 +35,13 @@ export const initialDonationState: Omit<DonationPage, 'id'> = {
     tagline: '',
   },
   donors: [],
+  activities: [],
 };
+
+export interface Activity {
+  userId: string;
+  userName: string | null;
+  type: 'add' | 'edit' | 'delete';
+  description: string;
+  datetime: string;
+}
