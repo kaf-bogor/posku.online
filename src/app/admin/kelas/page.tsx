@@ -34,6 +34,7 @@ import { FaMedal } from 'react-icons/fa';
 
 import { AppContext } from '~/lib/context/app';
 import { db } from '~/lib/firebase';
+import { formatIDR } from '~/lib/utils/currency';
 
 type Kelas = {
   name: string;
@@ -73,6 +74,15 @@ export default function Page() {
     'total' | 'percent' | 'participants'
   >('total');
   const [anonymize, setAnonymize] = useState(false);
+
+  const totalRaised = useMemo(
+    () => kelasList.reduce((s, k) => s + (k.collected ?? 0), 0),
+    [kelasList]
+  );
+  const totalTarget = useMemo(
+    () => kelasList.reduce((s, k) => s + (k.target ?? 0), 0),
+    [kelasList]
+  );
   const { bgColor, textColor } = useContext(AppContext);
 
   // Seed Firestore and subscribe to changes
@@ -190,6 +200,9 @@ export default function Page() {
           <Box>
             <Text fontSize="xl" fontWeight="bold">
               Peringkat
+            </Text>
+            <Text fontSize="sm">
+              Total Raised {formatIDR(totalRaised)} / {formatIDR(totalTarget)}
             </Text>
             <Text fontSize="sm" color="gray.500">
               Peringkat kelas berdasarkan berbagai metrik.

@@ -60,6 +60,14 @@ export default function KelasDetailPage() {
   const [participantName, setParticipantName] = useState('');
   const [participantValue, setParticipantValue] = useState('');
   const [saving, setSaving] = useState(false);
+  const [newTarget, setNewTarget] = useState('');
+
+  // Sync editable target when kelas data arrives
+  useEffect(() => {
+    if (kelas?.target !== undefined) {
+      setNewTarget(kelas.target.toString());
+    }
+  }, [kelas?.target]);
 
   useEffect(() => {
     const ref = doc(db, 'kelas', kelasName);
@@ -117,6 +125,14 @@ export default function KelasDetailPage() {
     setSaving(false);
   };
 
+  const updateTarget = async () => {
+    if (!newTarget) return;
+    setSaving(true);
+    const ref = doc(db, 'kelas', kelasName);
+    await updateDoc(ref, { target: Number(newTarget) });
+    setSaving(false);
+  };
+
   if (loading || !kelas) {
     return (
       <Box p={8} textAlign="center">
@@ -162,6 +178,22 @@ export default function KelasDetailPage() {
       </Flex>
       <Text>Jumlah Santri: {kelas.santriCount}</Text>
       <Text>Total Peserta Saat Ini: {kelas.participants?.length ?? 0}</Text>
+
+      <Box>
+        <Heading size="md" mb={2}>
+          Edit Target
+        </Heading>
+        <HStack>
+          <Input
+            type="number"
+            value={newTarget}
+            onChange={(e) => setNewTarget(e.target.value)}
+          />
+          <Button colorScheme="green" onClick={updateTarget} isLoading={saving}>
+            Simpan
+          </Button>
+        </HStack>
+      </Box>
 
       <Box>
         <Heading size="md" mb={2}>
