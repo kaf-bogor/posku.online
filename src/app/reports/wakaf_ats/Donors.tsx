@@ -1,5 +1,5 @@
 import { Box, Button, Heading, Flex, Text } from '@chakra-ui/react';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { FaTrash } from 'react-icons/fa';
 
 import { AppContext } from '~/lib/context/app';
@@ -22,6 +22,16 @@ export default function Donors({
   onRemove?: (donorId: number) => void;
 }) {
   const { bgColor, borderColor, textColor } = useContext(AppContext);
+
+  // Show more/less state
+  const [showAll, setShowAll] = useState(false);
+
+  // Always sort donors by newest date so latest donors appear at the top
+  const sortedDonors = [...donors].sort(
+    (a, b) => new Date(b.datetime).getTime() - new Date(a.datetime).getTime()
+  );
+
+  const displayedDonors = showAll ? sortedDonors : sortedDonors.slice(0, 10);
 
   return (
     <Box
@@ -59,6 +69,7 @@ export default function Donors({
           px={2}
           gap={2}
         >
+          <Box />
           <Box flex="2">Nama Donatur</Box>
           <Box flex="1" textAlign="right">
             Nominal
@@ -83,104 +94,107 @@ export default function Donors({
             Belum ada donatur.
           </Box>
         ) : (
-          [...donors]
-            .sort(
-              (a, b) =>
-                new Date(b.datetime).getTime() - new Date(a.datetime).getTime()
-            )
-            .map((row) => (
-              <Flex
-                key={row.name + row.datetime}
-                direction={{ base: 'column', md: 'row' }}
-                align={{ base: 'flex-start', md: 'center' }}
-                borderBottom="1px solid"
-                borderColor={borderColor}
-                py={3}
-                px={2}
-                gap={{ base: 0, md: 2 }}
-                _last={{ borderBottom: 'none' }}
-                bg={{ base: bgColor, md: 'transparent' }}
-                borderRadius={{ base: 'md', md: 'none' }}
-                mb={{ base: 3, md: 0 }}
-                color={textColor}
-              >
-                {/* Name */}
-                <Box flex="2" w="100%">
-                  <Text fontWeight="medium" fontSize={{ base: 'md', md: 'sm' }}>
-                    <Box
-                      as="span"
-                      display={{ base: 'inline', md: 'none' }}
-                      fontWeight="normal"
-                      mr={2}
-                    >
-                      Nama Donatur:
-                    </Box>
-                    {row.name}
-                  </Text>
-                </Box>
-                {/* Nominal */}
-                <Box
-                  flex="1"
-                  w="100%"
-                  textAlign={{ base: 'left', md: 'right' }}
-                >
-                  <Text
-                    color="green.700"
-                    fontWeight="bold"
-                    fontSize={{ base: 'md', md: 'sm' }}
-                  >
-                    <Box
-                      as="span"
-                      display={{ base: 'inline', md: 'none' }}
-                      fontWeight="normal"
-                      mr={2}
-                    >
-                      Nominal:
-                    </Box>
-                    Rp {row.value.toLocaleString('id-ID')}
-                  </Text>
-                </Box>
-                {/* Date */}
-                <Box
-                  w={{ base: '100%', md: '100px' }}
-                  textAlign={{ base: 'left', md: 'center' }}
-                >
-                  <Text fontSize={{ base: 'md', md: 'sm' }}>
-                    <Box
-                      as="span"
-                      display={{ base: 'inline', md: 'none' }}
-                      color={textColor}
-                      fontWeight="normal"
-                      mr={2}
-                    >
-                      Tanggal:
-                    </Box>
-                    {new Date(row.datetime).toLocaleDateString('id-ID', {
-                      year: 'numeric',
-                      month: 'short',
-                      day: 'numeric',
-                    })}
-                  </Text>
-                </Box>
-                {/* Remove button */}
-                {onRemove && (
+          displayedDonors.map((row, idx) => (
+            <Flex
+              key={row.name + row.datetime}
+              direction={{ base: 'column', md: 'row' }}
+              align={{ base: 'flex-start', md: 'center' }}
+              borderBottom="1px solid"
+              borderColor={borderColor}
+              py={3}
+              px={2}
+              gap={{ base: 0, md: 2 }}
+              _last={{ borderBottom: 'none' }}
+              bg={{ base: bgColor, md: 'transparent' }}
+              borderRadius={{ base: 'md', md: 'none' }}
+              mb={{ base: 3, md: 0 }}
+              color={textColor}
+            >
+              <Box>{idx + 1}.</Box>
+              {/* Name */}
+              <Box flex="2" w="100%">
+                <Text fontWeight="medium" fontSize={{ base: 'md', md: 'sm' }}>
                   <Box
-                    flex="0 0 20px"
-                    w={{ base: '100%', md: '40px' }}
-                    mt={{ base: 2, md: 0 }}
+                    as="span"
+                    display={{ base: 'inline', md: 'none' }}
+                    fontWeight="normal"
+                    mr={2}
                   >
-                    <Button
-                      colorScheme="red"
-                      size="sm"
-                      onClick={() => onRemove(row.id)}
-                      w={{ base: '100%', md: 'auto' }}
-                    >
-                      <FaTrash size={16} />
-                    </Button>
+                    Nama Donatur:
                   </Box>
-                )}
-              </Flex>
-            ))
+                  {row.name}
+                  {row?.donorsCount && row.donorsCount > 1
+                    ? ` - ${row.donorsCount} donatur`
+                    : null}
+                </Text>
+              </Box>
+              {/* Nominal */}
+              <Box flex="1" w="100%" textAlign={{ base: 'left', md: 'right' }}>
+                <Text
+                  color="green.700"
+                  fontWeight="bold"
+                  fontSize={{ base: 'md', md: 'sm' }}
+                >
+                  <Box
+                    as="span"
+                    display={{ base: 'inline', md: 'none' }}
+                    fontWeight="normal"
+                    mr={2}
+                  >
+                    Nominal:
+                  </Box>
+                  Rp {row.value.toLocaleString('id-ID')}
+                </Text>
+              </Box>
+              {/* Date */}
+              <Box
+                w={{ base: '100%', md: '100px' }}
+                textAlign={{ base: 'left', md: 'center' }}
+              >
+                <Text fontSize={{ base: 'md', md: 'sm' }}>
+                  <Box
+                    as="span"
+                    display={{ base: 'inline', md: 'none' }}
+                    color={textColor}
+                    fontWeight="normal"
+                    mr={2}
+                  >
+                    Tanggal:
+                  </Box>
+                  {new Date(row.datetime).toLocaleDateString('id-ID', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric',
+                  })}
+                </Text>
+              </Box>
+              {/* Remove button */}
+              {onRemove && (
+                <Box
+                  flex="0 0 20px"
+                  w={{ base: '100%', md: '40px' }}
+                  mt={{ base: 2, md: 0 }}
+                >
+                  <Button
+                    colorScheme="red"
+                    size="sm"
+                    onClick={() => onRemove(row.id)}
+                    w={{ base: '100%', md: 'auto' }}
+                  >
+                    <FaTrash size={16} />
+                  </Button>
+                </Box>
+              )}
+            </Flex>
+          ))
+        )}
+
+        {donors.length > 10 && (
+          <Box textAlign="center" mt={4}>
+            <Button size="sm" onClick={() => setShowAll((prev) => !prev)}>
+              {showAll ? 'Show Less' : 'Show More'}
+            </Button>
+          </Box>
         )}
       </Box>
     </Box>

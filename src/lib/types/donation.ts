@@ -12,10 +12,12 @@ export interface DonationPage {
     tagline: string;
   };
   donors: Array<Donor>;
+  donorsCount: number;
   activities: Array<Activity>;
 }
 
 export interface Donor {
+  donorsCount?: number;
   id: number;
   name: string;
   value: number;
@@ -35,6 +37,7 @@ export const initialDonationState: Omit<DonationPage, 'id'> = {
     tagline: '',
   },
   donors: [],
+  donorsCount: 1,
   activities: [],
 };
 

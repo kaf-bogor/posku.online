@@ -192,15 +192,23 @@ export function useCrudManager<T extends ManagedItem>({
 
       // Build description of changed fields
       const changedFields: string[] = [];
+      const isPrimitive = (val: unknown) =>
+        val === null || ['string', 'number', 'boolean'].includes(typeof val);
+
       Object.entries(rest).forEach(([key, value]) => {
         const prevVal = (prevData as Record<string, unknown>)[key];
         if (JSON.stringify(prevVal) !== JSON.stringify(value)) {
-          changedFields.push(`${key}: ${prevVal ?? '–'} → ${value}`);
+          if (isPrimitive(value) && isPrimitive(prevVal)) {
+            changedFields.push(`${key}: ${prevVal ?? '–'} → ${value}`);
+          } else {
+            // For arrays/objects, listing key name is sufficient
+            changedFields.push(key);
+          }
         }
       });
       const changeDesc =
         changedFields.length > 0
-          ? changedFields.join('; ')
+          ? changedFields.join(', ')
           : 'No visible field change';
 
       // Sanitize editForm into a plain object
