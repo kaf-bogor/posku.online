@@ -1,5 +1,6 @@
 'use client';
 
+import { useColorModeValue } from '@chakra-ui/react';
 import { createContext, useState, useMemo } from 'react';
 import type { FC, ReactNode } from 'react';
 
@@ -10,6 +11,8 @@ export const siteConfig = {
   subtitle: 'Persatuan Orang tua Santri Kuttab Al-Fatih Bogor',
   image: `${storageUrl}/logo_posku.png?alt=media`,
   isDisplayPromo: false,
+  bgColor: 'white',
+  textColor: 'black',
 };
 
 type LayoutContextType = {
@@ -17,6 +20,8 @@ type LayoutContextType = {
   subtitle: string;
   image: string;
   isDisplayPromo: boolean;
+  bgColor: string;
+  textColor: string;
   setTitle: (title: string) => void;
   setSubtitle: (subtitle: string) => void;
   setImage: (image: string) => void;
@@ -28,6 +33,8 @@ export const AppContext = createContext<LayoutContextType>({
   subtitle: siteConfig.subtitle,
   image: siteConfig.image,
   isDisplayPromo: siteConfig.isDisplayPromo,
+  bgColor: siteConfig.bgColor,
+  textColor: siteConfig.textColor,
   setTitle: () => {},
   setSubtitle: () => {},
   setImage: () => {},
@@ -46,8 +53,13 @@ export const AppProvider: FC<LayoutProviderProps> = ({ children }) => {
     siteConfig.isDisplayPromo
   );
 
+  const bgColor = useColorModeValue('white', 'gray.900');
+  const textColor = useColorModeValue('black', 'gray.100');
+
   const contextValue = useMemo(
     () => ({
+      bgColor,
+      textColor,
       image,
       isDisplayPromo,
       title,
@@ -57,7 +69,7 @@ export const AppProvider: FC<LayoutProviderProps> = ({ children }) => {
       setTitle,
       setSubtitle,
     }),
-    [image, isDisplayPromo, title, subtitle]
+    [bgColor, textColor, image, isDisplayPromo, title, subtitle]
   );
 
   return (

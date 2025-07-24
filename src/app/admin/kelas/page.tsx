@@ -14,11 +14,13 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
+  Select,
 } from '@chakra-ui/react';
 import { collection, doc, setDoc, onSnapshot } from 'firebase/firestore';
 import Link from 'next/link';
-import { useEffect, useState, useMemo } from 'react';
+import { useContext, useEffect, useState, useMemo } from 'react';
 
+import { AppContext } from '~/lib/context/app';
 import { db } from '~/lib/firebase';
 
 type Kelas = {
@@ -29,33 +31,33 @@ type Kelas = {
   participants?: { name: string; value: number; datetime: string }[];
 };
 
-const DEFAULT_TARGET = 5000000;
-
 const DEFAULT_KELAS: Kelas[] = [
-  { name: 'Kuttab Awal 1A', santriCount: 11 },
-  { name: 'Kuttab Awal 1B', santriCount: 12 },
-  { name: 'Kuttab Awal 2A', santriCount: 11 },
-  { name: 'Kuttab Awal 2B', santriCount: 11 },
-  { name: 'Kuttab Awal 2C', santriCount: 11 },
-  { name: 'Kuttab Awal 2D', santriCount: 10 },
-  { name: 'Kuttab Awal 3A', santriCount: 8 },
-  { name: 'Kuttab Awal 3B', santriCount: 7 },
-  { name: 'Kuttab Awal 3C', santriCount: 11 },
-  { name: 'Kuttab Awal 3D', santriCount: 10 },
-  { name: 'Qonuni 1A', santriCount: 16 },
-  { name: 'Qonuni 1B', santriCount: 16 },
-  { name: 'Qonuni 1C', santriCount: 11 },
-  { name: 'Qonuni 2A', santriCount: 14 },
-  { name: 'Qonuni 2B', santriCount: 17 },
-  { name: 'Qonuni 3A', santriCount: 20 },
-  { name: 'Qonuni 3B', santriCount: 11 },
-  { name: 'Qonuni 4A', santriCount: 24 },
-  { name: 'Qonuni 4B', santriCount: 17 },
+  { name: 'Kuttab Awal 1A', santriCount: 11, target: 5000000 },
+  { name: 'Kuttab Awal 1B', santriCount: 12, target: 5000000 },
+  { name: 'Kuttab Awal 2A', santriCount: 11, target: 5000000 },
+  { name: 'Kuttab Awal 2B', santriCount: 11, target: 5000000 },
+  { name: 'Kuttab Awal 2C', santriCount: 11, target: 5000000 },
+  { name: 'Kuttab Awal 2D', santriCount: 10, target: 5000000 },
+  { name: 'Kuttab Awal 3A', santriCount: 8, target: 5000000 },
+  { name: 'Kuttab Awal 3B', santriCount: 7, target: 5000000 },
+  { name: 'Kuttab Awal 3C', santriCount: 11, target: 5000000 },
+  { name: 'Kuttab Awal 3D', santriCount: 10, target: 5000000 },
+  { name: 'Qonuni 1A', santriCount: 16, target: 5000000 },
+  { name: 'Qonuni 1B', santriCount: 16, target: 5000000 },
+  { name: 'Qonuni 1C', santriCount: 11, target: 5000000 },
+  { name: 'Qonuni 2A', santriCount: 14, target: 5000000 },
+  { name: 'Qonuni 2B', santriCount: 17, target: 5000000 },
+  { name: 'Qonuni 3A', santriCount: 20, target: 5000000 },
+  { name: 'Qonuni 3B', santriCount: 11, target: 5000000 },
+  { name: 'Qonuni 4A', santriCount: 24, target: 5000000 },
+  { name: 'Qonuni 4B', santriCount: 17, target: 5000000 },
 ];
 
 export default function Page() {
   const [kelasList, setKelasList] = useState<Kelas[]>([]);
   const [query, setQuery] = useState('');
+  const [sortBy, setSortBy] = useState<'peringkat' | 'name'>('peringkat');
+  const { bgColor, textColor } = useContext(AppContext);
 
   // Seed Firestore and subscribe to changes
   useEffect(() => {
@@ -77,7 +79,7 @@ export default function Page() {
             setDoc(doc(db, 'kelas', kelas.name), {
               name: kelas.name,
               santriCount: kelas.santriCount,
-              target: 0,
+              target: kelas.target,
               participants: [],
             } as Kelas)
           )
@@ -105,8 +107,16 @@ export default function Page() {
   }, [kelasList]);
 
   const filtered = kelasList.filter((k) =>
-    k.name.toLowerCase().includes(query.toLowerCase())
+    k.name?.toLowerCase().includes(query.toLowerCase())
   );
+
+  const sortedKelas = useMemo(() => {
+    const list = [...filtered];
+    if (sortBy === 'peringkat') {
+      return list.sort((a, b) => (b.collected ?? 0) - (a.collected ?? 0));
+    }
+    return list.sort((a, b) => a.name.localeCompare(b.name));
+  }, [filtered, sortBy]);
 
   return (
     <VStack align="stretch" spacing={4}>
@@ -121,10 +131,19 @@ export default function Page() {
         />
       </InputGroup>
 
+      <Select
+        maxW="200px"
+        value={sortBy}
+        onChange={(e) => setSortBy(e.target.value as 'peringkat' | 'name')}
+      >
+        <option value="peringkat">Peringkat</option>
+        <option value="name">Nama</option>
+      </Select>
+
       <SimpleGrid columns={{ base: 1, md: 2 }} spacing={4}>
-        {filtered.map((k) => {
-          const { collected = 0 } = k;
-          const percent = (collected / DEFAULT_TARGET) * 100;
+        {sortedKelas.map((k) => {
+          const { collected = 0, target = 0 } = k;
+          const percent = (collected / target) * 100;
           return (
             <Link
               key={k.name}
@@ -133,15 +152,16 @@ export default function Page() {
             >
               <Box
                 borderWidth="2px"
-                borderColor="yellow.400"
+                borderColor="grey.400"
                 rounded="md"
                 p={4}
                 w="full"
                 _hover={{ shadow: 'md' }}
-                bg="white"
+                color={textColor}
+                bg={bgColor}
               >
                 <Flex mb={2} align="center">
-                  <Text fontSize="lg" fontWeight="bold" color="blue.700">
+                  <Text fontSize="lg" fontWeight="bold">
                     {k.name}
                   </Text>
                   <Spacer />
@@ -150,8 +170,8 @@ export default function Page() {
                   </Badge>
                 </Flex>
 
-                <Text fontSize="sm" color="gray.600">
-                  Target: Rp {DEFAULT_TARGET.toLocaleString('id-ID')}
+                <Text fontSize="sm">
+                  Target: Rp {target.toLocaleString('id-ID')}
                 </Text>
 
                 <Text fontSize="2xl" fontWeight="bold" mt={2}>
@@ -166,12 +186,7 @@ export default function Page() {
                     colorScheme="blue"
                     mr={2}
                   />
-                  <Text
-                    fontSize="sm"
-                    color="blue.600"
-                    minW="45px"
-                    textAlign="right"
-                  >
+                  <Text fontSize="sm" minW="45px" textAlign="right">
                     {percent}%
                   </Text>
                 </Flex>
@@ -183,7 +198,7 @@ export default function Page() {
                   fontSize="sm"
                   alignItems="center"
                 >
-                  <Text fontSize="sm" color="gray.700" textAlign="center">
+                  <Text fontSize="sm" textAlign="center">
                     Lihat Detail
                   </Text>
                 </HStack>

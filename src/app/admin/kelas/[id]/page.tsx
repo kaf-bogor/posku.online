@@ -3,6 +3,7 @@
 import {
   Box,
   Button,
+  Flex,
   FormControl,
   FormLabel,
   Heading,
@@ -10,12 +11,14 @@ import {
   Input,
   List,
   ListItem,
+  Progress,
   Spinner,
   Text,
   VStack,
 } from '@chakra-ui/react';
 import {
   arrayUnion,
+  arrayRemove,
   doc,
   onSnapshot,
   setDoc,
@@ -24,9 +27,12 @@ import {
   increment,
 } from 'firebase/firestore';
 import { useParams, useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { FaTrash } from 'react-icons/fa';
 
+import { AppContext } from '~/lib/context/app';
 import { db } from '~/lib/firebase';
+import { formatIDR } from '~/lib/utils/currency';
 
 interface Participant {
   name: string;
@@ -45,6 +51,7 @@ interface Kelas {
 export default function KelasDetailPage() {
   const { id } = useParams<{ id: string }>();
   const router = useRouter();
+  const { bgColor, textColor } = useContext(AppContext);
 
   const kelasName = decodeURIComponent(id);
 
@@ -99,6 +106,17 @@ export default function KelasDetailPage() {
     setSaving(false);
   };
 
+  const removeParticipant = async (participant: Participant) => {
+    if (!participant) return;
+    setSaving(true);
+    const ref = doc(db, 'kelas', kelasName);
+    await updateDoc(ref, {
+      participants: arrayRemove(participant),
+      collected: increment(-participant.value),
+    });
+    setSaving(false);
+  };
+
   if (loading || !kelas) {
     return (
       <Box p={8} textAlign="center">
@@ -107,8 +125,18 @@ export default function KelasDetailPage() {
     );
   }
 
+  const percent = ((kelas?.collected || 0) / (kelas?.target || 0)) * 100;
+
   return (
-    <VStack align="stretch" spacing={6} p={6} maxW="600px" mx="auto">
+    <VStack
+      align="stretch"
+      spacing={6}
+      p={6}
+      maxW="600px"
+      mx="auto"
+      color={textColor}
+      bg={bgColor}
+    >
       <HStack spacing={4} justify="space-between">
         <Heading size="lg">{kelas.name}</Heading>
         <Button variant="link" onClick={() => router.back()}>
@@ -116,6 +144,22 @@ export default function KelasDetailPage() {
         </Button>
       </HStack>
 
+      <Text>
+        Perolehan: {formatIDR(kelas.collected)} / {formatIDR(kelas.target)}
+      </Text>
+      <Flex align="center" mb={2}>
+        <Progress
+          value={percent}
+          size="sm"
+          flex="1"
+          borderRadius="sm"
+          colorScheme="blue"
+          mr={2}
+        />
+        <Text fontSize="sm" color="blue.600" minW="45px" textAlign="right">
+          {percent}%
+        </Text>
+      </Flex>
       <Text>Jumlah Santri: {kelas.santriCount}</Text>
       <Text>Total Peserta Saat Ini: {kelas.participants?.length ?? 0}</Text>
 
@@ -163,14 +207,27 @@ export default function KelasDetailPage() {
                 pb={2}
               >
                 <HStack justify="space-between">
-                  <Text>{p.name}</Text>
-                  <Text fontWeight="bold">
-                    Rp {p.value.toLocaleString('id-ID')}
-                  </Text>
+                  <VStack align="start" spacing={0}>
+                    <Text>{p.name}</Text>
+                    <Text fontSize="xs" color="gray.500">
+                      {new Date(p.datetime).toLocaleString('id-ID')}
+                    </Text>
+                  </VStack>
+                  <HStack spacing={4}>
+                    <Text fontWeight="bold">
+                      Rp {p.value.toLocaleString('id-ID')}
+                    </Text>
+                    <Button
+                      size="sm"
+                      colorScheme="red"
+                      variant="ghost"
+                      onClick={() => removeParticipant(p)}
+                      isLoading={saving}
+                    >
+                      <FaTrash />
+                    </Button>
+                  </HStack>
                 </HStack>
-                <Text fontSize="xs" color="gray.500">
-                  {new Date(p.datetime).toLocaleString('id-ID')}
-                </Text>
               </ListItem>
             ))}
           </List>
