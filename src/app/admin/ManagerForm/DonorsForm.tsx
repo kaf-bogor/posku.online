@@ -14,6 +14,7 @@ import Donors from '~/app/reports/wakaf_ats/Donors';
 import { AppContext } from '~/lib/context/app';
 import type { Donor } from '~/lib/types/donation';
 
+const DEFAULT_NAME = 'Hamba Allah';
 export default function DonorsFormSection({
   donors,
   onFormChange,
@@ -34,7 +35,7 @@ export default function DonorsFormSection({
 
   const [newDonor, setNewDonor] = useState({
     id: localDonors.length + 1,
-    name: 'Hamba Allah',
+    name: DEFAULT_NAME,
     value: '',
     datetime: '',
     donorsCount: 1,
@@ -69,12 +70,12 @@ export default function DonorsFormSection({
   }, []);
 
   const handleAddDonor = () => {
-    if (!newDonor.name || !newDonor.value || !newDonor.datetime) return;
+    if (!newDonor.value || !newDonor.datetime) return;
     const newDonors = [
       ...localDonors,
       {
         id: localDonors.length + 1,
-        name: newDonor.name,
+        name: newDonor.name || DEFAULT_NAME,
         donorsCount: newDonor.donorsCount,
         value: Number(newDonor.value),
         datetime: newDonor.datetime,
@@ -88,7 +89,7 @@ export default function DonorsFormSection({
     onFormChange(sorted);
     setNewDonor({
       id: newDonors.length + 1,
-      name: 'Hamba Allah',
+      name: DEFAULT_NAME,
       value: '',
       datetime: '',
       donorsCount: 1,
@@ -128,7 +129,7 @@ export default function DonorsFormSection({
               name="name"
               onChange={handleInputChange}
               size="sm"
-              placeholder="Donor name"
+              placeholder="Hamba Allah"
             />
           </FormControl>
           <FormControl>
@@ -164,7 +165,7 @@ export default function DonorsFormSection({
             colorScheme="green"
             size="sm"
             onClick={handleAddDonor}
-            isDisabled={!newDonor.name || !newDonor.value || !newDonor.datetime}
+            isDisabled={!newDonor.value || !newDonor.datetime}
             borderRadius="md"
             w={{ base: '100%', md: '30px' }}
           >
