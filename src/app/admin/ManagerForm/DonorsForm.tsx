@@ -34,7 +34,7 @@ export default function DonorsFormSection({
 
   const [newDonor, setNewDonor] = useState({
     id: localDonors.length + 1,
-    name: '',
+    name: 'Hamba Allah',
     value: '',
     datetime: '',
     donorsCount: 1,
@@ -88,7 +88,7 @@ export default function DonorsFormSection({
     onFormChange(sorted);
     setNewDonor({
       id: newDonors.length + 1,
-      name: '',
+      name: 'Hamba Allah',
       value: '',
       datetime: '',
       donorsCount: 1,
