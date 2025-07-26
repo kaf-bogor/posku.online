@@ -96,7 +96,7 @@ export default function Donors({
         ) : (
           displayedDonors.map((row, idx) => (
             <Flex
-              key={row.name + row.datetime}
+              key={row.id + row.name + row.datetime}
               direction={{ base: 'column', md: 'row' }}
               align={{ base: 'flex-start', md: 'center' }}
               borderBottom="1px solid"
@@ -143,7 +143,7 @@ export default function Donors({
                   >
                     Nominal:
                   </Box>
-                  Rp {row.value.toLocaleString('id-ID')}
+                  Rp {row.value ? row.value.toLocaleString('id-ID') : '0'}
                 </Text>
               </Box>
               {/* Date */}

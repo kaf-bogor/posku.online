@@ -8,20 +8,24 @@ import {
   Input,
   Button,
 } from '@chakra-ui/react';
-import { useState, useEffect, useContext, useRef, useCallback } from 'react';
+import { doc, updateDoc } from 'firebase/firestore';
+import { useState, useEffect, useContext } from 'react';
 
 import Donors from '~/app/reports/wakaf_ats/Donors';
 import { AppContext } from '~/lib/context/app';
+import { db } from '~/lib/firebase';
 import type { Donor } from '~/lib/types/donation';
 
 const DEFAULT_NAME = 'Hamba Allah';
+interface DonorsFormProps {
+  donors: Donor[];
+  donationId: string;
+}
+
 export default function DonorsFormSection({
   donors,
-  onFormChange,
-}: {
-  donors: Donor[];
-  onFormChange: (donors: Donor[]) => void;
-}) {
+  donationId,
+}: DonorsFormProps) {
   const [localDonors, setLocalDonors] = useState<Donor[]>(donors);
   const { bgColor, borderColor, textColor } = useContext(AppContext);
 
@@ -30,6 +34,7 @@ export default function DonorsFormSection({
     const sorted = [...donors].sort(
       (a, b) => new Date(b.datetime).getTime() - new Date(a.datetime).getTime()
     );
+
     setLocalDonors(sorted);
   }, [donors]);
 
@@ -41,42 +46,23 @@ export default function DonorsFormSection({
     donorsCount: 1,
   });
 
-  const debounceRef = useRef<NodeJS.Timeout | null>(null);
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setNewDonor((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
-  const handleInputChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      const { name, value } = e.target;
-
-      if (debounceRef.current) {
-        clearTimeout(debounceRef.current);
-      }
-
-      debounceRef.current = setTimeout(() => {
-        setNewDonor((prev) => ({
-          ...prev,
-          [name]: value,
-        }));
-      }, 300);
-    },
-    []
-  );
-
-  useEffect(() => {
-    return () => {
-      if (debounceRef.current) {
-        clearTimeout(debounceRef.current);
-      }
-    };
-  }, []);
-
-  const handleAddDonor = () => {
-    if (!newDonor.value || !newDonor.datetime) return;
+  const handleAddDonor = async () => {
+    if (!newDonor.name || !newDonor.value || !newDonor.datetime) return;
     const newDonors = [
       ...localDonors,
       {
         id: localDonors.length + 1,
-        name: newDonor.name || DEFAULT_NAME,
-        donorsCount: newDonor.donorsCount,
+
+        name: newDonor.name,
+        donorsCount: Number(newDonor.donorsCount) || 1,
         value: Number(newDonor.value),
         datetime: newDonor.datetime,
       },
@@ -86,7 +72,13 @@ export default function DonorsFormSection({
       (a, b) => new Date(b.datetime).getTime() - new Date(a.datetime).getTime()
     );
     setLocalDonors(sorted);
-    onFormChange(sorted);
+    try {
+      const donationRef = doc(db, 'donations', donationId);
+      await updateDoc(donationRef, { donors: sorted });
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error('Failed to update donors', err);
+    }
     setNewDonor({
       id: newDonors.length + 1,
       name: DEFAULT_NAME,
@@ -96,10 +88,16 @@ export default function DonorsFormSection({
     });
   };
 
-  const handleRemoveDonor = (donorId: number) => {
+  const handleRemoveDonor = async (donorId: number) => {
     const updatedDonors = localDonors.filter((donor) => donor.id !== donorId);
     setLocalDonors(updatedDonors);
-    onFormChange(updatedDonors);
+    try {
+      const donationRef = doc(db, 'donations', donationId);
+      await updateDoc(donationRef, { donors: updatedDonors });
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error('Failed to remove donor', err);
+    }
   };
 
   return (
@@ -127,6 +125,7 @@ export default function DonorsFormSection({
             <FormLabel mb={1}>Nama</FormLabel>
             <Input
               name="name"
+              value={newDonor.name}
               onChange={handleInputChange}
               size="sm"
               placeholder="Hamba Allah"
@@ -136,7 +135,8 @@ export default function DonorsFormSection({
             <FormLabel mb={1}>Nominal</FormLabel>
             <Input
               name="value"
-              type="text"
+              type="number"
+              value={newDonor.value}
               onChange={handleInputChange}
               size="sm"
               placeholder="Amount"
@@ -147,6 +147,7 @@ export default function DonorsFormSection({
             <Input
               name="datetime"
               type="datetime-local"
+              value={newDonor.datetime}
               onChange={handleInputChange}
               size="sm"
             />
@@ -155,7 +156,8 @@ export default function DonorsFormSection({
             <FormLabel mb={1}>Jumlah donatur</FormLabel>
             <Input
               name="donorsCount"
-              type="text"
+              type="number"
+              value={String(newDonor.donorsCount ?? '')}
               onChange={handleInputChange}
               size="sm"
               placeholder="Jumlah donatur"

@@ -6,6 +6,7 @@ import {
   NumberInput,
   NumberInputField,
   Input,
+  Flex,
   Tabs,
   TabList,
   TabPanels,
@@ -18,6 +19,7 @@ import {
   ListItem,
   Text,
   Badge,
+  Progress,
 } from '@chakra-ui/react';
 import { doc, getDoc } from 'firebase/firestore';
 import dynamic from 'next/dynamic';
@@ -34,6 +36,7 @@ import { db } from '~/lib/firebase'; // adjust the import path to your firebase 
 import { useCrudManager } from '~/lib/hooks/useCrudManager';
 import type { Activity, DonationPage } from '~/lib/types/donation';
 import { initialDonationState } from '~/lib/types/donation';
+import { formatIDR } from '~/lib/utils/currency';
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
@@ -88,6 +91,13 @@ const DonationDetailPage = ({ params }: { params: { id: string } }) => {
     return <div>Loading...</div>;
   }
 
+  const currentAmount =
+    donation.donors?.reduce((acc, donor) => acc + (donor.value || 0), 0) || 0;
+  const percentage = Math.min(
+    (currentAmount / donation.target) * 100,
+    100
+  ).toFixed(0);
+
   return (
     <ManagerForm
       isEdit
@@ -106,12 +116,25 @@ const DonationDetailPage = ({ params }: { params: { id: string } }) => {
         </TabList>
         <TabPanels>
           <TabPanel>
-            {/* Donors Section */}
+            <Box bg={bgColor} p={3} color={textColor}>
+              {formatIDR(currentAmount)} dari {formatIDR(donation.target)}
+              <Flex align="center" mb={2}>
+                <Progress
+                  value={Number(percentage)}
+                  size="sm"
+                  flex="1"
+                  borderRadius="sm"
+                  colorScheme="blue"
+                  mr={2}
+                />
+                <Text fontSize="sm" minW="45px" textAlign="right">
+                  {percentage}%
+                </Text>
+              </Flex>
+            </Box>
             <DonorsFormSection
               donors={donation.donors || []}
-              onFormChange={(donors) => {
-                if (editForm) setEditForm({ ...editForm, donors });
-              }}
+              donationId={donation.id}
             />
           </TabPanel>
           <TabPanel>
