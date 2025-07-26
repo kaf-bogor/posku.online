@@ -109,7 +109,11 @@ export default function DonationDetailPage() {
   // Placeholder for raised, target, donors, organizer
   const raised = (campaign.donors || []).reduce((sum, d) => sum + d.value, 0);
   const target = campaign.target || 0;
-  const donors = campaign.donors ? campaign.donors.length : 0;
+  const donorsCount =
+    campaign.donors?.reduce(
+      (acc, donor) => acc + (Number(donor.donorsCount) || 1),
+      0
+    ) || 0;
   const percent = target
     ? Math.min(100, Math.round((raised / target) * 100))
     : 0;
@@ -229,7 +233,7 @@ export default function DonationDetailPage() {
             mt={1}
           />
           <Text fontSize="xs" color="green.600" mt={1}>
-            {percent}% tercapai • {donors} Donatur
+            {percent}% tercapai • {donorsCount} Donatur
           </Text>
         </Box>
         {/* Donation Input */}

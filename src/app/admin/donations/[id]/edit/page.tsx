@@ -117,7 +117,12 @@ const DonationDetailPage = ({ params }: { params: { id: string } }) => {
         <TabPanels>
           <TabPanel>
             <Box bg={bgColor} p={3} color={textColor}>
-              {formatIDR(currentAmount)} dari {formatIDR(donation.target)}
+              {formatIDR(currentAmount)} dari {formatIDR(donation.target)} •{' '}
+              {donation.donors?.reduce(
+                (acc, donor) => acc + (Number(donor.donorsCount) || 1),
+                0
+              ) || 0}{' '}
+              Donatur
               <Flex align="center" mb={2}>
                 <Progress
                   value={Number(percentage)}
