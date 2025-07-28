@@ -51,8 +51,7 @@ Berikut adalah panduan teknis untuk memulai.
 1.  **Clone Repositori**
 
     ```bash
-    # Ganti YOUR_USERNAME dengan username Github Antum
-    git clone https://github.com/YOUR_USERNAME/posku.online.git
+    git clone https://github.com/kubido/posku.online.git
     cd posku.online
     ```
 
