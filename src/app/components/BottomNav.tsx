@@ -38,12 +38,13 @@ export default function BottomNav() {
       bg={bgColor}
       borderTop={`1px solid ${borderColor}`}
       zIndex={100}
-      boxShadow="0 -2px 8px rgba(0,0,0,0.04)"
-      px={2}
-      py={1}
+      boxShadow="0 -2px 12px rgba(0,0,0,0.1)"
+      px={{ base: 1, md: 2 }}
+      py={{ base: 2, md: 1 }}
       maxWidth={800}
       left="50%"
       transform="translateX(-50%)"
+      backdropFilter="blur(10px)"
     >
       <Flex justify="space-around" align="center">
         {navItems.map(({ label, href, icon }) => (
