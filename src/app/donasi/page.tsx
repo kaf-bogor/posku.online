@@ -231,16 +231,26 @@ const DonasiPage = () => {
                   {/* Campaign Content */}
                   <VStack spacing={4} p={6} align="stretch">
                     {/* Title */}
-                    <Heading 
-                      as="h3" 
-                      size="md" 
-                      color={titleColor}
-                      lineHeight="shorter"
-                      noOfLines={2}
-                      fontWeight="bold"
-                    >
-                      {campaign.title}
-                    </Heading>
+                    <HStack justify="space-between" align="start">
+                      <Heading
+                        as="h3"
+                        size="md"
+                        color={titleColor}
+                        lineHeight="shorter"
+                        noOfLines={2}
+                        fontWeight="bold"
+                        flex={1}
+                      >
+                        {campaign.title}
+                      </Heading>
+                      <Badge
+                        colorScheme={campaign.published ? 'green' : 'red'}
+                        size="sm"
+                        ml={2}
+                      >
+                        {campaign.published ? 'Published' : 'Draft'}
+                      </Badge>
+                    </HStack>
 
                     {/* Summary */}
                     <Text
