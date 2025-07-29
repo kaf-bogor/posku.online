@@ -83,7 +83,11 @@ const DonasiPage = () => {
             variant="ghost"
             size="sm"
             alignSelf="flex-start"
-            onClick={() => window.history.back()}
+            onClick={() => {
+              if (typeof window !== 'undefined') {
+                window.history.back();
+              }
+            }}
           />
           <Center 
             minH="40vh" 
