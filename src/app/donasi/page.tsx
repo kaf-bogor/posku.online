@@ -258,7 +258,7 @@ const DonasiPage = () => {
                       {/* Additional Stats */}
                       <HStack justify="space-between" align="center">
                         <HStack spacing={2}>
-                          <FaUsers color={useColorModeValue('gray.400', 'gray.500')} />
+                          <FaUsers color={iconColor} />
                           <Text fontSize="sm" color={textColor}>
                             {donorsCount} donatur
                           </Text>
