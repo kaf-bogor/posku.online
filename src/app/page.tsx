@@ -86,7 +86,7 @@ const Home = () => {
   );
 
   return (
-    <VStack spacing={8} align="stretch" w="100%">
+    <VStack spacing={6} align="stretch" w="100%">
       {/* Hero Section */}
       <HeroSection />
 
