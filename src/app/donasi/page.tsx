@@ -127,7 +127,7 @@ const DonasiPage = () => {
                 variant="ghost"
                 size="md"
                 onClick={() => window.history.back()}
-                _hover={{ bg: useColorModeValue('gray.100', 'gray.700') }}
+                _hover={{ bg: hoverBg }}
               />
               <VStack spacing={1} flex={1}>
                 <Heading 
