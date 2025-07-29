@@ -115,7 +115,7 @@ export default function Card({ item }: Props) {
               colorScheme="green"
               size="lg"
               borderRadius="full"
-              bg={useColorModeValue('gray.100', 'gray.600')}
+              bg={progressBg}
             />
 
             {/* Stats */}
