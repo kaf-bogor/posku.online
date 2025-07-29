@@ -45,12 +45,14 @@ const ShareButton: React.FC = () => {
               <Button
                 leftIcon={<FaFacebook />}
                 colorScheme="facebook"
-                onClick={() =>
-                  window.open(
-                    `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentUrl)}`,
-                    '_blank'
-                  )
-                }
+                onClick={() => {
+                  if (typeof window !== 'undefined') {
+                    window.open(
+                      `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentUrl)}`,
+                      '_blank'
+                    );
+                  }
+                }}
               >
                 Bagikan ke Facebook
               </Button>
