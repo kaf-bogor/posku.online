@@ -193,7 +193,7 @@ const DonasiPage = () => {
                       borderRadius="full"
                       p={2}
                     >
-                      <FaHeart color={useColorModeValue('red.500', 'red.400')} />
+                      <FaHeart color={heartColor} />
                     </Box>
                   </Box>
 
