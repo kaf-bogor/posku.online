@@ -68,18 +68,18 @@ export default function BottomNav() {
               }}
             >
               {icon === 'home' && (
-                <FaHome fontSize={24} style={{ marginBottom: 4 }} />
+                <FaHome fontSize={20} style={{ marginBottom: 2 }} />
               )}
               {icon === 'donate' && (
-                <FaHandsHelping fontSize={24} style={{ marginBottom: 4 }} />
+                <FaHandsHelping fontSize={20} style={{ marginBottom: 2 }} />
               )}
               {icon === 'links' && (
-                <FaLink fontSize={24} style={{ marginBottom: 4 }} />
+                <FaLink fontSize={20} style={{ marginBottom: 2 }} />
               )}
               {icon === 'admin' && (
-                <FaUser fontSize={24} style={{ marginBottom: 4 }} />
+                <FaUser fontSize={20} style={{ marginBottom: 2 }} />
               )}
-              <Text fontSize="xs">{label}</Text>
+              <Text fontSize="xs" fontWeight="medium">{label}</Text>
             </ChakraLink>
           </Link>
         ))}
