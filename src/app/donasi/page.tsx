@@ -46,6 +46,7 @@ const DonasiPage = () => {
   // State hooks
   const [campaigns, setCampaigns] = useState<DonationPage[]>([]);
   const [loading, setLoading] = useState(true);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     const fetchCampaigns = async () => {
