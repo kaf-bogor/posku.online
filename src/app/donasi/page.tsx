@@ -132,7 +132,11 @@ const DonasiPage = () => {
                 icon={<FaArrowLeft />}
                 variant="ghost"
                 size="md"
-                onClick={() => window.history.back()}
+                onClick={() => {
+                  if (typeof window !== 'undefined') {
+                    window.history.back();
+                  }
+                }}
                 _hover={{ bg: hoverBg }}
               />
               <VStack spacing={1} flex={1}>
