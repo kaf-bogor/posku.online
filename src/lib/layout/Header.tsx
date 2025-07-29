@@ -71,12 +71,14 @@ const Header = ({
           </VStack>
         </HStack>
       </Flex>
-      <HStack>
+      <HStack spacing={{ base: 1, md: 2 }}>
         <ShareButton />
         <IconButton
           aria-label="theme toggle"
           icon={colorMode === 'light' ? <RiMoonFill /> : <RiSunLine />}
           onClick={toggleColorMode}
+          size={{ base: "sm", md: "md" }}
+          variant="ghost"
         />
       </HStack>
     </VStack>
