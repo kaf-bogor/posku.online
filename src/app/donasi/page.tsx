@@ -231,7 +231,7 @@ const DonasiPage = () => {
                           colorScheme="green"
                           size="lg"
                           borderRadius="full"
-                          bg={useColorModeValue('gray.100', 'gray.600')}
+                          bg={progressBg}
                         />
                       </Box>
 
