@@ -26,7 +26,7 @@ import { FaArrowLeft, FaUsers, FaHeart, FaHandsHelping } from 'react-icons/fa';
 
 import { db } from '~/lib/firebase';
 import type { DonationPage } from '~/lib/types/donation';
-import { currency } from '~/lib/utils/currency';
+import { formatIDR } from '~/lib/utils/currency';
 
 const DonasiPage = () => {
   const [campaigns, setCampaigns] = useState<DonationPage[]>([]);
