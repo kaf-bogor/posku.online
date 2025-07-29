@@ -244,7 +244,7 @@ const DonasiPage = () => {
                             Target
                           </Text>
                           <Text fontSize="sm" fontWeight="semibold" color={titleColor}>
-                            {currency(campaign.target)}
+                            {formatIDR(campaign.target)}
                           </Text>
                         </VStack>
                       </HStack>
