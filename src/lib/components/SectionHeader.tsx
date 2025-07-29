@@ -26,10 +26,10 @@ const SectionHeader = ({
   const linkColor = useColorModeValue('purple.600', 'purple.300');
 
   return (
-    <HStack justify="space-between" align="center" mb={4}>
+    <HStack justify="space-between" align="center" mb={3}>
       <HStack spacing={2}>
-        {icon && <Icon as={icon} color={linkColor} fontSize="xl" />}
-        <Text fontSize="xl" fontWeight="bold" color={titleColor}>
+        {icon && <Icon as={icon} color={linkColor} fontSize="lg" />}
+        <Text fontSize="lg" fontWeight="bold" color={titleColor}>
           {title}
         </Text>
       </HStack>
