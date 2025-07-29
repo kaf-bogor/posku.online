@@ -157,10 +157,10 @@ const Home = () => {
 
       {/* Events Section */}
       <Box>
-        <SectionHeader 
-          title="Acara & Kegiatan" 
+        <SectionHeader
+          title="Acara & Kegiatan"
           icon={FaCalendarAlt}
-          viewAllLink="/admin/events"
+          viewAllLink="/events"
           viewAllText="Lihat Semua Acara"
         />
         {eventsLoading ? (
