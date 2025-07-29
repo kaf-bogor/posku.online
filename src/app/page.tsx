@@ -123,7 +123,7 @@ const Home = () => {
             {
               label: 'Donasi',
               href: '/donasi',
-              icon: FaRegFileAlt,
+              icon: FaHandsHelping,
             },
           ]}
         />
