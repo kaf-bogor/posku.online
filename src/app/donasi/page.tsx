@@ -225,10 +225,12 @@ const DonasiPage = () => {
                       color={textColor}
                       lineHeight="relaxed"
                       noOfLines={3}
-                      dangerouslySetInnerHTML={{
-                        __html: DOMPurify.sanitize(campaign.summary).slice(0, 150) + '...',
-                      }}
-                    />
+                    >
+                      {campaign.summary.length > 150
+                        ? campaign.summary.slice(0, 150) + '...'
+                        : campaign.summary
+                      }
+                    </Text>
 
                     {/* Progress Section */}
                     <VStack spacing={3} align="stretch">
