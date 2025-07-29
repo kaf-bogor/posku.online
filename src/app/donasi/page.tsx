@@ -49,6 +49,7 @@ const DonasiPage = () => {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     const fetchCampaigns = async () => {
       try {
         const querySnapshot = await getDocs(collection(db, 'donations'));
@@ -64,6 +65,18 @@ const DonasiPage = () => {
     };
     fetchCampaigns();
   }, []);
+
+  // Prevent hydration mismatch by not rendering until mounted
+  if (!mounted) {
+    return (
+      <Center minH="60vh">
+        <VStack spacing={4}>
+          <Spinner size="xl" color="green.500" thickness="4px" />
+          <Text color="gray.500">Loading...</Text>
+        </VStack>
+      </Center>
+    );
+  }
 
   if (loading) {
     return (
