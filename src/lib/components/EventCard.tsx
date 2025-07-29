@@ -26,21 +26,24 @@ const EventCard = ({ event, isCompact = false }: EventCardProps) => {
   const textColor = useColorModeValue('gray.600', 'gray.300');
   const titleColor = useColorModeValue('gray.800', 'white');
 
-  const now = new Date();
+  const [status, setStatus] = useState({ label: 'Loading', colorScheme: 'gray' });
   const startDate = new Date(event.startDate);
   const endDate = new Date(event.endDate);
-  
-  const getEventStatus = () => {
-    if (isBefore(now, startDate)) {
-      return { label: 'Upcoming', colorScheme: 'blue' };
-    } else if (isAfter(now, endDate)) {
-      return { label: 'Ended', colorScheme: 'gray' };
-    } else {
-      return { label: 'Ongoing', colorScheme: 'green' };
-    }
-  };
 
-  const status = getEventStatus();
+  useEffect(() => {
+    const now = new Date();
+    const getEventStatus = () => {
+      if (isBefore(now, startDate)) {
+        return { label: 'Upcoming', colorScheme: 'blue' };
+      } else if (isAfter(now, endDate)) {
+        return { label: 'Ended', colorScheme: 'gray' };
+      } else {
+        return { label: 'Ongoing', colorScheme: 'green' };
+      }
+    };
+
+    setStatus(getEventStatus());
+  }, [event.startDate, event.endDate, startDate, endDate]);
 
   return (
     <Link href={`/events/${event.id}`} passHref>
