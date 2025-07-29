@@ -59,7 +59,9 @@ const DonasiPage = () => {
         console.log('All donations from Firebase:', allData);
         console.log('Published donations:', allData.filter(campaign => campaign.published));
 
-        const data = allData.filter((campaign) => campaign.published);
+        // Temporarily show all donations for debugging
+        const data = allData; // Remove filter to see all donations
+        // const data = allData.filter((campaign) => campaign.published);
         setCampaigns(data);
       } catch (error) {
         console.error('Error fetching campaigns:', error);
