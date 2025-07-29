@@ -35,6 +35,9 @@ const DonasiPage = () => {
   const textColor = useColorModeValue('gray.600', 'gray.300');
   const titleColor = useColorModeValue('gray.800', 'white');
   const accentColor = useColorModeValue('green.500', 'green.400');
+  const hoverBg = useColorModeValue('gray.100', 'gray.700');
+  const borderColor = useColorModeValue('gray.100', 'gray.700');
+  const progressBg = useColorModeValue('gray.100', 'gray.600');
 
   // State hooks
   const [campaigns, setCampaigns] = useState<DonationPage[]>([]);
