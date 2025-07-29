@@ -38,6 +38,8 @@ const DonasiPage = () => {
   const hoverBg = useColorModeValue('gray.100', 'gray.700');
   const borderColor = useColorModeValue('gray.100', 'gray.700');
   const progressBg = useColorModeValue('gray.100', 'gray.600');
+  const heartColor = useColorModeValue('red.500', 'red.400');
+  const iconColor = useColorModeValue('gray.400', 'gray.500');
 
   // State hooks
   const [campaigns, setCampaigns] = useState<DonationPage[]>([]);
