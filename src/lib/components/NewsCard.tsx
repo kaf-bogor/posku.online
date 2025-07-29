@@ -38,7 +38,7 @@ const NewsCard = ({ news, isCompact = false }: NewsCardProps) => {
         }}
         cursor="pointer"
         w="100%"
-        h={isCompact ? "120px" : "auto"}
+        h={isCompact ? '120px' : 'auto'}
       >
         {isCompact ? (
           <HStack spacing={0} h="100%">
@@ -52,7 +52,14 @@ const NewsCard = ({ news, isCompact = false }: NewsCardProps) => {
                 flexShrink={0}
               />
             )}
-            <VStack align="start" spacing={1} p={3} flex={1} h="100%" justify="space-between">
+            <VStack
+              align="start"
+              spacing={1}
+              p={3}
+              flex={1}
+              h="100%"
+              justify="space-between"
+            >
               <VStack align="start" spacing={1} flex={1}>
                 <Text
                   fontSize="sm"
@@ -69,7 +76,9 @@ const NewsCard = ({ news, isCompact = false }: NewsCardProps) => {
               </VStack>
               <HStack justify="space-between" w="100%" align="center">
                 <Text fontSize="xs" color={textColor}>
-                  {format(new Date(news.publishDate), 'dd MMM yyyy', { locale: id })}
+                  {format(new Date(news.publishDate), 'dd MMM yyyy', {
+                    locale: id,
+                  })}
                 </Text>
                 {news.isPublished && (
                   <Badge colorScheme="green" size="sm">
@@ -104,12 +113,12 @@ const NewsCard = ({ news, isCompact = false }: NewsCardProps) => {
               </Text>
               <HStack justify="space-between" w="100%" align="center">
                 <Text fontSize="sm" color={textColor}>
-                  {format(new Date(news.publishDate), 'dd MMMM yyyy', { locale: id })}
+                  {format(new Date(news.publishDate), 'dd MMMM yyyy', {
+                    locale: id,
+                  })}
                 </Text>
                 {news.isPublished && (
-                  <Badge colorScheme="green">
-                    Published
-                  </Badge>
+                  <Badge colorScheme="green">Published</Badge>
                 )}
               </HStack>
             </VStack>

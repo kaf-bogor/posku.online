@@ -20,25 +20,23 @@ export default function EventsPage() {
   const emptyBg = useColorModeValue('gray.50', 'gray.600');
   const emptyTextColor = useColorModeValue('gray.500', 'gray.400');
 
-  const {
-    items: eventItems,
-    loading: eventsLoading,
-  } = useCrudManager<EventItem>({
-    collectionName: 'events',
-    blobFolderName: 'events',
-    itemSchema: {
-      title: '',
-      summary: '',
-      imageUrls: [],
-      startDate: new Date().toISOString(),
-      endDate: new Date().toISOString(),
-      location: '',
-      isActive: false,
-    },
-  });
+  const { items: eventItems, loading: eventsLoading } =
+    useCrudManager<EventItem>({
+      collectionName: 'events',
+      blobFolderName: 'events',
+      itemSchema: {
+        title: '',
+        summary: '',
+        imageUrls: [],
+        startDate: new Date().toISOString(),
+        endDate: new Date().toISOString(),
+        location: '',
+        isActive: false,
+      },
+    });
 
   // Filter active events
-  const activeEvents = eventItems.filter(event => event.isActive);
+  const activeEvents = eventItems.filter((event) => event.isActive);
 
   const LoadingSection = () => (
     <Center py={16}>
@@ -50,12 +48,7 @@ export default function EventsPage() {
   );
 
   const EmptySection = () => (
-    <Box
-      bg={emptyBg}
-      borderRadius="xl"
-      p={12}
-      textAlign="center"
-    >
+    <Box bg={emptyBg} borderRadius="xl" p={12} textAlign="center">
       <VStack spacing={4}>
         <FaCalendarAlt fontSize="48px" color={emptyTextColor} />
         <Text color={emptyTextColor} fontSize="lg" fontWeight="medium">
@@ -71,7 +64,7 @@ export default function EventsPage() {
   return (
     <VStack spacing={6} align="stretch" w="100%">
       <SectionHeader title="Semua Acara & Kegiatan" icon={FaCalendarAlt} />
-      
+
       {eventsLoading ? (
         <LoadingSection />
       ) : activeEvents.length > 0 ? (

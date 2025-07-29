@@ -53,11 +53,15 @@ const DonasiPage = () => {
     const fetchCampaigns = async () => {
       try {
         const querySnapshot = await getDocs(collection(db, 'donations'));
-        const allData: DonationPage[] = querySnapshot.docs
-          .map((doc) => ({ id: doc.id, ...doc.data() }) as DonationPage);
+        const allData: DonationPage[] = querySnapshot.docs.map(
+          (doc) => ({ id: doc.id, ...doc.data() }) as DonationPage
+        );
 
         console.log('All donations from Firebase:', allData);
-        console.log('Published donations:', allData.filter(campaign => campaign.published));
+        console.log(
+          'Published donations:',
+          allData.filter((campaign) => campaign.published)
+        );
 
         // Temporarily show all donations for debugging
         const data = allData; // Remove filter to see all donations
@@ -112,8 +116,8 @@ const DonasiPage = () => {
               }
             }}
           />
-          <Center 
-            minH="40vh" 
+          <Center
+            minH="40vh"
             bg={cardBg}
             borderRadius="2xl"
             p={12}
@@ -126,7 +130,8 @@ const DonasiPage = () => {
                 Belum Ada Kampanye Donasi
               </Heading>
               <Text color={textColor} maxW="400px">
-                Saat ini belum ada kampanye donasi yang tersedia. Silakan kembali lagi nanti.
+                Saat ini belum ada kampanye donasi yang tersedia. Silakan
+                kembali lagi nanti.
               </Text>
             </VStack>
           </Center>
@@ -163,8 +168,8 @@ const DonasiPage = () => {
                 _hover={{ bg: hoverBg }}
               />
               <VStack spacing={1} flex={1}>
-                <Heading 
-                  size="xl" 
+                <Heading
+                  size="xl"
                   color={titleColor}
                   textAlign="center"
                   fontWeight="bold"
@@ -180,13 +185,16 @@ const DonasiPage = () => {
           </VStack>
 
           {/* Campaigns Grid */}
-          <SimpleGrid 
-            columns={{ base: 1, md: 2, lg: 3 }} 
-            spacing={{ base: 6, md: 8 }} 
+          <SimpleGrid
+            columns={{ base: 1, md: 2, lg: 3 }}
+            spacing={{ base: 6, md: 8 }}
           >
             {campaigns.map((campaign) => {
               const totalCollected = getTotalCollected(campaign.donors);
-              const progress = calculateProgress(totalCollected, campaign.target);
+              const progress = calculateProgress(
+                totalCollected,
+                campaign.target
+              );
               const donorsCount = campaign.donors?.length || 0;
 
               return (
@@ -210,7 +218,7 @@ const DonasiPage = () => {
                       src={campaign.imageUrls?.[0] || ''}
                       alt={campaign.title}
                       w="100%"
-                      h={{ base: "200px", md: "240px" }}
+                      h={{ base: '200px', md: '240px' }}
                       objectFit="cover"
                       transition="transform 0.3s ease"
                       _hover={{ transform: 'scale(1.05)' }}
@@ -261,8 +269,7 @@ const DonasiPage = () => {
                     >
                       {campaign.summary.length > 150
                         ? campaign.summary.slice(0, 150) + '...'
-                        : campaign.summary
-                      }
+                        : campaign.summary}
                     </Text>
 
                     {/* Progress Section */}
@@ -281,18 +288,34 @@ const DonasiPage = () => {
                       {/* Stats */}
                       <HStack justify="space-between" align="start">
                         <VStack spacing={1} align="start" flex={1}>
-                          <Text fontSize="xs" color={textColor} fontWeight="medium">
+                          <Text
+                            fontSize="xs"
+                            color={textColor}
+                            fontWeight="medium"
+                          >
                             Terkumpul
                           </Text>
-                          <Text fontSize="lg" fontWeight="bold" color={accentColor}>
+                          <Text
+                            fontSize="lg"
+                            fontWeight="bold"
+                            color={accentColor}
+                          >
                             {formatIDR(totalCollected)}
                           </Text>
                         </VStack>
                         <VStack spacing={1} align="end" flex={1}>
-                          <Text fontSize="xs" color={textColor} fontWeight="medium">
+                          <Text
+                            fontSize="xs"
+                            color={textColor}
+                            fontWeight="medium"
+                          >
                             Target
                           </Text>
-                          <Text fontSize="sm" fontWeight="semibold" color={titleColor}>
+                          <Text
+                            fontSize="sm"
+                            fontWeight="semibold"
+                            color={titleColor}
+                          >
                             {formatIDR(campaign.target)}
                           </Text>
                         </VStack>
@@ -362,8 +385,8 @@ const DonasiPage = () => {
                   Setiap Donasi Berharga
                 </Heading>
                 <Text color={textColor} maxW="500px">
-                  Bantuan Anda, sekecil apapun, sangat berarti untuk membantu sesama dan 
-                  mewujudkan kebaikan bersama.
+                  Bantuan Anda, sekecil apapun, sangat berarti untuk membantu
+                  sesama dan mewujudkan kebaikan bersama.
                 </Text>
               </VStack>
             </VStack>

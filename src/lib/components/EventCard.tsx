@@ -26,7 +26,10 @@ const EventCard = ({ event, isCompact = false }: EventCardProps) => {
   const textColor = useColorModeValue('gray.600', 'gray.300');
   const titleColor = useColorModeValue('gray.800', 'white');
 
-  const [status, setStatus] = useState({ label: 'Loading', colorScheme: 'gray' });
+  const [status, setStatus] = useState({
+    label: 'Loading',
+    colorScheme: 'gray',
+  });
   const startDate = new Date(event.startDate);
   const endDate = new Date(event.endDate);
 
@@ -60,7 +63,7 @@ const EventCard = ({ event, isCompact = false }: EventCardProps) => {
         }}
         cursor="pointer"
         w="100%"
-        h={isCompact ? "120px" : "auto"}
+        h={isCompact ? '120px' : 'auto'}
       >
         {isCompact ? (
           <HStack spacing={0} h="100%">
@@ -74,7 +77,14 @@ const EventCard = ({ event, isCompact = false }: EventCardProps) => {
                 flexShrink={0}
               />
             )}
-            <VStack align="start" spacing={1} p={3} flex={1} h="100%" justify="space-between">
+            <VStack
+              align="start"
+              spacing={1}
+              p={3}
+              flex={1}
+              h="100%"
+              justify="space-between"
+            >
               <VStack align="start" spacing={1} flex={1}>
                 <Text
                   fontSize="sm"
@@ -135,7 +145,8 @@ const EventCard = ({ event, isCompact = false }: EventCardProps) => {
                 <HStack spacing={2} fontSize="sm" color={textColor}>
                   <Icon as={FaCalendarAlt} />
                   <Text>
-                    {format(startDate, 'dd MMMM yyyy', { locale: id })} - {format(endDate, 'dd MMMM yyyy', { locale: id })}
+                    {format(startDate, 'dd MMMM yyyy', { locale: id })} -{' '}
+                    {format(endDate, 'dd MMMM yyyy', { locale: id })}
                   </Text>
                 </HStack>
                 <HStack spacing={2} fontSize="sm" color={textColor}>
@@ -144,14 +155,8 @@ const EventCard = ({ event, isCompact = false }: EventCardProps) => {
                 </HStack>
               </VStack>
               <HStack justify="space-between" w="100%" align="center">
-                <Badge colorScheme={status.colorScheme}>
-                  {status.label}
-                </Badge>
-                {event.isActive && (
-                  <Badge colorScheme="purple">
-                    Active
-                  </Badge>
-                )}
+                <Badge colorScheme={status.colorScheme}>{status.label}</Badge>
+                {event.isActive && <Badge colorScheme="purple">Active</Badge>}
               </HStack>
             </VStack>
           </VStack>

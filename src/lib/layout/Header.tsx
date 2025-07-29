@@ -46,23 +46,28 @@ const Header = ({
         <HStack spacing={{ base: 3, md: 4 }} w="full" justify="center">
           <Link href="/">
             <Image
-              width={{ base: "48px", md: "64px" }}
-              height={{ base: "48px", md: "64px" }}
+              width={{ base: '48px', md: '64px' }}
+              height={{ base: '48px', md: '64px' }}
               src={image}
               alt="Logo"
             />
           </Link>
-          <VStack alignItems="start" justifyContent="center" spacing={0} flex={1}>
+          <VStack
+            alignItems="start"
+            justifyContent="center"
+            spacing={0}
+            flex={1}
+          >
             <Text
               fontWeight="bold"
-              fontSize={{ base: "lg", md: "xl" }}
+              fontSize={{ base: 'lg', md: 'xl' }}
               lineHeight="short"
               noOfLines={1}
             >
               {title}
             </Text>
             <Text
-              fontSize={{ base: "xs", md: "sm" }}
+              fontSize={{ base: 'xs', md: 'sm' }}
               color={colorMode === 'light' ? 'gray.600' : 'gray.400'}
               noOfLines={1}
             >
@@ -77,7 +82,7 @@ const Header = ({
           aria-label="theme toggle"
           icon={colorMode === 'light' ? <RiMoonFill /> : <RiSunLine />}
           onClick={toggleColorMode}
-          size={{ base: "sm", md: "md" }}
+          size={{ base: 'sm', md: 'md' }}
           variant="ghost"
         />
       </HStack>

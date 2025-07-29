@@ -10,7 +10,14 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { FaUsers, FaEnvelopeOpenText, FaRegFileAlt, FaNewspaper, FaCalendarAlt, FaHandsHelping } from 'react-icons/fa';
+import {
+  FaUsers,
+  FaEnvelopeOpenText,
+  FaRegFileAlt,
+  FaNewspaper,
+  FaCalendarAlt,
+  FaHandsHelping,
+} from 'react-icons/fa';
 
 import { storageUrl } from '~/lib/context/baseUrl';
 import EventCard from '~/lib/components/EventCard';
@@ -28,10 +35,7 @@ const Home = () => {
   const emptyTextColor = useColorModeValue('gray.500', 'gray.400');
 
   // News data management
-  const {
-    items: newsItems,
-    loading: newsLoading,
-  } = useCrudManager<NewsItem>({
+  const { items: newsItems, loading: newsLoading } = useCrudManager<NewsItem>({
     collectionName: 'news',
     blobFolderName: 'news',
     itemSchema: {
@@ -45,26 +49,26 @@ const Home = () => {
   });
 
   // Events data management
-  const {
-    items: eventItems,
-    loading: eventsLoading,
-  } = useCrudManager<EventItem>({
-    collectionName: 'events',
-    blobFolderName: 'events',
-    itemSchema: {
-      title: '',
-      summary: '',
-      imageUrls: [],
-      startDate: new Date().toISOString(),
-      endDate: new Date().toISOString(),
-      location: '',
-      isActive: false,
-    },
-  });
+  const { items: eventItems, loading: eventsLoading } =
+    useCrudManager<EventItem>({
+      collectionName: 'events',
+      blobFolderName: 'events',
+      itemSchema: {
+        title: '',
+        summary: '',
+        imageUrls: [],
+        startDate: new Date().toISOString(),
+        endDate: new Date().toISOString(),
+        location: '',
+        isActive: false,
+      },
+    });
 
   // Filter published news and active events
-  const publishedNews = newsItems.filter(news => news.isPublished).slice(0, 3);
-  const activeEvents = eventItems.filter(event => event.isActive).slice(0, 3);
+  const publishedNews = newsItems
+    .filter((news) => news.isPublished)
+    .slice(0, 3);
+  const activeEvents = eventItems.filter((event) => event.isActive).slice(0, 3);
 
   const LoadingSection = () => (
     <Center py={8}>
@@ -73,12 +77,7 @@ const Home = () => {
   );
 
   const EmptySection = ({ message }: { message: string }) => (
-    <Box
-      bg={emptyBg}
-      borderRadius="xl"
-      p={8}
-      textAlign="center"
-    >
+    <Box bg={emptyBg} borderRadius="xl" p={8} textAlign="center">
       <Text color={emptyTextColor} fontSize="sm">
         {message}
       </Text>
@@ -142,9 +141,7 @@ const Home = () => {
         ) : publishedNews.length > 0 ? (
           <VStack spacing={4} align="stretch">
             {/* Featured news (larger card) */}
-            {publishedNews[0] && (
-              <NewsCard news={publishedNews[0]} />
-            )}
+            {publishedNews[0] && <NewsCard news={publishedNews[0]} />}
             {/* Compact news cards */}
             {publishedNews.slice(1).map((news) => (
               <NewsCard key={news.id} news={news} isCompact />
@@ -168,9 +165,7 @@ const Home = () => {
         ) : activeEvents.length > 0 ? (
           <VStack spacing={4} align="stretch">
             {/* Featured event (larger card) */}
-            {activeEvents[0] && (
-              <EventCard event={activeEvents[0]} />
-            )}
+            {activeEvents[0] && <EventCard event={activeEvents[0]} />}
             {/* Compact event cards */}
             {activeEvents.slice(1).map((event) => (
               <EventCard key={event.id} event={event} isCompact />
@@ -182,7 +177,7 @@ const Home = () => {
       </Box>
 
       {/* Additional bottom spacing for bottom navigation */}
-      <Box h={{ base: "20px", md: "40px" }} />
+      <Box h={{ base: '20px', md: '40px' }} />
     </VStack>
   );
 };

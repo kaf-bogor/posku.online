@@ -29,12 +29,12 @@ const HeroSection = () => {
         <Image
           src={`${storageUrl}/logo_posku.png?alt=media`}
           alt="POSKU Al-Fatih"
-          width={{ base: "60px", md: "80px" }}
-          height={{ base: "60px", md: "80px" }}
+          width={{ base: '60px', md: '80px' }}
+          height={{ base: '60px', md: '80px' }}
         />
         <VStack spacing={1}>
           <Text
-            fontSize={{ base: "lg", md: "xl" }}
+            fontSize={{ base: 'lg', md: 'xl' }}
             fontWeight="bold"
             color={titleColor}
             lineHeight="short"
@@ -42,7 +42,7 @@ const HeroSection = () => {
             POSKU Al-Fatih Bogor
           </Text>
           <Text
-            fontSize={{ base: "xs", md: "sm" }}
+            fontSize={{ base: 'xs', md: 'sm' }}
             color={textColor}
             maxW="350px"
             lineHeight="relaxed"
@@ -51,7 +51,7 @@ const HeroSection = () => {
           </Text>
         </VStack>
       </VStack>
-      
+
       {/* Decorative background elements */}
       <Box
         position="absolute"

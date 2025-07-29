@@ -29,12 +29,7 @@ const MainMenus = ({
 
   return (
     <Box w="100%" overflowX="auto" pb={2}>
-      <HStack 
-        spacing={3} 
-        align="stretch" 
-        minW="fit-content"
-        px={1}
-      >
+      <HStack spacing={3} align="stretch" minW="fit-content" px={1}>
         {items.map(({ href, label, icon: Icon, imageUrl }) => (
           <Link href={href} key={href} passHref legacyBehavior>
             <Box
@@ -51,7 +46,7 @@ const MainMenus = ({
                 boxShadow: 'md',
                 bg: hoverBg,
                 borderColor: 'purple.300',
-                transform: 'translateY(-1px)'
+                transform: 'translateY(-1px)',
               }}
               cursor="pointer"
               overflow="hidden"
@@ -77,12 +72,7 @@ const MainMenus = ({
                       borderRadius="md"
                     />
                   )}
-                  {Icon && (
-                    <Icon
-                      fontSize={24}
-                      color={labelColor}
-                    />
-                  )}
+                  {Icon && <Icon fontSize={24} color={labelColor} />}
                 </Box>
 
                 {/* Label */}

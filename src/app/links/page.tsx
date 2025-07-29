@@ -37,7 +37,7 @@ const categorizedLinks = [
     color: 'blue',
     links: [
       {
-        label: 'Daftar Program Ta\'awun Tali Asih POSKU',
+        label: "Daftar Program Ta'awun Tali Asih POSKU",
         description: 'Formulir pendaftaran program bantuan sosial',
         href: 'https://bit.ly/posku-tali-asih',
         icon: FaHeart,
@@ -140,143 +140,178 @@ const LinksPage = () => {
         <VStack spacing={8} align="stretch">
           {/* Header */}
           <VStack spacing={4} textAlign="center" py={6}>
-            <Heading 
-              size="2xl" 
-              color={titleColor}
-              fontWeight="bold"
-            >
+            <Heading size="2xl" color={titleColor} fontWeight="bold">
               Tautan Penting
             </Heading>
-            <Text 
-              fontSize="lg" 
+            <Text
+              fontSize="lg"
               color={textColor}
               maxW="600px"
               lineHeight="relaxed"
             >
-              Akses cepat ke formulir, kontak, media sosial, dan website resmi 
+              Akses cepat ke formulir, kontak, media sosial, dan website resmi
               POSKU Al-Fatih Bogor
             </Text>
           </VStack>
 
           {/* Links Grid */}
           <SimpleGrid columns={{ base: 1, lg: 2 }} spacing={8}>
-            {categorizedLinks.map(({ category, description, icon: CategoryIcon, color, links }) => (
-              <Box
-                key={category}
-                bg={cardBg}
-                borderRadius="2xl"
-                p={6}
-                boxShadow="lg"
-                border="1px solid"
-                borderColor={borderColor}
-                transition="all 0.3s ease"
-                _hover={{
-                  transform: 'translateY(-4px)',
-                  boxShadow: '2xl',
-                }}
-              >
-                {/* Category Header */}
-                <VStack spacing={4} align="stretch">
-                  <HStack spacing={4} align="center">
-                    <Box
-                      p={3}
-                      borderRadius="xl"
-                      bg={`${color}.50`}
-                      color={`${color}.500`}
-                    >
-                      <CategoryIcon size={24} />
-                    </Box>
-                    <VStack align="start" spacing={1} flex={1}>
-                      <Heading as="h3" size="md" color={titleColor}>
-                        {category}
-                      </Heading>
-                      <Text fontSize="sm" color={textColor}>
-                        {description}
-                      </Text>
-                    </VStack>
-                    <Badge
-                      colorScheme={color}
-                      variant="subtle"
-                      borderRadius="full"
-                      px={3}
-                      py={1}
-                    >
-                      {links.length} link{links.length > 1 ? 's' : ''}
-                    </Badge>
-                  </HStack>
+            {categorizedLinks.map(
+              ({ category, description, icon: CategoryIcon, color, links }) => (
+                <Box
+                  key={category}
+                  bg={cardBg}
+                  borderRadius="2xl"
+                  p={6}
+                  boxShadow="lg"
+                  border="1px solid"
+                  borderColor={borderColor}
+                  transition="all 0.3s ease"
+                  _hover={{
+                    transform: 'translateY(-4px)',
+                    boxShadow: '2xl',
+                  }}
+                >
+                  {/* Category Header */}
+                  <VStack spacing={4} align="stretch">
+                    <HStack spacing={4} align="center">
+                      <Box
+                        p={3}
+                        borderRadius="xl"
+                        bg={`${color}.50`}
+                        color={`${color}.500`}
+                      >
+                        <CategoryIcon size={24} />
+                      </Box>
+                      <VStack align="start" spacing={1} flex={1}>
+                        <Heading as="h3" size="md" color={titleColor}>
+                          {category}
+                        </Heading>
+                        <Text fontSize="sm" color={textColor}>
+                          {description}
+                        </Text>
+                      </VStack>
+                      <Badge
+                        colorScheme={color}
+                        variant="subtle"
+                        borderRadius="full"
+                        px={3}
+                        py={1}
+                      >
+                        {links.length} link{links.length > 1 ? 's' : ''}
+                      </Badge>
+                    </HStack>
 
-                  {/* Links */}
-                  <VStack spacing={3} align="stretch">
-                    {links.map(({ href, label, description: linkDesc, icon: LinkIcon }) => (
-                      <Link href={href} key={href} passHref legacyBehavior>
-                        <Button
-                          as="a"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          h="auto"
-                          p={4}
-                          justifyContent="flex-start"
-                          textAlign="left"
-                          bg={useColorModeValue(`${color}.50`, `${color}.900`)}
-                          color={useColorModeValue(`${color}.700`, `${color}.200`)}
-                          borderColor={useColorModeValue(`${color}.200`, `${color}.600`)}
-                          border="1px solid"
-                          borderRadius="xl"
-                          transition="all 0.3s ease"
-                          _hover={{
-                            bg: useColorModeValue(`${color}.100`, `${color}.800`),
-                            borderColor: useColorModeValue(`${color}.300`, `${color}.500`),
-                            transform: 'translateY(-2px)',
-                            boxShadow: 'md',
-                          }}
-                          _active={{
-                            transform: 'translateY(0)',
-                          }}
-                        >
-                          <HStack spacing={4} align="start" w="100%">
-                            <Box
-                              p={2}
-                              borderRadius="lg"
-                              bg={useColorModeValue(`${color}.100`, `${color}.700`)}
-                              color={useColorModeValue(`${color}.600`, `${color}.300`)}
-                              flexShrink={0}
+                    {/* Links */}
+                    <VStack spacing={3} align="stretch">
+                      {links.map(
+                        ({
+                          href,
+                          label,
+                          description: linkDesc,
+                          icon: LinkIcon,
+                        }) => (
+                          <Link href={href} key={href} passHref legacyBehavior>
+                            <Button
+                              as="a"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              h="auto"
+                              p={4}
+                              justifyContent="flex-start"
+                              textAlign="left"
+                              bg={useColorModeValue(
+                                `${color}.50`,
+                                `${color}.900`
+                              )}
+                              color={useColorModeValue(
+                                `${color}.700`,
+                                `${color}.200`
+                              )}
+                              borderColor={useColorModeValue(
+                                `${color}.200`,
+                                `${color}.600`
+                              )}
+                              border="1px solid"
+                              borderRadius="xl"
+                              transition="all 0.3s ease"
+                              _hover={{
+                                bg: useColorModeValue(
+                                  `${color}.100`,
+                                  `${color}.800`
+                                ),
+                                borderColor: useColorModeValue(
+                                  `${color}.300`,
+                                  `${color}.500`
+                                ),
+                                transform: 'translateY(-2px)',
+                                boxShadow: 'md',
+                              }}
+                              _active={{
+                                transform: 'translateY(0)',
+                              }}
                             >
-                              <LinkIcon size={18} />
-                            </Box>
-                            <VStack align="start" spacing={1} flex={1} minW={0}>
-                              <HStack justify="space-between" w="100%" align="center">
-                                <Text 
-                                  fontWeight="semibold"
-                                  fontSize="sm"
-                                  noOfLines={1}
-                                  flex={1}
-                                >
-                                  {label}
-                                </Text>
-                                <Icon 
-                                  as={FaExternalLinkAlt} 
-                                  boxSize={3}
-                                  opacity={0.6}
+                              <HStack spacing={4} align="start" w="100%">
+                                <Box
+                                  p={2}
+                                  borderRadius="lg"
+                                  bg={useColorModeValue(
+                                    `${color}.100`,
+                                    `${color}.700`
+                                  )}
+                                  color={useColorModeValue(
+                                    `${color}.600`,
+                                    `${color}.300`
+                                  )}
                                   flexShrink={0}
-                                />
+                                >
+                                  <LinkIcon size={18} />
+                                </Box>
+                                <VStack
+                                  align="start"
+                                  spacing={1}
+                                  flex={1}
+                                  minW={0}
+                                >
+                                  <HStack
+                                    justify="space-between"
+                                    w="100%"
+                                    align="center"
+                                  >
+                                    <Text
+                                      fontWeight="semibold"
+                                      fontSize="sm"
+                                      noOfLines={1}
+                                      flex={1}
+                                    >
+                                      {label}
+                                    </Text>
+                                    <Icon
+                                      as={FaExternalLinkAlt}
+                                      boxSize={3}
+                                      opacity={0.6}
+                                      flexShrink={0}
+                                    />
+                                  </HStack>
+                                  <Text
+                                    fontSize="xs"
+                                    opacity={0.8}
+                                    lineHeight="short"
+                                    noOfLines={2}
+                                  >
+                                    {linkDesc}
+                                  </Text>
+                                </VStack>
                               </HStack>
-                              <Text 
-                                fontSize="xs"
-                                opacity={0.8}
-                                lineHeight="short"
-                                noOfLines={2}
-                              >
-                                {linkDesc}
-                              </Text>
-                            </VStack>
-                          </HStack>
-                        </Button>
-                      </Link>
-                    ))}
+                            </Button>
+                          </Link>
+                        )
+                      )}
+                    </VStack>
                   </VStack>
-                </VStack>
-              </Box>
-            ))}
+                </Box>
+              )
+            )}
           </SimpleGrid>
 
           {/* Footer Call to Action */}
@@ -303,8 +338,8 @@ const LinksPage = () => {
                   Mari Bergabung Bersama Kami
                 </Heading>
                 <Text color={textColor} maxW="500px">
-                  POSKU Al-Fatih Bogor adalah paguyuban orang tua santri yang berkomitmen 
-                  untuk mendukung pendidikan Islam yang berkualitas.
+                  POSKU Al-Fatih Bogor adalah paguyuban orang tua santri yang
+                  berkomitmen untuk mendukung pendidikan Islam yang berkualitas.
                 </Text>
               </VStack>
               <HStack spacing={4} flexWrap="wrap" justify="center">

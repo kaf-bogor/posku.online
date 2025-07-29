@@ -56,8 +56,8 @@ export default function BottomNav() {
               fontSize="xs"
               color={textColor}
               _hover={{ color: 'purple.600' }}
-              minW={{ base: "70px", md: "60px" }}
-              minH={{ base: "50px", md: "auto" }}
+              minW={{ base: '70px', md: '60px' }}
+              minH={{ base: '50px', md: 'auto' }}
               justify="center"
               py={1}
               borderRadius="lg"
@@ -79,7 +79,9 @@ export default function BottomNav() {
               {icon === 'admin' && (
                 <FaUser fontSize={20} style={{ marginBottom: 2 }} />
               )}
-              <Text fontSize="xs" fontWeight="medium">{label}</Text>
+              <Text fontSize="xs" fontWeight="medium">
+                {label}
+              </Text>
             </ChakraLink>
           </Link>
         ))}

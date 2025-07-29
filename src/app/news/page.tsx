@@ -20,10 +20,7 @@ export default function NewsPage() {
   const emptyBg = useColorModeValue('gray.50', 'gray.600');
   const emptyTextColor = useColorModeValue('gray.500', 'gray.400');
 
-  const {
-    items: newsItems,
-    loading: newsLoading,
-  } = useCrudManager<NewsItem>({
+  const { items: newsItems, loading: newsLoading } = useCrudManager<NewsItem>({
     collectionName: 'news',
     blobFolderName: 'news',
     itemSchema: {
@@ -37,7 +34,7 @@ export default function NewsPage() {
   });
 
   // Filter published news
-  const publishedNews = newsItems.filter(news => news.isPublished);
+  const publishedNews = newsItems.filter((news) => news.isPublished);
 
   const LoadingSection = () => (
     <Center py={16}>
@@ -49,12 +46,7 @@ export default function NewsPage() {
   );
 
   const EmptySection = () => (
-    <Box
-      bg={emptyBg}
-      borderRadius="xl"
-      p={12}
-      textAlign="center"
-    >
+    <Box bg={emptyBg} borderRadius="xl" p={12} textAlign="center">
       <VStack spacing={4}>
         <FaNewspaper fontSize="48px" color={emptyTextColor} />
         <Text color={emptyTextColor} fontSize="lg" fontWeight="medium">
@@ -70,7 +62,7 @@ export default function NewsPage() {
   return (
     <VStack spacing={6} align="stretch" w="100%">
       <SectionHeader title="Semua Berita" icon={FaNewspaper} />
-      
+
       {newsLoading ? (
         <LoadingSection />
       ) : publishedNews.length > 0 ? (

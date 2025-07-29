@@ -16,11 +16,11 @@ interface SectionHeaderProps {
   viewAllText?: string;
 }
 
-const SectionHeader = ({ 
-  title, 
-  icon, 
-  viewAllLink, 
-  viewAllText = "Lihat Semua" 
+const SectionHeader = ({
+  title,
+  icon,
+  viewAllLink,
+  viewAllText = 'Lihat Semua',
 }: SectionHeaderProps) => {
   const titleColor = useColorModeValue('gray.800', 'white');
   const linkColor = useColorModeValue('purple.600', 'purple.300');

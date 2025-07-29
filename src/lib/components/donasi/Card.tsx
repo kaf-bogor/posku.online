@@ -90,9 +90,9 @@ export default function Card({ item }: Props) {
       {/* Content Section */}
       <VStack spacing={4} p={6} align="stretch">
         {/* Title */}
-        <Heading 
-          as="h3" 
-          size="md" 
+        <Heading
+          as="h3"
+          size="md"
           color={titleColor}
           lineHeight="shorter"
           noOfLines={2}
