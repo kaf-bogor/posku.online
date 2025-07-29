@@ -150,8 +150,8 @@ const DonasiPage = () => {
 
   return (
     <Box bg={bgColor} minH="100vh" pb={8}>
-      <Container maxW="container.xl">
-        <VStack spacing={8} align="stretch">
+      <Container maxW="container.md">
+        <VStack spacing={6} align="stretch">
           {/* Header */}
           <VStack spacing={4} pt={4}>
             <HStack w="100%" justify="space-between" align="center">
@@ -169,26 +169,23 @@ const DonasiPage = () => {
               />
               <VStack spacing={1} flex={1}>
                 <Heading
-                  size="xl"
+                  size="2xl"
                   color={titleColor}
                   textAlign="center"
                   fontWeight="bold"
                 >
                   Kampanye Donasi
                 </Heading>
-                <Text color={textColor} fontSize="sm" textAlign="center">
-                  Mari bersama membantu sesama
+                <Text color={textColor} fontSize="md" textAlign="center">
+                  Mari bersama membantu sesama membangun masa depan yang lebih baik
                 </Text>
               </VStack>
               <Box w="40px" />
             </HStack>
           </VStack>
 
-          {/* Campaigns Grid */}
-          <SimpleGrid
-            columns={{ base: 1, md: 2, lg: 3 }}
-            spacing={{ base: 6, md: 8 }}
-          >
+          {/* Campaigns List - Single Column */}
+          <VStack spacing={6} align="stretch">
             {campaigns.map((campaign) => {
               const totalCollected = getTotalCollected(campaign.donors);
               const progress = calculateProgress(
@@ -367,7 +364,7 @@ const DonasiPage = () => {
                 </Box>
               );
             })}
-          </SimpleGrid>
+          </VStack>
 
           {/* Call to Action */}
           <Box
