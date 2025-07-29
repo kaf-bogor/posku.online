@@ -169,7 +169,7 @@ const DonasiPage = () => {
                     boxShadow: '2xl',
                   }}
                   border="1px solid"
-                  borderColor={useColorModeValue('gray.100', 'gray.700')}
+                  borderColor={borderColor}
                 >
                   {/* Campaign Image */}
                   <Box position="relative" overflow="hidden">
