@@ -53,11 +53,16 @@ const DonasiPage = () => {
     const fetchCampaigns = async () => {
       try {
         const querySnapshot = await getDocs(collection(db, 'donations'));
-        const data: DonationPage[] = querySnapshot.docs
-          .map((doc) => ({ id: doc.id, ...doc.data() }) as DonationPage)
-          .filter((campaign) => campaign.published);
+        const allData: DonationPage[] = querySnapshot.docs
+          .map((doc) => ({ id: doc.id, ...doc.data() }) as DonationPage);
+
+        console.log('All donations from Firebase:', allData);
+        console.log('Published donations:', allData.filter(campaign => campaign.published));
+
+        const data = allData.filter((campaign) => campaign.published);
         setCampaigns(data);
-      } catch {
+      } catch (error) {
+        console.error('Error fetching campaigns:', error);
         setCampaigns([]);
       } finally {
         setLoading(false);
