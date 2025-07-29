@@ -200,167 +200,202 @@ const DonasiPage = () => {
                   bg={cardBg}
                   borderRadius="2xl"
                   overflow="hidden"
-                  boxShadow="lg"
+                  boxShadow="xl"
                   transition="all 0.3s ease"
                   _hover={{
-                    transform: 'translateY(-8px)',
+                    transform: 'translateY(-4px)',
                     boxShadow: '2xl',
                   }}
                   border="1px solid"
                   borderColor={borderColor}
                 >
-                  {/* Campaign Image */}
-                  <Box position="relative" overflow="hidden">
-                    <Image
-                      src={campaign.imageUrls?.[0] || ''}
-                      alt={campaign.title}
-                      w="100%"
-                      h={{ base: '200px', md: '240px' }}
-                      objectFit="cover"
-                      transition="transform 0.3s ease"
-                      _hover={{ transform: 'scale(1.05)' }}
-                    />
+                  <Flex direction={{ base: 'column', md: 'row' }} align="stretch">
+                    {/* Campaign Image */}
                     <Box
-                      position="absolute"
-                      top={4}
-                      right={4}
-                      bg="rgba(255, 255, 255, 0.9)"
-                      backdropFilter="blur(10px)"
-                      borderRadius="full"
-                      p={2}
+                      position="relative"
+                      overflow="hidden"
+                      w={{ base: '100%', md: '320px' }}
+                      h={{ base: '240px', md: '300px' }}
+                      flexShrink={0}
                     >
-                      <FaHeart color={heartColor} />
-                    </Box>
-                  </Box>
+                      <Image
+                        src={campaign.imageUrls?.[0] || ''}
+                        alt={campaign.title}
+                        w="100%"
+                        h="100%"
+                        objectFit="cover"
+                        transition="transform 0.3s ease"
+                        _hover={{ transform: 'scale(1.05)' }}
+                      />
 
-                  {/* Campaign Content */}
-                  <VStack spacing={4} p={6} align="stretch">
-                    {/* Title */}
-                    <HStack justify="space-between" align="start">
-                      <Heading
-                        as="h3"
-                        size="md"
-                        color={titleColor}
-                        lineHeight="shorter"
-                        noOfLines={2}
-                        fontWeight="bold"
-                        flex={1}
+                      {/* Heart Icon Overlay */}
+                      <Box
+                        position="absolute"
+                        top={4}
+                        right={4}
+                        bg="rgba(255, 255, 255, 0.95)"
+                        backdropFilter="blur(10px)"
+                        borderRadius="full"
+                        p={2}
+                        boxShadow="sm"
                       >
-                        {campaign.title}
-                      </Heading>
-                      <Badge
-                        colorScheme={campaign.published ? 'green' : 'red'}
-                        size="sm"
-                        ml={2}
-                      >
-                        {campaign.published ? 'Published' : 'Draft'}
-                      </Badge>
-                    </HStack>
-
-                    {/* Summary */}
-                    <Text
-                      fontSize="sm"
-                      color={textColor}
-                      lineHeight="relaxed"
-                      noOfLines={3}
-                    >
-                      {campaign.summary.length > 150
-                        ? campaign.summary.slice(0, 150) + '...'
-                        : campaign.summary}
-                    </Text>
-
-                    {/* Progress Section */}
-                    <VStack spacing={3} align="stretch">
-                      {/* Progress Bar */}
-                      <Box>
-                        <Progress
-                          value={progress}
-                          colorScheme="green"
-                          size="lg"
-                          borderRadius="full"
-                          bg={progressBg}
-                        />
+                        <FaHeart color={heartColor} />
                       </Box>
 
-                      {/* Stats */}
-                      <HStack justify="space-between" align="start">
-                        <VStack spacing={1} align="start" flex={1}>
-                          <Text
-                            fontSize="xs"
-                            color={textColor}
-                            fontWeight="medium"
+                      {/* Progress Overlay */}
+                      <Box
+                        position="absolute"
+                        bottom={0}
+                        left={0}
+                        right={0}
+                        bg="linear-gradient(to top, rgba(0,0,0,0.8), transparent)"
+                        p={4}
+                      >
+                        <VStack spacing={2} align="start">
+                          <Badge
+                            colorScheme={progress >= 100 ? 'green' : 'blue'}
+                            variant="solid"
+                            borderRadius="full"
+                            px={3}
+                            py={1}
+                            fontSize="sm"
+                            fontWeight="bold"
                           >
-                            Terkumpul
-                          </Text>
+                            {progress.toFixed(0)}% tercapai
+                          </Badge>
                           <Text
+                            color="white"
                             fontSize="lg"
                             fontWeight="bold"
-                            color={accentColor}
+                            textShadow="0 1px 3px rgba(0,0,0,0.8)"
                           >
                             {formatIDR(totalCollected)}
                           </Text>
-                        </VStack>
-                        <VStack spacing={1} align="end" flex={1}>
                           <Text
-                            fontSize="xs"
-                            color={textColor}
-                            fontWeight="medium"
-                          >
-                            Target
-                          </Text>
-                          <Text
+                            color="white"
                             fontSize="sm"
-                            fontWeight="semibold"
-                            color={titleColor}
+                            opacity={0.9}
+                            textShadow="0 1px 2px rgba(0,0,0,0.8)"
                           >
-                            {formatIDR(campaign.target)}
+                            dari target {formatIDR(campaign.target)}
                           </Text>
                         </VStack>
-                      </HStack>
+                      </Box>
+                    </Box>
 
-                      {/* Additional Stats */}
-                      <HStack justify="space-between" align="center">
-                        <HStack spacing={2}>
-                          <FaUsers color={iconColor} />
-                          <Text fontSize="sm" color={textColor}>
-                            {donorsCount} donatur
-                          </Text>
-                        </HStack>
-                        <Badge
-                          colorScheme={progress >= 100 ? 'green' : 'blue'}
-                          variant="subtle"
-                          borderRadius="full"
-                          px={3}
-                          py={1}
+                    {/* Campaign Content */}
+                    <VStack spacing={5} p={6} align="stretch" flex={1} justify="space-between">
+                      {/* Top Section */}
+                      <VStack spacing={4} align="stretch">
+                        {/* Title and Status */}
+                        <VStack spacing={2} align="stretch">
+                          <HStack justify="space-between" align="start">
+                            <Heading
+                              as="h3"
+                              size="lg"
+                              color={titleColor}
+                              lineHeight="shorter"
+                              fontWeight="bold"
+                              flex={1}
+                            >
+                              {campaign.title}
+                            </Heading>
+                            <Badge
+                              colorScheme={campaign.published ? 'green' : 'red'}
+                              variant="subtle"
+                              borderRadius="full"
+                              px={3}
+                              py={1}
+                              ml={3}
+                              flexShrink={0}
+                            >
+                              {campaign.published ? 'Published' : 'Draft'}
+                            </Badge>
+                          </HStack>
+                        </VStack>
+
+                        {/* Summary */}
+                        <Text
+                          fontSize="md"
+                          color={textColor}
+                          lineHeight="relaxed"
+                          noOfLines={4}
                         >
-                          {progress.toFixed(0)}% tercapai
-                        </Badge>
-                      </HStack>
-                    </VStack>
+                          {campaign.summary.length > 200
+                            ? campaign.summary.slice(0, 200) + '...'
+                            : campaign.summary}
+                        </Text>
 
-                    {/* Action Button */}
-                    <Link
-                      href={`/donasi/${campaign.id}` || '/donasi/wakaf_ats'}
-                      passHref
-                      legacyBehavior
-                    >
-                      <Button
-                        as="a"
-                        size="lg"
-                        colorScheme="green"
-                        borderRadius="xl"
-                        w="100%"
-                        fontWeight="bold"
-                        _hover={{
-                          transform: 'translateY(-2px)',
-                          boxShadow: 'lg',
-                        }}
-                        leftIcon={<FaHeart />}
-                      >
-                        Donasi Sekarang
-                      </Button>
-                    </Link>
-                  </VStack>
+                        {/* Progress Bar */}
+                        <VStack spacing={2} align="stretch">
+                          <Progress
+                            value={progress}
+                            colorScheme="green"
+                            size="lg"
+                            borderRadius="full"
+                            bg={progressBg}
+                          />
+                          <HStack justify="space-between" align="center">
+                            <HStack spacing={2}>
+                              <FaUsers color={iconColor} />
+                              <Text fontSize="sm" color={textColor} fontWeight="medium">
+                                {donorsCount} donatur
+                              </Text>
+                            </HStack>
+                            <Text fontSize="sm" color={textColor} fontWeight="medium">
+                              {progress.toFixed(1)}% dari target
+                            </Text>
+                          </HStack>
+                        </VStack>
+                      </VStack>
+
+                      {/* Bottom Section - Action Button */}
+                      <VStack spacing={3} align="stretch">
+                        <HStack justify="space-between" align="center">
+                          <VStack align="start" spacing={0}>
+                            <Text fontSize="xs" color={textColor} fontWeight="medium">
+                              Terkumpul
+                            </Text>
+                            <Text fontSize="xl" fontWeight="bold" color={accentColor}>
+                              {formatIDR(totalCollected)}
+                            </Text>
+                          </VStack>
+                          <VStack align="end" spacing={0}>
+                            <Text fontSize="xs" color={textColor} fontWeight="medium">
+                              Target
+                            </Text>
+                            <Text fontSize="lg" fontWeight="semibold" color={titleColor}>
+                              {formatIDR(campaign.target)}
+                            </Text>
+                          </VStack>
+                        </HStack>
+
+                        <Link
+                          href={`/donasi/${campaign.id}` || '/donasi/wakaf_ats'}
+                          passHref
+                          legacyBehavior
+                        >
+                          <Button
+                            as="a"
+                            size="lg"
+                            colorScheme="green"
+                            borderRadius="xl"
+                            w="100%"
+                            fontWeight="bold"
+                            py={6}
+                            fontSize="lg"
+                            _hover={{
+                              transform: 'translateY(-2px)',
+                              boxShadow: 'xl',
+                            }}
+                            leftIcon={<FaHeart />}
+                          >
+                            Donasi Sekarang
+                          </Button>
+                        </Link>
+                      </VStack>
+                    </VStack>
+                  </Flex>
                 </Box>
               );
             })}
