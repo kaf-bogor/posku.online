@@ -131,10 +131,10 @@ const Home = () => {
 
       {/* News Section */}
       <Box>
-        <SectionHeader 
-          title="Berita Terbaru" 
+        <SectionHeader
+          title="Berita Terbaru"
           icon={FaNewspaper}
-          viewAllLink="/admin/news"
+          viewAllLink="/news"
           viewAllText="Lihat Semua Berita"
         />
         {newsLoading ? (
