@@ -69,7 +69,7 @@ const NewsCard = ({ news, isCompact = false }: NewsCardProps) => {
               </VStack>
               <HStack justify="space-between" w="100%" align="center">
                 <Text fontSize="xs" color={textColor}>
-                  {format(new Date(news.publishDate), 'dd MMM yyyy')}
+                  {format(new Date(news.publishDate), 'dd MMM yyyy', { locale: id })}
                 </Text>
                 {news.isPublished && (
                   <Badge colorScheme="green" size="sm">
