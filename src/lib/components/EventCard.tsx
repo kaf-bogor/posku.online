@@ -42,7 +42,7 @@ const EventCard = ({ event, isCompact = false }: EventCardProps) => {
   const status = getEventStatus();
 
   return (
-    <Link href={`/admin/events/${event.id}`} passHref>
+    <Link href={`/events/${event.id}`} passHref>
       <Box
         as="a"
         bg={cardBg}
