@@ -236,7 +236,7 @@ const DonasiPage = () => {
                             Terkumpul
                           </Text>
                           <Text fontSize="lg" fontWeight="bold" color={accentColor}>
-                            {currency(totalCollected)}
+                            {formatIDR(totalCollected)}
                           </Text>
                         </VStack>
                         <VStack spacing={1} align="end" flex={1}>
