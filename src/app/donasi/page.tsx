@@ -29,15 +29,16 @@ import type { DonationPage } from '~/lib/types/donation';
 import { formatIDR } from '~/lib/utils/currency';
 
 const DonasiPage = () => {
-  const [campaigns, setCampaigns] = useState<DonationPage[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  // Color theme
+  // Color theme - Must be called first and in consistent order
   const bgColor = useColorModeValue('gray.50', 'gray.900');
   const cardBg = useColorModeValue('white', 'gray.800');
   const textColor = useColorModeValue('gray.600', 'gray.300');
   const titleColor = useColorModeValue('gray.800', 'white');
   const accentColor = useColorModeValue('green.500', 'green.400');
+
+  // State hooks
+  const [campaigns, setCampaigns] = useState<DonationPage[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchCampaigns = async () => {
