@@ -182,7 +182,7 @@ const Home = () => {
       </Box>
 
       {/* Additional bottom spacing for bottom navigation */}
-      <Box h="80px" />
+      <Box h={{ base: "20px", md: "40px" }} />
     </VStack>
   );
 };
