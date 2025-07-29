@@ -10,7 +10,7 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { FaUsers, FaEnvelopeOpenText, FaRegFileAlt, FaNewspaper, FaCalendarAlt } from 'react-icons/fa';
+import { FaUsers, FaEnvelopeOpenText, FaRegFileAlt, FaNewspaper, FaCalendarAlt, FaHandsHelping } from 'react-icons/fa';
 
 import { storageUrl } from '~/lib/context/baseUrl';
 import EventCard from '~/lib/components/EventCard';
