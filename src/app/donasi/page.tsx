@@ -89,7 +89,7 @@ const DonasiPage = () => {
             boxShadow="sm"
           >
             <VStack spacing={4} textAlign="center">
-              <FaHandsHelping fontSize="64px" color={useColorModeValue('green.300', 'green.500')} />
+              <FaHandsHelping fontSize="64px" color={accentColor} />
               <Heading size="lg" color={titleColor}>
                 Belum Ada Kampanye Donasi
               </Heading>
