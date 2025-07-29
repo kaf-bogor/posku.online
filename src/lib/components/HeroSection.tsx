@@ -20,20 +20,19 @@ const HeroSection = () => {
   return (
     <Box
       bgGradient={bgGradient}
-      borderRadius="2xl"
-      p={6}
-      mb={6}
+      borderRadius="xl"
+      p={{ base: 4, md: 5 }}
       position="relative"
       overflow="hidden"
     >
-      <VStack spacing={4} align="center" textAlign="center">
+      <VStack spacing={3} align="center" textAlign="center">
         <Image
           src={`${storageUrl}/logo_posku.png?alt=media`}
           alt="POSKU Al-Fatih"
-          width={{ base: "80px", md: "100px" }}
-          height={{ base: "80px", md: "100px" }}
+          width={{ base: "60px", md: "80px" }}
+          height={{ base: "60px", md: "80px" }}
         />
-        <VStack spacing={2}>
+        <VStack spacing={1}>
           <Text
             fontSize={{ base: "xl", md: "2xl" }}
             fontWeight="bold"
