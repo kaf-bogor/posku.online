@@ -18,7 +18,7 @@ import {
   Flex,
   Container,
 } from '@chakra-ui/react';
-import DOMPurify from 'dompurify';
+
 import { collection, getDocs } from 'firebase/firestore';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
