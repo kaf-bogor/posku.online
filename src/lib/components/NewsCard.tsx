@@ -24,7 +24,7 @@ const NewsCard = ({ news, isCompact = false }: NewsCardProps) => {
   const titleColor = useColorModeValue('gray.800', 'white');
 
   return (
-    <Link href={`/admin/news/${news.id}`} passHref>
+    <Link href={`/news/${news.id}`} passHref>
       <Box
         as="a"
         bg={cardBg}
