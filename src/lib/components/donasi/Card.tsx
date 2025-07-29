@@ -61,7 +61,7 @@ export default function Card({ item }: Props) {
         boxShadow: '2xl',
       }}
       border="1px solid"
-      borderColor={useColorModeValue('gray.100', 'gray.700')}
+      borderColor={borderColor}
     >
       {/* Image Section */}
       <Box position="relative" overflow="hidden">
