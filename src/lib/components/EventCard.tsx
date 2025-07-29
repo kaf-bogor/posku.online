@@ -11,6 +11,7 @@ import {
 import { format, isAfter, isBefore } from 'date-fns';
 import { id } from 'date-fns/locale';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 import { FaMapMarkerAlt, FaCalendarAlt } from 'react-icons/fa';
 
 import type { EventItem } from '~/lib/types/event';
