@@ -177,7 +177,8 @@ const DonasiPage = () => {
                   Kampanye Donasi
                 </Heading>
                 <Text color={textColor} fontSize="md" textAlign="center">
-                  Mari bersama membantu sesama membangun masa depan yang lebih baik
+                  Mari bersama membantu sesama membangun masa depan yang lebih
+                  baik
                 </Text>
               </VStack>
               <Box w="40px" />
@@ -209,7 +210,10 @@ const DonasiPage = () => {
                   border="1px solid"
                   borderColor={borderColor}
                 >
-                  <Flex direction={{ base: 'column', md: 'row' }} align="stretch">
+                  <Flex
+                    direction={{ base: 'column', md: 'row' }}
+                    align="stretch"
+                  >
                     {/* Campaign Image */}
                     <Box
                       position="relative"
@@ -284,7 +288,13 @@ const DonasiPage = () => {
                     </Box>
 
                     {/* Campaign Content */}
-                    <VStack spacing={5} p={6} align="stretch" flex={1} justify="space-between">
+                    <VStack
+                      spacing={5}
+                      p={6}
+                      align="stretch"
+                      flex={1}
+                      justify="space-between"
+                    >
                       {/* Top Section */}
                       <VStack spacing={4} align="stretch">
                         {/* Title and Status */}
@@ -338,11 +348,19 @@ const DonasiPage = () => {
                           <HStack justify="space-between" align="center">
                             <HStack spacing={2}>
                               <FaUsers color={iconColor} />
-                              <Text fontSize="sm" color={textColor} fontWeight="medium">
+                              <Text
+                                fontSize="sm"
+                                color={textColor}
+                                fontWeight="medium"
+                              >
                                 {donorsCount} donatur
                               </Text>
                             </HStack>
-                            <Text fontSize="sm" color={textColor} fontWeight="medium">
+                            <Text
+                              fontSize="sm"
+                              color={textColor}
+                              fontWeight="medium"
+                            >
                               {progress.toFixed(1)}% dari target
                             </Text>
                           </HStack>
@@ -353,18 +371,34 @@ const DonasiPage = () => {
                       <VStack spacing={3} align="stretch">
                         <HStack justify="space-between" align="center">
                           <VStack align="start" spacing={0}>
-                            <Text fontSize="xs" color={textColor} fontWeight="medium">
+                            <Text
+                              fontSize="xs"
+                              color={textColor}
+                              fontWeight="medium"
+                            >
                               Terkumpul
                             </Text>
-                            <Text fontSize="xl" fontWeight="bold" color={accentColor}>
+                            <Text
+                              fontSize="xl"
+                              fontWeight="bold"
+                              color={accentColor}
+                            >
                               {formatIDR(totalCollected)}
                             </Text>
                           </VStack>
                           <VStack align="end" spacing={0}>
-                            <Text fontSize="xs" color={textColor} fontWeight="medium">
+                            <Text
+                              fontSize="xs"
+                              color={textColor}
+                              fontWeight="medium"
+                            >
                               Target
                             </Text>
-                            <Text fontSize="lg" fontWeight="semibold" color={titleColor}>
+                            <Text
+                              fontSize="lg"
+                              fontWeight="semibold"
+                              color={titleColor}
+                            >
                               {formatIDR(campaign.target)}
                             </Text>
                           </VStack>

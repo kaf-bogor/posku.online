@@ -66,13 +66,13 @@ import { auth, db } from '~/lib/firebase';
 import { formatIDR } from '~/lib/utils/currency';
 
 // Dashboard Stats Card Component
-const StatsCard = ({ 
-  title, 
-  value, 
-  icon, 
-  change, 
+const StatsCard = ({
+  title,
+  value,
+  icon,
+  change,
   color = 'blue',
-  isLoading = false 
+  isLoading = false,
 }: {
   title: string;
   value: string | number;
@@ -99,18 +99,15 @@ const StatsCard = ({
               </StatNumber>
               {change && (
                 <StatHelpText mt={2} mb={0}>
-                  <StatArrow type={change.trend === 'up' ? 'increase' : 'decrease'} />
+                  <StatArrow
+                    type={change.trend === 'up' ? 'increase' : 'decrease'}
+                  />
                   {Math.abs(change.value)}%
                 </StatHelpText>
               )}
             </Stat>
           </Box>
-          <Box
-            p={3}
-            borderRadius="xl"
-            bg={iconBg}
-            color={iconColor}
-          >
+          <Box p={3} borderRadius="xl" bg={iconBg} color={iconColor}>
             <Icon as={icon} boxSize={6} />
           </Box>
         </Flex>
@@ -120,13 +117,13 @@ const StatsCard = ({
 };
 
 // Quick Actions Card Component
-const QuickActionCard = ({ 
-  title, 
-  description, 
-  icon, 
-  href, 
+const QuickActionCard = ({
+  title,
+  description,
+  icon,
+  href,
   color = 'blue',
-  badge
+  badge,
 }: {
   title: string;
   description: string;
@@ -137,19 +134,19 @@ const QuickActionCard = ({
 }) => {
   const cardBg = useColorModeValue('white', 'gray.800');
   const hoverBg = useColorModeValue(`${color}.50`, `${color}.900`);
-  
+
   return (
-    <Card 
-      as="a" 
+    <Card
+      as="a"
       href={href}
-      bg={cardBg} 
-      shadow="md" 
-      borderRadius="xl" 
+      bg={cardBg}
+      shadow="md"
+      borderRadius="xl"
       transition="all 0.3s ease"
-      _hover={{ 
-        shadow: 'lg', 
+      _hover={{
+        shadow: 'lg',
         bg: hoverBg,
-        transform: 'translateY(-2px)'
+        transform: 'translateY(-2px)',
       }}
       cursor="pointer"
       position="relative"
@@ -166,7 +163,12 @@ const QuickActionCard = ({
               <Icon as={icon} boxSize={6} />
             </Box>
             {badge && (
-              <Badge colorScheme={color} variant="subtle" borderRadius="full" px={3}>
+              <Badge
+                colorScheme={color}
+                variant="subtle"
+                borderRadius="full"
+                px={3}
+              >
                 {badge}
               </Badge>
             )}
@@ -188,7 +190,7 @@ const QuickActionCard = ({
 // Component for loading state
 const LoadingView = () => {
   const cardBg = useColorModeValue('white', 'gray.800');
-  
+
   return (
     <Container maxW="container.md" py={20}>
       <Card bg={cardBg} shadow="xl" borderRadius="2xl">
@@ -220,7 +222,7 @@ const LoginView = ({ onLogin }: { onLogin: () => Promise<void> }) => {
     'linear(to-br, blue.50, purple.50)',
     'linear(to-br, blue.900, purple.900)'
   );
-  
+
   return (
     <Box bg={bgGradient} minH="100vh" py={20}>
       <Container maxW="container.sm">
@@ -245,13 +247,13 @@ const LoginView = ({ onLogin }: { onLogin: () => Promise<void> }) => {
                   </Text>
                 </VStack>
               </VStack>
-              
+
               <VStack spacing={4} w="100%">
                 <Text color="gray.600" textAlign="center">
                   Masuk dengan akun Google yang telah terdaftar sebagai admin
                   untuk mengakses panel manajemen konten.
                 </Text>
-                
+
                 <Button
                   size="lg"
                   colorScheme="blue"
@@ -267,9 +269,9 @@ const LoginView = ({ onLogin }: { onLogin: () => Promise<void> }) => {
                   Masuk dengan Google
                 </Button>
               </VStack>
-              
+
               <Divider />
-              
+
               <Alert status="info" borderRadius="lg">
                 <AlertIcon />
                 <Text fontSize="sm">
@@ -287,7 +289,7 @@ const LoginView = ({ onLogin }: { onLogin: () => Promise<void> }) => {
 // Component for unauthorized view
 const UnauthorizedView = () => {
   const cardBg = useColorModeValue('white', 'gray.800');
-  
+
   return (
     <Container maxW="container.md" py={20}>
       <Card bg={cardBg} shadow="xl" borderRadius="2xl">
@@ -302,10 +304,12 @@ const UnauthorizedView = () => {
               <Spinner size="xl" thickness="3px" />
             </Box>
             <VStack spacing={2} textAlign="center">
-              <Heading size="lg" color="red.500">Akses Ditolak</Heading>
+              <Heading size="lg" color="red.500">
+                Akses Ditolak
+              </Heading>
               <Text color="gray.500">
-                Anda tidak memiliki izin untuk mengakses panel admin. 
-                Akan logout otomatis...
+                Anda tidak memiliki izin untuk mengakses panel admin. Akan
+                logout otomatis...
               </Text>
             </VStack>
           </VStack>
@@ -435,7 +439,7 @@ function useDashboardStats() {
     totalEvents: 0,
     totalNews: 0,
     totalFunding: 0,
-    loading: true
+    loading: true,
   });
 
   useEffect(() => {
@@ -443,14 +447,21 @@ function useDashboardStats() {
       try {
         const [donationsSnap, eventsSnap, newsSnap] = await Promise.all([
           getDocs(collection(db, 'donations')),
-          getDocs(collection(db, 'events')), 
-          getDocs(collection(db, 'news'))
+          getDocs(collection(db, 'events')),
+          getDocs(collection(db, 'news')),
         ]);
 
-        const donations = donationsSnap.docs.map(doc => doc.data());
+        const donations = donationsSnap.docs.map((doc) => doc.data());
         const totalFunding = donations.reduce((sum, donation) => {
           const donors = donation.donors || [];
-          return sum + donors.reduce((donationSum: number, donor: any) => donationSum + (donor.value || 0), 0);
+          return (
+            sum +
+            donors.reduce(
+              (donationSum: number, donor: any) =>
+                donationSum + (donor.value || 0),
+              0
+            )
+          );
         }, 0);
 
         setStats({
@@ -458,11 +469,11 @@ function useDashboardStats() {
           totalEvents: eventsSnap.size,
           totalNews: newsSnap.size,
           totalFunding,
-          loading: false
+          loading: false,
         });
       } catch (error) {
         console.error('Error fetching stats:', error);
-        setStats(prev => ({ ...prev, loading: false }));
+        setStats((prev) => ({ ...prev, loading: false }));
       }
     };
 
@@ -476,7 +487,7 @@ export default function AdminPage() {
   const { user, loading, login, logout } = useAuth();
   const { notAllowed, error, adminsLoading } = useAdminAuthorization(user);
   const stats = useDashboardStats();
-  
+
   const bgColor = useColorModeValue('gray.50', 'gray.900');
   const cardBg = useColorModeValue('white', 'gray.800');
 
@@ -525,8 +536,8 @@ export default function AdminPage() {
                 </VStack>
                 <HStack spacing={4}>
                   <HStack spacing={3}>
-                    <Avatar 
-                      size="md" 
+                    <Avatar
+                      size="md"
                       src={user.photoURL || undefined}
                       name={user.displayName || user.email || undefined}
                     />
@@ -585,7 +596,9 @@ export default function AdminPage() {
               />
               <StatsCard
                 title="Total Dana Terkumpul"
-                value={stats.loading ? 'Loading...' : formatIDR(stats.totalFunding)}
+                value={
+                  stats.loading ? 'Loading...' : formatIDR(stats.totalFunding)
+                }
                 icon={FaMoneyBillWave}
                 color="orange"
                 isLoading={stats.loading}
@@ -660,7 +673,10 @@ export default function AdminPage() {
                               p={2}
                               borderRadius="lg"
                               bg={useColorModeValue('green.50', 'green.900')}
-                              color={useColorModeValue('green.500', 'green.300')}
+                              color={useColorModeValue(
+                                'green.500',
+                                'green.300'
+                              )}
                             >
                               <FaDonate size={16} />
                             </Box>
@@ -675,10 +691,14 @@ export default function AdminPage() {
                           </HStack>
                         </Td>
                         <Td>
-                          <Badge colorScheme="green" variant="subtle">Donasi</Badge>
+                          <Badge colorScheme="green" variant="subtle">
+                            Donasi
+                          </Badge>
                         </Td>
                         <Td>
-                          <Text fontSize="sm" color="gray.500">2 jam lalu</Text>
+                          <Text fontSize="sm" color="gray.500">
+                            2 jam lalu
+                          </Text>
                         </Td>
                         <Td>
                           <Badge colorScheme="green">Published</Badge>
@@ -706,10 +726,14 @@ export default function AdminPage() {
                           </HStack>
                         </Td>
                         <Td>
-                          <Badge colorScheme="blue" variant="subtle">Event</Badge>
+                          <Badge colorScheme="blue" variant="subtle">
+                            Event
+                          </Badge>
                         </Td>
                         <Td>
-                          <Text fontSize="sm" color="gray.500">5 jam lalu</Text>
+                          <Text fontSize="sm" color="gray.500">
+                            5 jam lalu
+                          </Text>
                         </Td>
                         <Td>
                           <Badge colorScheme="blue">Active</Badge>
@@ -722,7 +746,10 @@ export default function AdminPage() {
                               p={2}
                               borderRadius="lg"
                               bg={useColorModeValue('purple.50', 'purple.900')}
-                              color={useColorModeValue('purple.500', 'purple.300')}
+                              color={useColorModeValue(
+                                'purple.500',
+                                'purple.300'
+                              )}
                             >
                               <FaNewspaper size={16} />
                             </Box>
@@ -737,10 +764,14 @@ export default function AdminPage() {
                           </HStack>
                         </Td>
                         <Td>
-                          <Badge colorScheme="purple" variant="subtle">Berita</Badge>
+                          <Badge colorScheme="purple" variant="subtle">
+                            Berita
+                          </Badge>
                         </Td>
                         <Td>
-                          <Text fontSize="sm" color="gray.500">1 hari lalu</Text>
+                          <Text fontSize="sm" color="gray.500">
+                            1 hari lalu
+                          </Text>
                         </Td>
                         <Td>
                           <Badge colorScheme="purple">Published</Badge>
