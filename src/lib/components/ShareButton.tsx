@@ -59,12 +59,14 @@ const ShareButton: React.FC = () => {
               <Button
                 leftIcon={<FaWhatsapp />}
                 colorScheme="whatsapp"
-                onClick={() =>
-                  window.open(
-                    `https://api.whatsapp.com/send?text=${encodeURIComponent(currentUrl)}`,
-                    '_blank'
-                  )
-                }
+                onClick={() => {
+                  if (typeof window !== 'undefined') {
+                    window.open(
+                      `https://api.whatsapp.com/send?text=${encodeURIComponent(currentUrl)}`,
+                      '_blank'
+                    );
+                  }
+                }}
               >
                 Bagikan ke WhatsApp
               </Button>
