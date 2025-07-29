@@ -9,6 +9,7 @@ import {
   Icon,
 } from '@chakra-ui/react';
 import { format, isAfter, isBefore } from 'date-fns';
+import { id } from 'date-fns/locale';
 import Link from 'next/link';
 import { FaMapMarkerAlt, FaCalendarAlt } from 'react-icons/fa';
 
