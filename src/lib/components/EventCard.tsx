@@ -84,7 +84,7 @@ const EventCard = ({ event, isCompact = false }: EventCardProps) => {
                 <HStack spacing={2} fontSize="xs" color={textColor}>
                   <HStack spacing={1}>
                     <Icon as={FaCalendarAlt} />
-                    <Text>{format(startDate, 'dd MMM')}</Text>
+                    <Text>{format(startDate, 'dd MMM', { locale: id })}</Text>
                   </HStack>
                   <HStack spacing={1}>
                     <Icon as={FaMapMarkerAlt} />
