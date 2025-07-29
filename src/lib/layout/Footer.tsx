@@ -1,10 +1,17 @@
 import { Flex, Link, Text } from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
 
 const Footer = () => {
+  const [currentYear, setCurrentYear] = useState<number | null>(null);
+
+  useEffect(() => {
+    setCurrentYear(new Date().getFullYear());
+  }, []);
+
   return (
     <Flex as="footer" width="full" justifyContent="center">
       <Text fontSize="sm">
-        {new Date().getFullYear()} -{' '}
+        {currentYear || '2024'} -{' '}
         <Link href="https://posku.online" isExternal rel="noopener noreferrer">
           Posku.online
         </Link>
