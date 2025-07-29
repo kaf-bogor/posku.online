@@ -8,6 +8,7 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react';
 import { format } from 'date-fns';
+import { id } from 'date-fns/locale';
 import Link from 'next/link';
 
 import type { NewsItem } from '~/lib/types/news';
