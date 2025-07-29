@@ -34,7 +34,7 @@ const HeroSection = () => {
         />
         <VStack spacing={1}>
           <Text
-            fontSize={{ base: "xl", md: "2xl" }}
+            fontSize={{ base: "lg", md: "xl" }}
             fontWeight="bold"
             color={titleColor}
             lineHeight="short"
@@ -42,9 +42,9 @@ const HeroSection = () => {
             POSKU Al-Fatih Bogor
           </Text>
           <Text
-            fontSize={{ base: "sm", md: "md" }}
+            fontSize={{ base: "xs", md: "sm" }}
             color={textColor}
-            maxW="400px"
+            maxW="350px"
             lineHeight="relaxed"
           >
             Paguyuban Orang Tua Santri Kuttab Al-Fatih Bogor
