@@ -345,8 +345,9 @@ const LinksPage = () => {
                   Bersama, Kita Wujudkan Peradaban Islam
                 </Heading>
                 <Text color={textColor} maxW="500px">
-                  POSKU Al-Fatih Bogor adalah paguyuban orang tua santri yang
-                  berkomitmen untuk mendukung pendidikan Islam yang berkualitas.
+                  POSKU Al-Fatih Bogor adalah wadah koordinasi dan kolaborasi
+                  orang tua santri untuk mendukung kegiatan belajar mengajar di
+                  Kuttab Al-Fatih.
                 </Text>
               </VStack>
               <HStack spacing={4} flexWrap="wrap" justify="center">

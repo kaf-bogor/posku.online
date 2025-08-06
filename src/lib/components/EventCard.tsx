@@ -11,7 +11,7 @@ import {
 import { format, isAfter, isBefore } from 'date-fns';
 import { id } from 'date-fns/locale';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { FaMapMarkerAlt, FaCalendarAlt } from 'react-icons/fa';
 
 import type { EventItem } from '~/lib/types/event';
@@ -30,19 +30,21 @@ const EventCard = ({ event, isCompact = false }: EventCardProps) => {
     label: 'Loading',
     colorScheme: 'gray',
   });
-  const startDate = new Date(event.startDate);
-  const endDate = new Date(event.endDate);
+  const startDate = useMemo(() => new Date(event.startDate), [event.startDate]);
+  const endDate = useMemo(() => new Date(event.endDate), [event.endDate]);
 
   useEffect(() => {
     const now = new Date();
     const getEventStatus = () => {
       if (isBefore(now, startDate)) {
         return { label: 'Upcoming', colorScheme: 'blue' };
-      } else if (isAfter(now, endDate)) {
-        return { label: 'Ended', colorScheme: 'gray' };
-      } else {
-        return { label: 'Ongoing', colorScheme: 'green' };
       }
+
+      if (isAfter(now, endDate)) {
+        return { label: 'Ended', colorScheme: 'gray' };
+      }
+
+      return { label: 'Ongoing', colorScheme: 'green' };
     };
 
     setStatus(getEventStatus());

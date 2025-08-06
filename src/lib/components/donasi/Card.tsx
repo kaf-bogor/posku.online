@@ -14,7 +14,7 @@ import {
   Icon,
 } from '@chakra-ui/react';
 import Link from 'next/link';
-import { FaUsers, FaHeart } from 'react-icons/fa';
+import { FaHeart } from 'react-icons/fa';
 
 import { GET_TOTAL_FUND_RAISING_BY_ID } from '~/lib/graphql';
 import {

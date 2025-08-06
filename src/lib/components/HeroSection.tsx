@@ -1,11 +1,4 @@
-import {
-  Box,
-  VStack,
-  Text,
-  Image,
-  useColorModeValue,
-  Flex,
-} from '@chakra-ui/react';
+import { Box, VStack, Text, Image, useColorModeValue } from '@chakra-ui/react';
 
 import { storageUrl } from '~/lib/context/baseUrl';
 

@@ -7,7 +7,6 @@ import {
   HStack,
   VStack,
   useColorModeValue,
-  Flex,
 } from '@chakra-ui/react';
 import Link from 'next/link';
 import type { IconType } from 'react-icons';
@@ -26,6 +25,7 @@ const MainMenus = ({
   const cardBg = useColorModeValue('white', 'gray.700');
   const hoverBg = useColorModeValue('purple.50', 'purple.900');
   const borderColor = useColorModeValue('gray.200', 'gray.600');
+  const emptyBg = useColorModeValue('gray.50', 'gray.600');
 
   return (
     <Box w="100%" overflowX="auto" pb={2}>
@@ -60,7 +60,7 @@ const MainMenus = ({
                   alignItems="center"
                   justifyContent="center"
                   borderRadius="lg"
-                  bg={useColorModeValue('gray.50', 'gray.600')}
+                  bg={emptyBg}
                   flexShrink={0}
                 >
                   {imageUrl && (
