@@ -45,24 +45,28 @@ const ShareButton: React.FC = () => {
               <Button
                 leftIcon={<FaFacebook />}
                 colorScheme="facebook"
-                onClick={() =>
-                  window.open(
-                    `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentUrl)}`,
-                    '_blank'
-                  )
-                }
+                onClick={() => {
+                  if (typeof window !== 'undefined') {
+                    window.open(
+                      `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentUrl)}`,
+                      '_blank'
+                    );
+                  }
+                }}
               >
                 Bagikan ke Facebook
               </Button>
               <Button
                 leftIcon={<FaWhatsapp />}
                 colorScheme="whatsapp"
-                onClick={() =>
-                  window.open(
-                    `https://api.whatsapp.com/send?text=${encodeURIComponent(currentUrl)}`,
-                    '_blank'
-                  )
-                }
+                onClick={() => {
+                  if (typeof window !== 'undefined') {
+                    window.open(
+                      `https://api.whatsapp.com/send?text=${encodeURIComponent(currentUrl)}`,
+                      '_blank'
+                    );
+                  }
+                }}
               >
                 Bagikan ke WhatsApp
               </Button>

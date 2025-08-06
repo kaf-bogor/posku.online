@@ -45,7 +45,12 @@ const Layout = ({ children }: LayoutProps) => {
 
       <Header image={image} title={title} subtitle={subtitle} />
 
-      <Box as="main" padding={6} pt="160px">
+      <Box
+        as="main"
+        padding={{ base: 4, md: 6 }}
+        pt={{ base: '140px', md: '160px' }}
+        pb={{ base: '80px', md: '60px' }}
+      >
         {children}
       </Box>
       <BottomNav />

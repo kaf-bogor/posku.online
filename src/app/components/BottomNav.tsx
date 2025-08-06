@@ -38,12 +38,13 @@ export default function BottomNav() {
       bg={bgColor}
       borderTop={`1px solid ${borderColor}`}
       zIndex={100}
-      boxShadow="0 -2px 8px rgba(0,0,0,0.04)"
-      px={2}
-      py={1}
+      boxShadow="0 -2px 12px rgba(0,0,0,0.1)"
+      px={{ base: 1, md: 2 }}
+      py={{ base: 2, md: 1 }}
       maxWidth={800}
       left="50%"
       transform="translateX(-50%)"
+      backdropFilter="blur(10px)"
     >
       <Flex justify="space-around" align="center">
         {navItems.map(({ label, href, icon }) => (
@@ -55,21 +56,31 @@ export default function BottomNav() {
               fontSize="xs"
               color={textColor}
               _hover={{ color: 'purple.600' }}
-              minW="60px"
+              minW={{ base: '70px', md: '60px' }}
+              minH={{ base: '50px', md: 'auto' }}
+              py={1}
+              borderRadius="lg"
+              transition="all 0.2s"
+              _active={{
+                bg: 'purple.50',
+                transform: 'scale(0.95)',
+              }}
             >
               {icon === 'home' && (
-                <FaHome fontSize={24} style={{ marginBottom: 4 }} />
+                <FaHome fontSize={20} style={{ marginBottom: 2 }} />
               )}
               {icon === 'donate' && (
-                <FaHandsHelping fontSize={24} style={{ marginBottom: 4 }} />
+                <FaHandsHelping fontSize={20} style={{ marginBottom: 2 }} />
               )}
               {icon === 'links' && (
-                <FaLink fontSize={24} style={{ marginBottom: 4 }} />
+                <FaLink fontSize={20} style={{ marginBottom: 2 }} />
               )}
               {icon === 'admin' && (
-                <FaUser fontSize={24} style={{ marginBottom: 4 }} />
+                <FaUser fontSize={20} style={{ marginBottom: 2 }} />
               )}
-              <Text fontSize="xs">{label}</Text>
+              <Text fontSize="xs" fontWeight="medium">
+                {label}
+              </Text>
             </ChakraLink>
           </Link>
         ))}

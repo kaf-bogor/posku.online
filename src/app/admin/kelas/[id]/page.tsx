@@ -78,6 +78,9 @@ export default function KelasDetailPage() {
   const [loading, setLoading] = useState(true);
   const [participantName, setParticipantName] = useState('');
   const [participantValue, setParticipantValue] = useState('');
+  const [participantDate, setParticipantDate] = useState(
+    new Date().toISOString().substring(0, 10)
+  );
   const [saving, setSaving] = useState(false);
   const [newTarget, setNewTarget] = useState('');
 
@@ -117,7 +120,7 @@ export default function KelasDetailPage() {
   }, [kelasName]);
 
   const addParticipant = async () => {
-    if (!participantName || !participantValue) return;
+    if (!participantName || !participantValue || !participantDate) return;
     setSaving(true);
     const ref = doc(db, 'kelas', kelasName);
     const valueNum = Number(participantValue);
@@ -134,13 +137,14 @@ export default function KelasDetailPage() {
       participants: arrayUnion({
         name: participantName,
         value: valueNum,
-        datetime: new Date().toISOString(),
+        datetime: new Date(participantDate).toISOString(),
       } as Participant),
       collected: increment(valueNum),
       activities: arrayUnion(newActivity),
     });
     setParticipantName('');
     setParticipantValue('');
+    setParticipantDate(new Date().toISOString().substring(0, 10));
     setSaving(false);
   };
 
@@ -154,7 +158,7 @@ export default function KelasDetailPage() {
       userName: delName,
       type: 'remove',
       description: `Menghapus peserta ${participant.name} dengan nominal Rp ${participant.value.toLocaleString('id-ID')}`,
-      datetime: new Date().toISOString(),
+      datetime: new Date(participantDate).toISOString(),
     };
     await updateDoc(ref, {
       participants: arrayRemove(participant),
@@ -174,7 +178,7 @@ export default function KelasDetailPage() {
       userName: updName,
       type: 'update_target',
       description: `Mengubah target dari Rp ${(kelas?.target ?? 0).toLocaleString('id-ID')} ke Rp ${Number(newTarget).toLocaleString('id-ID')}`,
-      datetime: new Date().toISOString(),
+      datetime: new Date(participantDate).toISOString(),
     };
     await updateDoc(ref, {
       target: Number(newTarget),
@@ -257,6 +261,15 @@ export default function KelasDetailPage() {
               onChange={(e) => setParticipantName(e.target.value)}
             />
           </FormControl>
+          <FormControl isRequired>
+            <FormLabel>Tanggal</FormLabel>
+            <Input
+              type="date"
+              value={participantDate}
+              onChange={(e) => setParticipantDate(e.target.value)}
+            />
+          </FormControl>
+
           <FormControl isRequired>
             <FormLabel>Nominal (Rp)</FormLabel>
             <Input
