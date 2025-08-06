@@ -24,6 +24,7 @@ const SectionHeader = ({
 }: SectionHeaderProps) => {
   const titleColor = useColorModeValue('gray.800', 'white');
   const linkColor = useColorModeValue('purple.600', 'purple.300');
+  const hoverColor = useColorModeValue('purple.50', 'purple.900');
 
   return (
     <HStack justify="space-between" align="center" mb={3}>
@@ -36,13 +37,12 @@ const SectionHeader = ({
       {viewAllLink && (
         <Link href={viewAllLink} passHref>
           <Button
-            as="a"
             variant="ghost"
             color={linkColor}
             size="sm"
             rightIcon={<FaChevronRight />}
             _hover={{
-              bg: useColorModeValue('purple.50', 'purple.900'),
+              bg: hoverColor,
             }}
           >
             {viewAllText}

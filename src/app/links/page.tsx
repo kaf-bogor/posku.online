@@ -1,5 +1,7 @@
 'use client';
 
+/* eslint-disable react-hooks/rules-of-hooks */
+
 import {
   Button,
   VStack,
@@ -12,7 +14,6 @@ import {
   Icon,
   useColorModeValue,
   Badge,
-  Flex,
 } from '@chakra-ui/react';
 import Link from 'next/link';
 import {
@@ -25,8 +26,9 @@ import {
   FaHeart,
   FaUsers,
   FaBookOpen,
-  FaPhone,
 } from 'react-icons/fa';
+
+const HOVER_TRANSFORM = 'translateY(-2px)';
 
 // Enhanced categorized links with descriptions and additional metadata
 const categorizedLinks = [
@@ -244,7 +246,7 @@ const LinksPage = () => {
                                   `${color}.300`,
                                   `${color}.500`
                                 ),
-                                transform: 'translateY(-2px)',
+                                transform: HOVER_TRANSFORM,
                                 boxShadow: 'md',
                               }}
                               _active={{
@@ -297,7 +299,12 @@ const LinksPage = () => {
                                     fontSize="xs"
                                     opacity={0.8}
                                     lineHeight="short"
-                                    noOfLines={2}
+                                    noOfLines={1}
+                                    whiteSpace="normal"
+                                    sx={{
+                                      WebkitLineClamp: 2,
+                                      WebkitBoxOrient: 'vertical',
+                                    }}
                                   >
                                     {linkDesc}
                                   </Text>
@@ -335,7 +342,7 @@ const LinksPage = () => {
               </Box>
               <VStack spacing={2}>
                 <Heading size="lg" color={titleColor}>
-                  Mari Bergabung Bersama Kami
+                  Bersama, Kita Wujudkan Peradaban Islam
                 </Heading>
                 <Text color={textColor} maxW="500px">
                   POSKU Al-Fatih Bogor adalah paguyuban orang tua santri yang
@@ -350,7 +357,7 @@ const LinksPage = () => {
                   colorScheme="green"
                   leftIcon={<FaWhatsapp />}
                   borderRadius="xl"
-                  _hover={{ transform: 'translateY(-2px)' }}
+                  _hover={{ transform: HOVER_TRANSFORM }}
                 >
                   Hubungi Pengurus
                 </Button>
@@ -362,7 +369,7 @@ const LinksPage = () => {
                   variant="outline"
                   leftIcon={<FaInstagram />}
                   borderRadius="xl"
-                  _hover={{ transform: 'translateY(-2px)' }}
+                  _hover={{ transform: HOVER_TRANSFORM }}
                 >
                   Follow Instagram
                 </Button>

@@ -1,34 +1,24 @@
 'use client';
 
-import dynamic from 'next/dynamic';
-
 import {
   Box,
   VStack,
   HStack,
-  Image,
   Heading,
   Text,
-  Button,
   Spinner,
   Center,
-  Progress,
-  Badge,
   useColorModeValue,
-  SimpleGrid,
   IconButton,
-  Flex,
   Container,
 } from '@chakra-ui/react';
-
 import { collection, getDocs } from 'firebase/firestore';
-import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { FaArrowLeft, FaUsers, FaHeart, FaHandsHelping } from 'react-icons/fa';
+import { FaArrowLeft, FaHandsHelping } from 'react-icons/fa';
 
+import DonationCard from '../admin/components/DonationCard';
 import { db } from '~/lib/firebase';
 import type { DonationPage } from '~/lib/types/donation';
-import { formatIDR } from '~/lib/utils/currency';
 
 const DonasiPage = () => {
   // Color theme - Must be called first and in consistent order
@@ -38,10 +28,6 @@ const DonasiPage = () => {
   const titleColor = useColorModeValue('gray.800', 'white');
   const accentColor = useColorModeValue('green.500', 'green.400');
   const hoverBg = useColorModeValue('gray.100', 'gray.700');
-  const borderColor = useColorModeValue('gray.100', 'gray.700');
-  const progressBg = useColorModeValue('gray.100', 'gray.600');
-  const heartColor = useColorModeValue('red.500', 'red.400');
-  const iconColor = useColorModeValue('gray.400', 'gray.500');
 
   // State hooks
   const [campaigns, setCampaigns] = useState<DonationPage[]>([]);
@@ -57,18 +43,11 @@ const DonasiPage = () => {
           (doc) => ({ id: doc.id, ...doc.data() }) as DonationPage
         );
 
-        console.log('All donations from Firebase:', allData);
-        console.log(
-          'Published donations:',
-          allData.filter((campaign) => campaign.published)
-        );
-
         // Temporarily show all donations for debugging
         const data = allData; // Remove filter to see all donations
         // const data = allData.filter((campaign) => campaign.published);
         setCampaigns(data);
-      } catch (error) {
-        console.error('Error fetching campaigns:', error);
+      } catch {
         setCampaigns([]);
       } finally {
         setLoading(false);
@@ -140,14 +119,6 @@ const DonasiPage = () => {
     );
   }
 
-  const calculateProgress = (collected: number, target: number) => {
-    return target > 0 ? Math.min((collected / target) * 100, 100) : 0;
-  };
-
-  const getTotalCollected = (donors: any[]) => {
-    return donors?.reduce((total, donor) => total + (donor.value || 0), 0) || 0;
-  };
-
   return (
     <Box bg={bgColor} minH="100vh" pb={8}>
       <Container maxW="container.md">
@@ -174,11 +145,10 @@ const DonasiPage = () => {
                   textAlign="center"
                   fontWeight="bold"
                 >
-                  Kampanye Donasi
+                  Donasi
                 </Heading>
                 <Text color={textColor} fontSize="md" textAlign="center">
-                  Mari bersama membantu sesama membangun masa depan yang lebih
-                  baik
+                  Mari bersama membantu membangun peradaban
                 </Text>
               </VStack>
               <Box w="40px" />
@@ -188,250 +158,7 @@ const DonasiPage = () => {
           {/* Campaigns List - Single Column */}
           <VStack spacing={6} align="stretch">
             {campaigns.map((campaign) => {
-              const totalCollected = getTotalCollected(campaign.donors);
-              const progress = calculateProgress(
-                totalCollected,
-                campaign.target
-              );
-              const donorsCount = campaign.donors?.length || 0;
-
-              return (
-                <Box
-                  key={campaign.id}
-                  bg={cardBg}
-                  borderRadius="2xl"
-                  overflow="hidden"
-                  boxShadow="xl"
-                  transition="all 0.3s ease"
-                  _hover={{
-                    transform: 'translateY(-4px)',
-                    boxShadow: '2xl',
-                  }}
-                  border="1px solid"
-                  borderColor={borderColor}
-                >
-                  <Flex
-                    direction={{ base: 'column', md: 'row' }}
-                    align="stretch"
-                  >
-                    {/* Campaign Image */}
-                    <Box
-                      position="relative"
-                      overflow="hidden"
-                      w={{ base: '100%', md: '320px' }}
-                      h={{ base: '240px', md: '300px' }}
-                      flexShrink={0}
-                    >
-                      <Image
-                        src={campaign.imageUrls?.[0] || ''}
-                        alt={campaign.title}
-                        w="100%"
-                        h="100%"
-                        objectFit="cover"
-                        transition="transform 0.3s ease"
-                        _hover={{ transform: 'scale(1.05)' }}
-                      />
-
-                      {/* Heart Icon Overlay */}
-                      <Box
-                        position="absolute"
-                        top={4}
-                        right={4}
-                        bg="rgba(255, 255, 255, 0.95)"
-                        backdropFilter="blur(10px)"
-                        borderRadius="full"
-                        p={2}
-                        boxShadow="sm"
-                      >
-                        <FaHeart color={heartColor} />
-                      </Box>
-
-                      {/* Progress Overlay */}
-                      <Box
-                        position="absolute"
-                        bottom={0}
-                        left={0}
-                        right={0}
-                        bg="linear-gradient(to top, rgba(0,0,0,0.8), transparent)"
-                        p={4}
-                      >
-                        <VStack spacing={2} align="start">
-                          <Badge
-                            colorScheme={progress >= 100 ? 'green' : 'blue'}
-                            variant="solid"
-                            borderRadius="full"
-                            px={3}
-                            py={1}
-                            fontSize="sm"
-                            fontWeight="bold"
-                          >
-                            {progress.toFixed(0)}% tercapai
-                          </Badge>
-                          <Text
-                            color="white"
-                            fontSize="lg"
-                            fontWeight="bold"
-                            textShadow="0 1px 3px rgba(0,0,0,0.8)"
-                          >
-                            {formatIDR(totalCollected)}
-                          </Text>
-                          <Text
-                            color="white"
-                            fontSize="sm"
-                            opacity={0.9}
-                            textShadow="0 1px 2px rgba(0,0,0,0.8)"
-                          >
-                            dari target {formatIDR(campaign.target)}
-                          </Text>
-                        </VStack>
-                      </Box>
-                    </Box>
-
-                    {/* Campaign Content */}
-                    <VStack
-                      spacing={5}
-                      p={6}
-                      align="stretch"
-                      flex={1}
-                      justify="space-between"
-                    >
-                      {/* Top Section */}
-                      <VStack spacing={4} align="stretch">
-                        {/* Title and Status */}
-                        <VStack spacing={2} align="stretch">
-                          <HStack justify="space-between" align="start">
-                            <Heading
-                              as="h3"
-                              size="lg"
-                              color={titleColor}
-                              lineHeight="shorter"
-                              fontWeight="bold"
-                              flex={1}
-                            >
-                              {campaign.title}
-                            </Heading>
-                            <Badge
-                              colorScheme={campaign.published ? 'green' : 'red'}
-                              variant="subtle"
-                              borderRadius="full"
-                              px={3}
-                              py={1}
-                              ml={3}
-                              flexShrink={0}
-                            >
-                              {campaign.published ? 'Published' : 'Draft'}
-                            </Badge>
-                          </HStack>
-                        </VStack>
-
-                        {/* Summary */}
-                        <Text
-                          fontSize="md"
-                          color={textColor}
-                          lineHeight="relaxed"
-                          noOfLines={4}
-                        >
-                          {campaign.summary.length > 200
-                            ? campaign.summary.slice(0, 200) + '...'
-                            : campaign.summary}
-                        </Text>
-
-                        {/* Progress Bar */}
-                        <VStack spacing={2} align="stretch">
-                          <Progress
-                            value={progress}
-                            colorScheme="green"
-                            size="lg"
-                            borderRadius="full"
-                            bg={progressBg}
-                          />
-                          <HStack justify="space-between" align="center">
-                            <HStack spacing={2}>
-                              <FaUsers color={iconColor} />
-                              <Text
-                                fontSize="sm"
-                                color={textColor}
-                                fontWeight="medium"
-                              >
-                                {donorsCount} donatur
-                              </Text>
-                            </HStack>
-                            <Text
-                              fontSize="sm"
-                              color={textColor}
-                              fontWeight="medium"
-                            >
-                              {progress.toFixed(1)}% dari target
-                            </Text>
-                          </HStack>
-                        </VStack>
-                      </VStack>
-
-                      {/* Bottom Section - Action Button */}
-                      <VStack spacing={3} align="stretch">
-                        <HStack justify="space-between" align="center">
-                          <VStack align="start" spacing={0}>
-                            <Text
-                              fontSize="xs"
-                              color={textColor}
-                              fontWeight="medium"
-                            >
-                              Terkumpul
-                            </Text>
-                            <Text
-                              fontSize="xl"
-                              fontWeight="bold"
-                              color={accentColor}
-                            >
-                              {formatIDR(totalCollected)}
-                            </Text>
-                          </VStack>
-                          <VStack align="end" spacing={0}>
-                            <Text
-                              fontSize="xs"
-                              color={textColor}
-                              fontWeight="medium"
-                            >
-                              Target
-                            </Text>
-                            <Text
-                              fontSize="lg"
-                              fontWeight="semibold"
-                              color={titleColor}
-                            >
-                              {formatIDR(campaign.target)}
-                            </Text>
-                          </VStack>
-                        </HStack>
-
-                        <Link
-                          href={`/donasi/${campaign.id}` || '/donasi/wakaf_ats'}
-                          passHref
-                          legacyBehavior
-                        >
-                          <Button
-                            as="a"
-                            size="lg"
-                            colorScheme="green"
-                            borderRadius="xl"
-                            w="100%"
-                            fontWeight="bold"
-                            py={6}
-                            fontSize="lg"
-                            _hover={{
-                              transform: 'translateY(-2px)',
-                              boxShadow: 'xl',
-                            }}
-                            leftIcon={<FaHeart />}
-                          >
-                            Donasi Sekarang
-                          </Button>
-                        </Link>
-                      </VStack>
-                    </VStack>
-                  </Flex>
-                </Box>
-              );
+              return <DonationCard key={campaign.id} donation={campaign} />;
             })}
           </VStack>
 
@@ -451,8 +178,8 @@ const DonasiPage = () => {
                   Setiap Donasi Berharga
                 </Heading>
                 <Text color={textColor} maxW="500px">
-                  Bantuan Anda, sekecil apapun, sangat berarti untuk membantu
-                  sesama dan mewujudkan kebaikan bersama.
+                  Dukungan Anda, sekecil apapun, adalah langkah nyata untuk
+                  membangun peradaban
                 </Text>
               </VStack>
             </VStack>

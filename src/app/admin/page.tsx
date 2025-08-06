@@ -16,25 +16,11 @@ import {
   SimpleGrid,
   Card,
   CardBody,
-  Stat,
-  StatLabel,
-  StatNumber,
-  StatHelpText,
-  StatArrow,
   useColorModeValue,
   Container,
   Flex,
-  Badge,
   Icon,
   Divider,
-  Progress,
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
-  TableContainer,
 } from '@chakra-ui/react';
 import {
   signInWithPopup,
@@ -45,76 +31,17 @@ import {
 import type { User } from 'firebase/auth';
 import { doc, getDoc, getDocs, collection, setDoc } from 'firebase/firestore';
 import { useEffect, useState, useCallback } from 'react';
+import type { IconType } from 'react-icons';
 import {
   FaDonate,
   FaNewspaper,
   FaCalendarAlt,
   FaChalkboardTeacher,
-  FaUsers,
-  FaChartLine,
-  FaCog,
-  FaEye,
-  FaHeart,
   FaGoogle,
   FaShieldAlt,
-  FaTrendingUp,
-  FaCalendarDay,
-  FaMoneyBillWave,
 } from 'react-icons/fa';
 
 import { auth, db } from '~/lib/firebase';
-import { formatIDR } from '~/lib/utils/currency';
-
-// Dashboard Stats Card Component
-const StatsCard = ({
-  title,
-  value,
-  icon,
-  change,
-  color = 'blue',
-  isLoading = false,
-}: {
-  title: string;
-  value: string | number;
-  icon: any;
-  change?: { value: number; trend: 'up' | 'down' };
-  color?: string;
-  isLoading?: boolean;
-}) => {
-  const cardBg = useColorModeValue('white', 'gray.800');
-  const iconBg = useColorModeValue(`${color}.50`, `${color}.900`);
-  const iconColor = useColorModeValue(`${color}.500`, `${color}.300`);
-
-  return (
-    <Card bg={cardBg} shadow="md" borderRadius="xl" overflow="hidden">
-      <CardBody p={6}>
-        <Flex justify="space-between" align="start">
-          <Box>
-            <Stat>
-              <StatLabel fontSize="sm" fontWeight="medium" color="gray.500">
-                {title}
-              </StatLabel>
-              <StatNumber fontSize="2xl" fontWeight="bold" mt={2}>
-                {isLoading ? <Spinner size="sm" /> : value}
-              </StatNumber>
-              {change && (
-                <StatHelpText mt={2} mb={0}>
-                  <StatArrow
-                    type={change.trend === 'up' ? 'increase' : 'decrease'}
-                  />
-                  {Math.abs(change.value)}%
-                </StatHelpText>
-              )}
-            </Stat>
-          </Box>
-          <Box p={3} borderRadius="xl" bg={iconBg} color={iconColor}>
-            <Icon as={icon} boxSize={6} />
-          </Box>
-        </Flex>
-      </CardBody>
-    </Card>
-  );
-};
 
 // Quick Actions Card Component
 const QuickActionCard = ({
@@ -123,14 +50,12 @@ const QuickActionCard = ({
   icon,
   href,
   color = 'blue',
-  badge,
 }: {
   title: string;
   description: string;
-  icon: any;
+  icon: IconType;
   href: string;
   color?: string;
-  badge?: string;
 }) => {
   const cardBg = useColorModeValue('white', 'gray.800');
   const hoverBg = useColorModeValue(`${color}.50`, `${color}.900`);
@@ -162,25 +87,15 @@ const QuickActionCard = ({
             >
               <Icon as={icon} boxSize={6} />
             </Box>
-            {badge && (
-              <Badge
-                colorScheme={color}
-                variant="subtle"
-                borderRadius="full"
-                px={3}
-              >
-                {badge}
-              </Badge>
-            )}
+            <VStack spacing={2} align="start">
+              <Heading size="md" fontWeight="bold">
+                {title}
+              </Heading>
+              <Text fontSize="sm" color="gray.500" lineHeight="relaxed">
+                {description}
+              </Text>
+            </VStack>
           </HStack>
-          <VStack spacing={2} align="start">
-            <Heading size="md" fontWeight="bold">
-              {title}
-            </Heading>
-            <Text fontSize="sm" color="gray.500" lineHeight="relaxed">
-              {description}
-            </Text>
-          </VStack>
         </VStack>
       </CardBody>
     </Card>
@@ -432,61 +347,9 @@ function useAdminAuthorization(user: User | null) {
   return { adminEmails, adminsLoading, notAllowed, error };
 }
 
-// Dashboard stats hook
-function useDashboardStats() {
-  const [stats, setStats] = useState({
-    totalDonations: 0,
-    totalEvents: 0,
-    totalNews: 0,
-    totalFunding: 0,
-    loading: true,
-  });
-
-  useEffect(() => {
-    const fetchStats = async () => {
-      try {
-        const [donationsSnap, eventsSnap, newsSnap] = await Promise.all([
-          getDocs(collection(db, 'donations')),
-          getDocs(collection(db, 'events')),
-          getDocs(collection(db, 'news')),
-        ]);
-
-        const donations = donationsSnap.docs.map((doc) => doc.data());
-        const totalFunding = donations.reduce((sum, donation) => {
-          const donors = donation.donors || [];
-          return (
-            sum +
-            donors.reduce(
-              (donationSum: number, donor: any) =>
-                donationSum + (donor.value || 0),
-              0
-            )
-          );
-        }, 0);
-
-        setStats({
-          totalDonations: donationsSnap.size,
-          totalEvents: eventsSnap.size,
-          totalNews: newsSnap.size,
-          totalFunding,
-          loading: false,
-        });
-      } catch (error) {
-        console.error('Error fetching stats:', error);
-        setStats((prev) => ({ ...prev, loading: false }));
-      }
-    };
-
-    fetchStats();
-  }, []);
-
-  return stats;
-}
-
 export default function AdminPage() {
   const { user, loading, login, logout } = useAuth();
   const { notAllowed, error, adminsLoading } = useAdminAuthorization(user);
-  const stats = useDashboardStats();
 
   const bgColor = useColorModeValue('gray.50', 'gray.900');
   const cardBg = useColorModeValue('white', 'gray.800');
@@ -564,49 +427,6 @@ export default function AdminPage() {
             </CardBody>
           </Card>
 
-          {/* Dashboard Stats */}
-          <VStack spacing={6} align="stretch">
-            <Heading size="lg" fontWeight="bold">
-              Statistik Dashboard
-            </Heading>
-            <SimpleGrid columns={{ base: 1, md: 2, lg: 4 }} spacing={6}>
-              <StatsCard
-                title="Total Kampanye Donasi"
-                value={stats.totalDonations}
-                icon={FaDonate}
-                color="green"
-                isLoading={stats.loading}
-                change={{ value: 12, trend: 'up' }}
-              />
-              <StatsCard
-                title="Total Acara"
-                value={stats.totalEvents}
-                icon={FaCalendarAlt}
-                color="blue"
-                isLoading={stats.loading}
-                change={{ value: 8, trend: 'up' }}
-              />
-              <StatsCard
-                title="Total Berita"
-                value={stats.totalNews}
-                icon={FaNewspaper}
-                color="purple"
-                isLoading={stats.loading}
-                change={{ value: 5, trend: 'up' }}
-              />
-              <StatsCard
-                title="Total Dana Terkumpul"
-                value={
-                  stats.loading ? 'Loading...' : formatIDR(stats.totalFunding)
-                }
-                icon={FaMoneyBillWave}
-                color="orange"
-                isLoading={stats.loading}
-                change={{ value: 15, trend: 'up' }}
-              />
-            </SimpleGrid>
-          </VStack>
-
           {/* Quick Actions */}
           <VStack spacing={6} align="stretch">
             <Heading size="lg" fontWeight="bold">
@@ -619,23 +439,6 @@ export default function AdminPage() {
                 icon={FaDonate}
                 href="/admin/donations"
                 color="green"
-                badge="Primary"
-              />
-              <QuickActionCard
-                title="Kelola Acara"
-                description="Manajemen event dan kegiatan yang akan berlangsung atau telah selesai"
-                icon={FaCalendarAlt}
-                href="/admin/events"
-                color="blue"
-                badge="Active"
-              />
-              <QuickActionCard
-                title="Kelola Berita"
-                description="Publikasi berita terbaru dan update informasi untuk komunitas"
-                icon={FaNewspaper}
-                href="/admin/news"
-                color="purple"
-                badge="Content"
               />
               <QuickActionCard
                 title="Fund Raise Kelas"
@@ -643,145 +446,22 @@ export default function AdminPage() {
                 icon={FaChalkboardTeacher}
                 href="/admin/kelas"
                 color="orange"
-                badge="Education"
+              />
+              <QuickActionCard
+                title="Kelola Acara"
+                description="Manajemen event dan kegiatan yang akan berlangsung atau telah selesai"
+                icon={FaCalendarAlt}
+                href="/admin/events"
+                color="blue"
+              />
+              <QuickActionCard
+                title="Kelola Berita"
+                description="Publikasi berita terbaru dan update informasi untuk komunitas"
+                icon={FaNewspaper}
+                href="/admin/news"
+                color="purple"
               />
             </SimpleGrid>
-          </VStack>
-
-          {/* Recent Activity */}
-          <VStack spacing={6} align="stretch">
-            <Heading size="lg" fontWeight="bold">
-              Aktivitas Terbaru
-            </Heading>
-            <Card bg={cardBg} shadow="md" borderRadius="xl">
-              <CardBody p={6}>
-                <TableContainer>
-                  <Table variant="simple" size="md">
-                    <Thead>
-                      <Tr>
-                        <Th>Aktivitas</Th>
-                        <Th>Kategori</Th>
-                        <Th>Waktu</Th>
-                        <Th>Status</Th>
-                      </Tr>
-                    </Thead>
-                    <Tbody>
-                      <Tr>
-                        <Td>
-                          <HStack spacing={3}>
-                            <Box
-                              p={2}
-                              borderRadius="lg"
-                              bg={useColorModeValue('green.50', 'green.900')}
-                              color={useColorModeValue(
-                                'green.500',
-                                'green.300'
-                              )}
-                            >
-                              <FaDonate size={16} />
-                            </Box>
-                            <VStack align="start" spacing={0}>
-                              <Text fontWeight="semibold" fontSize="sm">
-                                Campaign Wakaf ATS Published
-                              </Text>
-                              <Text color="gray.500" fontSize="xs">
-                                Kampanye donasi baru telah dipublikasikan
-                              </Text>
-                            </VStack>
-                          </HStack>
-                        </Td>
-                        <Td>
-                          <Badge colorScheme="green" variant="subtle">
-                            Donasi
-                          </Badge>
-                        </Td>
-                        <Td>
-                          <Text fontSize="sm" color="gray.500">
-                            2 jam lalu
-                          </Text>
-                        </Td>
-                        <Td>
-                          <Badge colorScheme="green">Published</Badge>
-                        </Td>
-                      </Tr>
-                      <Tr>
-                        <Td>
-                          <HStack spacing={3}>
-                            <Box
-                              p={2}
-                              borderRadius="lg"
-                              bg={useColorModeValue('blue.50', 'blue.900')}
-                              color={useColorModeValue('blue.500', 'blue.300')}
-                            >
-                              <FaCalendarAlt size={16} />
-                            </Box>
-                            <VStack align="start" spacing={0}>
-                              <Text fontWeight="semibold" fontSize="sm">
-                                Event Rapat Bilistiwa Created
-                              </Text>
-                              <Text color="gray.500" fontSize="xs">
-                                Event baru berhasil ditambahkan
-                              </Text>
-                            </VStack>
-                          </HStack>
-                        </Td>
-                        <Td>
-                          <Badge colorScheme="blue" variant="subtle">
-                            Event
-                          </Badge>
-                        </Td>
-                        <Td>
-                          <Text fontSize="sm" color="gray.500">
-                            5 jam lalu
-                          </Text>
-                        </Td>
-                        <Td>
-                          <Badge colorScheme="blue">Active</Badge>
-                        </Td>
-                      </Tr>
-                      <Tr>
-                        <Td>
-                          <HStack spacing={3}>
-                            <Box
-                              p={2}
-                              borderRadius="lg"
-                              bg={useColorModeValue('purple.50', 'purple.900')}
-                              color={useColorModeValue(
-                                'purple.500',
-                                'purple.300'
-                              )}
-                            >
-                              <FaNewspaper size={16} />
-                            </Box>
-                            <VStack align="start" spacing={0}>
-                              <Text fontWeight="semibold" fontSize="sm">
-                                Berita Tahun Ajaran Baru
-                              </Text>
-                              <Text color="gray.500" fontSize="xs">
-                                Artikel berita berhasil dipublikasikan
-                              </Text>
-                            </VStack>
-                          </HStack>
-                        </Td>
-                        <Td>
-                          <Badge colorScheme="purple" variant="subtle">
-                            Berita
-                          </Badge>
-                        </Td>
-                        <Td>
-                          <Text fontSize="sm" color="gray.500">
-                            1 hari lalu
-                          </Text>
-                        </Td>
-                        <Td>
-                          <Badge colorScheme="purple">Published</Badge>
-                        </Td>
-                      </Tr>
-                    </Tbody>
-                  </Table>
-                </TableContainer>
-              </CardBody>
-            </Card>
           </VStack>
         </VStack>
       </Container>
