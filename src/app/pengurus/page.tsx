@@ -21,7 +21,7 @@ const PengurusPage = () => {
           <Text>Kembali</Text>
         </HStack>
       </Link>
-      <Tabs w={['90vw', 'full']}>
+      <Tabs w="full">
         <TabList>
           <Tab>2024</Tab>
           <Tab>2023</Tab>

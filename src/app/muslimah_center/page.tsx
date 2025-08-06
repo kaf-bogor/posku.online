@@ -47,14 +47,14 @@ const MuslimahCenterPage = () => {
   }, [image, logoUrl, title, subtitle, setImage, setTitle, setSubtitle]);
 
   return (
-    <VStack spacing={8} mt={8} px={4} maxW="600px" mx="auto">
+    <VStack spacing={8} mt={8} px={4} mx="auto">
       <VStack spacing={2} textAlign="center">
         <Text fontSize="md">
           Klik tautan di bawah untuk menghubungi contact person setiap sentra.
         </Text>
       </VStack>
 
-      <Accordion allowMultiple w={['full', '450px']}>
+      <Accordion allowMultiple w="full">
         {data.map((sentra) => (
           <AccordionItem key={sentra.title}>
             <h2>
