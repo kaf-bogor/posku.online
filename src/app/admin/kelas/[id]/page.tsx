@@ -296,7 +296,7 @@ export default function KelasDetailPage() {
           <List spacing={2}>
             {kelas.participants.map((p) => (
               <ListItem
-                key={p.name}
+                key={`${p.name}-${p.datetime}`}
                 borderBottom="1px"
                 borderColor={borderColor}
                 pb={2}

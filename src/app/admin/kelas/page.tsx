@@ -28,9 +28,9 @@ import {
   Icon,
   TableContainer,
 } from '@chakra-ui/react';
-import { collection, doc, setDoc, onSnapshot } from 'firebase/firestore';
+import { onSnapshot, collection } from 'firebase/firestore';
 import Link from 'next/link';
-import { useContext, useEffect, useState, useMemo } from 'react';
+import { useContext, useState, useMemo, useEffect } from 'react';
 import { FaMedal } from 'react-icons/fa';
 
 import { AppContext } from '~/lib/context/app';
@@ -44,28 +44,6 @@ type Kelas = {
   collected?: number;
   participants?: { name: string; value: number; datetime: string }[];
 };
-
-const DEFAULT_KELAS: Kelas[] = [
-  { name: 'Kuttab Awal 1A', santriCount: 11, target: 5000000 },
-  { name: 'Kuttab Awal 1B', santriCount: 12, target: 5000000 },
-  { name: 'Kuttab Awal 2A', santriCount: 11, target: 5000000 },
-  { name: 'Kuttab Awal 2B', santriCount: 11, target: 5000000 },
-  { name: 'Kuttab Awal 2C', santriCount: 11, target: 5000000 },
-  { name: 'Kuttab Awal 2D', santriCount: 10, target: 5000000 },
-  { name: 'Kuttab Awal 3A', santriCount: 8, target: 5000000 },
-  { name: 'Kuttab Awal 3B', santriCount: 7, target: 5000000 },
-  { name: 'Kuttab Awal 3C', santriCount: 11, target: 5000000 },
-  { name: 'Kuttab Awal 3D', santriCount: 10, target: 5000000 },
-  { name: 'Qonuni 1A', santriCount: 16, target: 5000000 },
-  { name: 'Qonuni 1B', santriCount: 16, target: 5000000 },
-  { name: 'Qonuni 1C', santriCount: 11, target: 5000000 },
-  { name: 'Qonuni 2A', santriCount: 14, target: 5000000 },
-  { name: 'Qonuni 2B', santriCount: 17, target: 5000000 },
-  { name: 'Qonuni 3A', santriCount: 20, target: 5000000 },
-  { name: 'Qonuni 3B', santriCount: 11, target: 5000000 },
-  { name: 'Qonuni 4A', santriCount: 24, target: 5000000 },
-  { name: 'Qonuni 4B', santriCount: 17, target: 5000000 },
-];
 
 export default function Page() {
   const [kelasList, setKelasList] = useState<Kelas[]>([]);
@@ -89,33 +67,12 @@ export default function Page() {
   // Seed Firestore and subscribe to changes
   useEffect(() => {
     const unsub = onSnapshot(collection(db, 'kelas'), async (snap) => {
-      const existingNames = new Set<string>();
       const data: Kelas[] = [];
       snap.docs.forEach((d) => {
         const kd = d.data() as Kelas;
-        existingNames.add(kd.name);
         data.push(kd);
       });
 
-      // seed missing
-      const missing = DEFAULT_KELAS.filter((k) => !existingNames.has(k.name));
-
-      if (missing.length) {
-        await Promise.all(
-          missing.map((kelas) =>
-            setDoc(doc(db, 'kelas', kelas.name), {
-              name: kelas.name,
-              santriCount: kelas.santriCount,
-              target: kelas.target,
-              participants: [],
-            } as Kelas)
-          )
-        );
-
-        data.push(
-          ...missing.map((kelas) => ({ ...kelas, target: 0, participants: [] }))
-        );
-      }
       setKelasList(data);
     });
     return () => unsub();
