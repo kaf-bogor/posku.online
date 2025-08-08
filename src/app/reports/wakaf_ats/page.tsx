@@ -151,7 +151,7 @@ const App = () => {
                 transition="all 0.3s ease-in-out"
                 _active={{ transform: 'scale(0.95)' }}
               >
-                Donasi Sekarang!
+                Beramal Sekarang!
               </Button>
               <Box mt={4} textAlign="center">
                 <Text fontWeight="bold" color="gray.800" fontSize="lg">

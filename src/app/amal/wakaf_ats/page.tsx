@@ -78,14 +78,14 @@ export default function WakafAtsPage() {
   const handleDonate = () => {
     if (!amountNumber || Number.isNaN(amountNumber) || amountNumber < 1) {
       toast({
-        title: 'Masukkan nominal donasi yang valid.',
+        title: 'Masukkan nominal amal yang valid.',
         status: 'warning',
         duration: 2000,
       });
       return;
     }
     toast({
-      title: `Terima kasih atas donasi sebesar Rp${amountNumber.toLocaleString('id-ID')}!`,
+      title: `Terima kasih atas amal sebesar Rp${amountNumber.toLocaleString('id-ID')}!`,
       status: 'success',
       duration: 3000,
     });
@@ -262,7 +262,7 @@ export default function WakafAtsPage() {
             </InputLeftAddon>
             <Input
               inputMode="numeric"
-              placeholder="Nominal Donasi"
+              placeholder="Nominal Amal"
               value={amount}
               onChange={handleAmountChange}
               bg={inputBg}

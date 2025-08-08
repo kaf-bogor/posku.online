@@ -27,11 +27,11 @@ const TerimaKasihPage = () => {
         autoplay
       />
       <Text fontSize="4xl" align="center">
-        Terima kasih
+        Jazakumullahu khairan wa barakallahu fikum.
       </Text>
       <Text fontSize="2xl" align="center">
-        atas donasi yang telah Anda berikan. Semoga Allah membalas dengan
-        keberkahan dan pahala yang berlipat
+        Semoga setiap amal yang Anda tunaikan dibalas dengan keberkahan dan
+        pahala yang berlipat ganda.
       </Text>
     </VStack>
   );

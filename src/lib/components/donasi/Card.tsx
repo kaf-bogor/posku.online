@@ -168,7 +168,7 @@ export default function Card({ item }: Props) {
               boxShadow: 'lg',
             }}
           >
-            Donasi Sekarang
+            Beramal Sekarang
           </Button>
         </Link>
       </VStack>

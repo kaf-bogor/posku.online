@@ -80,7 +80,7 @@ export default function DonationDetailPage() {
   if (!campaign) {
     return (
       <Center minH="60vh">
-        <Text>Donasi tidak ditemukan.</Text>
+        <Text>Amal tidak ditemukan.</Text>
         <Button mt={4} onClick={() => router.back()}>
           Kembali
         </Button>

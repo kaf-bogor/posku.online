@@ -218,8 +218,8 @@ const Home = () => {
               icon: FaRegFileAlt,
             },
             {
-              label: 'Donasi',
-              href: '/donasi',
+              label: 'Amal',
+              href: '/amal',
               icon: FaHandsHelping,
             },
           ]}

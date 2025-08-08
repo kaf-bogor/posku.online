@@ -12,8 +12,8 @@ const navItems = [
     icon: 'home',
   },
   {
-    label: 'Donasi',
-    href: '/donasi',
+    label: 'Amal',
+    href: '/amal',
     icon: 'donate',
   },
   {

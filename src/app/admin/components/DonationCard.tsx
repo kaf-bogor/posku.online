@@ -155,7 +155,7 @@ export default function DonationCard({
             {/* Summary */}
             {!preview && <SummarySection summary={summary} />}
             <ActionSection
-              path={`/donasi/${id}`}
+              path={`/amal/${id}`}
               onEdit={onEdit}
               onDelete={onDelete}
             />

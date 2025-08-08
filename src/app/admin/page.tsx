@@ -434,10 +434,10 @@ export default function AdminPage() {
             </Heading>
             <SimpleGrid columns={{ base: 1, md: 2, lg: 2 }} spacing={6}>
               <QuickActionCard
-                title="Kelola Donasi"
-                description="Tambah, edit, dan kelola kampanye donasi serta tracking dana yang terkumpul"
+                title="Kelola Amal"
+                description="Tambah, edit, dan kelola kampanye amal serta tracking dana yang terkumpul"
                 icon={FaDonate}
-                href="/admin/donations"
+                href="/admin/amal"
                 color="green"
               />
               <QuickActionCard
