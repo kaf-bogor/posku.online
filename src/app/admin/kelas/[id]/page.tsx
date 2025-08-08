@@ -20,13 +20,13 @@ import {
 import { getAuth } from 'firebase/auth';
 import {
   arrayUnion,
-  arrayRemove,
   doc,
   onSnapshot,
   setDoc,
   updateDoc,
   getDoc,
   increment,
+  runTransaction,
 } from 'firebase/firestore';
 import { useParams, useRouter } from 'next/navigation';
 import { useContext, useEffect, useState } from 'react';
@@ -153,19 +153,51 @@ export default function KelasDetailPage() {
     setSaving(true);
     const ref = doc(db, 'kelas', kelasName);
     const { userId: delUid, userName: delName } = getUserInfo();
-    const delActivity: Activity = {
-      userId: delUid,
-      userName: delName,
-      type: 'remove',
-      description: `Menghapus peserta ${participant.name} dengan nominal Rp ${participant.value.toLocaleString('id-ID')}`,
-      datetime: new Date(participantDate).toISOString(),
-    };
-    await updateDoc(ref, {
-      participants: arrayRemove(participant),
-      collected: increment(-participant.value),
-      activities: arrayUnion(delActivity),
-    });
-    setSaving(false);
+    try {
+      await runTransaction(db, async (tx) => {
+        const snap = await tx.get(ref);
+        if (!snap.exists()) throw new Error('Dokumen kelas tidak ditemukan');
+        const data = snap.data() as Kelas;
+        const participants = data.participants ?? [];
+
+        // Find exact participant by all fields
+        const idx = participants.findIndex(
+          (p) =>
+            p.name === participant.name &&
+            p.value === participant.value &&
+            p.datetime === participant.datetime
+        );
+        if (idx === -1) throw new Error('Peserta tidak ditemukan');
+
+        const newParticipants = [
+          ...participants.slice(0, idx),
+          ...participants.slice(idx + 1),
+        ];
+        const newCollected = newParticipants.reduce(
+          (sum, p) => sum + (p?.value ?? 0),
+          0
+        );
+
+        const delActivity: Activity = {
+          userId: delUid,
+          userName: delName,
+          type: 'remove',
+          description: `Menghapus peserta ${participant.name} dengan nominal Rp ${participant.value.toLocaleString('id-ID')}`,
+          datetime: new Date(participantDate).toISOString(),
+        };
+
+        // Update atomically
+        tx.update(ref, {
+          participants: newParticipants,
+          collected: newCollected,
+          activities: arrayUnion(delActivity),
+        });
+      });
+    } catch {
+      // swallow error; UI will reflect current snapshot
+    } finally {
+      setSaving(false);
+    }
   };
 
   const updateTarget = async () => {
@@ -195,7 +227,15 @@ export default function KelasDetailPage() {
     );
   }
 
-  const percent = ((kelas?.collected || 0) / (kelas?.target || 0)) * 100;
+  // Derive collected from participants for consistent UI
+  const derivedCollected = (kelas.participants ?? []).reduce(
+    (total, p) => total + (p?.value ?? 0),
+    0
+  );
+  const percent =
+    kelas.target && kelas.target > 0
+      ? Math.min((derivedCollected / kelas.target) * 100, 100)
+      : 0;
 
   return (
     <VStack
@@ -215,7 +255,7 @@ export default function KelasDetailPage() {
       </HStack>
 
       <Text>
-        Perolehan: {formatIDR(kelas.collected)} / {formatIDR(kelas.target)}
+        Perolehan: {formatIDR(derivedCollected)} / {formatIDR(kelas.target)}
       </Text>
       <Flex align="center" mb={2}>
         <Progress
