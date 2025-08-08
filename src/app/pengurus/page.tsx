@@ -7,21 +7,18 @@ import {
   TabPanel,
   Text,
   VStack,
-  HStack,
 } from '@chakra-ui/react';
-import Link from 'next/link';
-import { FaArrowLeft } from 'react-icons/fa';
+import { useContext } from 'react';
+
+import BackButton from '~/app/components/BackButton';
+import { AppContext } from '~/lib/context/app';
 
 const PengurusPage = () => {
+  const { bgColor } = useContext(AppContext);
   return (
     <Fade in>
-      <Link href="/">
-        <HStack my={6}>
-          <FaArrowLeft />
-          <Text>Kembali</Text>
-        </HStack>
-      </Link>
-      <Tabs w="full">
+      <BackButton />
+      <Tabs w="full" bg={bgColor} shadow="md">
         <TabList>
           <Tab>2024</Tab>
           <Tab>2023</Tab>

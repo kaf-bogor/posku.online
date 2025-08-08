@@ -1,18 +1,13 @@
-import { Box, SimpleGrid, Image, Text, Link, HStack } from '@chakra-ui/react';
-import { FaArrowLeft } from 'react-icons/fa';
+import { Box, SimpleGrid, Image, Text, Link } from '@chakra-ui/react';
 
+import BackButton from '~/app/components/BackButton';
 import { storageUrl } from '~/lib/context/baseUrl';
 import newsletters from '~/lib/data/newsletter.json';
 
 export default function Page() {
   return (
     <Box w="full">
-      <Link href="/">
-        <HStack my={6}>
-          <FaArrowLeft />
-          <Text>Kembali</Text>
-        </HStack>
-      </Link>
+      <BackButton />
       <SimpleGrid columns={[1, 1, 3]} spacing={6}>
         {[...newsletters]
           .sort((a, b) => b.order - a.order)

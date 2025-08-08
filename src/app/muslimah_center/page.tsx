@@ -15,11 +15,13 @@ import {
 } from '@chakra-ui/react';
 import { useContext, useEffect } from 'react';
 
+import BackButton from '~/app/components/BackButton';
 import { AppContext, siteConfig } from '~/lib/context/app';
 import { storageUrl } from '~/lib/context/baseUrl';
 import data from '~/lib/data/muslimah_center.json';
 
 const MuslimahCenterPage = () => {
+  const { bgColor } = useContext(AppContext);
   const { image, title, subtitle, setImage, setTitle, setSubtitle } =
     useContext(AppContext);
 
@@ -47,46 +49,49 @@ const MuslimahCenterPage = () => {
   }, [image, logoUrl, title, subtitle, setImage, setTitle, setSubtitle]);
 
   return (
-    <VStack spacing={8} mt={8} px={4} mx="auto">
-      <VStack spacing={2} textAlign="center">
-        <Text fontSize="md">
-          Klik tautan di bawah untuk menghubungi contact person setiap sentra.
-        </Text>
-      </VStack>
+    <>
+      <BackButton />
+      <VStack spacing={8} mt={8} p={4} mx="auto" bg={bgColor} shadow="md">
+        <VStack spacing={2} textAlign="center">
+          <Text fontSize="md">
+            Klik tautan di bawah untuk menghubungi contact person setiap sentra.
+          </Text>
+        </VStack>
 
-      <Accordion allowMultiple w="full">
-        {data.map((sentra) => (
-          <AccordionItem key={sentra.title}>
-            <h2>
-              <AccordionButton
-                py={4}
-                bg={accordionBg}
-                _hover={{ bg: accordionHoverBg }}
-                _expanded={{
-                  bg: accordionExpandedBg,
-                  color: accordionExpandedColor,
-                }}
-              >
-                <Box flex="1" textAlign="left" fontWeight="bold">
-                  {sentra.title}
-                </Box>
-                <AccordionIcon />
-              </AccordionButton>
-            </h2>
-            <AccordionPanel pb={4}>
-              <Text fontSize="sm">{sentra.description}</Text>
-              {sentra.linkTitle && (
-                <Link href={sentra.link} isExternal>
-                  <Button mt={4} w="full" colorScheme="teal">
-                    Hubungi ({sentra.linkTitle})
-                  </Button>
-                </Link>
-              )}
-            </AccordionPanel>
-          </AccordionItem>
-        ))}
-      </Accordion>
-    </VStack>
+        <Accordion allowMultiple w="full">
+          {data.map((sentra) => (
+            <AccordionItem key={sentra.title}>
+              <h2>
+                <AccordionButton
+                  py={4}
+                  bg={accordionBg}
+                  _hover={{ bg: accordionHoverBg }}
+                  _expanded={{
+                    bg: accordionExpandedBg,
+                    color: accordionExpandedColor,
+                  }}
+                >
+                  <Box flex="1" textAlign="left" fontWeight="bold">
+                    {sentra.title}
+                  </Box>
+                  <AccordionIcon />
+                </AccordionButton>
+              </h2>
+              <AccordionPanel pb={4}>
+                <Text fontSize="sm">{sentra.description}</Text>
+                {sentra.linkTitle && (
+                  <Link href={sentra.link} isExternal>
+                    <Button mt={4} w="full" colorScheme="teal">
+                      Hubungi ({sentra.linkTitle})
+                    </Button>
+                  </Link>
+                )}
+              </AccordionPanel>
+            </AccordionItem>
+          ))}
+        </Accordion>
+      </VStack>
+    </>
   );
 };
 

@@ -7,7 +7,13 @@ import {
   Spinner,
   Center,
   useColorModeValue,
+  Flex,
+  Icon,
 } from '@chakra-ui/react';
+import { format } from 'date-fns';
+import { id as localeID } from 'date-fns/locale';
+import Link from 'next/link';
+import { useContext } from 'react';
 import {
   FaUsers,
   FaEnvelopeOpenText,
@@ -17,10 +23,10 @@ import {
   FaHandsHelping,
 } from 'react-icons/fa';
 
-import EventCard from '~/lib/components/EventCard';
 import HeroSection from '~/lib/components/HeroSection';
 import NewsCard from '~/lib/components/NewsCard';
 import SectionHeader from '~/lib/components/SectionHeader';
+import { AppContext } from '~/lib/context/app';
 import { storageUrl } from '~/lib/context/baseUrl';
 import { useCrudManager } from '~/lib/hooks/useCrudManager';
 import type { EventItem } from '~/lib/types/event';
@@ -94,7 +100,15 @@ const EventsSection = ({
   eventItems: EventItem[];
   loading: boolean;
 }) => {
-  const activeEvents = eventItems.filter((event) => event.isActive).slice(0, 3);
+  const { bgColor } = useContext(AppContext);
+  const activeEvents = eventItems
+    .filter((event) => event.isActive)
+    .sort(
+      (a, b) =>
+        new Date(b.startDate).getTime() - new Date(a.startDate).getTime()
+    )
+    .slice(0, 3);
+  const dateColor = useColorModeValue('gray.600', 'gray.300');
 
   return (
     <Box>
@@ -111,10 +125,26 @@ const EventsSection = ({
         }
         if (activeEvents.length > 0) {
           return (
-            <VStack spacing={4} align="stretch">
-              {activeEvents[0] && <EventCard event={activeEvents[0]} />}
-              {activeEvents.slice(1).map((event) => (
-                <EventCard key={event.id} event={event} isCompact />
+            <VStack>
+              {activeEvents.map((event) => (
+                <Flex
+                  key={event.id}
+                  bg={bgColor}
+                  p={2}
+                  rounded="xl"
+                  w="100%"
+                  alignItems="center"
+                  boxShadow="md"
+                >
+                  <Icon as={FaCalendarAlt} boxSize={3.5} mr={2} />
+                  <Text as="span" color={dateColor} mr={2}>
+                    {format(new Date(event.startDate), 'dd MMMM yyyy', {
+                      locale: localeID,
+                    })}
+                    :
+                  </Text>
+                  <Link href={`/events/${event.id}`}>{event.title}</Link>
+                </Flex>
               ))}
             </VStack>
           );

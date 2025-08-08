@@ -5,24 +5,18 @@ import {
   Flex,
   Text,
   VStack,
-  HStack,
   List,
   ListItem,
   ListIcon,
 } from '@chakra-ui/react';
-import Link from 'next/link';
-import { FaArrowLeft } from 'react-icons/fa';
 import { MdCheckCircle } from 'react-icons/md';
+
+import BackButton from '~/app/components/BackButton';
 
 const TentangPage = () => {
   return (
     <Fade in>
-      <Link href="/">
-        <HStack my={6}>
-          <FaArrowLeft />
-          <Text>Kembali</Text>
-        </HStack>
-      </Link>
+      <BackButton />
 
       <VStack align="start" gap={8}>
         <VStack align="start" spacing={0}>

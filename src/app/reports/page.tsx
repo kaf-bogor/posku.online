@@ -1,6 +1,7 @@
-import { Box, Heading, Text, VStack, HStack } from '@chakra-ui/react';
+import { Box, Heading, Text, VStack } from '@chakra-ui/react';
 import Link from 'next/link'; // Import the Link component
-import { FaArrowLeft } from 'react-icons/fa';
+
+import BackButton from '~/app/components/BackButton';
 
 const menuItems = [
   {
@@ -19,18 +20,7 @@ export default function HomePage() {
   return (
     <>
       <Box w="full" textAlign="left" mb={2}>
-        <Link href="/" color="black">
-          <HStack
-            as="span"
-            display="inline-flex"
-            alignItems="center"
-            my={6}
-            spacing={2}
-          >
-            <FaArrowLeft />
-            <Text>Kembali</Text>
-          </HStack>
-        </Link>
+        <BackButton />
       </Box>
       <Heading as="h1" mb={6} size="xl" textAlign="center">
         Laporan seputar kuttab

@@ -3,6 +3,7 @@
 import { VStack, SimpleGrid } from '@chakra-ui/react';
 import { FaCalendarAlt } from 'react-icons/fa';
 
+import BackButton from '~/app/components/BackButton';
 import EmptySection from '~/app/components/EmptySection';
 import LoadingSection from '~/app/components/LoadingSection';
 import EventCard from '~/lib/components/EventCard';
@@ -38,8 +39,9 @@ export default function EventsPage() {
 
   return (
     <VStack spacing={6} align="stretch" w="100%">
+      <BackButton />
       <SectionHeader title="Semua Acara & Kegiatan" icon={FaCalendarAlt} />
-      <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={6}>
+      <SimpleGrid columns={{ base: 1, md: 2 }} spacing={6}>
         {activeEvents.map((event) => (
           <EventCard key={event.id} event={event} />
         ))}
