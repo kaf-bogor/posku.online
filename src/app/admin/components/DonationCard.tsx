@@ -21,6 +21,7 @@ import SummarySection from './DonationCard/Summary';
 
 export default function DonationCard({
   donation,
+  preview = false,
   onEdit,
   onDelete,
 }: DonationCardProps) {
@@ -152,7 +153,7 @@ export default function DonationCard({
             />
 
             {/* Summary */}
-            <SummarySection summary={summary} />
+            {!preview && <SummarySection summary={summary} />}
             <ActionSection
               path={`/donasi/${id}`}
               onEdit={onEdit}
@@ -167,6 +168,7 @@ export default function DonationCard({
 
 interface DonationCardProps {
   donation: DonationPage;
+  preview?: boolean;
   onEdit?: () => void;
   onDelete?: () => void;
 }

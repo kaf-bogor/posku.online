@@ -1,7 +1,7 @@
 import { Box, Heading, Text, VStack } from '@chakra-ui/react';
 import Link from 'next/link'; // Import the Link component
 
-import BackButton from '~/app/components/BackButton';
+import ContentWrapper from '~/app/components/ContentWrapper';
 
 const menuItems = [
   {
@@ -18,10 +18,7 @@ const menuItems = [
 
 export default function HomePage() {
   return (
-    <>
-      <Box w="full" textAlign="left" mb={2}>
-        <BackButton />
-      </Box>
+    <ContentWrapper>
       <Heading as="h1" mb={6} size="xl" textAlign="center">
         Laporan seputar kuttab
       </Heading>
@@ -50,6 +47,6 @@ export default function HomePage() {
           </Link>
         ))}
       </VStack>
-    </>
+    </ContentWrapper>
   );
 }

@@ -1,13 +1,12 @@
 import { Box, SimpleGrid, Image, Text, Link } from '@chakra-ui/react';
 
-import BackButton from '~/app/components/BackButton';
+import ContentWrapper from '~/app/components/ContentWrapper';
 import { storageUrl } from '~/lib/context/baseUrl';
 import newsletters from '~/lib/data/newsletter.json';
 
 export default function Page() {
   return (
-    <Box w="full">
-      <BackButton />
+    <ContentWrapper>
       <SimpleGrid columns={[1, 1, 3]} spacing={6}>
         {[...newsletters]
           .sort((a, b) => b.order - a.order)
@@ -48,6 +47,6 @@ export default function Page() {
             </Box>
           ))}
       </SimpleGrid>
-    </Box>
+    </ContentWrapper>
   );
 }

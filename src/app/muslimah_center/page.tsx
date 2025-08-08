@@ -15,13 +15,12 @@ import {
 } from '@chakra-ui/react';
 import { useContext, useEffect } from 'react';
 
-import BackButton from '~/app/components/BackButton';
+import ContentWrapper from '~/app/components/ContentWrapper';
 import { AppContext, siteConfig } from '~/lib/context/app';
 import { storageUrl } from '~/lib/context/baseUrl';
 import data from '~/lib/data/muslimah_center.json';
 
 const MuslimahCenterPage = () => {
-  const { bgColor } = useContext(AppContext);
   const { image, title, subtitle, setImage, setTitle, setSubtitle } =
     useContext(AppContext);
 
@@ -49,14 +48,11 @@ const MuslimahCenterPage = () => {
   }, [image, logoUrl, title, subtitle, setImage, setTitle, setSubtitle]);
 
   return (
-    <>
-      <BackButton />
-      <VStack spacing={8} mt={8} p={4} mx="auto" bg={bgColor} shadow="md">
-        <VStack spacing={2} textAlign="center">
-          <Text fontSize="md">
-            Klik tautan di bawah untuk menghubungi contact person setiap sentra.
-          </Text>
-        </VStack>
+    <ContentWrapper>
+      <VStack spacing={6} align="start">
+        <Text fontSize="md">
+          Klik tautan di bawah untuk menghubungi contact person setiap sentra.
+        </Text>
 
         <Accordion allowMultiple w="full">
           {data.map((sentra) => (
@@ -91,7 +87,7 @@ const MuslimahCenterPage = () => {
           ))}
         </Accordion>
       </VStack>
-    </>
+    </ContentWrapper>
   );
 };
 

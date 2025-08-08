@@ -91,13 +91,19 @@ const EventCard = ({ event, isCompact = false }: EventCardProps) => {
               <HStack spacing={2} fontSize="sm" color={textColor}>
                 <Icon as={FaCalendarAlt} />
                 <Text>
-                  {format(startDate, 'dd MMMM yyyy', { locale: id })} -{' '}
-                  {format(endDate, 'dd MMMM yyyy', { locale: id })}
+                  {format(startDate, 'dd MMMM yyyy', { locale: id })}
+                  {endDate &&
+                    `- ${format(endDate, 'dd MMMM yyyy', { locale: id })}`}
                 </Text>
               </HStack>
-              <HStack spacing={2} fontSize="sm" color={textColor}>
+              <HStack
+                spacing={2}
+                fontSize="sm"
+                color={textColor}
+                align="center"
+              >
                 <Icon as={FaMapMarkerAlt} />
-                <Text>{event.location}</Text>
+                <Text align="start">{event.location}</Text>
               </HStack>
             </VStack>
             <HStack justify="space-between" w="100%" align="center">

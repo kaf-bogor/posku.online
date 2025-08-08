@@ -4,21 +4,19 @@ import {
   Fade,
   Flex,
   Text,
-  VStack,
   List,
   ListItem,
   ListIcon,
+  VStack,
 } from '@chakra-ui/react';
 import { MdCheckCircle } from 'react-icons/md';
 
-import BackButton from '~/app/components/BackButton';
+import ContentWrapper from '~/app/components/ContentWrapper';
 
 const TentangPage = () => {
   return (
-    <Fade in>
-      <BackButton />
-
-      <VStack align="start" gap={8}>
+    <ContentWrapper>
+      <Fade in>
         <VStack align="start" spacing={0}>
           <Text fontWeight="bold" fontSize="24px">
             Pengertian
@@ -178,8 +176,8 @@ const TentangPage = () => {
             </ListItem>
           </List>
         </VStack>
-      </VStack>
-    </Fade>
+      </Fade>
+    </ContentWrapper>
   );
 };
 
