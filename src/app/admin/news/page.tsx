@@ -54,11 +54,7 @@ export default function NewsAdminPage() {
     selectedFiles,
     setSelectedFiles,
     editForm,
-    setEditForm,
-    setEditSelectedFiles,
     handleAdd,
-    handleSaveEdit,
-    handleCancelEdit,
   } = useCrudManager<NewsItem>({
     collectionName: 'news',
     blobFolderName: 'news',
@@ -146,87 +142,6 @@ export default function NewsAdminPage() {
                 accept="image/*"
                 onChange={(e) =>
                   setSelectedFiles(Array.from(e.target.files || []))
-                }
-              />
-            </FormControl>
-          </ManagerForm>
-        )}
-
-        {isEditing && (
-          <ManagerForm
-            formState={editForm}
-            onSubmit={(e) => handleSaveEdit(e, editForm!.id)}
-            onCancel={handleCancelEdit}
-            isEdit
-            title="Edit News"
-          >
-            <FormControl isRequired>
-              <FormLabel>Title</FormLabel>
-              <Input
-                name="title"
-                value={editForm.title}
-                onChange={(e) =>
-                  setEditForm({ ...editForm!, title: e.target.value })
-                }
-              />
-            </FormControl>
-
-            <FormControl isRequired>
-              <FormLabel>Summary</FormLabel>
-              <Textarea
-                name="summary"
-                value={editForm.summary}
-                onChange={(e) =>
-                  setEditForm({ ...editForm!, summary: e.target.value })
-                }
-              />
-            </FormControl>
-
-            <FormControl isRequired>
-              <FormLabel>Publish Date</FormLabel>
-              <Input
-                type="date"
-                name="publishDate"
-                value={editForm!.publishDate.split('T')[0]}
-                onChange={(e) =>
-                  setEditForm({
-                    ...editForm!,
-                    publishDate: new Date(e.target.value).toISOString(),
-                  })
-                }
-              />
-            </FormControl>
-
-            <FormControl isRequired>
-              <FormLabel>Author</FormLabel>
-              <Input
-                name="author"
-                value={editForm!.author}
-                onChange={(e) =>
-                  setEditForm({ ...editForm!, author: e.target.value })
-                }
-              />
-            </FormControl>
-
-            <FormControl>
-              <Checkbox
-                isChecked={editForm!.isPublished}
-                onChange={(e) =>
-                  setEditForm({ ...editForm!, isPublished: e.target.checked })
-                }
-              >
-                Published
-              </Checkbox>
-            </FormControl>
-
-            <FormControl>
-              <FormLabel>Additional Images</FormLabel>
-              <Input
-                type="file"
-                multiple
-                accept="image/*"
-                onChange={(e) =>
-                  setEditSelectedFiles(Array.from(e.target.files || []))
                 }
               />
             </FormControl>

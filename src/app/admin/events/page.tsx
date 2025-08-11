@@ -51,11 +51,7 @@ export default function EventsAdminPage() {
     selectedFiles,
     setSelectedFiles,
     editForm,
-    setEditForm,
-    setEditSelectedFiles,
     handleAdd,
-    handleSaveEdit,
-    handleCancelEdit,
   } = useCrudManager<EventItem>({
     collectionName: 'events',
     blobFolderName: 'events',
@@ -183,102 +179,6 @@ export default function EventsAdminPage() {
                 accept="image/*"
                 onChange={(e) =>
                   setSelectedFiles(Array.from(e.target.files || []))
-                }
-              />
-            </FormControl>
-          </ManagerForm>
-        )}
-
-        {isEditing && (
-          <ManagerForm
-            formState={editForm}
-            onSubmit={(e) => handleSaveEdit(e, editForm!.id)}
-            onCancel={handleCancelEdit}
-            isEdit
-            title="Edit Event"
-          >
-            <FormControl isRequired>
-              <FormLabel>Title</FormLabel>
-              <Input
-                name="title"
-                value={editForm.title}
-                onChange={(e) =>
-                  setEditForm({ ...editForm!, title: e.target.value })
-                }
-              />
-            </FormControl>
-
-            <FormControl isRequired>
-              <FormLabel>Summary</FormLabel>
-              <Textarea
-                name="summary"
-                value={editForm.summary}
-                onChange={(e) =>
-                  setEditForm({ ...editForm!, summary: e.target.value })
-                }
-              />
-            </FormControl>
-
-            <FormControl isRequired>
-              <FormLabel>Start Date</FormLabel>
-              <Input
-                type="date"
-                name="startDate"
-                value={editForm.startDate.split('T')[0]}
-                onChange={(e) =>
-                  setEditForm({
-                    ...editForm!,
-                    startDate: new Date(e.target.value).toISOString(),
-                  })
-                }
-              />
-            </FormControl>
-
-            <FormControl isRequired>
-              <FormLabel>End Date</FormLabel>
-              <Input
-                type="date"
-                name="endDate"
-                value={editForm.endDate.split('T')[0]}
-                onChange={(e) =>
-                  setEditForm({
-                    ...editForm!,
-                    endDate: new Date(e.target.value).toISOString(),
-                  })
-                }
-              />
-            </FormControl>
-
-            <FormControl isRequired>
-              <FormLabel>Location</FormLabel>
-              <Input
-                name="location"
-                value={editForm.location}
-                onChange={(e) =>
-                  setEditForm({ ...editForm!, location: e.target.value })
-                }
-              />
-            </FormControl>
-
-            <FormControl>
-              <Checkbox
-                isChecked={editForm.isActive}
-                onChange={(e) =>
-                  setEditForm({ ...editForm!, isActive: e.target.checked })
-                }
-              >
-                Active
-              </Checkbox>
-            </FormControl>
-
-            <FormControl>
-              <FormLabel>Additional Images</FormLabel>
-              <Input
-                type="file"
-                multiple
-                accept="image/*"
-                onChange={(e) =>
-                  setEditSelectedFiles(Array.from(e.target.files || []))
                 }
               />
             </FormControl>
