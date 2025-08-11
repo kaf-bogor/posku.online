@@ -23,7 +23,6 @@
     "prepare": "husky"
   },
   "dependencies": {
-    "@apollo/client": "^3.11.4",
     "@canvasjs/react-charts": "^1.0.2",
     "@chakra-ui/icons": "^2.1.1",
     "@chakra-ui/next-js": "^2.2.0",
@@ -41,7 +40,6 @@
     "firebase": "^11.10.0",
     "formidable": "^3.5.4",
     "framer-motion": "^11.3.18",
-    "graphql": "^16.9.0",
     "lexical": "^0.33.1",
     "minimatch": "^10.0.3",
     "next": "^14.2.5",

@@ -14,8 +14,12 @@ const Footer = () => {
     <Flex as="footer" width="full" justifyContent="center">
       <Text fontSize="sm">
         {currentYear || '2024'} -{' '}
-        <Link href="https://posku.online" isExternal rel="noopener noreferrer">
-          Posku.online
+        <Link
+          href="https://poskubogor.com"
+          isExternal
+          rel="noopener noreferrer"
+        >
+          Posku KAF Bogor
         </Link>
       </Text>
     </Flex>

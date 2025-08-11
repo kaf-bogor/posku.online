@@ -27,7 +27,7 @@
 
 ## Kontak & Info Lebih Lanjut
 
-- 🌐 Kunjungi website kami di [posku.online](https://www.posku.online)
+- 🌐 Kunjungi website kami di [poskubogor.com](https://www.poskubogor.com)
 - Cari menu: *Tentang POSKU*, *Pengurus*, *Newsletter*, atau *Muslimah Center*
 
 ---
