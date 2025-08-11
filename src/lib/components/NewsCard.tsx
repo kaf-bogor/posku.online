@@ -26,7 +26,6 @@ const NewsCard = ({ news, isCompact = false }: NewsCardProps) => {
   return (
     <Link href={`/news/${news.id}`} passHref>
       <Box
-        as="a"
         bg={cardBg}
         borderRadius="xl"
         overflow="hidden"

@@ -24,7 +24,6 @@ import {
 } from 'react-icons/fa';
 
 import HeroSection from '~/lib/components/HeroSection';
-import NewsCard from '~/lib/components/NewsCard';
 import SectionHeader from '~/lib/components/SectionHeader';
 import { AppContext } from '~/lib/context/app';
 import { storageUrl } from '~/lib/context/baseUrl';
@@ -60,9 +59,15 @@ const NewsSection = ({
   newsItems: NewsItem[];
   loading: boolean;
 }) => {
+  const { bgColor } = useContext(AppContext);
   const publishedNews = newsItems
     .filter((news) => news.isPublished)
+    .sort(
+      (a, b) =>
+        new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime()
+    )
     .slice(0, 3);
+  const dateColor = useColorModeValue('gray.600', 'gray.300');
 
   return (
     <Box>
@@ -79,10 +84,30 @@ const NewsSection = ({
         }
         if (publishedNews.length > 0) {
           return (
-            <VStack spacing={4} align="stretch">
-              {publishedNews[0] && <NewsCard news={publishedNews[0]} />}
-              {publishedNews.slice(1).map((news) => (
-                <NewsCard key={news.id} news={news} isCompact />
+            <VStack>
+              {publishedNews.map((news) => (
+                <Link
+                  href={`/news/${news.id}`}
+                  key={news.id}
+                  style={{ width: '100%' }}
+                >
+                  <Flex
+                    bg={bgColor}
+                    p={2}
+                    rounded="xl"
+                    alignItems="center"
+                    boxShadow="md"
+                  >
+                    <Icon as={FaNewspaper} boxSize={3.5} mr={2} />
+                    <Text as="span" color={dateColor} mr={2}>
+                      {format(new Date(news.publishDate), 'dd MMMM yyyy', {
+                        locale: localeID,
+                      })}
+                      :
+                    </Text>
+                    {news.title}
+                  </Flex>
+                </Link>
               ))}
             </VStack>
           );
@@ -127,24 +152,28 @@ const EventsSection = ({
           return (
             <VStack>
               {activeEvents.map((event) => (
-                <Flex
+                <Link
+                  href={`/events/${event.id}`}
                   key={event.id}
-                  bg={bgColor}
-                  p={2}
-                  rounded="xl"
-                  w="100%"
-                  alignItems="center"
-                  boxShadow="md"
+                  style={{ width: '100%' }}
                 >
-                  <Icon as={FaCalendarAlt} boxSize={3.5} mr={2} />
-                  <Text as="span" color={dateColor} mr={2}>
-                    {format(new Date(event.startDate), 'dd MMMM yyyy', {
-                      locale: localeID,
-                    })}
-                    :
-                  </Text>
-                  <Link href={`/events/${event.id}`}>{event.title}</Link>
-                </Flex>
+                  <Flex
+                    bg={bgColor}
+                    p={2}
+                    rounded="xl"
+                    alignItems="center"
+                    boxShadow="md"
+                  >
+                    <Icon as={FaCalendarAlt} boxSize={3.5} mr={2} />
+                    <Text as="span" color={dateColor} mr={2}>
+                      {format(new Date(event.startDate), 'dd MMMM yyyy', {
+                        locale: localeID,
+                      })}
+                      :
+                    </Text>
+                    {event.title}
+                  </Flex>
+                </Link>
               ))}
             </VStack>
           );
