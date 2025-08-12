@@ -227,7 +227,7 @@ const UnauthorizedView = () => {
 // useAdminAuthorization moved to ~/lib/hooks/useAdminAuthorization
 
 export default function AdminPage() {
-  const { user, loading, login, logout } = useAuth();
+  const { user, loading, login, logout } = useAuth('admin');
   const { notAllowed, error, adminsLoading } = useAdminAuthorization(user);
 
   const bgColor = useColorModeValue('gray.50', 'gray.900');

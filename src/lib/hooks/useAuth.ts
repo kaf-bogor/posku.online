@@ -13,7 +13,7 @@ import { useEffect, useState, useCallback } from 'react';
 import { auth, db } from '~/lib/firebase';
 
 // Custom hook for authentication
-export default function useAuth() {
+export default function useAuth(resourceType: string = 'users') {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -36,7 +36,7 @@ export default function useAuth() {
 
       if (!loginUser.email) return;
 
-      const adminRef = doc(db, 'admin', loginUser.email);
+      const adminRef = doc(db, resourceType, loginUser.email);
       const now = new Date().toISOString();
       const snapshot = await getDoc(adminRef);
 
@@ -55,7 +55,7 @@ export default function useAuth() {
     } catch (error) {
       console.error('Login error:', error);
     }
-  }, []);
+  }, [resourceType]);
 
   const logout = useCallback(async () => {
     try {

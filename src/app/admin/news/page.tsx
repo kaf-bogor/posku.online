@@ -42,7 +42,7 @@ export default function NewsAdminPage() {
   const cancelRef = useRef<HTMLButtonElement>(null);
   const [deleteId, setDeleteId] = useState<string | null>(null);
 
-  const { user } = useAuth();
+  const { user } = useAuth('admin');
 
   const {
     items: news,
