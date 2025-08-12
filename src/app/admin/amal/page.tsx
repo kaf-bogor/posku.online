@@ -21,7 +21,7 @@ const DonationsPage = () => {
       {donations.map((d) => (
         <DonationCard
           donation={d}
-          onEdit={() => router.push(`/admin/donations/${d.id}/edit`)}
+          onEdit={() => router.push(`/admin/amal/${d.id}/edit`)}
         />
       ))}
     </>

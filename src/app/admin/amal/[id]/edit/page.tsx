@@ -104,7 +104,7 @@ const DonationDetailPage = ({ params }: { params: { id: string } }) => {
       title={`Edit: ${donation.title}`}
       formState={editForm}
       onSubmit={(e) =>
-        handleSaveEdit(e, donation.id, () => router.push(`/admin/donations`))
+        handleSaveEdit(e, donation.id, () => router.push(`/admin/amal`))
       }
       onCancel={handleCancelEdit}
     >
