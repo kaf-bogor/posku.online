@@ -171,15 +171,16 @@ export default function SalesDataCard({
         </Text>
       </VStack>
 
+      {/* Cards Section */}
       <VStack
         spacing={4}
-        mt={3}
+        my={3}
         align="stretch"
         overflow="scroll"
         height="400px"
       >
         {salesData.map((data) => {
-          return <Card data={data} />;
+          return <Card key={data.date} data={data} />;
         })}
       </VStack>
     </VStack>

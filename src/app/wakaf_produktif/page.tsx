@@ -6,6 +6,7 @@ import { useContext, useEffect, useState } from 'react';
 
 import { AppContext, siteConfig } from '~/lib/context/app';
 
+import MultiBranchChart from './MultiBranchChart';
 import SalesDataCard from './SalesData';
 
 const WakafProduktif = () => {
@@ -31,6 +32,11 @@ const WakafProduktif = () => {
     };
   }, [title, subtitle, setTitle, setSubtitle]);
 
+  const branchConfigs = [
+    { title: 'Lingkar Dramaga', branch: 'LD', color: 'rgb(59, 130, 246)' },
+    { title: 'Atang Sanjaya', branch: 'ATS', color: 'rgb(34, 197, 94)' },
+  ];
+
   return (
     <VStack gap={5}>
       <VStack>
@@ -46,6 +52,9 @@ const WakafProduktif = () => {
           onChange={handleDateChange}
         />
       </VStack>
+
+      {/* Multi-Branch Chart */}
+      <MultiBranchChart salesDate={selectedDate} branches={branchConfigs} />
       {isMobile ? (
         <VStack spacing={4} align="stretch">
           <SalesDataCard
