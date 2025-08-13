@@ -175,7 +175,7 @@ export default function MultiBranchChart({
     <Box w="full" bg={bgColor} p={6}>
       <Chart
         branches={allBranchesData}
-        title="All Branches - Daily Sales Progress"
+        title="Semua Cabang - Progres Penjualan Harian"
       />
     </Box>
   );

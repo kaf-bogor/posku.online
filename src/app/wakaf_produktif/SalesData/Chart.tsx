@@ -29,15 +29,14 @@ ChartJS.register(
   Legend
 );
 
-interface BranchData {
-  branchName: string;
-  data: Transaction[];
-  color: string;
-}
-
 interface ChartProps {
-  branches: BranchData[];
+  branches: Array<{
+    branchName: string;
+    data: Transaction[];
+    color: string;
+  }>;
   title?: string;
+  viewMode?: 'monthly' | 'yearly';
 }
 
 type ChartType = 'line' | 'bar';
@@ -45,7 +44,8 @@ type DataType = 'sales' | 'omzet' | 'growth';
 
 export default function Chart({
   branches,
-  title = 'Daily Sales Progress',
+  title = 'Progres Penjualan Harian',
+  viewMode = 'monthly',
 }: ChartProps) {
   // Get actual CSS color values for Chart.js
   const chartTextColor = useColorModeValue('#000000', '#F7FAFC');
@@ -67,9 +67,14 @@ export default function Chart({
 
   // Prepare chart data
   const chartData = React.useMemo(() => {
-    const labels = allDates.map((date) =>
-      format(parseISO(date), 'dd MMM', { locale: id })
-    );
+    const labels = allDates.map((date) => {
+      if (viewMode === 'yearly') {
+        // For yearly view, show only month names
+        return format(parseISO(date), 'MMM yyyy', { locale: id });
+      }
+      // For monthly view, show day and month
+      return format(parseISO(date), 'dd MMM', { locale: id });
+    });
 
     const datasets = branches.map((branch) => {
       // Create a map of date to data for this branch
@@ -106,7 +111,7 @@ export default function Chart({
       labels,
       datasets,
     };
-  }, [allDates, branches, dataType]);
+  }, [allDates, branches, dataType, viewMode]);
 
   // Chart options
   const options = useMemo(
@@ -152,12 +157,20 @@ export default function Chart({
       },
       scales: {
         x: {
+          grid: {
+            display: true,
+            color: `${chartTextColor}20`, // Add transparency to grid lines
+          },
           ticks: {
             color: chartTextColor,
           },
         },
         y: {
           beginAtZero: true,
+          grid: {
+            display: true,
+            color: `${chartTextColor}20`, // Add transparency to grid lines
+          },
           ticks: {
             color: chartTextColor,
             maxTicksLimit: 8,
@@ -220,7 +233,7 @@ export default function Chart({
   ) {
     return (
       <Box p={4} textAlign="center">
-        <Text color="gray.500">No data available for chart</Text>
+        <Text color="gray.500">Data tidak tersedia untuk grafik</Text>
       </Box>
     );
   }
@@ -230,7 +243,7 @@ export default function Chart({
       <Box display="flex" gap={4} flexWrap="wrap">
         <Box>
           <Text fontSize="sm" mb={1}>
-            Chart Type:
+            Jenis Grafik:
           </Text>
           <Select
             size="sm"
@@ -238,27 +251,27 @@ export default function Chart({
             onChange={(e) => setChartType(e.target.value as ChartType)}
             width="120px"
           >
-            <option value="line">Line</option>
-            <option value="bar">Bar</option>
+            <option value="line">Garis</option>
+            <option value="bar">Batang</option>
           </Select>
         </Box>
         <Box>
           <Text fontSize="sm" mb={1}>
-            Data Type:
+            Jenis Data:
           </Text>
           <Select
             size="sm"
             value={dataType}
             onChange={(e) => setDataType(e.target.value as DataType)}
-            width="140px"
+            width="180px"
           >
-            <option value="sales">Sales Count</option>
+            <option value="sales">Jumlah Penjualan</option>
             <option value="omzet">Omzet</option>
-            <option value="growth">Growth %</option>
+            <option value="growth">Pertumbuhan %</option>
           </Select>
         </Box>
       </Box>
-      <Box height="500px" width="100%">
+      <Box height="350px" width="100%">
         {chartType === 'line' ? (
           <Line
             key={`line-${chartTextColor}`}
