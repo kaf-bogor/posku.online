@@ -17,15 +17,13 @@ import { formatIDR } from '~/lib/utils/currency';
 
 import ActionSection from './DonationCard/Action';
 import ProgressSection from './DonationCard/Progress';
-import SummarySection from './DonationCard/Summary';
 
 export default function DonationCard({
   donation,
-  preview = false,
   onEdit,
   onDelete,
 }: DonationCardProps) {
-  const { id, donors, title, summary, target, imageUrls } = donation;
+  const { id, donors, title, target, imageUrls } = donation;
 
   const { borderColor } = useContext(AppContext);
 
@@ -46,6 +44,7 @@ export default function DonationCard({
 
   return (
     <Box
+      width="full"
       key={id}
       bg={cardBg}
       borderRadius="2xl"
@@ -65,6 +64,7 @@ export default function DonationCard({
           position="relative"
           overflow="hidden"
           w={{ base: '100%', md: '320px' }}
+          maxH="300px"
           alignSelf="stretch"
           flexShrink={0}
         >
@@ -152,8 +152,6 @@ export default function DonationCard({
               donors={donors}
             />
 
-            {/* Summary */}
-            {!preview && <SummarySection summary={summary} />}
             <ActionSection
               path={`/amal/${id}`}
               onEdit={onEdit}
@@ -168,7 +166,6 @@ export default function DonationCard({
 
 interface DonationCardProps {
   donation: DonationPage;
-  preview?: boolean;
   onEdit?: () => void;
   onDelete?: () => void;
 }

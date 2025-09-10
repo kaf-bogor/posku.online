@@ -1,5 +1,6 @@
 'use client';
 
+import { Button, VStack } from '@chakra-ui/react';
 import { useRouter } from 'next/navigation';
 
 import DonationCard from '../components/DonationCard';
@@ -17,14 +18,25 @@ const DonationsPage = () => {
   });
 
   return (
-    <>
-      {donations.map((d) => (
-        <DonationCard
-          donation={d}
-          onEdit={() => router.push(`/admin/amal/${d.id}/edit`)}
-        />
-      ))}
-    </>
+    <VStack align="stretch" spacing={4}>
+      <Button
+        alignSelf="start"
+        colorScheme="green"
+        onClick={() => router.push('/admin/amal/add')}
+      >
+        Tambah Amal
+      </Button>
+
+      <VStack gap="16px">
+        {donations.map((d) => (
+          <DonationCard
+            key={d.id}
+            donation={d}
+            onEdit={() => router.push(`/admin/amal/${d.id}/edit`)}
+          />
+        ))}
+      </VStack>
+    </VStack>
   );
 };
 

@@ -126,9 +126,7 @@ const AmalPage = () => {
         {/* Campaigns List - Single Column */}
         <VStack spacing={6} align="stretch">
           {campaigns.map((campaign) => {
-            return (
-              <DonationCard key={campaign.id} donation={campaign} preview />
-            );
+            return <DonationCard key={campaign.id} donation={campaign} />;
           })}
         </VStack>
       </VStack>
