@@ -1,5 +1,5 @@
 import { Box, Text } from '@chakra-ui/react';
-import { compareDesc, getDate, parseISO, lastDayOfMonth } from 'date-fns';
+import { getDate, lastDayOfMonth } from 'date-fns';
 import { useState, useEffect, useCallback, useContext } from 'react';
 
 import { AppContext } from '~/lib/context/app';
@@ -94,7 +94,7 @@ export default function MultiBranchChart({
           );
         });
 
-        // Convert TransactionData to Transaction format
+        // Convert TransactionData to Transaction format and aggregate daily data
         const convertedData: Transaction[] = filteredData.map(
           (item: TransactionData) => ({
             date: item.date,
@@ -108,14 +108,46 @@ export default function MultiBranchChart({
           })
         );
 
-        const sortedData = convertedData.sort(
-          (a: Transaction, b: Transaction) => {
-            return compareDesc(
-              parseISO(a.currentDate),
-              parseISO(b.currentDate)
-            );
-          }
-        );
+        // Aggregate daily data to get correct monthly totals
+        const sortedData =
+          convertedData.length > 0
+            ? [
+                {
+                  date: salesDate,
+                  previousDate: salesDate,
+                  currentDate: salesDate,
+                  previousCount: convertedData.reduce(
+                    (sum, item) => sum + item.previousCount,
+                    0
+                  ),
+                  previousOmzet: convertedData.reduce(
+                    (sum, item) => sum + item.previousOmzet,
+                    0
+                  ),
+                  currentCount: convertedData.reduce(
+                    (sum, item) => sum + item.currentCount,
+                    0
+                  ),
+                  currentOmzet: convertedData.reduce(
+                    (sum, item) => sum + item.currentOmzet,
+                    0
+                  ),
+                  growthPercent: (() => {
+                    const totalPrevious = convertedData.reduce(
+                      (sum, item) => sum + item.previousOmzet,
+                      0
+                    );
+                    const totalCurrent = convertedData.reduce(
+                      (sum, item) => sum + item.currentOmzet,
+                      0
+                    );
+                    return totalPrevious > 0
+                      ? ((totalCurrent - totalPrevious) / totalPrevious) * 100
+                      : 0;
+                  })(),
+                },
+              ]
+            : [];
 
         return {
           branchName: branchConfig.title,

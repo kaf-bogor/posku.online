@@ -21,6 +21,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
 import { FaCalendarAlt, FaMapMarkerAlt } from 'react-icons/fa';
 
+import Summary from '~/app/admin/components/DonationCard/Summary';
 import CommentsSection from '~/lib/components/CommentsSection';
 import { db } from '~/lib/firebase';
 import type { EventItem } from '~/lib/types/event';
@@ -37,6 +38,7 @@ export default function EventDetailPage() {
 
   const [event, setEvent] = useState<EventItem | null>(null);
   const [loading, setLoading] = useState(true);
+  const [isImageExpanded, setIsImageExpanded] = useState(false);
 
   useEffect(() => {
     if (!id) return undefined;
@@ -117,14 +119,36 @@ export default function EventDetailPage() {
           overflow="hidden"
           borderWidth="1px"
           borderColor={borderColor}
+          position="relative"
+          _hover={{ '& .image-indicator': { opacity: 1 } }}
         >
           <Image
             src={event.imageUrls[0]}
             alt={event.title}
             w="100%"
-            h={{ base: '220px', md: '320px' }}
-            objectFit="cover"
+            h={isImageExpanded ? 'auto' : { base: '220px', md: '320px' }}
+            objectFit={isImageExpanded ? 'contain' : 'cover'}
+            cursor="pointer"
+            onClick={() => setIsImageExpanded(!isImageExpanded)}
+            transition="all 0.3s ease"
           />
+          <Box
+            className="image-indicator"
+            position="absolute"
+            bottom="2"
+            right="2"
+            bg="blackAlpha.700"
+            color="white"
+            px={2}
+            py={1}
+            borderRadius="md"
+            fontSize="xs"
+            opacity={0}
+            transition="opacity 0.2s ease"
+            pointerEvents="none"
+          >
+            {isImageExpanded ? 'Klik untuk perkecil' : 'Klik untuk perbesar'}
+          </Box>
         </Box>
       )}
 
@@ -148,9 +172,9 @@ export default function EventDetailPage() {
             <Icon as={FaMapMarkerAlt} />
             <Text>{event.location}</Text>
           </HStack>
-          <Text color={textColor} whiteSpace="pre-wrap">
-            {event.summary}
-          </Text>
+          <Box color={textColor}>
+            <Summary summary={event.summary} isDefaultExpanded />
+          </Box>
         </VStack>
       </Box>
 

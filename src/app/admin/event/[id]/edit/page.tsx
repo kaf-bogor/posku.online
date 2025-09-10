@@ -7,13 +7,13 @@ import {
   Text,
   useToast,
   Input,
-  Textarea,
   Checkbox,
   FormControl,
   FormLabel,
   HStack,
 } from '@chakra-ui/react';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import dynamic from 'next/dynamic';
 import { useRouter, useParams } from 'next/navigation';
 import { useEffect, useState, useContext } from 'react';
 
@@ -21,6 +21,8 @@ import ManagerForm from '~/app/admin/ManagerForm';
 import { AppContext } from '~/lib/context/app';
 import { db } from '~/lib/firebase';
 import type { EventItem } from '~/lib/types/event';
+
+const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 const ADMIN_EVENT_PATH = '/admin/events';
 
@@ -130,10 +132,10 @@ export default function EditEventPage() {
 
         <FormControl isRequired>
           <FormLabel>Summary</FormLabel>
-          <Textarea
-            name="summary"
+          <ReactQuill
+            theme="snow"
             value={form.summary}
-            onChange={(e) => setForm({ ...form, summary: e.target.value })}
+            onChange={(value) => setForm({ ...form, summary: value })}
           />
         </FormControl>
 

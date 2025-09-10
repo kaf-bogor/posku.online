@@ -14,8 +14,9 @@ import {
   query,
   orderBy,
   arrayUnion,
+  where,
 } from 'firebase/firestore';
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 
 import { db } from '~/lib/firebase';
 import type { Activity } from '~/lib/types/donation';
@@ -34,12 +35,18 @@ export interface UseCrudManagerProps<T extends ManagedItem> {
   collectionName: string;
   blobFolderName: string;
   itemSchema: Omit<T, 'id'>;
+  filters?: Record<string, string | number | boolean>;
+  orderByField?: string;
+  orderByDirection?: 'asc' | 'desc';
 }
 
 export function useCrudManager<T extends ManagedItem>({
   collectionName,
   blobFolderName,
   itemSchema,
+  filters,
+  orderByField = 'createdAt',
+  orderByDirection = 'desc',
 }: UseCrudManagerProps<T>) {
   const toast = useToast();
   const [items, setItems] = useState<T[]>([]);
@@ -52,12 +59,24 @@ export function useCrudManager<T extends ManagedItem>({
   const [pendingDeleteId, setPendingDeleteId] = useState<string | null>(null);
   const cancelRef = useRef(null);
 
+  const filtersString = useMemo(() => JSON.stringify(filters), [filters]);
+
   const fetchItems = useCallback(async () => {
     setLoading(true);
     try {
+      const parsedFilters = filtersString
+        ? JSON.parse(filtersString)
+        : undefined;
+      const filterConstraints = parsedFilters
+        ? Object.entries(parsedFilters).map(([field, value]) =>
+            where(field, '==', value)
+          )
+        : [];
+
       const q = query(
         collection(db, collectionName),
-        orderBy('createdAt', 'desc')
+        ...filterConstraints,
+        orderBy(orderByField, orderByDirection)
       );
 
       console.log(q, collectionName);
@@ -78,7 +97,7 @@ export function useCrudManager<T extends ManagedItem>({
     } finally {
       setLoading(false);
     }
-  }, [collectionName, toast]);
+  }, [collectionName, toast, filtersString, orderByField, orderByDirection]);
 
   useEffect(() => {
     fetchItems();

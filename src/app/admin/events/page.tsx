@@ -64,6 +64,8 @@ export default function EventsAdminPage() {
       location: '',
       isActive: false,
     },
+    orderByField: 'startDate',
+    orderByDirection: 'desc',
   });
 
   const { bgColor, textColor } = useContext(AppContext);
@@ -91,98 +93,104 @@ export default function EventsAdminPage() {
 
   return (
     <>
-      <VStack align="stretch" spacing={4} bg={bgColor}>
+      <VStack align="stretch" spacing={4}>
         <Button alignSelf="start" colorScheme="green" onClick={toggleForm}>
           Add Event
         </Button>
 
         {showForm && !isEditing && (
-          <ManagerForm
-            formState={form}
-            onSubmit={handleAdd}
-            onCancel={toggleForm}
-            title="Add New Event"
-          >
-            <FormControl isRequired>
-              <FormLabel>Title</FormLabel>
-              <Input
-                name="title"
-                value={form.title}
-                onChange={(e) => setForm({ ...form, title: e.target.value })}
-              />
-            </FormControl>
+          <Box bg={bgColor}>
+            <ManagerForm
+              formState={form}
+              onSubmit={handleAdd}
+              onCancel={toggleForm}
+              title="Add New Event"
+            >
+              <FormControl isRequired>
+                <FormLabel>Title</FormLabel>
+                <Input
+                  name="title"
+                  value={form.title}
+                  onChange={(e) => setForm({ ...form, title: e.target.value })}
+                />
+              </FormControl>
 
-            <FormControl isRequired>
-              <FormLabel>Summary</FormLabel>
-              <Textarea
-                name="summary"
-                value={form.summary}
-                onChange={(e) => setForm({ ...form, summary: e.target.value })}
-              />
-            </FormControl>
+              <FormControl isRequired>
+                <FormLabel>Summary</FormLabel>
+                <Textarea
+                  name="summary"
+                  value={form.summary}
+                  onChange={(e) =>
+                    setForm({ ...form, summary: e.target.value })
+                  }
+                />
+              </FormControl>
 
-            <FormControl isRequired>
-              <FormLabel>Start Date</FormLabel>
-              <Input
-                type="date"
-                name="startDate"
-                value={form.startDate.split('T')[0]}
-                onChange={(e) =>
-                  setForm({
-                    ...form,
-                    startDate: new Date(e.target.value).toISOString(),
-                  })
-                }
-              />
-            </FormControl>
+              <FormControl isRequired>
+                <FormLabel>Start Date</FormLabel>
+                <Input
+                  type="datetime-local"
+                  name="startDate"
+                  value={form.startDate}
+                  onChange={(e) =>
+                    setForm({
+                      ...form,
+                      startDate: e.target.value,
+                    })
+                  }
+                />
+              </FormControl>
 
-            <FormControl isRequired>
-              <FormLabel>End Date</FormLabel>
-              <Input
-                type="date"
-                name="endDate"
-                value={form.endDate.split('T')[0]}
-                onChange={(e) =>
-                  setForm({
-                    ...form,
-                    endDate: new Date(e.target.value).toISOString(),
-                  })
-                }
-              />
-            </FormControl>
+              <FormControl isRequired>
+                <FormLabel>End Date</FormLabel>
+                <Input
+                  type="date"
+                  name="endDate"
+                  value={form.endDate.split('T')[0]}
+                  onChange={(e) =>
+                    setForm({
+                      ...form,
+                      endDate: new Date(e.target.value).toISOString(),
+                    })
+                  }
+                />
+              </FormControl>
 
-            <FormControl isRequired>
-              <FormLabel>Location</FormLabel>
-              <Input
-                name="location"
-                value={form.location}
-                onChange={(e) => setForm({ ...form, location: e.target.value })}
-              />
-            </FormControl>
+              <FormControl isRequired>
+                <FormLabel>Location</FormLabel>
+                <Input
+                  name="location"
+                  value={form.location}
+                  onChange={(e) =>
+                    setForm({ ...form, location: e.target.value })
+                  }
+                />
+              </FormControl>
 
-            <FormControl>
-              <Checkbox
-                isChecked={form.isActive}
-                onChange={(e) =>
-                  setForm({ ...form, isActive: e.target.checked })
-                }
-              >
-                Active
-              </Checkbox>
-            </FormControl>
+              <FormControl>
+                <Checkbox
+                  isChecked={form.isActive}
+                  onChange={(e) =>
+                    setForm({ ...form, isActive: e.target.checked })
+                  }
+                >
+                  Active
+                </Checkbox>
+              </FormControl>
 
-            <FormControl isRequired={selectedFiles.length === 0}>
-              <FormLabel>Images</FormLabel>
-              <Input
-                type="file"
-                multiple
-                accept="image/*"
-                onChange={(e) =>
-                  setSelectedFiles(Array.from(e.target.files || []))
-                }
-              />
-            </FormControl>
-          </ManagerForm>
+              <FormControl isRequired={selectedFiles.length === 0}>
+                <FormLabel>Images</FormLabel>
+                <Input
+                  type="file"
+                  multiple
+                  accept="image/*"
+                  onChange={(e) =>
+                    setSelectedFiles(Array.from(e.target.files || []))
+                  }
+                />
+              </FormControl>
+            </ManagerForm>
+          </Box>
         )}
 
         {events.length === 0 ? (
@@ -203,9 +211,7 @@ export default function EventsAdminPage() {
                 <Heading size="md" color={titleColor}>
                   {event.title}
                 </Heading>
-                <Text color={textColor} noOfLines={2}>
-                  {event.summary}
-                </Text>
+
                 <HStack fontSize="sm" color={textColor} spacing={3}>
                   <HStack spacing={1}>
                     <FaCalendarAlt />
@@ -218,7 +224,12 @@ export default function EventsAdminPage() {
                     <FaMapMarkerAlt />
                     <Text>{event.location}</Text>
                   </HStack>
-                  {event.isActive && <Badge colorScheme="purple">Active</Badge>}
+                  {event.isActive && new Date(event.startDate) > new Date() && (
+                    <Badge colorScheme="green">Upcoming</Badge>
+                  )}
+                  {new Date(event.endDate) < new Date() && (
+                    <Badge colorScheme="orange">Past</Badge>
+                  )}
                 </HStack>
                 <HStack>
                   <Button

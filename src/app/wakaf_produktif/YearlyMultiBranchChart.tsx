@@ -7,6 +7,10 @@ import { AppContext } from '~/lib/context/app';
 import Chart from './SalesData/Chart';
 import type { Transaction, TransactionData } from './SalesData/types';
 
+function calculateTotalPrice(data: Transaction[]): number {
+  return data.reduce((total, sale) => total + sale.currentOmzet, 0);
+}
+
 interface BranchConfig {
   title: string;
   branch: string;
@@ -102,28 +106,25 @@ export const YearlyMultiBranchChart = ({
         const monthlyAggregatedData: Transaction[] = [];
         monthlyDataResults.forEach((monthData, monthIndex) => {
           if (monthData.length > 0) {
-            // Calculate monthly totals
-            const monthlyTotals = monthData.reduce(
-              (totals, dailyData) => ({
-                currentCount: totals.currentCount + dailyData.currentCount,
-                currentOmzet: totals.currentOmzet + dailyData.currentOmzet,
-                previousCount: totals.previousCount + dailyData.previousCount,
-                previousOmzet: totals.previousOmzet + dailyData.previousOmzet,
-              }),
-              {
-                currentCount: 0,
-                currentOmzet: 0,
-                previousCount: 0,
-                previousOmzet: 0,
-              }
+            // Calculate monthly totals using calculateTotalPrice function
+            const currentOmzet = calculateTotalPrice(monthData);
+            const previousOmzet = monthData.reduce(
+              (total, dailyData) => total + dailyData.previousOmzet,
+              0
+            );
+            const currentCount = monthData.reduce(
+              (total, dailyData) => total + dailyData.currentCount,
+              0
+            );
+            const previousCount = monthData.reduce(
+              (total, dailyData) => total + dailyData.previousCount,
+              0
             );
 
             // Calculate growth percentage for the month
             const growthPercent =
-              monthlyTotals.previousOmzet > 0
-                ? ((monthlyTotals.currentOmzet - monthlyTotals.previousOmzet) /
-                    monthlyTotals.previousOmzet) *
-                  100
+              previousOmzet > 0
+                ? ((currentOmzet - previousOmzet) / previousOmzet) * 100
                 : 0;
 
             // Create a single data point for this month
@@ -134,10 +135,10 @@ export const YearlyMultiBranchChart = ({
               date: monthDate,
               previousDate: monthDate,
               currentDate: monthDate,
-              previousCount: monthlyTotals.previousCount,
-              previousOmzet: monthlyTotals.previousOmzet,
-              currentCount: monthlyTotals.currentCount,
-              currentOmzet: monthlyTotals.currentOmzet,
+              previousCount,
+              previousOmzet,
+              currentCount,
+              currentOmzet,
               growthPercent,
             });
           }
