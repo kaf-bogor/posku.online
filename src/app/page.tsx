@@ -134,6 +134,8 @@ const EventsSection = ({
     )
     .slice(0, 3);
   const dateColor = useColorModeValue('gray.600', 'gray.300');
+  const pastEventTextColor = useColorModeValue('gray.400', 'gray.500');
+  const activeEventTextColor = useColorModeValue('gray.800', 'white');
 
   return (
     <Box>
@@ -151,30 +153,38 @@ const EventsSection = ({
         if (activeEvents.length > 0) {
           return (
             <VStack>
-              {activeEvents.map((event) => (
-                <Link
-                  href={`/events/${event.id}`}
-                  key={event.id}
-                  style={{ width: '100%' }}
-                >
-                  <Flex
-                    bg={bgColor}
-                    p={2}
-                    rounded="xl"
-                    alignItems="center"
-                    boxShadow="md"
+              {activeEvents.map((event) => {
+                const isEventPast = new Date(event.endDate) < new Date();
+                const eventTextColor = isEventPast
+                  ? pastEventTextColor
+                  : activeEventTextColor;
+
+                return (
+                  <Link
+                    href={`/events/${event.id}`}
+                    key={event.id}
+                    style={{ width: '100%' }}
                   >
-                    <Icon as={FaCalendarAlt} boxSize={3.5} mr={2} />
-                    <Text as="span" color={dateColor} mr={2}>
-                      {format(new Date(event.startDate), 'dd MMMM yyyy', {
-                        locale: localeID,
-                      })}
-                      :
-                    </Text>
-                    {event.title}
-                  </Flex>
-                </Link>
-              ))}
+                    <Flex
+                      bg={bgColor}
+                      p={2}
+                      rounded="xl"
+                      alignItems="center"
+                      boxShadow="md"
+                      color={eventTextColor}
+                    >
+                      <Icon as={FaCalendarAlt} boxSize={3.5} mr={2} />
+                      <Text as="span" color={dateColor} mr={2}>
+                        {format(new Date(event.startDate), 'dd MMMM yyyy', {
+                          locale: localeID,
+                        })}
+                        :
+                      </Text>
+                      {event.title}
+                    </Flex>
+                  </Link>
+                );
+              })}
             </VStack>
           );
         }

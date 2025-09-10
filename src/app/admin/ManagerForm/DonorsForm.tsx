@@ -16,7 +16,7 @@ import { AppContext } from '~/lib/context/app';
 import { db } from '~/lib/firebase';
 import type { Donor } from '~/lib/types/donation';
 
-const DEFAULT_NAME = 'Hamba Allah';
+const DEFAULT_NAME = null;
 interface DonorsFormProps {
   donors: Donor[];
   donationId: string;
@@ -125,10 +125,9 @@ export default function DonorsFormSection({
             <FormLabel mb={1}>Nama</FormLabel>
             <Input
               name="name"
-              value={newDonor.name}
               onChange={handleInputChange}
               size="sm"
-              placeholder="Hamba Allah"
+              placeholder="Nama donatur"
             />
           </FormControl>
           <FormControl>
@@ -139,7 +138,7 @@ export default function DonorsFormSection({
               value={newDonor.value}
               onChange={handleInputChange}
               size="sm"
-              placeholder="Amount"
+              placeholder="Nominal donasi"
             />
           </FormControl>
           <FormControl>
