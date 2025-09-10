@@ -8,7 +8,7 @@ import {
   useColorModeValue,
   Icon,
 } from '@chakra-ui/react';
-import { format, isAfter, isBefore } from 'date-fns';
+import { format, isAfter, isBefore, isSameDay } from 'date-fns';
 import { id } from 'date-fns/locale';
 import Link from 'next/link';
 import { useEffect, useState, useMemo, useContext } from 'react';
@@ -92,7 +92,8 @@ const EventCard = ({ event, isCompact = false }: EventCardProps) => {
                 <Text>
                   {format(startDate, 'dd MMMM yyyy', { locale: id })}
                   {endDate &&
-                    `- ${format(endDate, 'dd MMMM yyyy', { locale: id })}`}
+                    !isSameDay(startDate, endDate) &&
+                    ` - ${format(endDate, 'dd MMMM yyyy', { locale: id })}`}
                 </Text>
               </HStack>
               <HStack
