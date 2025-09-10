@@ -73,6 +73,8 @@ const EventCard = ({ event, isCompact = false }: EventCardProps) => {
               w="100%"
               h="200px"
               objectFit="cover"
+              filter={status.label === 'Ended' ? 'grayscale(100%)' : 'none'}
+              transition="filter 0.3s ease"
             />
           )}
           <VStack align="start" spacing={3} p={4}>
@@ -83,9 +85,6 @@ const EventCard = ({ event, isCompact = false }: EventCardProps) => {
               lineHeight="short"
             >
               {event.title}
-            </Text>
-            <Text fontSize="sm" color={textColor} noOfLines={2}>
-              {event.summary}
             </Text>
             <VStack align="start" spacing={2} w="100%">
               <HStack spacing={2} fontSize="sm" color={textColor}>
@@ -108,7 +107,6 @@ const EventCard = ({ event, isCompact = false }: EventCardProps) => {
             </VStack>
             <HStack justify="space-between" w="100%" align="center">
               <Badge colorScheme={status.colorScheme}>{status.label}</Badge>
-              {event.isActive && <Badge colorScheme="purple">Active</Badge>}
             </HStack>
           </VStack>
         </VStack>

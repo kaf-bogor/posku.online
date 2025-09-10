@@ -26,6 +26,8 @@ export default function EventsPage() {
         location: '',
         isActive: false,
       },
+      orderByField: 'startDate',
+      orderByDirection: 'desc',
     });
   const activeEvents = eventItems.filter((event) => event.isActive);
 
