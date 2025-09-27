@@ -1,0 +1,97 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    /* ------------ helper ------------ */
+    function isAdmin() {
+      // user is signed-in AND has a doc in /admin/{email}
+      return request.auth != null &&
+             exists(/databases/$(database)/documents/admin/$(request.auth.token.email));
+    }
+
+    /* ------------ admin collection ------------ */
+    // Anyone may read the list of admins; only admins can edit it
+    match /admin/{email} {
+      allow read:  if true;
+      allow write: if isAdmin();
+    }
+
+    /* ------------ donations ------------ */
+    match /donations/{docId} {
+      allow read:  if true;
+      allow write: if isAdmin();
+    }
+
+    /* ------------ news ------------ */
+    match /news/{docId} {
+      allow read:  if true;
+      allow write: if isAdmin();
+    }
+    
+    /* ------------ users ------------ */
+    match /users/{userId} {
+      // Users can read and write their own profile
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+      // Admins can read all user profiles
+      allow read: if isAdmin();
+      // Allow creation of user profile on first login
+      allow create: if request.auth != null &&
+                       request.auth.uid == userId;
+    }
+
+    /* ------------ quizzes ------------ */
+    match /quizzes/{quizId} {
+      // Anyone can read quizzes (for browsing)
+      allow read: if true;
+      // Only admins can create, update, or delete quizzes
+      allow write: if isAdmin();
+    }
+
+    /* ------------ quiz_attempts ------------ */
+    match /quiz_attempts/{attemptId} {
+      // Users can read their own attempts
+      allow read: if request.auth != null &&
+                     resource.data.userId == request.auth.uid;
+      // Admins can read all attempts
+      allow read: if isAdmin();
+      // Users can create their own attempts
+      allow create: if request.auth != null;
+      // Only admins can delete attempts
+      allow delete: if isAdmin();
+    }
+
+    /* ------------ events ------------ */
+    match /events/{docId} {
+      allow read:  if true;
+      allow write: if isAdmin();
+    }
+    
+    /* ------------ events ------------ */
+    match /kelas/{docId} {
+      allow read:  if true;
+      allow write: if isAdmin();
+    }
+    
+    // Public read, admin-only write
+    match /podcasts/{docId} {
+      allow read: if true;   // or: if resource.data.isPublished == true;
+      allow write: if request.auth != null && isAdmin();
+    }
+    
+    // Public read, admin-only write
+    match /comments/{docId} {
+      allow read: if true;   // or: if resource.data.isPublished == true;
+      allow write: if request.auth != null;
+    }
+
+    /* ------------ default deny ------------ */
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

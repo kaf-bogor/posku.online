@@ -29,6 +29,7 @@ import {
   FaGoogle,
   FaShieldAlt,
 } from 'react-icons/fa';
+import { FiHelpCircle } from 'react-icons/fi';
 
 import useAdminAuthorization from '~/lib/hooks/useAdminAuthorization';
 import useAuth from '~/lib/hooks/useAuth';
@@ -311,7 +312,7 @@ export default function AdminPage() {
             <Heading size="lg" fontWeight="bold">
               Manajemen Konten
             </Heading>
-            <SimpleGrid columns={{ base: 1, md: 2, lg: 2 }} spacing={6}>
+            <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={6}>
               <QuickActionCard
                 title="Kelola Amal"
                 description="Tambah, edit, dan kelola kampanye amal serta tracking dana yang terkumpul"
@@ -325,6 +326,13 @@ export default function AdminPage() {
                 icon={FaChalkboardTeacher}
                 href="/admin/kelas"
                 color="orange"
+              />
+              <QuickActionCard
+                title="Kelola Quiz"
+                description="Buat dan kelola quiz untuk menguji pengetahuan pengguna"
+                icon={FiHelpCircle}
+                href="/admin/quiz"
+                color="teal"
               />
               <QuickActionCard
                 title="Kelola Acara"

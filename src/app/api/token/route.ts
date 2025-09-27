@@ -52,7 +52,7 @@ export const GET = async (request: Request) => {
     /* eslint-disable-next-line */
   } catch (error) {
     return NextResponse.json(
-      { message: 'Error fetching data' },
+      { message: 'Error fetching data 09090' },
       { status: 500 }
     );
   }

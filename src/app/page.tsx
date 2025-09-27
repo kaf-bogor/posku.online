@@ -22,6 +22,7 @@ import {
   FaCalendarAlt,
   FaHandsHelping,
 } from 'react-icons/fa';
+import { FiHelpCircle } from 'react-icons/fi';
 
 import HeroSection from '~/lib/components/HeroSection';
 import SectionHeader from '~/lib/components/SectionHeader';
@@ -240,6 +241,11 @@ const Home = () => {
               label: 'Muslimah Center',
               href: '/muslimah_center',
               imageUrl: `${storageUrl}/mc_light.png?alt=media`,
+            },
+            {
+              label: 'Quiz',
+              href: '/quiz',
+              icon: FiHelpCircle,
             },
             {
               label: 'Pengurus',
