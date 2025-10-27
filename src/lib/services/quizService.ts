@@ -1,3 +1,5 @@
+/* eslint-disable no-useless-catch */
+/* eslint-disable sonarjs/no-useless-catch */
 import {
   collection,
   doc,
@@ -31,19 +33,14 @@ const QUIZ_ATTEMPTS_COLLECTION = 'quiz_attempts';
 
 // User operations
 export const saveUserProfile = async (user: Omit<User, 'createdAt'>) => {
-  try {
-    const userRef = doc(db, USERS_COLLECTION, user.uid);
-    const userDoc = await getDoc(userRef);
+  const userRef = doc(db, USERS_COLLECTION, user.uid);
+  const userDoc = await getDoc(userRef);
 
-    if (!userDoc.exists()) {
-      await setDoc(userRef, {
-        ...user,
-        createdAt: serverTimestamp(),
-      });
-    }
-  } catch (error) {
-    // Error saving user profile
-    throw error;
+  if (!userDoc.exists()) {
+    await setDoc(userRef, {
+      ...user,
+      createdAt: serverTimestamp(),
+    });
   }
 };
 
@@ -222,10 +219,10 @@ export const getUserQuizAttempt = async (
     const querySnapshot = await getDocs(attemptQuery);
 
     if (!querySnapshot.empty) {
-      const doc = querySnapshot.docs[0];
-      const data = doc.data();
+      const attemptDoc = querySnapshot.docs[0];
+      const data = attemptDoc.data();
       return {
-        id: doc.id,
+        id: attemptDoc.id,
         ...data,
         submittedAt: data.submittedAt?.toDate() || new Date(),
       } as QuizAttempt;
@@ -327,32 +324,38 @@ export const getQuizLeaderboard = async (
     );
     const querySnapshot = await getDocs(attemptsQuery);
 
-    const attempts: Array<QuizAttempt & { userName: string }> = await Promise.all(
-      querySnapshot.docs.map(async (attemptDoc) => {
-        const attemptData = attemptDoc.data();
-        const attempt = {
-          id: attemptDoc.id,
-          ...attemptData,
-          submittedAt: attemptData.submittedAt?.toDate() || new Date(),
-        } as QuizAttempt;
+    const attempts: Array<QuizAttempt & { userName: string }> =
+      await Promise.all(
+        querySnapshot.docs.map(async (attemptDoc) => {
+          const attemptData = attemptDoc.data();
+          const attempt = {
+            id: attemptDoc.id,
+            ...attemptData,
+            submittedAt: attemptData.submittedAt?.toDate() || new Date(),
+          } as QuizAttempt;
 
-        // Get user name
-        let userName = 'Unknown User';
-        try {
-          const userDocument = await getDoc(doc(db, USERS_COLLECTION, attempt.userId));
-          if (userDocument.exists()) {
-            userName = userDocument.data().displayName || userDocument.data().email || 'Unknown User';
+          // Get user name
+          let userName = 'Unknown User';
+          try {
+            const userDoc = await getDoc(
+              doc(db, USERS_COLLECTION, attempt.userId)
+            );
+            if (userDoc.exists()) {
+              userName =
+                userDoc.data().displayName ||
+                userDoc.data().email ||
+                'Unknown User';
+            }
+          } catch {
+            // Error getting user data
           }
-        } catch (error) {
-          // Error getting user data
-        }
 
-        return {
-          ...attempt,
-          userName,
-        };
-      })
-    );
+          return {
+            ...attempt,
+            userName,
+          };
+        })
+      );
 
     // Sort by score descending, then by time spent ascending (faster time wins)
     attempts.sort((a, b) => {

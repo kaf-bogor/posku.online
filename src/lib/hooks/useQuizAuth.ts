@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-catch, sonarjs/no-useless-catch */
 import {
   signInWithPopup,
   GoogleAuthProvider,
@@ -35,21 +36,21 @@ export const useQuizAuth = (): UseQuizAuthReturn => {
 
   // Listen to auth state changes
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
-      setFirebaseUser(firebaseUser);
+    const unsubscribe = onAuthStateChanged(auth, async (authUser) => {
+      setFirebaseUser(authUser);
 
-      if (firebaseUser) {
+      if (authUser) {
         try {
           // Get or create user profile
-          let userProfile = await getUserProfile(firebaseUser.uid);
+          let userProfile = await getUserProfile(authUser.uid);
 
           if (!userProfile) {
             // Create user profile if it doesn't exist
             const newUser: Omit<User, 'createdAt'> = {
-              uid: firebaseUser.uid,
-              email: firebaseUser.email || '',
+              uid: authUser.uid,
+              email: authUser.email || '',
               displayName:
-                firebaseUser.displayName || firebaseUser.email || 'Anonymous',
+                authUser.displayName || authUser.email || 'Anonymous',
               role: 'user', // default role
             };
             await saveUserProfile(newUser);
@@ -57,8 +58,7 @@ export const useQuizAuth = (): UseQuizAuthReturn => {
           }
 
           setUser(userProfile);
-        } catch (error) {
-          console.error('Error loading user profile:', error);
+        } catch {
           setUser(null);
         }
       } else {
@@ -75,11 +75,10 @@ export const useQuizAuth = (): UseQuizAuthReturn => {
     try {
       setLoading(true);
       const provider = new GoogleAuthProvider();
-      const result = await signInWithPopup(auth, provider);
+      await signInWithPopup(auth, provider);
 
       // User profile will be handled by the auth state change listener
     } catch (error) {
-      console.error('Google sign-in error:', error);
       throw error;
     } finally {
       setLoading(false);
@@ -93,7 +92,6 @@ export const useQuizAuth = (): UseQuizAuthReturn => {
         await signInWithEmailAndPassword(auth, email, password);
         // User profile will be handled by the auth state change listener
       } catch (error) {
-        console.error('Email sign-in error:', error);
         throw error;
       } finally {
         setLoading(false);
@@ -121,7 +119,6 @@ export const useQuizAuth = (): UseQuizAuthReturn => {
         };
         await saveUserProfile(newUser);
       } catch (error) {
-        console.error('Email sign-up error:', error);
         throw error;
       } finally {
         setLoading(false);
@@ -135,7 +132,6 @@ export const useQuizAuth = (): UseQuizAuthReturn => {
       setLoading(true);
       await signOut(auth);
     } catch (error) {
-      console.error('Logout error:', error);
       throw error;
     } finally {
       setLoading(false);

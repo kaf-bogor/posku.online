@@ -6,6 +6,7 @@ export interface DonationPage {
   target: number;
   link: string;
   published: boolean;
+  is_active: boolean;
   organizer: {
     avatar: string;
     name: string;
@@ -31,6 +32,7 @@ export const initialDonationState: Omit<DonationPage, 'id'> = {
   target: 0,
   link: '',
   published: false,
+  is_active: false,
   organizer: {
     avatar: '',
     name: '',

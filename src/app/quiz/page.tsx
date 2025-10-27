@@ -20,14 +20,14 @@ import {
   Flex,
 } from '@chakra-ui/react';
 import { useRouter } from 'next/navigation';
-import { FiClock, FiPlay, FiCheck, FiLock } from 'react-icons/fi';
+import { FiClock, FiPlay, FiCheck } from 'react-icons/fi';
 
 import { useQuiz } from '~/lib/context/quizContext';
 import useAuth from '~/lib/hooks/useAuth';
 
 const QuizListPage = () => {
   const router = useRouter();
-  const { user, loading: authLoading } = useAuth();
+  const { user } = useAuth();
   const { quizzes, loading: quizLoading, hasAttempted, error } = useQuiz();
 
   const cardBg = useColorModeValue('white', 'gray.700');
@@ -60,14 +60,6 @@ const QuizListPage = () => {
       return;
     }
     router.push(`/quiz/${quizId}`);
-  };
-
-  const handleViewResult = (quizId: string) => {
-    if (!user) {
-      router.push('/quiz/auth');
-      return;
-    }
-    router.push(`/quiz/${quizId}/result`);
   };
 
   return (
@@ -119,6 +111,7 @@ const QuizListPage = () => {
                           </Heading>
                           <Badge
                             colorScheme={
+                              // eslint-disable-next-line no-nested-ternary
                               quiz.level === 'Beginner'
                                 ? 'green'
                                 : quiz.level === 'Intermediate'

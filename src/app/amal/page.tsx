@@ -9,7 +9,7 @@ import {
   useColorModeValue,
   IconButton,
 } from '@chakra-ui/react';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs, query, where } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import { FaArrowLeft, FaHandsHelping } from 'react-icons/fa';
 
@@ -33,14 +33,15 @@ const AmalPage = () => {
     setMounted(true);
     const fetchCampaigns = async () => {
       try {
-        const querySnapshot = await getDocs(collection(db, 'donations'));
-        const allData: DonationPage[] = querySnapshot.docs.map(
+        // Query only active campaigns from Firebase
+        const q = query(
+          collection(db, 'donations'),
+          where('is_active', '==', true)
+        );
+        const querySnapshot = await getDocs(q);
+        const data: DonationPage[] = querySnapshot.docs.map(
           (doc) => ({ id: doc.id, ...doc.data() }) as DonationPage
         );
-
-        // Temporarily show all donations for debugging
-        const data = allData; // Remove filter to see all donations
-        // const data = allData.filter((campaign) => campaign.published);
         setCampaigns(data);
       } catch {
         setCampaigns([]);

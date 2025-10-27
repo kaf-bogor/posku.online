@@ -17,7 +17,6 @@ import {
   Td,
   TableContainer,
   Badge,
-  HStack,
   VStack,
   useColorModeValue,
   Alert,
@@ -60,8 +59,8 @@ import {
   FiDownload,
 } from 'react-icons/fi';
 
-import useAuth from '~/lib/hooks/useAuth';
 import useAdminAuthorization from '~/lib/hooks/useAdminAuthorization';
+import useAuth from '~/lib/hooks/useAuth';
 import {
   getAllQuizzes,
   deleteQuiz,
@@ -111,8 +110,7 @@ const AdminQuizPage = () => {
         );
 
         setQuizAttempts(attemptsMap);
-      } catch (error) {
-        console.error('Error loading quizzes:', error);
+      } catch {
         toast({
           title: 'Error loading quizzes',
           status: 'error',
@@ -142,8 +140,7 @@ const AdminQuizPage = () => {
         duration: 3000,
       });
       onClose();
-    } catch (error) {
-      console.error('Error deleting quiz:', error);
+    } catch {
       toast({
         title: 'Error deleting quiz',
         status: 'error',
@@ -374,6 +371,7 @@ const AdminQuizPage = () => {
                           <Td>
                             <Badge
                               colorScheme={
+                                // eslint-disable-next-line no-nested-ternary
                                 quiz.level === 'Beginner'
                                   ? 'green'
                                   : quiz.level === 'Intermediate'
@@ -402,6 +400,7 @@ const AdminQuizPage = () => {
                             <Text
                               fontWeight="medium"
                               color={
+                                // eslint-disable-next-line no-nested-ternary
                                 stats.averageScore >= 80
                                   ? 'green.500'
                                   : stats.averageScore >= 60
@@ -481,8 +480,8 @@ const AdminQuizPage = () => {
           <ModalBody>
             <Stack spacing={4}>
               <Text>
-                Are you sure you want to delete the quiz "{selectedQuiz?.title}
-                "?
+                Are you sure you want to delete the quiz &quot;
+                {selectedQuiz?.title}&quot;?
               </Text>
               <Alert status="warning" size="sm">
                 <AlertIcon />

@@ -76,9 +76,7 @@ const QuizAuthPage = () => {
           <Heading size="lg" mb={2}>
             Autentikasi Kuis
           </Heading>
-          <Text color="gray.600">
-            Masuk dengan Google untuk mengakses kuis
-          </Text>
+          <Text color="gray.600">Masuk dengan Google untuk mengakses kuis</Text>
         </Box>
 
         <Card
@@ -109,7 +107,8 @@ const QuizAuthPage = () => {
         </Card>
 
         <Text textAlign="center" fontSize="sm" color="gray.500">
-          Dengan masuk, Anda setuju untuk mengikuti kuis dengan bertanggung jawab dan jujur.
+          Dengan masuk, Anda setuju untuk mengikuti kuis dengan bertanggung
+          jawab dan jujur.
         </Text>
       </Stack>
     </Container>

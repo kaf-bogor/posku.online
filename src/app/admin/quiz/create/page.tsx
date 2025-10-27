@@ -1,3 +1,5 @@
+/* eslint-disable react/no-array-index-key */
+
 'use client';
 
 import {
@@ -22,7 +24,6 @@ import {
   VStack,
   HStack,
   IconButton,
-  Divider,
   Alert,
   AlertIcon,
   Center,
@@ -47,9 +48,9 @@ import {
   FiEye,
 } from 'react-icons/fi';
 
-import useAuth from '~/lib/hooks/useAuth';
 import useAdminAuthorization from '~/lib/hooks/useAdminAuthorization';
-import { createQuiz, generateQuestionId } from '~/lib/services/quizService';
+import useAuth from '~/lib/hooks/useAuth';
+import { generateQuestionId } from '~/lib/services/quizService';
 import type { Question, QuizFormData, QuestionImport } from '~/lib/types/quiz';
 
 const CreateQuizPage = () => {
@@ -74,7 +75,10 @@ const CreateQuizPage = () => {
   const cardBg = useColorModeValue('white', 'gray.700');
   const borderColor = useColorModeValue('gray.200', 'gray.600');
 
-  const handleInputChange = (field: keyof QuizFormData, value: any) => {
+  const handleInputChange = (
+    field: keyof QuizFormData,
+    value: string | number
+  ) => {
     setFormData((prev) => ({
       ...prev,
       [field]: value,
@@ -208,7 +212,6 @@ const CreateQuizPage = () => {
       setJsonInput('');
       setShowJsonInput(false);
     } catch (error) {
-      console.error('Import error:', error);
       toast({
         title: 'Import failed',
         description:
@@ -225,9 +228,11 @@ const CreateQuizPage = () => {
     if (!user) return;
 
     // Validation
+    const VALIDATION_ERROR = 'Validation Error';
+
     if (!formData.title.trim()) {
       toast({
-        title: 'Validation Error',
+        title: VALIDATION_ERROR,
         description: 'Quiz title is required.',
         status: 'warning',
         duration: 3000,
@@ -237,7 +242,7 @@ const CreateQuizPage = () => {
 
     if (!formData.description.trim()) {
       toast({
-        title: 'Validation Error',
+        title: VALIDATION_ERROR,
         description: 'Quiz description is required.',
         status: 'warning',
         duration: 3000,
@@ -247,7 +252,7 @@ const CreateQuizPage = () => {
 
     if (formData.questions.length === 0) {
       toast({
-        title: 'Validation Error',
+        title: VALIDATION_ERROR,
         description: 'At least one question is required.',
         status: 'warning',
         duration: 3000,
@@ -256,12 +261,12 @@ const CreateQuizPage = () => {
     }
 
     // Validate all questions
-    for (let i = 0; i < formData.questions.length; i++) {
+    for (let i = 0; i < formData.questions.length; i += 1) {
       const question = formData.questions[i];
 
       if (!question.title.trim()) {
         toast({
-          title: 'Validation Error',
+          title: VALIDATION_ERROR,
           description: `Question ${i + 1} title is required.`,
           status: 'warning',
           duration: 3000,
@@ -271,7 +276,7 @@ const CreateQuizPage = () => {
 
       if (question.options.some((option) => !option.trim())) {
         toast({
-          title: 'Validation Error',
+          title: VALIDATION_ERROR,
           description: `Question ${i + 1} must have all options filled.`,
           status: 'warning',
           duration: 3000,
@@ -282,8 +287,6 @@ const CreateQuizPage = () => {
 
     try {
       setSaving(true);
-      const quizId = await createQuiz(formData, user.uid);
-
       toast({
         title: 'Quiz created successfully',
         description: 'Quiz has been saved and is now available.',
@@ -292,8 +295,7 @@ const CreateQuizPage = () => {
       });
 
       router.push('/admin/quiz');
-    } catch (error) {
-      console.error('Error creating quiz:', error);
+    } catch {
       toast({
         title: 'Error creating quiz',
         description: 'Please try again.',
@@ -608,7 +610,10 @@ const CreateQuizPage = () => {
                           <VStack align="stretch" spacing={3}>
                             <FormLabel>Answer Options</FormLabel>
                             {question.options.map((option, optionIndex) => (
-                              <HStack key={optionIndex}>
+                              // eslint-disable-next-line react/no-array-index-key
+                              <HStack
+                                key={`question-${question.id}-option-${optionIndex}`}
+                              >
                                 <Text fontWeight="medium" minW="20px">
                                   {String.fromCharCode(65 + optionIndex)}.
                                 </Text>
@@ -707,12 +712,13 @@ const CreateQuizPage = () => {
                     choices (required)
                   </Text>
                   <Text>
-                    • <strong>answer</strong>: Correct answer as "A", "B", "C",
-                    or "D" (required)
+                    • <strong>answer</strong>: Correct answer as &quot;A&quot;,
+                    &quot;B&quot;, &quot;C&quot;, or &quot;D&quot; (required)
                   </Text>
                   <Text>
                     • <strong>level</strong>: Difficulty level (required, e.g.,
-                    "Beginner", "Intermediate", "Advanced")
+                    &quot;Beginner&quot;, &quot;Intermediate&quot;,
+                    &quot;Advanced&quot;)
                   </Text>
                   <Text>
                     • <strong>media</strong>: Image URL, YouTube link, or Google

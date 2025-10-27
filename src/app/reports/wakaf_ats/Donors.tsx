@@ -6,6 +6,71 @@ import { AppContext } from '~/lib/context/app';
 import type { Donor } from '~/lib/types/donation';
 
 /**
+ * Censor a name by showing only the first 2 characters and replacing the rest with asterisks.
+ * Preserves text after "an." and text inside parentheses.
+ * @param {string} name - The full name to censor
+ * @returns {string} The censored name
+ */
+function censorName(name: string): string {
+  // Split by "an." to preserve text after it
+  const parts = name.split(/\s+an\.\s+/i);
+  const nameToCensor = parts[0];
+  const preservedPart =
+    parts.length > 1 ? ` an. ${parts.slice(1).join(' an. ')}` : '';
+
+  // Function to censor a single word
+  const censorWord = (word: string): string => {
+    if (word.length <= 2) {
+      return word;
+    }
+    const firstTwo = word.substring(0, 2);
+    const asterisks = '*'.repeat(word.length - 2);
+    return `${firstTwo}${asterisks}`;
+  };
+
+  // Split the name part into words and handle parentheses
+  let result = '';
+  let currentWord = '';
+  let insideParentheses = false;
+  let parenthesesContent = '';
+
+  for (let i = 0; i < nameToCensor.length; i += 1) {
+    const char = nameToCensor[i];
+
+    if (char === '(') {
+      // Censor the current word if any
+      if (currentWord.trim()) {
+        result = `${result}${censorWord(currentWord.trim())} `;
+        currentWord = '';
+      }
+      insideParentheses = true;
+      parenthesesContent = '(';
+    } else if (char === ')') {
+      insideParentheses = false;
+      parenthesesContent = `${parenthesesContent})`;
+      result = `${result}${parenthesesContent}`;
+      parenthesesContent = '';
+    } else if (insideParentheses) {
+      parenthesesContent = `${parenthesesContent}${char}`;
+    } else if (char === ' ') {
+      if (currentWord.trim()) {
+        result = `${result}${censorWord(currentWord.trim())} `;
+        currentWord = '';
+      }
+    } else {
+      currentWord = `${currentWord}${char}`;
+    }
+  }
+
+  // Handle the last word
+  if (currentWord.trim()) {
+    result = `${result}${censorWord(currentWord.trim())}`;
+  }
+
+  return `${result.trim()}${preservedPart}`;
+}
+
+/**
  * Component to display a list of donors.
  * @param {Object} props - The component props.
  * @param {Donor[]} props.donors - The list of donors to display.
@@ -122,7 +187,7 @@ export default function Donors({
                   >
                     Nama Donatur:
                   </Box>
-                  {row.name}
+                  {censorName(row.name)}
                   {row?.donorsCount && row.donorsCount > 1
                     ? ` - ${row.donorsCount} donatur`
                     : null}

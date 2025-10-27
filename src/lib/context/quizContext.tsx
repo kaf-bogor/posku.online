@@ -7,14 +7,11 @@ import {
   useState,
   useCallback,
   useEffect,
+  useMemo,
 } from 'react';
 
 import useAuth from '~/lib/hooks/useAuth';
-import {
-  getAllQuizzes,
-  getUserQuizAttempts,
-  hasUserAttemptedQuiz,
-} from '~/lib/services/quizService';
+import { getAllQuizzes, getUserQuizAttempts } from '~/lib/services/quizService';
 import type { Quiz, QuizAttempt, QuizSession } from '~/lib/types/quiz';
 
 interface QuizContextType {
@@ -57,7 +54,6 @@ export const QuizProvider: React.FC<QuizProviderProps> = ({ children }) => {
       const errorMessage =
         err instanceof Error ? err.message : 'Failed to load quizzes';
       setError(errorMessage);
-      console.error('Error loading quizzes:', err);
     } finally {
       setLoading(false);
     }
@@ -75,7 +71,6 @@ export const QuizProvider: React.FC<QuizProviderProps> = ({ children }) => {
       const errorMessage =
         err instanceof Error ? err.message : 'Failed to load user attempts';
       setError(errorMessage);
-      console.error('Error loading user attempts:', err);
     } finally {
       setLoading(false);
     }
@@ -122,19 +117,34 @@ export const QuizProvider: React.FC<QuizProviderProps> = ({ children }) => {
     }
   }, [user, loadUserAttempts]);
 
-  const value: QuizContextType = {
-    quizzes,
-    userAttempts,
-    currentSession,
-    loading,
-    error,
-    loadQuizzes,
-    loadUserAttempts,
-    startQuizSession,
-    updateQuizSession,
-    endQuizSession,
-    hasAttempted,
-  };
+  const value: QuizContextType = useMemo(
+    () => ({
+      quizzes,
+      userAttempts,
+      currentSession,
+      loading,
+      error,
+      loadQuizzes,
+      loadUserAttempts,
+      startQuizSession,
+      updateQuizSession,
+      endQuizSession,
+      hasAttempted,
+    }),
+    [
+      quizzes,
+      userAttempts,
+      currentSession,
+      loading,
+      error,
+      loadQuizzes,
+      loadUserAttempts,
+      startQuizSession,
+      updateQuizSession,
+      endQuizSession,
+      hasAttempted,
+    ]
+  );
 
   return <QuizContext.Provider value={value}>{children}</QuizContext.Provider>;
 };

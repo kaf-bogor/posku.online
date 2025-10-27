@@ -11,7 +11,6 @@ import {
   Button,
   Badge,
   HStack,
-  VStack,
   Table,
   Thead,
   Tbody,
@@ -34,12 +33,11 @@ import {
 } from '@chakra-ui/react';
 import { format } from 'date-fns';
 import { useRouter } from 'next/navigation';
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { FiTrendingUp, FiClock, FiTarget, FiHome, FiEye } from 'react-icons/fi';
 
 import { useQuiz } from '~/lib/context/quizContext';
 import useAuth from '~/lib/hooks/useAuth';
-import type { QuizAttempt } from '~/lib/types/quiz';
 
 const QuizHistoryPage = () => {
   const router = useRouter();
@@ -266,6 +264,7 @@ const QuizHistoryPage = () => {
                           <Td>
                             <Badge
                               colorScheme={
+                                // eslint-disable-next-line no-nested-ternary
                                 getQuizLevel(attempt.quizId) === 'Beginner'
                                   ? 'green'
                                   : getQuizLevel(attempt.quizId) ===

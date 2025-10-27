@@ -9,11 +9,8 @@ import {
   Card,
   CardBody,
   Button,
-  Progress,
   Alert,
   AlertIcon,
-  Radio,
-  RadioGroup,
   VStack,
   HStack,
   Badge,
@@ -21,15 +18,7 @@ import {
   useToast,
   Center,
   Spinner,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
   useDisclosure,
-  Image,
-  AspectRatio,
   Tabs,
   TabList,
   TabPanels,
@@ -38,7 +27,6 @@ import {
 import { useParams, useRouter } from 'next/navigation';
 import { useState, useEffect, useCallback } from 'react';
 import {
-  FiClock,
   FiArrowLeft,
   FiArrowRight,
   FiSend,
@@ -47,10 +35,10 @@ import {
   FiUsers,
 } from 'react-icons/fi';
 
+import HasilSayaTab from '~/components/quiz/HasilSayaTab';
+import LeaderboardTab from '~/components/quiz/LeaderboardTab';
 import { useQuiz } from '~/lib/context/quizContext';
 import useAuth from '~/lib/hooks/useAuth';
-import LeaderboardTab from '~/components/quiz/LeaderboardTab';
-import HasilSayaTab from '~/components/quiz/HasilSayaTab';
 import {
   getQuiz,
   submitQuizAttempt,
@@ -62,6 +50,12 @@ import {
 } from '~/lib/services/quizService';
 import type { Quiz, QuizAttempt } from '~/lib/types/quiz';
 
+import Header from './page/Header';
+import QuestionCard from './page/QuestionCard';
+import SubmitModal from './page/SubmitModal';
+import { processUserAnswers } from './utils';
+
+// eslint-disable-next-line sonarjs/cognitive-complexity
 const QuizTakingPage = () => {
   const params = useParams();
   const router = useRouter();
@@ -82,7 +76,9 @@ const QuizTakingPage = () => {
     {}
   );
   const [showOverview, setShowOverview] = useState(true);
-  const [leaderboard, setLeaderboard] = useState<Array<QuizAttempt & { userName: string }>>([]);
+  const [leaderboard, setLeaderboard] = useState<
+    Array<QuizAttempt & { userName: string }>
+  >([]);
   const [leaderboardLoading, setLeaderboardLoading] = useState(false);
   const [userAttempt, setUserAttempt] = useState<QuizAttempt | null>(null);
   const [allUserAttempts, setAllUserAttempts] = useState<QuizAttempt[]>([]);
@@ -131,7 +127,7 @@ const QuizTakingPage = () => {
         try {
           const attempt = await getUserQuizAttempt(user.uid, quizId);
           setUserAttempt(attempt);
-        } catch (error) {
+        } catch {
           // Error loading user attempt
         }
 
@@ -144,7 +140,7 @@ const QuizTakingPage = () => {
           ]);
           setAllUserAttempts(allAttempts);
           setAllQuizzes(quizzes);
-        } catch (error) {
+        } catch {
           // Error loading user attempts or quizzes
         } finally {
           setUserAttemptsLoading(false);
@@ -155,12 +151,12 @@ const QuizTakingPage = () => {
         try {
           const leaderboardData = await getQuizLeaderboard(quizId, 10);
           setLeaderboard(leaderboardData);
-        } catch (error) {
+        } catch {
           // Error loading leaderboard
         } finally {
           setLeaderboardLoading(false);
         }
-      } catch (error) {
+      } catch {
         // Error loading quiz
         toast({
           title: 'Error memuat kuis',
@@ -174,11 +170,72 @@ const QuizTakingPage = () => {
     };
 
     loadQuiz();
-  }, [user, quizId]);
+  }, [user, quizId, quiz, currentSession, router, toast]);
+
+  const handleSubmitQuiz = useCallback(
+    async (autoSubmit = false) => {
+      if (!quiz || !user || !currentSession) return;
+
+      try {
+        setSubmitting(true);
+
+        const score = calculateScore(currentAnswers, quiz.questions);
+        const timeSpent = Math.floor(
+          (new Date().getTime() - currentSession.startTime.getTime()) / 1000
+        );
+
+        await submitQuizAttempt({
+          userId: user.uid,
+          quizId: quiz.id,
+          score,
+          totalQuestions: quiz.questions.length,
+          answers: currentAnswers,
+          timeSpent,
+        });
+
+        updateQuizSession({ isCompleted: true });
+        endQuizSession();
+
+        toast({
+          title: autoSubmit
+            ? 'Waktu habis - Kuis terkirim'
+            : 'Kuis berhasil dikirim',
+          description: `Skor Anda: ${score}%`,
+          status: 'success',
+          duration: 5000,
+        });
+
+        router.push(`/quiz/${quiz.id}/result`);
+      } catch {
+        // Error submitting quiz
+        toast({
+          title: 'Error mengirim kuis',
+          status: 'error',
+          duration: 5000,
+        });
+      } finally {
+        setSubmitting(false);
+      }
+    },
+    [
+      quiz,
+      user,
+      currentSession,
+      currentAnswers,
+      updateQuizSession,
+      endQuizSession,
+      toast,
+      router,
+    ]
+  );
+
+  const handleAutoSubmit = useCallback(async () => {
+    await handleSubmitQuiz(true);
+  }, [handleSubmitQuiz]);
 
   // Timer effect
   useEffect(() => {
-    if (!currentSession || currentSession.isCompleted) return;
+    if (!currentSession || currentSession.isCompleted) return undefined;
 
     const updateTimer = () => {
       const now = new Date();
@@ -200,57 +257,10 @@ const QuizTakingPage = () => {
     const interval = setInterval(updateTimer, 1000);
 
     return () => clearInterval(interval);
-  }, [currentSession]);
-
-  const formatTime = (seconds: number) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins}:${secs.toString().padStart(2, '0')}`;
-  };
-
+  }, [currentSession, handleAutoSubmit]);
 
   // Process all user answers into individual question entries
-  const processUserAnswers = () => {
-    const questionAnswers: Array<{
-      id: string;
-      quizTitle: string;
-      questionTitle: string;
-      userAnswer: string;
-      correctAnswer: string;
-      isCorrect: boolean;
-      options: string[];
-      submittedAt: Date;
-    }> = [];
-
-    allUserAttempts.forEach((attempt) => {
-      const attemptQuiz = allQuizzes.find((q) => q.id === attempt.quizId);
-      if (!attemptQuiz) return;
-
-      attemptQuiz.questions.forEach((question) => {
-        const userAnswer = attempt.answers[question.id];
-        if (userAnswer) {
-          questionAnswers.push({
-            id: `${attempt.id}_${question.id}`,
-            quizTitle: attemptQuiz.title,
-            questionTitle: question.title,
-            userAnswer,
-            correctAnswer: question.answer,
-            isCorrect: userAnswer === question.answer,
-            options: question.options,
-            submittedAt: attempt.submittedAt,
-          });
-        }
-      });
-    });
-
-    // Sort by submission date (most recent first)
-    return questionAnswers.sort(
-      (a, b) =>
-        new Date(b.submittedAt).getTime() - new Date(a.submittedAt).getTime()
-    );
-  };
-
-  const userQuestionAnswers = processUserAnswers();
+  const userQuestionAnswers = processUserAnswers(allUserAttempts, allQuizzes);
 
   const handleStartQuiz = () => {
     if (!quiz) return;
@@ -285,55 +295,6 @@ const QuizTakingPage = () => {
     const prevIndex = currentSession.currentQuestionIndex - 1;
     if (prevIndex >= 0) {
       updateQuizSession({ currentQuestionIndex: prevIndex });
-    }
-  };
-
-  const handleAutoSubmit = useCallback(async () => {
-    await handleSubmitQuiz(true);
-  }, []);
-
-  const handleSubmitQuiz = async (autoSubmit = false) => {
-    if (!quiz || !user || !currentSession) return;
-
-    try {
-      setSubmitting(true);
-
-      const score = calculateScore(currentAnswers, quiz.questions);
-      const timeSpent = Math.floor(
-        (new Date().getTime() - currentSession.startTime.getTime()) / 1000
-      );
-
-      await submitQuizAttempt({
-        userId: user.uid,
-        quizId: quiz.id,
-        score,
-        totalQuestions: quiz.questions.length,
-        answers: currentAnswers,
-        timeSpent,
-      });
-
-      updateQuizSession({ isCompleted: true });
-      endQuizSession();
-
-      toast({
-        title: autoSubmit
-          ? 'Waktu habis - Kuis terkirim'
-          : 'Kuis berhasil dikirim',
-        description: `Skor Anda: ${score}%`,
-        status: 'success',
-        duration: 5000,
-      });
-
-      router.push(`/quiz/${quiz.id}/result`);
-    } catch (error) {
-      // Error submitting quiz
-      toast({
-        title: 'Error mengirim kuis',
-        status: 'error',
-        duration: 5000,
-      });
-    } finally {
-      setSubmitting(false);
     }
   };
 
@@ -411,6 +372,7 @@ const QuizTakingPage = () => {
                         fontSize="3xl"
                         fontWeight="bold"
                         color={
+                          // eslint-disable-next-line no-nested-ternary
                           userAttempt.score >= 80
                             ? 'green.500'
                             : userAttempt.score >= 60
@@ -560,93 +522,24 @@ const QuizTakingPage = () => {
   return (
     <Container maxW="container.lg" py={8}>
       <Stack spacing={6}>
-        {/* Header */}
-        <Box>
-          <HStack justify="space-between" mb={4}>
-            <Box>
-              <Heading size="md">{quiz.title}</Heading>
-              <Text color="gray.600" fontSize="sm">
-                Pertanyaan {currentSession.currentQuestionIndex + 1} dari{' '}
-                {quiz.questions.length}
-              </Text>
-            </Box>
-
-            <VStack align="end" spacing={2}>
-              <HStack>
-                <FiClock />
-                <Text
-                  fontWeight="bold"
-                  color={timeLeft < 60 ? 'red.500' : 'blue.500'}
-                >
-                  {formatTime(timeLeft)}
-                </Text>
-              </HStack>
-              <Badge colorScheme="blue">
-                {answeredQuestions}/{quiz.questions.length} terjawab
-              </Badge>
-            </VStack>
-          </HStack>
-
-          <Progress value={progress} colorScheme="blue" />
-        </Box>
+        {currentSession && (
+          <Header
+            currentSession={currentSession}
+            quiz={quiz}
+            timeLeft={timeLeft}
+            answeredQuestions={answeredQuestions}
+            progress={progress}
+          />
+        )}
 
         {/* Question Card */}
-        <Card bg={cardBg} border="1px" borderColor={borderColor} shadow="sm">
-          <CardBody>
-            <Stack spacing={6}>
-              <Box>
-                <Heading size="sm" mb={4}>
-                  {currentQuestion?.title}
-                </Heading>
-
-                {/* Media (if available) */}
-                {currentQuestion?.media && (
-                  <Box mb={4}>
-                    {currentQuestion.media.includes('youtube.com') ||
-                    currentQuestion.media.includes('youtu.be') ? (
-                      <AspectRatio ratio={16 / 9} maxW="500px">
-                        <iframe
-                          src={currentQuestion.media.replace(
-                            'watch?v=',
-                            'embed/'
-                          )}
-                          title="Quiz media"
-                          allowFullScreen
-                        />
-                      </AspectRatio>
-                    ) : (
-                      <Image
-                        src={currentQuestion.media}
-                        alt="Quiz question media"
-                        maxW="500px"
-                        borderRadius="md"
-                      />
-                    )}
-                  </Box>
-                )}
-              </Box>
-
-              <RadioGroup
-                value={currentAnswers[currentQuestion?.id || ''] || ''}
-                onChange={handleAnswerChange}
-              >
-                <VStack align="stretch" spacing={3}>
-                  {currentQuestion?.options.map((option, index) => (
-                    <Radio
-                      key={`question-${currentQuestionIndex}-option-${index}`}
-                      value={String.fromCharCode(65 + index)}
-                      size="lg"
-                    >
-                      <Text ml={2}>
-                        {String.fromCharCode(65 + index)}. {option}
-                      </Text>
-                    </Radio>
-                  ))}
-                </VStack>
-              </RadioGroup>
-            </Stack>
-          </CardBody>
-        </Card>
+        {currentQuestion && (
+          <QuestionCard
+            question={currentQuestion}
+            currentAnswer={currentAnswers[currentQuestion.id] || ''}
+            onAnswerChange={handleAnswerChange}
+          />
+        )}
 
         {/* Navigation */}
         <HStack justify="space-between">
@@ -696,46 +589,15 @@ const QuizTakingPage = () => {
       </Stack>
 
       {/* Submit Confirmation Modal */}
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Kirim Kuis</ModalHeader>
-          <ModalBody>
-            <Stack spacing={4}>
-              <Text>Apakah Anda yakin ingin mengirim kuis Anda?</Text>
-              <Box>
-                <Text>
-                  <strong>Terjawab:</strong> {answeredQuestions} dari{' '}
-                  {quiz.questions.length} pertanyaan
-                </Text>
-                <Text>
-                  <strong>Waktu digunakan:</strong>{' '}
-                  {formatTime(quiz.timeLimit * 60 - timeLeft)}
-                </Text>
-              </Box>
-              {answeredQuestions < quiz.questions.length && (
-                <Alert status="warning" size="sm">
-                  <AlertIcon />
-                  Anda memiliki pertanyaan yang belum dijawab. Mereka akan
-                  ditandai sebagai salah.
-                </Alert>
-              )}
-            </Stack>
-          </ModalBody>
-          <ModalFooter>
-            <Button variant="ghost" mr={3} onClick={onClose}>
-              Batal
-            </Button>
-            <Button
-              colorScheme="green"
-              onClick={() => handleSubmitQuiz()}
-              isLoading={submitting}
-            >
-              Kirim Kuis
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
+      <SubmitModal
+        isOpen={isOpen}
+        onClose={onClose}
+        answeredQuestions={answeredQuestions}
+        totalQuestions={quiz.questions.length}
+        timeUsed={quiz.timeLimit * 60 - timeLeft}
+        onSubmit={() => handleSubmitQuiz()}
+        isSubmitting={submitting}
+      />
     </Container>
   );
 };
