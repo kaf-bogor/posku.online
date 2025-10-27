@@ -170,7 +170,8 @@ const QuizTakingPage = () => {
     };
 
     loadQuiz();
-  }, [user, quizId, quiz, currentSession, router, toast]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user, quizId]);
 
   const handleSubmitQuiz = useCallback(
     async (autoSubmit = false) => {
