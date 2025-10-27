@@ -546,7 +546,7 @@ const QuizTakingPage = () => {
           <Button
             leftIcon={<FiArrowLeft />}
             onClick={handlePreviousQuestion}
-            isDisabled={currentSession.currentQuestionIndex === 0}
+            isDisabled={currentSession?.currentQuestionIndex === 0}
             variant="outline"
           >
             Sebelumnya
