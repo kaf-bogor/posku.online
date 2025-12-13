@@ -51,7 +51,7 @@ const EventCard = ({ event, isCompact = false }: EventCardProps) => {
   }, [event.startDate, event.endDate, startDate, endDate]);
 
   return (
-    <Link href={`/events/${event.id}`} passHref>
+    <Link href={`/events/${event.slug}`} passHref>
       <Box
         borderRadius="xl"
         overflow="hidden"

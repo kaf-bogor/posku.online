@@ -11,7 +11,6 @@ import {
   Badge,
   useColorModeValue,
   Input,
-  Textarea,
   Checkbox,
   FormControl,
   FormLabel,
@@ -25,6 +24,7 @@ import {
 } from '@chakra-ui/react';
 import { format } from 'date-fns';
 import { doc, updateDoc } from 'firebase/firestore';
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
 import { useContext, useRef, useState } from 'react';
 import { FaCalendarAlt, FaMapMarkerAlt } from 'react-icons/fa';
@@ -34,6 +34,9 @@ import { AppContext } from '~/lib/context/app';
 import { db } from '~/lib/firebase';
 import { useCrudManager } from '~/lib/hooks/useCrudManager';
 import type { EventItem } from '~/lib/types/event';
+import { generateSlug } from '~/lib/utils/slug';
+
+const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 export default function EventsAdminPage() {
   const router = useRouter();
@@ -57,6 +60,7 @@ export default function EventsAdminPage() {
     blobFolderName: 'events',
     itemSchema: {
       title: '',
+      slug: '',
       summary: '',
       imageUrls: [],
       startDate: new Date().toISOString(),
@@ -91,6 +95,17 @@ export default function EventsAdminPage() {
     onClose();
   };
 
+  const handleAddEvent = (e: React.FormEvent) => {
+    // Ensure slug is set before submission
+    if (!form.slug && form.title) {
+      const slug = generateSlug(form.title);
+      // We need to update the form state used by handleAdd
+      // Since setForm is async, we'll directly modify the form reference
+      Object.assign(form, { slug });
+    }
+    handleAdd(e);
+  };
+
   return (
     <>
       <VStack align="stretch" spacing={4}>
@@ -102,7 +117,7 @@ export default function EventsAdminPage() {
           <Box bg={bgColor}>
             <ManagerForm
               formState={form}
-              onSubmit={handleAdd}
+              onSubmit={handleAddEvent}
               onCancel={toggleForm}
               title="Add New Event"
             >
@@ -111,18 +126,34 @@ export default function EventsAdminPage() {
                 <Input
                   name="title"
                   value={form.title}
-                  onChange={(e) => setForm({ ...form, title: e.target.value })}
+                  onChange={(e) => {
+                    const newTitle = e.target.value;
+                    setForm({
+                      ...form,
+                      title: newTitle,
+                      slug: generateSlug(newTitle),
+                    });
+                  }}
+                />
+              </FormControl>
+
+              <FormControl isRequired>
+                <FormLabel>Slug (auto-generated)</FormLabel>
+                <Input
+                  name="slug"
+                  value={form.slug}
+                  isReadOnly
+                  placeholder="url-friendly-slug"
+                  bg="gray.50"
                 />
               </FormControl>
 
               <FormControl isRequired>
                 <FormLabel>Summary</FormLabel>
-                <Textarea
-                  name="summary"
+                <ReactQuill
+                  theme="snow"
                   value={form.summary}
-                  onChange={(e) =>
-                    setForm({ ...form, summary: e.target.value })
-                  }
+                  onChange={(value) => setForm({ ...form, summary: value })}
                 />
               </FormControl>
 

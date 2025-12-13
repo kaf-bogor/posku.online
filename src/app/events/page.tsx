@@ -19,6 +19,7 @@ export default function EventsPage() {
       blobFolderName: 'events',
       itemSchema: {
         title: '',
+        slug: '',
         summary: '',
         imageUrls: [],
         startDate: new Date().toISOString(),
