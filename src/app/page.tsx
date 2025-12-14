@@ -133,7 +133,7 @@ const EventsSection = ({
       (a, b) =>
         new Date(b.startDate).getTime() - new Date(a.startDate).getTime()
     )
-    .slice(0, 3);
+    .slice(0, 10);
   const dateColor = useColorModeValue('gray.600', 'gray.300');
   const pastEventTextColor = useColorModeValue('gray.400', 'gray.500');
   const activeEventTextColor = useColorModeValue('gray.800', 'white');
@@ -162,7 +162,7 @@ const EventsSection = ({
 
                 return (
                   <Link
-                    href={`/events/${event.id}`}
+                    href={`/events/${event.slug}`}
                     key={event.id}
                     style={{ width: '100%' }}
                   >
@@ -215,6 +215,7 @@ const Home = () => {
       blobFolderName: 'events',
       itemSchema: {
         title: '',
+        slug: '',
         summary: '',
         imageUrls: [],
         startDate: new Date().toISOString(),
