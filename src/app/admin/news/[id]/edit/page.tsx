@@ -21,6 +21,7 @@ import ManagerForm from '~/app/admin/ManagerForm';
 import { AppContext } from '~/lib/context/app';
 import { db } from '~/lib/firebase';
 import type { NewsItem } from '~/lib/types/news';
+import { generateSlug } from '~/lib/utils/slug';
 
 const ADMIN_NEWS_PATH = '/admin/news';
 
@@ -124,7 +125,24 @@ export default function EditNewsPage() {
           <Input
             name="title"
             value={form.title}
-            onChange={(e) => setForm({ ...form, title: e.target.value })}
+            onChange={(e) => {
+              const newTitle = e.target.value;
+              setForm({
+                ...form,
+                title: newTitle,
+                slug: generateSlug(newTitle),
+              });
+            }}
+          />
+        </FormControl>
+
+        <FormControl isRequired>
+          <FormLabel>Slug</FormLabel>
+          <Input
+            name="slug"
+            value={form.slug}
+            onChange={(e) => setForm({ ...form, slug: e.target.value })}
+            placeholder="url-friendly-slug"
           />
         </FormControl>
 

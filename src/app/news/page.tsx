@@ -16,6 +16,7 @@ export default function NewsPage() {
     blobFolderName: 'news',
     itemSchema: {
       title: '',
+      slug: '',
       summary: '',
       imageUrls: [],
       publishDate: new Date().toISOString(),

@@ -67,7 +67,7 @@ const NewsSection = ({
       (a, b) =>
         new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime()
     )
-    .slice(0, 3);
+    .slice(0, 10);
   const dateColor = useColorModeValue('gray.600', 'gray.300');
 
   return (
@@ -88,7 +88,7 @@ const NewsSection = ({
             <VStack>
               {publishedNews.map((news) => (
                 <Link
-                  href={`/news/${news.id}`}
+                  href={`/news/${news.slug}`}
                   key={news.id}
                   style={{ width: '100%' }}
                 >
@@ -201,6 +201,7 @@ const Home = () => {
     blobFolderName: 'news',
     itemSchema: {
       title: '',
+      slug: '',
       summary: '',
       imageUrls: [],
       publishDate: new Date().toISOString(),

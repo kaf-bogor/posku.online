@@ -35,6 +35,7 @@ import { db } from '~/lib/firebase';
 import useAuth from '~/lib/hooks/useAuth';
 import { useCrudManager } from '~/lib/hooks/useCrudManager';
 import type { NewsItem } from '~/lib/types/news';
+import { generateSlug } from '~/lib/utils/slug';
 
 export default function NewsAdminPage() {
   const router = useRouter();
@@ -60,6 +61,7 @@ export default function NewsAdminPage() {
     blobFolderName: 'news',
     itemSchema: {
       title: '',
+      slug: '',
       summary: '',
       imageUrls: [],
       publishDate: new Date().toISOString(),
@@ -91,6 +93,15 @@ export default function NewsAdminPage() {
     onClose();
   };
 
+  const handleAddNews = (e: React.FormEvent) => {
+    // Ensure slug is set before submission
+    if (!form.slug && form.title) {
+      const slug = generateSlug(form.title);
+      Object.assign(form, { slug });
+    }
+    handleAdd(e);
+  };
+
   return (
     <>
       <VStack align="stretch" spacing={4} bg={bgColor}>
@@ -101,7 +112,7 @@ export default function NewsAdminPage() {
         {showForm && !isEditing && (
           <ManagerForm
             formState={form}
-            onSubmit={handleAdd}
+            onSubmit={handleAddNews}
             onCancel={toggleForm}
             title="Add New News"
           >
@@ -110,7 +121,25 @@ export default function NewsAdminPage() {
               <Input
                 name="title"
                 value={form.title}
-                onChange={(e) => setForm({ ...form, title: e.target.value })}
+                onChange={(e) => {
+                  const newTitle = e.target.value;
+                  setForm({
+                    ...form,
+                    title: newTitle,
+                    slug: generateSlug(newTitle),
+                  });
+                }}
+              />
+            </FormControl>
+
+            <FormControl isRequired>
+              <FormLabel>Slug (auto-generated)</FormLabel>
+              <Input
+                name="slug"
+                value={form.slug}
+                isReadOnly
+                placeholder="url-friendly-slug"
+                bg="gray.50"
               />
             </FormControl>
 
