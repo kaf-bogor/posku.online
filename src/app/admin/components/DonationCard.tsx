@@ -88,17 +88,19 @@ export default function DonationCard({
             p={4}
           >
             <VStack spacing={2} align="start">
-              <Badge
-                colorScheme={progress >= 100 ? 'green' : 'blue'}
-                variant="solid"
-                borderRadius="full"
-                px={3}
-                py={1}
-                fontSize="sm"
-                fontWeight="bold"
-              >
-                {progress.toFixed(0)}% tercapai
-              </Badge>
+              {target > 0 && (
+                <Badge
+                  colorScheme={progress >= 100 ? 'green' : 'blue'}
+                  variant="solid"
+                  borderRadius="full"
+                  px={3}
+                  py={1}
+                  fontSize="sm"
+                  fontWeight="bold"
+                >
+                  {progress.toFixed(0)}% tercapai
+                </Badge>
+              )}
               <Text
                 color="white"
                 fontSize="lg"
@@ -107,14 +109,16 @@ export default function DonationCard({
               >
                 {formatIDR(getTotalCollected())}
               </Text>
-              <Text
-                color="white"
-                fontSize="sm"
-                opacity={0.9}
-                textShadow="0 1px 2px rgba(0,0,0,0.8)"
-              >
-                dari target {formatIDR(target)}
-              </Text>
+              {target > 0 && (
+                <Text
+                  color="white"
+                  fontSize="sm"
+                  opacity={0.9}
+                  textShadow="0 1px 2px rgba(0,0,0,0.8)"
+                >
+                  dari target {formatIDR(target)}
+                </Text>
+              )}
             </VStack>
           </Box>
         </Box>

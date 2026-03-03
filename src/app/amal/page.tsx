@@ -9,7 +9,7 @@ import {
   useColorModeValue,
   IconButton,
 } from '@chakra-ui/react';
-import { collection, getDocs, query, where } from 'firebase/firestore';
+import { collection, getDocs, orderBy, query, where } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import { FaArrowLeft, FaHandsHelping } from 'react-icons/fa';
 
@@ -36,7 +36,8 @@ const AmalPage = () => {
         // Query only active campaigns from Firebase
         const q = query(
           collection(db, 'donations'),
-          where('is_active', '==', true)
+          where('is_active', '==', true),
+          orderBy('order', 'asc')
         );
         const querySnapshot = await getDocs(q);
         const data: DonationPage[] = querySnapshot.docs.map(

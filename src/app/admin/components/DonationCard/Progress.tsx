@@ -46,7 +46,7 @@ export default function Progress({
             Target
           </Text>
           <Text fontSize="lg" fontWeight="semibold" color={titleColor}>
-            {formatIDR(target)}
+            {target === 0 ? '∞' : formatIDR(target)}
           </Text>
         </VStack>
       </HStack>
@@ -67,7 +67,9 @@ export default function Progress({
             </Text>
           </HStack>
           <Text fontSize="sm" color={textColor} fontWeight="medium">
-            {progress.toFixed(1)}% dari target
+            {target === 0
+              ? `${progress.toFixed(1)}% tercapai`
+              : `${progress.toFixed(1)}% dari target`}
           </Text>
         </HStack>
       </VStack>

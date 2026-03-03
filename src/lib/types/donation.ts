@@ -3,6 +3,7 @@ export interface DonationPage {
   title: string;
   summary: string;
   imageUrls: string[];
+  order?: number;
   target: number;
   link: string;
   published: boolean;
@@ -29,6 +30,7 @@ export const initialDonationState: Omit<DonationPage, 'id'> = {
   title: '',
   summary: '',
   imageUrls: [],
+  order: 0,
   target: 0,
   link: '',
   published: false,

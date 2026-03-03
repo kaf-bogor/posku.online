@@ -38,6 +38,8 @@ export interface UseCrudManagerProps<T extends ManagedItem> {
   filters?: Record<string, string | number | boolean>;
   orderByField?: string;
   orderByDirection?: 'asc' | 'desc';
+  omitOnEditSave?: Array<keyof Omit<T, 'id'>>;
+  cancelEditOnSave?: boolean;
 }
 
 export function useCrudManager<T extends ManagedItem>({
@@ -47,10 +49,13 @@ export function useCrudManager<T extends ManagedItem>({
   filters,
   orderByField = 'createdAt',
   orderByDirection = 'desc',
+  omitOnEditSave,
+  cancelEditOnSave = true,
 }: UseCrudManagerProps<T>) {
   const toast = useToast();
   const [items, setItems] = useState<T[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isSaving, setIsSaving] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [form, setForm] = useState<Omit<T, 'id'>>(itemSchema);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
@@ -124,7 +129,7 @@ export function useCrudManager<T extends ManagedItem>({
 
   const handleAdd = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
+    setIsSaving(true);
     try {
       const imageUrls = await uploadImagesToServer(
         selectedFiles,
@@ -169,7 +174,7 @@ export function useCrudManager<T extends ManagedItem>({
         isClosable: true,
       });
     } finally {
-      setLoading(false);
+      setIsSaving(false);
     }
   };
 
@@ -185,7 +190,7 @@ export function useCrudManager<T extends ManagedItem>({
   ) => {
     e.preventDefault();
     if (!editForm || !editId) return;
-    setLoading(true);
+    setIsSaving(true);
 
     console.log('Saving edit for item:', editForm);
     try {
@@ -203,6 +208,11 @@ export function useCrudManager<T extends ManagedItem>({
       const docRef = firestoreDoc(db, collectionName, editId);
       const { id, ...rest } = editForm;
 
+      const omittedKeys = new Set<string>((omitOnEditSave ?? []) as string[]);
+      const restWithoutOmitted = Object.fromEntries(
+        Object.entries(rest).filter(([key]) => !omittedKeys.has(key))
+      ) as Record<string, unknown>;
+
       // Fetch previous data for diff
       const prevSnap = await getDoc(docRef);
       const prevData = prevSnap.exists()
@@ -214,7 +224,7 @@ export function useCrudManager<T extends ManagedItem>({
       const isPrimitive = (val: unknown) =>
         val === null || ['string', 'number', 'boolean'].includes(typeof val);
 
-      Object.entries(rest).forEach(([key, value]) => {
+      Object.entries(restWithoutOmitted).forEach(([key, value]) => {
         const prevVal = (prevData as Record<string, unknown>)[key];
         if (JSON.stringify(prevVal) !== JSON.stringify(value)) {
           if (isPrimitive(value) && isPrimitive(prevVal)) {
@@ -233,7 +243,7 @@ export function useCrudManager<T extends ManagedItem>({
       // Sanitize editForm into a plain object
 
       const updatedData = {
-        ...JSON.parse(JSON.stringify(rest)), // safely strip any prototype
+        ...JSON.parse(JSON.stringify(restWithoutOmitted)), // safely strip any prototype
         imageUrls,
       };
 
@@ -258,7 +268,7 @@ export function useCrudManager<T extends ManagedItem>({
         isClosable: true,
       });
 
-      handleCancelEdit();
+      if (cancelEditOnSave) handleCancelEdit();
       onSucces();
     } catch (error) {
       console.error('Error updating item:', error);
@@ -270,7 +280,7 @@ export function useCrudManager<T extends ManagedItem>({
         isClosable: true,
       });
     } finally {
-      setLoading(false);
+      setIsSaving(false);
     }
   };
 
@@ -284,7 +294,7 @@ export function useCrudManager<T extends ManagedItem>({
 
   const confirmDelete = async () => {
     if (!pendingDeleteId) return;
-    setLoading(true);
+    setIsSaving(true);
     try {
       const delRef = firestoreDoc(db, collectionName, pendingDeleteId);
       const user = getAuth().currentUser;
@@ -316,13 +326,14 @@ export function useCrudManager<T extends ManagedItem>({
         isClosable: true,
       });
     } finally {
-      setLoading(false);
+      setIsSaving(false);
     }
   };
 
   return {
     items,
     loading,
+    isSaving,
     showForm,
     form,
     setForm,

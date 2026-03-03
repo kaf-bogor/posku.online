@@ -23,7 +23,6 @@ import {
 } from '@chakra-ui/react';
 import { doc, getDoc } from 'firebase/firestore';
 import dynamic from 'next/dynamic';
-import { useRouter } from 'next/navigation';
 import { useContext, useEffect, useState } from 'react';
 import type React from 'react';
 
@@ -42,7 +41,6 @@ const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 const DonationDetailPage = ({ params }: { params: { id: string } }) => {
   const { id } = params;
-  const router = useRouter();
 
   const [donation, setDonation] = useState<DonationPage | null>(null);
   const { bgColor, textColor, borderColor } = useContext(AppContext);
@@ -54,10 +52,13 @@ const DonationDetailPage = ({ params }: { params: { id: string } }) => {
     setEditSelectedFiles,
     handleCancelEdit,
     handleSaveEdit,
+    isSaving,
   } = useCrudManager<DonationPage>({
     collectionName: 'donations',
     blobFolderName: 'donation',
     itemSchema: initialDonationState,
+    omitOnEditSave: ['donors', 'donorsCount'],
+    cancelEditOnSave: false,
   });
 
   useEffect(() => {
@@ -103,9 +104,8 @@ const DonationDetailPage = ({ params }: { params: { id: string } }) => {
       isEdit
       title={`Edit: ${donation.title}`}
       formState={editForm}
-      onSubmit={(e) =>
-        handleSaveEdit(e, donation.id, () => router.push(`/admin/amal`))
-      }
+      isLoading={isSaving}
+      onSubmit={(e) => handleSaveEdit(e, donation.id)}
       onCancel={handleCancelEdit}
     >
       <Tabs variant="soft-rounded" isFitted>

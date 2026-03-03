@@ -14,6 +14,7 @@ interface ManagerFormProps {
   onSubmit: (e: FormEvent) => void;
   onCancel: () => void;
   isEdit?: boolean;
+  isLoading?: boolean;
   children?: ReactNode; // Untuk field spesifik
   title: string;
 }
@@ -23,6 +24,7 @@ export default function ManagerForm({
   onSubmit,
   onCancel,
   isEdit = false,
+  isLoading = false,
   children,
   title,
 }: ManagerFormProps) {
@@ -46,10 +48,15 @@ export default function ManagerForm({
           {children}
 
           <HStack spacing={2} mt={4}>
-            <Button colorScheme={isEdit ? 'blue' : 'green'} type="submit">
+            <Button
+              colorScheme={isEdit ? 'blue' : 'green'}
+              type="submit"
+              isLoading={isLoading}
+              isDisabled={isLoading}
+            >
               {isEdit ? 'Save Changes' : 'Add Item'}
             </Button>
-            <Button variant="outline" onClick={onCancel}>
+            <Button variant="outline" onClick={onCancel} isDisabled={isLoading}>
               Cancel
             </Button>
           </HStack>
