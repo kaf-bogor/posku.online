@@ -31,7 +31,7 @@ export default function AddDonationPage() {
     useCrudManager<DonationPage>({
       collectionName: 'donations',
       blobFolderName: 'donation',
-      itemSchema: initialDonationState,
+      itemSchema: { ...initialDonationState, is_active: true },
     });
 
   const handleSubmit = async (e: React.FormEvent) => {

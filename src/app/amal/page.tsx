@@ -28,11 +28,13 @@ const AmalPage = () => {
   const [campaigns, setCampaigns] = useState<DonationPage[]>([]);
   const [loading, setLoading] = useState(true);
   const [mounted, setMounted] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     setMounted(true);
     const fetchCampaigns = async () => {
       try {
+        setError(null);
         // Query only active campaigns from Firebase
         const q = query(
           collection(db, 'donations'),
@@ -43,9 +45,13 @@ const AmalPage = () => {
         const data: DonationPage[] = querySnapshot.docs.map(
           (doc) => ({ id: doc.id, ...doc.data() }) as DonationPage
         );
+
         setCampaigns(data);
-      } catch {
+      } catch (err) {
+        // eslint-disable-next-line no-console
+        console.error('Failed to fetch donations for /amal', err);
         setCampaigns([]);
+        setError(err instanceof Error ? err.message : 'Unknown error');
       } finally {
         setLoading(false);
       }
@@ -83,6 +89,23 @@ const AmalPage = () => {
           />
           <Spinner size="xl" color="green.500" thickness="4px" />
           <Text color={textColor}>Memuat kampanye Amal...</Text>
+        </VStack>
+      </ContentWrapper>
+    );
+  }
+
+  if (error) {
+    return (
+      <ContentWrapper>
+        <VStack spacing={6}>
+          <VStack spacing={4} textAlign="center">
+            <Heading size="lg" color={titleColor}>
+              Gagal memuat kampanye Amal
+            </Heading>
+            <Text color={textColor} maxW="520px">
+              {error}
+            </Text>
+          </VStack>
         </VStack>
       </ContentWrapper>
     );

@@ -22,6 +22,7 @@ import {
 } from '@chakra-ui/react';
 import type { IconType } from 'react-icons';
 import {
+  FaClipboardCheck,
   FaDonate,
   FaNewspaper,
   FaCalendarAlt,
@@ -347,6 +348,13 @@ export default function AdminPage() {
                 icon={FaNewspaper}
                 href="/admin/news"
                 color="purple"
+              />
+              <QuickActionCard
+                title="Kelola Kehadiran"
+                description="Buat event kehadiran, kelola check-in peserta, dan generate QR code"
+                icon={FaClipboardCheck}
+                href="/admin/kehadiran"
+                color="cyan"
               />
             </SimpleGrid>
           </VStack>

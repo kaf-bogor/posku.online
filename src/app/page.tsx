@@ -250,6 +250,11 @@ const Home = () => {
               icon: FiHelpCircle,
             },
             {
+              label: 'Kehadiran',
+              href: '/kehadiran',
+              icon: FaCalendarAlt,
+            },
+            {
               label: 'Pengurus',
               href: '/pengurus',
               icon: FaUsers,

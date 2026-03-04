@@ -6,6 +6,7 @@ import {
   NumberInput,
   NumberInputField,
   Input,
+  Switch,
   Flex,
   Tabs,
   TabList,
@@ -194,6 +195,17 @@ const DonationDetailPage = ({ params }: { params: { id: string } }) => {
                   name="link"
                   value={editForm?.link}
                   onChange={handleEditFormChange}
+                />
+              </FormControl>
+
+              <FormControl>
+                <FormLabel>Aktif</FormLabel>
+                <Switch
+                  isChecked={editForm?.is_active}
+                  onChange={(e) => {
+                    if (editForm)
+                      setEditForm({ ...editForm, is_active: e.target.checked });
+                  }}
                 />
               </FormControl>
 
