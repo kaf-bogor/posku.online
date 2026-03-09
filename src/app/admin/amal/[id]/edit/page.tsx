@@ -24,6 +24,7 @@ import {
 } from '@chakra-ui/react';
 import { doc, getDoc } from 'firebase/firestore';
 import dynamic from 'next/dynamic';
+import { useRouter } from 'next/navigation';
 import { useContext, useEffect, useState } from 'react';
 import type React from 'react';
 
@@ -37,11 +38,13 @@ import { useCrudManager } from '~/lib/hooks/useCrudManager';
 import type { Activity, DonationPage } from '~/lib/types/donation';
 import { initialDonationState } from '~/lib/types/donation';
 import { formatIDR } from '~/lib/utils/currency';
+import { generateSlug } from '~/lib/utils/slug';
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 const DonationDetailPage = ({ params }: { params: { id: string } }) => {
   const { id } = params;
+  const router = useRouter();
 
   const [donation, setDonation] = useState<DonationPage | null>(null);
   const { bgColor, textColor, borderColor } = useContext(AppContext);
@@ -107,7 +110,7 @@ const DonationDetailPage = ({ params }: { params: { id: string } }) => {
       formState={editForm}
       isLoading={isSaving}
       onSubmit={(e) => handleSaveEdit(e, donation.id)}
-      onCancel={handleCancelEdit}
+      onCancel={() => router.push('/admin/amal')}
     >
       <Tabs variant="soft-rounded" isFitted>
         <TabList>
@@ -158,7 +161,27 @@ const DonationDetailPage = ({ params }: { params: { id: string } }) => {
                 <Input
                   name="title"
                   value={editForm?.title}
-                  onChange={handleEditFormChange}
+                  onChange={(e) => {
+                    if (editForm)
+                      setEditForm({
+                        ...editForm,
+                        title: e.target.value,
+                        slug: generateSlug(e.target.value),
+                      });
+                  }}
+                />
+              </FormControl>
+
+              <FormControl>
+                <FormLabel>Slug</FormLabel>
+                <Input
+                  name="slug"
+                  value={editForm?.slug ?? ''}
+                  onChange={(e) => {
+                    if (editForm)
+                      setEditForm({ ...editForm, slug: e.target.value });
+                  }}
+                  placeholder="auto-generated from title"
                 />
               </FormControl>
 

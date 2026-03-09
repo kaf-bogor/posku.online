@@ -18,6 +18,7 @@ import { AppContext } from '~/lib/context/app';
 import { useCrudManager } from '~/lib/hooks/useCrudManager';
 import type { DonationPage } from '~/lib/types/donation';
 import { initialDonationState } from '~/lib/types/donation';
+import { generateSlug } from '~/lib/utils/slug';
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
@@ -63,7 +64,23 @@ export default function AddDonationPage() {
           <Input
             name="title"
             value={form.title}
-            onChange={(e) => setForm({ ...form, title: e.target.value })}
+            onChange={(e) =>
+              setForm({
+                ...form,
+                title: e.target.value,
+                slug: generateSlug(e.target.value),
+              })
+            }
+          />
+        </FormControl>
+
+        <FormControl>
+          <FormLabel>Slug</FormLabel>
+          <Input
+            name="slug"
+            value={form.slug ?? ''}
+            onChange={(e) => setForm({ ...form, slug: e.target.value })}
+            placeholder="auto-generated from title"
           />
         </FormControl>
 

@@ -1,5 +1,6 @@
 import { Box, Flex, Text, Link as ChakraLink } from '@chakra-ui/react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useContext } from 'react';
 import { FaHome, FaHandsHelping, FaLink, FaUser } from 'react-icons/fa';
 
@@ -30,6 +31,11 @@ const navItems = [
 
 export default function BottomNav() {
   const { bgColor, borderColor, textColor } = useContext(AppContext);
+  const pathname = usePathname();
+
+  const isActive = (href: string) =>
+    href === '/' ? pathname === '/' : pathname.startsWith(href);
+
   return (
     <Box
       position="fixed"
@@ -47,22 +53,27 @@ export default function BottomNav() {
       backdropFilter="blur(10px)"
     >
       <Flex justify="space-around" align="center">
-        {navItems.map(({ label, href, icon }) => (
+        {navItems.map(({ label, href, icon }) => {
+          const active = isActive(href);
+          return (
           <Link href={href} passHref key={label} legacyBehavior>
             <ChakraLink
               display="flex"
               flexDirection="column"
               alignItems="center"
               fontSize="xs"
-              color={textColor}
+              color={active ? 'purple.500' : textColor}
+              fontWeight={active ? 'bold' : 'medium'}
               _hover={{ color: 'purple.600' }}
               minW={{ base: '70px', md: '60px' }}
               minH={{ base: '50px', md: 'auto' }}
               py={1}
+              px={2}
               borderRadius="lg"
+              bg={active ? 'purple.50' : 'transparent'}
               transition="all 0.2s"
               _active={{
-                bg: 'purple.50',
+                bg: 'purple.100',
                 transform: 'scale(0.95)',
               }}
             >
@@ -83,7 +94,8 @@ export default function BottomNav() {
               </Text>
             </ChakraLink>
           </Link>
-        ))}
+          );
+        })}
       </Flex>
     </Box>
   );

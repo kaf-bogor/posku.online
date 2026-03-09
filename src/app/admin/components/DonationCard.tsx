@@ -14,6 +14,7 @@ import { useContext } from 'react';
 import { AppContext } from '~/lib/context/app';
 import type { DonationPage } from '~/lib/types/donation';
 import { formatIDR } from '~/lib/utils/currency';
+import { generateSlug } from '~/lib/utils/slug';
 
 import ActionSection from './DonationCard/Action';
 import ProgressSection from './DonationCard/Progress';
@@ -23,7 +24,8 @@ export default function DonationCard({
   onEdit,
   onDelete,
 }: DonationCardProps) {
-  const { id, donors, title, target, imageUrls } = donation;
+  const { id, slug, donors, title, target, imageUrls } = donation;
+  const effectiveSlug = slug || generateSlug(title) || id;
 
   const { borderColor } = useContext(AppContext);
 
@@ -157,7 +159,7 @@ export default function DonationCard({
             />
 
             <ActionSection
-              path={`/amal/${id}`}
+              path={`/amal/${effectiveSlug}`}
               onEdit={onEdit}
               onDelete={onDelete}
             />

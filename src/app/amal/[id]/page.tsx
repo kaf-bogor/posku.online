@@ -1,321 +1,181 @@
-'use client';
+import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 
-import {
-  Box,
-  VStack,
-  HStack,
-  Stack,
-  Image,
-  Heading,
-  Text,
-  Progress,
-  Button,
-  Avatar,
-  Tabs,
-  TabList,
-  Tab,
-  TabPanels,
-  TabPanel,
-  useColorModeValue,
-  Spinner,
-  Center,
-} from '@chakra-ui/react';
-import DOMPurify from 'dompurify';
-import { doc, getDoc } from 'firebase/firestore';
-import { useParams, useRouter } from 'next/navigation';
-import { useState, useEffect, useContext } from 'react';
-
-import Donors from '~/app/reports/wakaf_ats/Donors';
-import { AppContext } from '~/lib/context/app';
-import { db } from '~/lib/firebase';
+import DonationDetailClient from './DonationDetailClient';
 import type { DonationPage } from '~/lib/types/donation';
+import { generateSlug } from '~/lib/utils/slug';
 
-export default function DonationDetailPage() {
-  const { id } = useParams();
-  const router = useRouter();
-  const [campaign, setCampaign] = useState<DonationPage | null>(null);
-  const [loading, setLoading] = useState(true);
+const PROJECT_ID = process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID ?? '';
+const API_KEY = process.env.NEXT_PUBLIC_FIREBASE_API_KEY ?? '';
+const BASE_URL = `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents`;
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://posku.online';
 
-  const { bgColor, textColor } = useContext(AppContext);
+type FValue =
+  | { stringValue: string }
+  | { integerValue: string }
+  | { doubleValue: number }
+  | { booleanValue: boolean }
+  | { nullValue: null }
+  | { timestampValue: string }
+  | { arrayValue: { values?: FValue[] } }
+  | { mapValue: { fields?: Record<string, FValue> } };
 
-  // Color tokens
-  const cardShadow = useColorModeValue('md', 'dark-lg');
-  const headingColor = useColorModeValue('gray.800', 'white');
-  const buttonBg = useColorModeValue('green.500', 'green.400');
-  const buttonText = useColorModeValue('white', 'gray.900');
-  const buttonHoverBg = useColorModeValue('green.600', 'green.500');
-
-  // Carousel state
-  const [carouselIdx, setCarouselIdx] = useState(0);
-
-  useEffect(() => {
-    if (!id) return;
-    const fetchCampaign = async () => {
-      setLoading(true);
-      try {
-        const docRef = doc(db, 'donations', id as string);
-        const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
-          setCampaign({ id: docSnap.id, ...docSnap.data() } as DonationPage);
-        } else {
-          setCampaign(null);
-        }
-      } catch {
-        setCampaign(null);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchCampaign();
-  }, [id]);
-
-  if (loading) {
-    return (
-      <Center minH="60vh">
-        <Spinner size="xl" />
-      </Center>
-    );
+function fromFValue(v: FValue): unknown {
+  if ('stringValue' in v) return v.stringValue;
+  if ('integerValue' in v) return Number(v.integerValue);
+  if ('doubleValue' in v) return v.doubleValue;
+  if ('booleanValue' in v) return v.booleanValue;
+  if ('timestampValue' in v) return v.timestampValue;
+  if ('nullValue' in v) return null;
+  if ('arrayValue' in v)
+    return (v.arrayValue.values ?? []).map((item) => fromFValue(item));
+  if ('mapValue' in v) {
+    const obj: Record<string, unknown> = {};
+    for (const [k, fv] of Object.entries(v.mapValue.fields ?? {})) {
+      obj[k] = fromFValue(fv);
+    }
+    return obj;
   }
+  return null;
+}
+
+function docToType(doc: {
+  name: string;
+  fields?: Record<string, FValue>;
+}): DonationPage {
+  const id = doc.name.split('/').pop() ?? '';
+  const data: Record<string, unknown> = { id };
+  for (const [k, v] of Object.entries(doc.fields ?? {})) {
+    data[k] = fromFValue(v);
+  }
+  return data as unknown as DonationPage;
+}
+
+async function fetchDonation(slugOrId: string): Promise<DonationPage | null> {
+  try {
+    // 1. Try query by slug field
+    const queryRes = await fetch(`${BASE_URL}:runQuery?key=${API_KEY}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        structuredQuery: {
+          from: [{ collectionId: 'donations' }],
+          where: {
+            fieldFilter: {
+              field: { fieldPath: 'slug' },
+              op: 'EQUAL',
+              value: { stringValue: slugOrId },
+            },
+          },
+          limit: 1,
+        },
+      }),
+      next: { revalidate: 60 },
+    });
+
+    if (queryRes.ok) {
+      const queryData = await queryRes.json();
+      const firstDoc = queryData[0]?.document;
+      if (firstDoc) return docToType(firstDoc);
+    }
+
+    // 2. Fallback: fetch by document ID
+    const idRes = await fetch(
+      `${BASE_URL}/donations/${slugOrId}?key=${API_KEY}`,
+      { next: { revalidate: 60 } }
+    );
+    if (idRes.ok) {
+      const idData = await idRes.json();
+      if (idData.name) return docToType(idData);
+    }
+
+    // 3. Fallback: scan collection and match generateSlug(title) for docs
+    //    that were created before the slug field was introduced
+    const allRes = await fetch(
+      `${BASE_URL}/donations?key=${API_KEY}&pageSize=100`,
+      { next: { revalidate: 60 } }
+    );
+    if (allRes.ok) {
+      const allData = await allRes.json();
+      const match = (
+        allData.documents as Array<{
+          name: string;
+          fields?: Record<string, FValue>;
+        }>
+      )?.find((document) => {
+        const titleField = document.fields?.title;
+        const title =
+          titleField && 'stringValue' in titleField
+            ? titleField.stringValue
+            : '';
+        return generateSlug(title) === slugOrId;
+      });
+      if (match) return docToType(match);
+    }
+  } catch {
+    // ignore fetch errors — notFound() called below
+  }
+
+  return null;
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { id: string };
+}): Promise<Metadata> {
+  const campaign = await fetchDonation(params.id);
 
   if (!campaign) {
-    return (
-      <Center minH="60vh">
-        <Text>Amal tidak ditemukan.</Text>
-        <Button mt={4} onClick={() => router.back()}>
-          Kembali
-        </Button>
-      </Center>
-    );
+    return {
+      title: 'Amal tidak ditemukan | POSKU Al-Fatih Bogor',
+    };
   }
 
-  // Carousel logic
-  const totalMedia = campaign.imageUrls?.length || 0;
-  const goPrev = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setCarouselIdx((prev) => (prev - 1 + totalMedia) % totalMedia);
-  };
-  const goNext = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setCarouselIdx((prev) => (prev + 1) % totalMedia);
-  };
-  const currentMedia = campaign.imageUrls?.[carouselIdx]
-    ? {
-        type: 'image',
-        src: campaign.imageUrls[carouselIdx],
-        alt: campaign.title,
-      }
-    : null;
-
-  // Placeholder for raised, target, donors, organizer
   const raised = (campaign.donors || []).reduce((sum, d) => sum + d.value, 0);
-  const target = campaign.target || 0;
-  const donorsCount =
-    campaign.donors?.reduce(
-      (acc, donor) => acc + (Number(donor.donorsCount) || 1),
-      0
-    ) || 0;
-  const percent = target
-    ? Math.min(100, Math.round((raised / target) * 100))
+  const percent = campaign.target
+    ? Math.min(100, Math.round((raised / campaign.target) * 100))
     : 0;
 
-  return (
-    <Box mx="auto" px={2} py={4} mb={10}>
-      {/* Hero Section */}
-      <VStack
-        spacing={4}
-        align="stretch"
-        bg={bgColor}
-        borderRadius="lg"
-        boxShadow={cardShadow}
-        p={[2, 4]}
-      >
-        {/* Carousel Start */}
-        <Box position="relative" w="full" h={['180px', '260px']}>
-          {currentMedia ? (
-            <Image
-              src={currentMedia.src}
-              alt={currentMedia.alt}
-              borderRadius="md"
-              objectFit="cover"
-              w="full"
-              h={['180px', '260px']}
-            />
-          ) : (
-            <Box
-              w="full"
-              h={['180px', '260px']}
-              borderRadius="md"
-              overflow="hidden"
-              bg="gray.200"
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
-            >
-              <Text color="gray.500">Tidak ada gambar</Text>
-            </Box>
-          )}
-          {/* Carousel Arrows */}
-          {totalMedia > 1 && (
-            <>
-              <Button
-                position="absolute"
-                top="50%"
-                left={2}
-                transform="translateY(-50%)"
-                size="sm"
-                onClick={goPrev}
-                zIndex={2}
-                bg="whiteAlpha.800"
-                _hover={{ bg: 'white' }}
-                borderRadius="full"
-                minW={0}
-                px={2}
-              >
-                &#8592;
-              </Button>
-              <Button
-                position="absolute"
-                top="50%"
-                right={2}
-                transform="translateY(-50%)"
-                size="sm"
-                onClick={goNext}
-                zIndex={2}
-                bg="whiteAlpha.800"
-                _hover={{ bg: 'white' }}
-                borderRadius="full"
-                minW={0}
-                px={2}
-              >
-                &#8594;
-              </Button>
-            </>
-          )}
-          {/* Dots */}
-          <HStack
-            position="absolute"
-            bottom={2}
-            left="50%"
-            transform="translateX(-50%)"
-            spacing={1}
-            zIndex={2}
-          >
-            {campaign.imageUrls?.map((img, idx) => (
-              <Box
-                key={img || idx}
-                w={2}
-                h={2}
-                borderRadius="full"
-                bg={idx === carouselIdx ? 'green.500' : 'gray.300'}
-                cursor="pointer"
-                border={idx === carouselIdx ? '2px solid white' : 'none'}
-                onClick={() => setCarouselIdx(idx)}
-              />
-            ))}
-          </HStack>
-        </Box>
-        {/* Carousel End */}
-        <Heading as="h1" size="lg" color={headingColor}>
-          {campaign.title}
-        </Heading>
-        {/* Progress Bar */}
-        <Box>
-          <HStack justify="space-between">
-            <Text fontWeight="bold">Rp{raised.toLocaleString('id-ID')}</Text>
-            <Text fontSize="sm" color="gray.500">
-              dari Rp{target.toLocaleString('id-ID')}
-            </Text>
-          </HStack>
-          <Progress
-            colorScheme="green"
-            value={percent}
-            borderRadius="md"
-            mt={1}
-          />
-          <Text fontSize="xs" color="green.600" mt={1}>
-            {percent}% tercapai • {donorsCount} Donatur
-          </Text>
-        </Box>
-        {/* Donation Input */}
-        <Stack
-          direction={{ base: 'column', md: 'row' }}
-          spacing={2}
-          align="stretch"
-          w="full"
-        >
-          <Button
-            colorScheme="green"
-            onClick={() => router.push(campaign.link)}
-            flex={1}
-            bg={buttonBg}
-            color={buttonText}
-            _hover={{ bg: buttonHoverBg }}
-            p={[2, 0]}
-            my={[2, 0]}
-          >
-            Donasi Sekarang
-          </Button>
-        </Stack>
-      </VStack>
+  const plainSummary = campaign.summary
+    ? campaign.summary.replace(/<[^>]*>/g, '').slice(0, 160)
+    : `Bantu wujudkan ${campaign.title}. ${percent}% tercapai dari target.`;
 
-      {/* Campaign Description with Tabs */}
-      <Box mt={8} bg={bgColor} borderRadius="lg" boxShadow="sm" p={[2, 4]}>
-        <Tabs variant="enclosed" colorScheme="green">
-          <TabList>
-            <Tab fontWeight="bold" color={textColor}>
-              Tentang
-            </Tab>
-            <Tab fontWeight="bold" color={textColor}>
-              Laporan
-            </Tab>
-          </TabList>
-          <TabPanels>
-            <TabPanel>
-              <Box mb={4} color={textColor}>
-                {campaign.summary ? (
-                  <Box
-                    as="div"
-                    fontSize="md"
-                    color={textColor}
-                    dangerouslySetInnerHTML={{
-                      __html: DOMPurify.sanitize(campaign.summary),
-                    }}
-                  />
-                ) : (
-                  <Text>Tidak ada ringkasan.</Text>
-                )}
-              </Box>
-            </TabPanel>
-            <TabPanel>
-              <Donors donors={campaign.donors || []} withHeading={false} />
-            </TabPanel>
-          </TabPanels>
-        </Tabs>
-      </Box>
+  const canonicalSlug = campaign.slug || params.id;
+  const pageUrl = `${SITE_URL}/amal/${canonicalSlug}`;
+  const ogImage = campaign.imageUrls?.[0] ?? `${SITE_URL}/icons/icon-512x512.png`;
 
-      {/* Organizer Info */}
-      <Box
-        mt={6}
-        bg={bgColor}
-        borderRadius="lg"
-        boxShadow="sm"
-        p={[2, 4]}
-        color={textColor}
-      >
-        <Heading as="h3" size="sm" mb={2}>
-          Penanggung Jawab
-        </Heading>
-        <HStack>
-          <Avatar
-            src={campaign.organizer.avatar}
-            name={campaign.organizer.name}
-          />
-          <Box>
-            <Text fontWeight="bold">{campaign.organizer.name}</Text>
-            <Text fontSize="sm">{campaign.organizer.tagline}</Text>
-          </Box>
-        </HStack>
-      </Box>
-    </Box>
-  );
+  return {
+    title: `${campaign.title} | POSKU Al-Fatih Bogor`,
+    description: plainSummary,
+    alternates: { canonical: pageUrl },
+    openGraph: {
+      type: 'website',
+      url: pageUrl,
+      title: campaign.title,
+      description: plainSummary,
+      siteName: 'POSKU Al-Fatih Bogor',
+      images: [{ url: ogImage, width: 1200, height: 630, alt: campaign.title }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: campaign.title,
+      description: plainSummary,
+      images: [ogImage],
+    },
+  };
+}
+
+export default async function DonationDetailPage({
+  params,
+}: {
+  params: { id: string };
+}) {
+  const campaign = await fetchDonation(params.id);
+
+  if (!campaign) {
+    notFound();
+  }
+
+  return <DonationDetailClient campaign={campaign} />;
 }

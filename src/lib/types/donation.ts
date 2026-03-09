@@ -1,5 +1,6 @@
 export interface DonationPage {
   id: string;
+  slug?: string;
   title: string;
   summary: string;
   imageUrls: string[];
@@ -27,6 +28,7 @@ export interface Donor {
 }
 
 export const initialDonationState: Omit<DonationPage, 'id'> = {
+  slug: '',
   title: '',
   summary: '',
   imageUrls: [],

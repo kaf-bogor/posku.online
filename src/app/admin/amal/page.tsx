@@ -3,8 +3,10 @@
 import {
   Button,
   Box,
+  Center,
   HStack,
   IconButton,
+  Spinner,
   Tab,
   TabList,
   TabPanel,
@@ -62,7 +64,7 @@ const DraggableDonationItem = ({
 const DonationsPage = () => {
   const router = useRouter();
 
-  const { items: donations } = useCrudManager<DonationPage>({
+  const { items: donations, loading } = useCrudManager<DonationPage>({
     collectionName: 'donations',
     blobFolderName: 'donation',
     itemSchema: initialDonationState,
@@ -170,68 +172,76 @@ const DonationsPage = () => {
         Tambah Amal
       </Button>
 
-      <Tabs variant="soft-rounded" colorScheme="green">
-        <TabList>
-          <Tab>
-            <HStack spacing={2}>
-              <Text>Active</Text>
-              <Text as="span">({activeDonations.length})</Text>
-            </HStack>
-          </Tab>
-          <Tab>
-            <HStack spacing={2}>
-              <Text>Inactive</Text>
-              <Text as="span">({inactiveDonations.length})</Text>
-            </HStack>
-          </Tab>
-        </TabList>
+      {loading ? (
+        <Center py={10} flexDirection="column" gap={3}>
+          <Spinner size="lg" color="green.500" />
+          <Text>Loading data...</Text>
+        </Center>
+      ) : (
 
-        <TabPanels>
-          <TabPanel px={0}>
-            <Reorder.Group
-              axis="y"
-              values={activeDonations.map((d) => d.id)}
-              onReorder={(nextIds) => {
-                mergeReorderedSubset(nextIds, (d) => isDonationActive(d));
-                schedulePersistSubsetOrder('active', nextIds);
-              }}
-              style={{ listStyle: 'none', padding: 0, margin: 0 }}
-            >
-              <VStack gap="16px" align="stretch">
-                {activeDonations.map((d) => (
-                  <DraggableDonationItem
-                    key={d.id}
-                    donation={donationById[d.id] ?? d}
-                    onEdit={() => router.push(`/admin/amal/${d.id}/edit`)}
-                  />
-                ))}
-              </VStack>
-            </Reorder.Group>
-          </TabPanel>
+        <Tabs variant="soft-rounded" colorScheme="green">
+          <TabList>
+            <Tab>
+              <HStack spacing={2}>
+                <Text>Active</Text>
+                <Text as="span">({activeDonations.length})</Text>
+              </HStack>
+            </Tab>
+            <Tab>
+              <HStack spacing={2}>
+                <Text>Inactive</Text>
+                <Text as="span">({inactiveDonations.length})</Text>
+              </HStack>
+            </Tab>
+          </TabList>
 
-          <TabPanel px={0}>
-            <Reorder.Group
-              axis="y"
-              values={inactiveDonations.map((d) => d.id)}
-              onReorder={(nextIds) => {
-                mergeReorderedSubset(nextIds, (d) => !isDonationActive(d));
-                schedulePersistSubsetOrder('inactive', nextIds);
-              }}
-              style={{ listStyle: 'none', padding: 0, margin: 0 }}
-            >
-              <VStack gap="16px" align="stretch">
-                {inactiveDonations.map((d) => (
-                  <DraggableDonationItem
-                    key={d.id}
-                    donation={donationById[d.id] ?? d}
-                    onEdit={() => router.push(`/admin/amal/${d.id}/edit`)}
-                  />
-                ))}
-              </VStack>
-            </Reorder.Group>
-          </TabPanel>
-        </TabPanels>
-      </Tabs>
+          <TabPanels>
+            <TabPanel px={0}>
+              <Reorder.Group
+                axis="y"
+                values={activeDonations.map((d) => d.id)}
+                onReorder={(nextIds) => {
+                  mergeReorderedSubset(nextIds, (d) => isDonationActive(d));
+                  schedulePersistSubsetOrder('active', nextIds);
+                }}
+                style={{ listStyle: 'none', padding: 0, margin: 0 }}
+              >
+                <VStack gap="16px" align="stretch">
+                  {activeDonations.map((d) => (
+                    <DraggableDonationItem
+                      key={d.id}
+                      donation={donationById[d.id] ?? d}
+                      onEdit={() => router.push(`/admin/amal/${d.id}/edit`)}
+                    />
+                  ))}
+                </VStack>
+              </Reorder.Group>
+            </TabPanel>
+
+            <TabPanel px={0}>
+              <Reorder.Group
+                axis="y"
+                values={inactiveDonations.map((d) => d.id)}
+                onReorder={(nextIds) => {
+                  mergeReorderedSubset(nextIds, (d) => !isDonationActive(d));
+                  schedulePersistSubsetOrder('inactive', nextIds);
+                }}
+                style={{ listStyle: 'none', padding: 0, margin: 0 }}
+              >
+                <VStack gap="16px" align="stretch">
+                  {inactiveDonations.map((d) => (
+                    <DraggableDonationItem
+                      key={d.id}
+                      donation={donationById[d.id] ?? d}
+                      onEdit={() => router.push(`/admin/amal/${d.id}/edit`)}
+                    />
+                  ))}
+                </VStack>
+              </Reorder.Group>
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
+      )}
     </VStack>
   );
 };
