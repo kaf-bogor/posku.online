@@ -28,7 +28,7 @@ import type { DonationPage } from '~/lib/types/donation';
 
 function sanitizeHtml(html: string): string {
   if (typeof window === 'undefined') return html;
-  return createDOMPurify(window).sanitize(html);
+  return createDOMPurify(window as unknown as Parameters<typeof createDOMPurify>[0]).sanitize(html);
 }
 
 export default function DonationDetailClient({
