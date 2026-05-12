@@ -36,7 +36,7 @@ export default function AdminPushPage() {
       if (!res.ok) throw new Error(data.error ?? 'Failed to send');
       toast({
         title: 'Notifikasi terkirim',
-        description: `Terkirim ke ${data.sent} perangkat${data.failed ? `, ${data.failed} gagal` : ''}.`,
+        description: `Terkirim ke ${data.sent} perangkat${data.failed ? ', '.concat(String(data.failed), ' gagal') : ''}.`,
         status: 'success',
         duration: 5000,
         isClosable: true,
@@ -47,7 +47,8 @@ export default function AdminPushPage() {
     } catch (error) {
       toast({
         title: 'Gagal mengirim',
-        description: error instanceof Error ? error.message : 'Terjadi kesalahan.',
+        description:
+          error instanceof Error ? error.message : 'Terjadi kesalahan.',
         status: 'error',
         duration: 5000,
         isClosable: true,
@@ -64,7 +65,8 @@ export default function AdminPushPage() {
           Kirim Push Notification
         </Heading>
         <Text fontSize="sm" color="gray.500">
-          Pesan akan dikirim ke semua pengguna yang telah mengaktifkan notifikasi.
+          Pesan akan dikirim ke semua pengguna yang telah mengaktifkan
+          notifikasi.
         </Text>
       </Box>
 

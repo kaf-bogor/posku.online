@@ -1,3 +1,4 @@
+import type { FieldValue } from 'firebase/firestore';
 import {
   Timestamp,
   deleteDoc,
@@ -91,7 +92,7 @@ export const PUT = async (
 
     const body = (await req.json()) as AttendanceEventUpdateInput;
 
-    const updates: Record<string, unknown> = {
+    const updates: { [key: string]: string | Timestamp | FieldValue } = {
       updatedAt: serverTimestamp(),
     };
 

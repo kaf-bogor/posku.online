@@ -82,9 +82,8 @@ const CLASS_BG_DARK: [string, string][] = [
 function getClassBg(name: string, isDark: boolean): string {
   const lower = name.toLowerCase();
   const map = isDark ? CLASS_BG_DARK : CLASS_BG_LIGHT;
-  for (const [key, color] of map) {
-    if (lower.includes(key)) return color;
-  }
+  const found = map.find(([key]) => lower.includes(key));
+  if (found) return found[1];
   return isDark ? '#1a202c' : '#ffffff';
 }
 
@@ -127,7 +126,10 @@ export default function DataSantriTA20252026Page() {
   const classes = rawData as ClassInfo[];
   const [search, setSearch] = useState('');
   const [openIdxs, setOpenIdxs] = useState<number[]>([]);
-  const [selected, setSelected] = useState<{ student: Student; className: string } | null>(null);
+  const [selected, setSelected] = useState<{
+    student: Student;
+    className: string;
+  } | null>(null);
 
   const [isUnlocked, setIsUnlocked] = useState(false);
   const [showLockModal, setShowLockModal] = useState(false);
@@ -154,6 +156,62 @@ export default function DataSantriTA20252026Page() {
   function handleLock() {
     sessionStorage.removeItem('ds_unlocked');
     setIsUnlocked(false);
+    setSelected(null);
+  }
+
+  function handleSearch(e: React.ChangeEvent<HTMLInputElement>) {
+    setSearch(e.target.value);
+  }
+
+  function handleCloseLockModal() {
+    setShowLockModal(false);
+    setPwInput('');
+    setPwError('');
+  }
+
+  function toggleCard(idx: number) {
+    setOpenIdxs((prev) => {
+      if (prev.includes(idx)) return [];
+      return [idx];
+    });
+  }
+
+  function handleLockToggle() {
+    if (isUnlocked) {
+      handleLock();
+    } else {
+      setShowLockModal(true);
+    }
+  }
+
+  function handleCardToggle(e: React.MouseEvent<HTMLElement>) {
+    toggleCard(Number((e.currentTarget as HTMLElement).dataset.idx));
+  }
+
+  function handleStudentClick(e: React.MouseEvent<HTMLElement>) {
+    if (!isUnlocked) return;
+    const el = e.currentTarget as HTMLElement;
+    const studentName = el.dataset.studentName ?? '';
+    const cls = el.dataset.className ?? '';
+    const classData = classes.find((c) => c.name === cls);
+    const student = classData?.students.find((s) => s.name === studentName);
+    if (student) setSelected({ student, className: cls });
+  }
+
+  function handlePwInputChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setPwInput(e.target.value);
+    setPwError('');
+  }
+
+  function handlePwKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
+    if (e.key === 'Enter') handleUnlock();
+  }
+
+  function handleTogglePw() {
+    setShowPw((v) => !v);
+  }
+
+  function handleCloseDetailModal() {
     setSelected(null);
   }
 
@@ -195,13 +253,13 @@ export default function DataSantriTA20252026Page() {
     const lower = search.toLowerCase();
     return classes.reduce(
       (sum, c) =>
-        sum + c.students.filter((s) => s.name.toLowerCase().includes(lower)).length,
+        sum +
+        c.students.filter((s) => s.name.toLowerCase().includes(lower)).length,
       0
     );
   }, [classes, search]);
 
   const allOpen = filtered.length > 0 && openIdxs.length >= filtered.length;
-
 
   function toggleAll() {
     if (allOpen) {
@@ -209,13 +267,6 @@ export default function DataSantriTA20252026Page() {
     } else {
       setOpenIdxs(filtered.map((_, i) => i));
     }
-  }
-
-  function toggleCard(idx: number) {
-    setOpenIdxs((prev) => {
-      if (prev.includes(idx)) return [];
-      return [idx];
-    });
   }
 
   return (
@@ -234,7 +285,13 @@ export default function DataSantriTA20252026Page() {
           boxShadow={cardShadow}
         >
           {/* Header */}
-          <HStack justify="space-between" align="flex-start" mb={4} flexWrap="wrap" gap={3}>
+          <HStack
+            justify="space-between"
+            align="flex-start"
+            mb={4}
+            flexWrap="wrap"
+            gap={3}
+          >
             <VStack align="flex-start" spacing={0}>
               <Heading size="xl" fontWeight="extrabold" color={headingColor}>
                 Pembagian Kelas dan Pengajar
@@ -244,7 +301,9 @@ export default function DataSantriTA20252026Page() {
               </Heading>
               <Text fontSize="lg" color="gray.500">
                 TA. 2025-2026, Total Santri:{' '}
-                <Text as="span" fontWeight="bold">{totalSantri}</Text>
+                <Text as="span" fontWeight="bold">
+                  {totalSantri}
+                </Text>
               </Text>
             </VStack>
             <HStack spacing={2} flexShrink={0}>
@@ -260,7 +319,7 @@ export default function DataSantriTA20252026Page() {
                 fontSize="sm"
                 border="1px solid"
                 borderColor={borderColor}
-                onClick={() => isUnlocked ? handleLock() : setShowLockModal(true)}
+                onClick={handleLockToggle}
                 _hover={{ opacity: 0.8 }}
                 transition="opacity 0.15s ease"
                 title={isUnlocked ? 'Kunci info santri' : 'Buka info santri'}
@@ -291,7 +350,7 @@ export default function DataSantriTA20252026Page() {
             <Input
               placeholder="Cari nama kelas, guru, atau santri..."
               value={search}
-              onChange={(e) => setSearch(e.target.value)}
+              onChange={handleSearch}
               size="lg"
               focusBorderColor="blue.400"
               borderColor={borderColor}
@@ -339,7 +398,8 @@ export default function DataSantriTA20252026Page() {
                       p={5}
                       gap={3}
                       textAlign="left"
-                      onClick={() => toggleCard(idx)}
+                      data-idx={idx}
+                      onClick={handleCardToggle}
                       _hover={{ bg: 'blackAlpha.50' }}
                       transition="background 0.15s ease"
                     >
@@ -349,7 +409,9 @@ export default function DataSantriTA20252026Page() {
                           fontSize={{ base: 'lg', md: 'xl' }}
                           fontWeight="bold"
                           color={classNameColor}
-                          dangerouslySetInnerHTML={{ __html: highlight(classInfo.name, search) }}
+                          dangerouslySetInnerHTML={{
+                            __html: highlight(classInfo.name, search),
+                          }}
                         />
                         <Badge
                           colorScheme="blue"
@@ -376,18 +438,24 @@ export default function DataSantriTA20252026Page() {
                         h={3}
                         flexShrink={0}
                         transition="transform 0.3s ease"
-                        style={{ transform: isOpen ? 'rotate(0deg)' : 'rotate(180deg)' }}
+                        style={{
+                          transform: isOpen ? 'rotate(0deg)' : 'rotate(180deg)',
+                        }}
                       >
                         <path d="M9 5 5 1 1 5" />
                       </Box>
                     </Box>
 
                     {isOpen && (
-                      <Box p={5} borderTop="1px solid" borderColor={borderColor}>
+                      <Box
+                        p={5}
+                        borderTop="1px solid"
+                        borderColor={borderColor}
+                      >
                         <VStack spacing={2} mb={4} align="stretch">
-                          {classInfo.teachers.map((teacher, tIdx) => (
+                          {classInfo.teachers.map((teacher) => (
                             <HStack
-                              key={tIdx}
+                              key={teacher.name}
                               style={{ backgroundColor: teacherBg }}
                               borderLeft="4px solid"
                               borderColor="blue.400"
@@ -400,7 +468,10 @@ export default function DataSantriTA20252026Page() {
                                 fontWeight="semibold"
                                 color={teacherTextColor}
                                 dangerouslySetInnerHTML={{
-                                  __html: highlight(`${teacher.role}: ${teacher.name}`, search),
+                                  __html: highlight(
+                                    `${teacher.role}: ${teacher.name}`,
+                                    search
+                                  ),
                                 }}
                               />
                               {teacher.phone && (
@@ -418,7 +489,9 @@ export default function DataSantriTA20252026Page() {
                                     h={7}
                                     _hover={{ opacity: 0.8 }}
                                     transition="opacity 0.2s"
-                                    onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
+                                    onError={(
+                                      e: React.SyntheticEvent<HTMLImageElement>
+                                    ) => {
                                       e.currentTarget.src =
                                         'https://placehold.co/28x28/cccccc/ffffff?text=WA';
                                     }}
@@ -445,25 +518,44 @@ export default function DataSantriTA20252026Page() {
                             const isMatch =
                               !search ||
                               student.name.toLowerCase().includes(lower) ||
-                              (student.ayah ?? '').toLowerCase().includes(lower) ||
-                              (student.bunda ?? '').toLowerCase().includes(lower);
+                              (student.ayah ?? '')
+                                .toLowerCase()
+                                .includes(lower) ||
+                              (student.bunda ?? '')
+                                .toLowerCase()
+                                .includes(lower);
                             return (
                               <ListItem
-                                key={sIdx}
+                                key={student.name}
                                 py={1}
                                 px={2}
                                 borderRadius="md"
-                                color={isMatch ? matchedStudentColor : 'gray.500'}
+                                color={
+                                  isMatch ? matchedStudentColor : 'gray.500'
+                                }
                                 fontSize="sm"
                                 _hover={{ bg: studentHoverBg }}
                               >
                                 <Box
                                   cursor={isUnlocked ? 'pointer' : 'default'}
-                                  _hover={isUnlocked ? { textDecoration: 'underline' } : {}}
-                                  onClick={() => isUnlocked && setSelected({ student, className: classInfo.name })}
-                                  title={isUnlocked ? '' : 'Aktifkan info santri untuk melihat detail'}
+                                  _hover={
+                                    isUnlocked
+                                      ? { textDecoration: 'underline' }
+                                      : {}
+                                  }
+                                  data-student-name={student.name}
+                                  data-class-name={classInfo.name}
+                                  onClick={handleStudentClick}
+                                  title={
+                                    isUnlocked
+                                      ? ''
+                                      : 'Aktifkan info santri untuk melihat detail'
+                                  }
                                   dangerouslySetInnerHTML={{
-                                    __html: highlight(`${sIdx + 1}. ${student.name}`, search),
+                                    __html: highlight(
+                                      `${sIdx + 1}. ${student.name}`,
+                                      search
+                                    ),
                                   }}
                                 />
                               </ListItem>
@@ -483,7 +575,7 @@ export default function DataSantriTA20252026Page() {
       {/* Password unlock modal */}
       <Modal
         isOpen={showLockModal}
-        onClose={() => { setShowLockModal(false); setPwInput(''); setPwError(''); }}
+        onClose={handleCloseLockModal}
         isCentered
         size="sm"
       >
@@ -498,15 +590,15 @@ export default function DataSantriTA20252026Page() {
                   type={showPw ? 'text' : 'password'}
                   placeholder="Password"
                   value={pwInput}
-                  onChange={(e) => { setPwInput(e.target.value); setPwError(''); }}
-                  onKeyDown={(e) => e.key === 'Enter' && handleUnlock()}
+                  onChange={handlePwInputChange}
+                  onKeyDown={handlePwKeyDown}
                   autoFocus
                 />
                 <InputRightElement width="4rem">
                   <Button
                     h="1.5rem"
                     size="xs"
-                    onClick={() => setShowPw((v) => !v)}
+                    onClick={handleTogglePw}
                     variant="ghost"
                   >
                     {showPw ? 'Hide' : 'Show'}
@@ -525,7 +617,12 @@ export default function DataSantriTA20252026Page() {
       </Modal>
 
       {/* Student detail modal */}
-      <Modal isOpen={!!selected} onClose={() => setSelected(null)} isCentered size="md">
+      <Modal
+        isOpen={!!selected}
+        onClose={handleCloseDetailModal}
+        isCentered
+        size="md"
+      >
         <ModalOverlay />
         <ModalContent bg={modalBg}>
           <ModalHeader pb={2}>
@@ -543,14 +640,18 @@ export default function DataSantriTA20252026Page() {
             <VStack align="stretch" spacing={3}>
               {selected?.student.academic_year && (
                 <HStack>
-                  <Text fontSize="sm" color={modalLabelColor} minW="110px">Tahun Masuk</Text>
+                  <Text fontSize="sm" color={modalLabelColor} minW="110px">
+                    Tahun Masuk
+                  </Text>
                   <Text fontSize="sm" fontWeight="medium" color={headingColor}>
                     {selected.student.academic_year}
                   </Text>
                 </HStack>
               )}
               <HStack align="flex-start">
-                <Text fontSize="sm" color={modalLabelColor} minW="110px">Kelas</Text>
+                <Text fontSize="sm" color={modalLabelColor} minW="110px">
+                  Kelas
+                </Text>
                 <Text fontSize="sm" fontWeight="medium" color={headingColor}>
                   {selected?.className}
                 </Text>
@@ -560,43 +661,70 @@ export default function DataSantriTA20252026Page() {
                   <Divider />
                   {selected?.student.ayah && (
                     <HStack>
-                      <Text fontSize="sm" color={modalLabelColor} minW="110px">Ayah</Text>
-                      <Text fontSize="sm" fontWeight="medium" color={headingColor}>
+                      <Text fontSize="sm" color={modalLabelColor} minW="110px">
+                        Ayah
+                      </Text>
+                      <Text
+                        fontSize="sm"
+                        fontWeight="medium"
+                        color={headingColor}
+                      >
                         {selected.student.ayah}
                       </Text>
                     </HStack>
                   )}
                   {selected?.student.bunda && (
                     <HStack>
-                      <Text fontSize="sm" color={modalLabelColor} minW="110px">Bunda</Text>
-                      <Text fontSize="sm" fontWeight="medium" color={headingColor}>
+                      <Text fontSize="sm" color={modalLabelColor} minW="110px">
+                        Bunda
+                      </Text>
+                      <Text
+                        fontSize="sm"
+                        fontWeight="medium"
+                        color={headingColor}
+                      >
                         {selected.student.bunda}
                       </Text>
                     </HStack>
                   )}
                 </>
               )}
-              {selected?.student.siblings && selected.student.siblings.length > 0 && (
-                <>
-                  <Divider />
-                  <Box>
-                    <Text fontSize="sm" color={modalLabelColor} mb={2}>Saudara</Text>
-                    <VStack align="stretch" spacing={1}>
-                      {selected.student.siblings.map((sib, i) => (
-                        <Box key={i} px={3} py={2} borderRadius="md" bg={siblingBg}>
-                          <Text fontSize="sm" fontWeight="medium" color={siblingColor}>
-                            {sib.name}
-                          </Text>
-                          <Text fontSize="xs" color={modalLabelColor}>
-                            {sib.class}
-                            {sib.academic_year ? ` · Masuk ${sib.academic_year}` : ''}
-                          </Text>
-                        </Box>
-                      ))}
-                    </VStack>
-                  </Box>
-                </>
-              )}
+              {selected?.student.siblings &&
+                selected.student.siblings.length > 0 && (
+                  <>
+                    <Divider />
+                    <Box>
+                      <Text fontSize="sm" color={modalLabelColor} mb={2}>
+                        Saudara
+                      </Text>
+                      <VStack align="stretch" spacing={1}>
+                        {selected.student.siblings.map((sib) => (
+                          <Box
+                            key={sib.name}
+                            px={3}
+                            py={2}
+                            borderRadius="md"
+                            bg={siblingBg}
+                          >
+                            <Text
+                              fontSize="sm"
+                              fontWeight="medium"
+                              color={siblingColor}
+                            >
+                              {sib.name}
+                            </Text>
+                            <Text fontSize="xs" color={modalLabelColor}>
+                              {sib.class}
+                              {sib.academic_year
+                                ? ` · Masuk ${sib.academic_year}`
+                                : ''}
+                            </Text>
+                          </Box>
+                        ))}
+                      </VStack>
+                    </Box>
+                  </>
+                )}
             </VStack>
           </ModalBody>
         </ModalContent>

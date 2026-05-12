@@ -43,6 +43,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ success: true, sent, failed });
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error('Push send error:', error);
     return NextResponse.json(
       { error: 'Internal server error' },

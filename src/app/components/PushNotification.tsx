@@ -16,9 +16,7 @@ const STORAGE_KEY = 'push-notification-dismissed';
 
 function urlBase64ToUint8Array(base64String: string): Uint8Array {
   const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
-  const base64 = (base64String + padding)
-    .replace(/-/g, '+')
-    .replace(/_/g, '/');
+  const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
   const rawData = window.atob(base64);
   return Uint8Array.from(Array.from(rawData).map((char) => char.charCodeAt(0)));
 }
@@ -73,6 +71,7 @@ export default function PushNotification() {
       localStorage.setItem(STORAGE_KEY, '1');
       setShow(false);
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error('Push subscription failed:', err);
     } finally {
       setIsSubscribing(false);
@@ -98,13 +97,7 @@ export default function PushNotification() {
       py={3}
     >
       <Flex align="flex-start" gap={3}>
-        <Icon
-          as={FaBell}
-          color="blue.500"
-          boxSize={5}
-          mt={1}
-          flexShrink={0}
-        />
+        <Icon as={FaBell} color="blue.500" boxSize={5} mt={1} flexShrink={0} />
         <Box flex={1}>
           <Text fontWeight="bold" fontSize="sm" color={textColor}>
             Aktifkan Notifikasi

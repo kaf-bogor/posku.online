@@ -2,9 +2,10 @@ import type { Metadata } from 'next';
 import { unstable_cache } from 'next/cache';
 import { notFound } from 'next/navigation';
 
-import DonationDetailClient from './DonationDetailClient';
 import type { DonationPage } from '~/lib/types/donation';
 import { generateSlug } from '~/lib/utils/slug';
+
+import DonationDetailClient from './DonationDetailClient';
 
 const PROJECT_ID = process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID ?? '';
 const API_KEY = process.env.NEXT_PUBLIC_FIREBASE_API_KEY ?? '';
@@ -32,9 +33,9 @@ function fromFValue(v: FValue): unknown {
     return (v.arrayValue.values ?? []).map((item) => fromFValue(item));
   if ('mapValue' in v) {
     const obj: Record<string, unknown> = {};
-    for (const [k, fv] of Object.entries(v.mapValue.fields ?? {})) {
+    Object.entries(v.mapValue.fields ?? {}).forEach(([k, fv]) => {
       obj[k] = fromFValue(fv);
-    }
+    });
     return obj;
   }
   return null;
@@ -46,9 +47,9 @@ function docToType(doc: {
 }): DonationPage {
   const id = doc.name.split('/').pop() ?? '';
   const data: Record<string, unknown> = { id };
-  for (const [k, v] of Object.entries(doc.fields ?? {})) {
+  Object.entries(doc.fields ?? {}).forEach(([k, v]) => {
     data[k] = fromFValue(v);
-  }
+  });
   return data as unknown as DonationPage;
 }
 
@@ -121,11 +122,10 @@ async function fetchDonation(slugOrId: string): Promise<DonationPage | null> {
 }
 
 const getCachedDonation = (slugOrId: string) =>
-  unstable_cache(
-    () => fetchDonation(slugOrId),
-    [`donation-${slugOrId}`],
-    { revalidate: 300, tags: ['donations'] }
-  )();
+  unstable_cache(() => fetchDonation(slugOrId), [`donation-${slugOrId}`], {
+    revalidate: 300,
+    tags: ['donations'],
+  })();
 
 export async function generateMetadata({
   params,
@@ -151,7 +151,8 @@ export async function generateMetadata({
 
   const canonicalSlug = campaign.slug || params.id;
   const pageUrl = `${SITE_URL}/amal/${canonicalSlug}`;
-  const ogImage = campaign.imageUrls?.[0] ?? `${SITE_URL}/icons/icon-512x512.png`;
+  const ogImage =
+    campaign.imageUrls?.[0] ?? `${SITE_URL}/icons/icon-512x512.png`;
 
   return {
     title: `${campaign.title} | POSKU Al-Fatih Bogor`,

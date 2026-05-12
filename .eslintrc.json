@@ -6,6 +6,13 @@
   ],
   "rules": {
     "@typescript-eslint/lines-between-class-members": "off",
-    "@typescript-eslint/no-throw-literal": "off"
+    "@typescript-eslint/no-throw-literal": "off",
+    "react/jsx-no-bind": ["error", {
+      "ignoreRefs": true,
+      "allowArrowFunctions": true,
+      "allowFunctions": true,
+      "allowBind": false,
+      "ignoreDOMComponents": true
+    }]
   }
 }

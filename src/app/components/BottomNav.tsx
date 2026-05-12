@@ -56,44 +56,44 @@ export default function BottomNav() {
         {navItems.map(({ label, href, icon }) => {
           const active = isActive(href);
           return (
-          <Link href={href} passHref key={label} legacyBehavior>
-            <ChakraLink
-              display="flex"
-              flexDirection="column"
-              alignItems="center"
-              fontSize="xs"
-              color={active ? 'purple.500' : textColor}
-              fontWeight={active ? 'bold' : 'medium'}
-              _hover={{ color: 'purple.600' }}
-              minW={{ base: '70px', md: '60px' }}
-              minH={{ base: '50px', md: 'auto' }}
-              py={1}
-              px={2}
-              borderRadius="lg"
-              bg={active ? 'purple.50' : 'transparent'}
-              transition="all 0.2s"
-              _active={{
-                bg: 'purple.100',
-                transform: 'scale(0.95)',
-              }}
-            >
-              {icon === 'home' && (
-                <FaHome fontSize={20} style={{ marginBottom: 2 }} />
-              )}
-              {icon === 'donate' && (
-                <FaHandsHelping fontSize={20} style={{ marginBottom: 2 }} />
-              )}
-              {icon === 'links' && (
-                <FaLink fontSize={20} style={{ marginBottom: 2 }} />
-              )}
-              {icon === 'admin' && (
-                <FaUser fontSize={20} style={{ marginBottom: 2 }} />
-              )}
-              <Text fontSize="xs" fontWeight="medium">
-                {label}
-              </Text>
-            </ChakraLink>
-          </Link>
+            <Link href={href} passHref key={label} legacyBehavior>
+              <ChakraLink
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
+                fontSize="xs"
+                color={active ? 'purple.500' : textColor}
+                fontWeight={active ? 'bold' : 'medium'}
+                _hover={{ color: 'purple.600' }}
+                minW={{ base: '70px', md: '60px' }}
+                minH={{ base: '50px', md: 'auto' }}
+                py={1}
+                px={2}
+                borderRadius="lg"
+                bg={active ? 'purple.50' : 'transparent'}
+                transition="all 0.2s"
+                _active={{
+                  bg: 'purple.100',
+                  transform: 'scale(0.95)',
+                }}
+              >
+                {icon === 'home' && (
+                  <FaHome fontSize={20} style={{ marginBottom: 2 }} />
+                )}
+                {icon === 'donate' && (
+                  <FaHandsHelping fontSize={20} style={{ marginBottom: 2 }} />
+                )}
+                {icon === 'links' && (
+                  <FaLink fontSize={20} style={{ marginBottom: 2 }} />
+                )}
+                {icon === 'admin' && (
+                  <FaUser fontSize={20} style={{ marginBottom: 2 }} />
+                )}
+                <Text fontSize="xs" fontWeight="medium">
+                  {label}
+                </Text>
+              </ChakraLink>
+            </Link>
           );
         })}
       </Flex>

@@ -32,15 +32,15 @@ export default function AddToHomeScreen() {
   const subTextColor = useColorModeValue('gray.500', 'gray.400');
 
   useEffect(() => {
-    if (typeof window === 'undefined') return;
-    if (localStorage.getItem(STORAGE_KEY)) return;
+    if (typeof window === 'undefined') return () => {};
+    if (localStorage.getItem(STORAGE_KEY)) return () => {};
 
     const isStandalone =
       window.matchMedia('(display-mode: standalone)').matches ||
       ('standalone' in window.navigator &&
         (window.navigator as { standalone?: boolean }).standalone === true);
 
-    if (isStandalone) return;
+    if (isStandalone) return () => {};
 
     const isIOS =
       /iphone|ipad|ipod/i.test(navigator.userAgent) &&
@@ -49,7 +49,7 @@ export default function AddToHomeScreen() {
 
     if (isIOS) {
       setShowIOS(true);
-      return;
+      return () => {};
     }
 
     const handler = (e: Event) => {
@@ -116,7 +116,7 @@ export default function AddToHomeScreen() {
               <Icon as={FaShareAlt} boxSize={3} verticalAlign="middle" /> di
               bawah, lalu pilih{' '}
               <Text as="span" fontWeight="semibold">
-                "Add to Home Screen"
+                &quot;Add to Home Screen&quot;
               </Text>
               .
             </Text>

@@ -178,7 +178,6 @@ const DonationsPage = () => {
           <Text>Loading data...</Text>
         </Center>
       ) : (
-
         <Tabs variant="soft-rounded" colorScheme="green">
           <TabList>
             <Tab>

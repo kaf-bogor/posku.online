@@ -1,6 +1,13 @@
 'use client';
 
-import { Box, Heading, Link, Text, VStack, useColorModeValue } from '@chakra-ui/react';
+import {
+  Box,
+  Heading,
+  Link,
+  Text,
+  VStack,
+  useColorModeValue,
+} from '@chakra-ui/react';
 import NextLink from 'next/link';
 import { useContext } from 'react';
 
@@ -51,7 +58,11 @@ export default function DataSantriPage() {
               py={5}
               cursor="pointer"
               transition="all 0.15s ease"
-              _hover={{ bg: cardHoverBg, transform: 'translateY(-2px)', boxShadow: 'lg' }}
+              _hover={{
+                bg: cardHoverBg,
+                transform: 'translateY(-2px)',
+                boxShadow: 'lg',
+              }}
             >
               <Text fontWeight="bold" fontSize="lg" color={labelColor}>
                 {ta.label}

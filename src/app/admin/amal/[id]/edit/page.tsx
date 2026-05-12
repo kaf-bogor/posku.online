@@ -54,7 +54,6 @@ const DonationDetailPage = ({ params }: { params: { id: string } }) => {
     setEditForm,
     editSelectedFiles,
     setEditSelectedFiles,
-    handleCancelEdit,
     handleSaveEdit,
     isSaving,
   } = useCrudManager<DonationPage>({
