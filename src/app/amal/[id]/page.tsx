@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { unstable_cache } from 'next/cache';
 import { notFound } from 'next/navigation';
 
 import DonationDetailClient from './DonationDetailClient';
@@ -119,12 +120,19 @@ async function fetchDonation(slugOrId: string): Promise<DonationPage | null> {
   return null;
 }
 
+const getCachedDonation = (slugOrId: string) =>
+  unstable_cache(
+    () => fetchDonation(slugOrId),
+    [`donation-${slugOrId}`],
+    { revalidate: 300, tags: ['donations'] }
+  )();
+
 export async function generateMetadata({
   params,
 }: {
   params: { id: string };
 }): Promise<Metadata> {
-  const campaign = await fetchDonation(params.id);
+  const campaign = await getCachedDonation(params.id);
 
   if (!campaign) {
     return {
@@ -171,7 +179,7 @@ export default async function DonationDetailPage({
 }: {
   params: { id: string };
 }) {
-  const campaign = await fetchDonation(params.id);
+  const campaign = await getCachedDonation(params.id);
 
   if (!campaign) {
     notFound();

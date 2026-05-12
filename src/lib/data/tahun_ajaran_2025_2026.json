@@ -1,0 +1,3329 @@
+[
+    {
+        "name": "Kuttab Awal 1A",
+        "teachers": [
+            {
+                "role": "Guru Iman",
+                "name": "Ustadzah Uswah",
+                "phone": "+62 822-2190-6014"
+            },
+            {
+                "role": "Guru Qur'an",
+                "name": "Ustadzah Winda",
+                "phone": "+62 898-6652-067"
+            }
+        ],
+        "students": [
+            {
+                "name": "Aisyah",
+                "ayah": "Slamet Priyadi",
+                "bunda": null,
+                "academic_year": "2025/2026",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Maryam",
+                        "class": "Kuttab Awal 3A",
+                        "academic_year": "2023/2024"
+                    },
+                    {
+                        "name": "Yahya",
+                        "class": "Qonuni 4A",
+                        "academic_year": "2019/2020"
+                    }
+                ]
+            },
+            {
+                "name": "Ana Mir'atu Khadijah",
+                "ayah": "Ikhsan Sahid Sanjani",
+                "bunda": null,
+                "academic_year": "2025/2026",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Ahsanitaqwim Maula Mu'minah",
+                        "class": "Qonuni 1C",
+                        "academic_year": "2022/2023"
+                    }
+                ]
+            },
+            {
+                "name": "Anas Said Abdurrahman",
+                "ayah": "Suhendar",
+                "bunda": null,
+                "academic_year": "2025/2026",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Khadijah",
+                        "class": "Kuttab Awal 3B",
+                        "academic_year": "2023/2024"
+                    }
+                ]
+            },
+            {
+                "name": "Alula Jasmine Altahfunnisa",
+                "ayah": "Muhamad Sobari",
+                "bunda": null,
+                "academic_year": "2025/2026",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Arsakha Jabbar Al Fatih",
+                        "class": "Kuttab Awal 3C",
+                        "academic_year": "2024/2025"
+                    }
+                ]
+            },
+            {
+                "name": "Hilya Adzkiya Thessalonika",
+                "ayah": "Denny Hidayat",
+                "bunda": null,
+                "academic_year": "2025/2026",
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Kanna Shahia Khairuna",
+                "ayah": "Anangga Khairussalam",
+                "bunda": null,
+                "academic_year": "2025/2026",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Khalfan Aqmar Fazel",
+                        "class": "Qonuni 1B",
+                        "academic_year": "2023/2024"
+                    }
+                ]
+            },
+            {
+                "name": "Khadeejah Amelia Qurani",
+                "ayah": "Sanna Silly Dayusman",
+                "bunda": null,
+                "academic_year": "2025/2026",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Tsaqib Muhammad Al Fatih",
+                        "class": "Qonuni 2A",
+                        "academic_year": "2021/2022"
+                    }
+                ]
+            },
+            {
+                "name": "Ruya Fathammubina Hudrita",
+                "ayah": "Reza Primawan Hudrita",
+                "bunda": null,
+                "academic_year": "2025/2026",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Raudhatul Jannah Hudrita",
+                        "class": "Qonuni 1C",
+                        "academic_year": "2022/2023"
+                    }
+                ]
+            },
+            {
+                "name": "Taqiyyah Nur Rahmah",
+                "ayah": "Mas Ecky Ardhana Reswara",
+                "bunda": null,
+                "academic_year": "2025/2026",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Rosyidah Maryam Qurroh",
+                        "class": "Kuttab Awal 2A",
+                        "academic_year": "2024/2025"
+                    }
+                ]
+            },
+            {
+                "name": "Uwais Abdul Aziz",
+                "ayah": "Iko Lesmana",
+                "bunda": null,
+                "academic_year": "2025/2026",
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Zaeyyid Buana Gustika",
+                "ayah": "Ade Gustika",
+                "bunda": null,
+                "academic_year": "2025/2026",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Faeyza Ghaaziy Gustika",
+                        "class": "Qonuni 4A",
+                        "academic_year": "2019/2020"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Kuttab Awal 1B",
+        "teachers": [
+            {
+                "role": "Guru Iman",
+                "name": "Ustadzah Shafira",
+                "phone": "+62 899-0963-148"
+            },
+            {
+                "role": "Guru Qur'an",
+                "name": "Ustadzah Hilyah",
+                "phone": "+62 878-7395-5910"
+            }
+        ],
+        "students": [
+            {
+                "name": "Abdurrahman Ibrahim Alqudwah",
+                "ayah": "Muhammad Yanizal Reza",
+                "bunda": null,
+                "academic_year": "2025/2026",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Asiyah Tsabitah Alqudwah",
+                        "class": "Kuttab Awal 3B",
+                        "academic_year": "2023/2024"
+                    },
+                    {
+                        "name": "Abdullah Umar Alqudwah",
+                        "class": "Qonuni 3A",
+                        "academic_year": "2020/2021"
+                    }
+                ]
+            },
+            {
+                "name": "Fayeisha Shafana Avichayil",
+                "ayah": "Rio Bialfino",
+                "bunda": null,
+                "academic_year": "2025/2026",
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Ghazi Al-Adzki Nagendra",
+                "ayah": "Zaki Zakaria Muttaqin",
+                "bunda": null,
+                "academic_year": "2025/2026",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Ghaitsa Adzkiya Naqeeba",
+                        "class": "Kuttab Awal 3A",
+                        "academic_year": "2023/2024"
+                    }
+                ]
+            },
+            {
+                "name": "Halimah Qonita Zamzami",
+                "ayah": "Oslowmihaj Zamzami",
+                "bunda": null,
+                "academic_year": "2025/2026",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Rahmania Taqiyya Zamzami",
+                        "class": "Qonuni 2B",
+                        "academic_year": "2021/2022"
+                    }
+                ]
+            },
+            {
+                "name": "Khaulah Nuun Hakim",
+                "ayah": "Rayisman Hakim",
+                "bunda": null,
+                "academic_year": "2025/2026",
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Muhammad Riyad Alfathan",
+                "ayah": "Bayu Rustami",
+                "bunda": null,
+                "academic_year": "2025/2026",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Muhammad",
+                        "class": "Qonuni 1A",
+                        "academic_year": "2025/2026"
+                    }
+                ]
+            },
+            {
+                "name": "Muhammad Sulaiman Al Qanuni",
+                "ayah": "Rifki Fauzi",
+                "bunda": null,
+                "academic_year": "2025/2026",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Aisyah Almira Saliha",
+                        "class": "Qonuni 1C",
+                        "academic_year": "2022/2023"
+                    }
+                ]
+            },
+            {
+                "name": "Nuruddin Mahmud Zanki Assiraj",
+                "ayah": "Alauddin Naufal Assiraj",
+                "bunda": null,
+                "academic_year": "2025/2026",
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Sayyidah Maryam Rayya Fauzi",
+                "ayah": "Fauzi Firmansyah",
+                "bunda": null,
+                "academic_year": "2025/2026",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Sulthan Alkhalifi Elfathan Fauzi",
+                        "class": "Qonuni 3A",
+                        "academic_year": "2020/2021"
+                    }
+                ]
+            },
+            {
+                "name": "Rumaisha Azzahra",
+                "ayah": "Bambang Oktaryan Bramantyo",
+                "bunda": null,
+                "academic_year": "2025/2026",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Shanum Shaistanaya",
+                        "class": "Qonuni 2B",
+                        "academic_year": "2022/2023"
+                    },
+                    {
+                        "name": "Rizhan Alzena Qaireen",
+                        "class": "Qonuni 4B",
+                        "academic_year": "2020/2021"
+                    }
+                ]
+            },
+            {
+                "name": "Shidqia Nisa Alkarima",
+                "ayah": "Sudarmanto",
+                "bunda": null,
+                "academic_year": "2025/2026",
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Tsurayya Nara Abida",
+                "ayah": "Taufik",
+                "bunda": null,
+                "academic_year": "2025/2026",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Raizel Zinan Muhammad",
+                        "class": "Qonuni 1B",
+                        "academic_year": "2022/2023"
+                    },
+                    {
+                        "name": "Rubaina Zahra Ayesha",
+                        "class": "Qonuni 3B",
+                        "academic_year": "2021/2022"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Kuttab Awal 2A",
+        "teachers": [
+            {
+                "role": "Guru Iman",
+                "name": "Ustadzah Naily Faizah",
+                "phone": "+62 857-3558-3617"
+            },
+            {
+                "role": "Guru Qur'an",
+                "name": "Ustadzah Shanti",
+                "phone": "+62 812-1323-5557"
+            }
+        ],
+        "students": [
+            {
+                "name": "Aisyah Fathiya Hanum",
+                "ayah": "Rangga Mahardika",
+                "bunda": null,
+                "academic_year": "2024/2025",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Abdurahman Fariz",
+                        "class": "Qonuni 3A",
+                        "academic_year": "2021/2022"
+                    }
+                ]
+            },
+            {
+                "name": "Aulian Anwarzayd Hasry",
+                "ayah": "Febriandy Prima Hasry",
+                "bunda": null,
+                "academic_year": "2024/2025",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Arsabyan Somba Hasry",
+                        "class": "Qonuni 1B",
+                        "academic_year": "2022/2023"
+                    },
+                    {
+                        "name": "Albirra Ghiyas Hasry",
+                        "class": "Qonuni 3A",
+                        "academic_year": "2021/2022"
+                    }
+                ]
+            },
+            {
+                "name": "Ayman Attaqi Ahmad",
+                "ayah": "Achmad Syaefillah",
+                "bunda": null,
+                "academic_year": "2024/2025",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "AdzDzakir Misyary Ahmad",
+                        "class": "Qonuni 2A",
+                        "academic_year": "2021/2022"
+                    },
+                    {
+                        "name": "Azmi Arifin Ahmad",
+                        "class": "Qonuni 3A",
+                        "academic_year": "2021/2022"
+                    }
+                ]
+            },
+            {
+                "name": "Azkadina Mumtazah Alwafa",
+                "ayah": "Bimo Rekso Samudro",
+                "bunda": null,
+                "academic_year": "2024/2025",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Muhammad Faqih Alfatih",
+                        "class": "Qonuni 1B",
+                        "academic_year": "2022/2023"
+                    },
+                    {
+                        "name": "Hanna Azaria Zhafira",
+                        "class": "Qonuni 4B",
+                        "academic_year": "2020/2021"
+                    }
+                ]
+            },
+            {
+                "name": "Galuh Ayuning Palupi",
+                "ayah": "Intan Irawati",
+                "bunda": null,
+                "academic_year": "2024/2025",
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Khoiru Shofinatul Jiyad",
+                "ayah": "Mohamad Dahlan",
+                "bunda": null,
+                "academic_year": "2024/2025",
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Nailah Humairah Nasution",
+                "ayah": "Husin Nasution",
+                "bunda": null,
+                "academic_year": "2024/2025",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Zaki Dzulkarnain Nasution",
+                        "class": "Qonuni 2A",
+                        "academic_year": "2021/2022"
+                    },
+                    {
+                        "name": "Zafran Nasution",
+                        "class": "Qonuni 4A",
+                        "academic_year": "2019/2020"
+                    }
+                ]
+            },
+            {
+                "name": "Qorry Aynan Maryama",
+                "ayah": "Yayan Sofyan",
+                "bunda": null,
+                "academic_year": "2024/2025",
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Rosyidah Maryam Qurroh",
+                "ayah": "Mas Ecky Ardhana Reswara",
+                "bunda": null,
+                "academic_year": "2024/2025",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Taqiyyah Nur Rahmah",
+                        "class": "Kuttab Awal 1A",
+                        "academic_year": "2025/2026"
+                    }
+                ]
+            },
+            {
+                "name": "Sayf Abdullah Al-Faruq",
+                "ayah": "Alfisyahrian",
+                "bunda": null,
+                "academic_year": "2024/2025",
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Shiddiqa Humaira",
+                "ayah": "Rachmat Widyanto",
+                "bunda": null,
+                "academic_year": "2024/2025",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Sajid Ibrahim",
+                        "class": "Qonuni 2A",
+                        "academic_year": "2021/2022"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Kuttab Awal 2B",
+        "teachers": [
+            {
+                "role": "Guru Iman & Qur'an",
+                "name": "Ustadz Fauzan",
+                "phone": "+62 821-2501-7258"
+            }
+        ],
+        "students": [
+            {
+                "name": "Abdullah Sufyan Ats tsauri",
+                "ayah": "Ismat",
+                "bunda": null,
+                "academic_year": "2024/2025",
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Atika Fahima Zahra",
+                "ayah": "Danil Nurmansyah",
+                "bunda": null,
+                "academic_year": "2024/2025",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Muhammad Thoriq Abdurrahman",
+                        "class": "Qonuni 3A",
+                        "academic_year": "2020/2021"
+                    }
+                ]
+            },
+            {
+                "name": "Hanaa Nusaibah Qonita",
+                "ayah": "Kurnia Setiawan",
+                "bunda": null,
+                "academic_year": "2024/2025",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Rasydan Haidarrahman Abdullah",
+                        "class": "Qonuni 1A",
+                        "academic_year": "2022/2023"
+                    }
+                ]
+            },
+            {
+                "name": "Khidir Sesfao",
+                "ayah": "Saddam Husen Sesfao",
+                "bunda": null,
+                "academic_year": "2024/2025",
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Muhammad Habibi",
+                "ayah": null,
+                "bunda": null,
+                "academic_year": null,
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Nur Humairah Khairunnisa",
+                "ayah": "Hermawan",
+                "bunda": null,
+                "academic_year": "2024/2025",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Hamas Syahid Abdullah",
+                        "class": "Qonuni 1B",
+                        "academic_year": "2022/2023"
+                    },
+                    {
+                        "name": "Nur Qisya Ramadhani",
+                        "class": "Qonuni 4B",
+                        "academic_year": "2019/2020"
+                    }
+                ]
+            },
+            {
+                "name": "Rayyan Syauqi Muhammad",
+                "ayah": "Muhammad Ridwan",
+                "bunda": null,
+                "academic_year": "2024/2025",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Muhammad Yusuf Muwafiq",
+                        "class": "Qonuni 2A",
+                        "academic_year": "2021/2022"
+                    },
+                    {
+                        "name": "Humairaa Syifaa Izzatunnisa",
+                        "class": "Qonuni 2B",
+                        "academic_year": "2021/2022"
+                    },
+                    {
+                        "name": "Nida Fayza Qurratul'ain Syauqillah",
+                        "class": "Qonuni 3B",
+                        "academic_year": "2021/2022"
+                    }
+                ]
+            },
+            {
+                "name": "Salsabila Ihdal Husnayain",
+                "ayah": "Achmad Indrawan Heryadi",
+                "bunda": null,
+                "academic_year": "2024/2025",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Shofia Maryam Alhanin",
+                        "class": "Qonuni 2B",
+                        "academic_year": "2021/2022"
+                    }
+                ]
+            },
+            {
+                "name": "Taqiyyanisa Khadijah Purnomo",
+                "ayah": "Nanang Dwi Purnomo",
+                "bunda": null,
+                "academic_year": "2024/2025",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Afiqah Fathiyyaturahma Purnomo",
+                        "class": "Qonuni 4B",
+                        "academic_year": "2019/2020"
+                    }
+                ]
+            },
+            {
+                "name": "Usamah Aidan Al-Hibb",
+                "ayah": "Ginanjar Purwa Ananta",
+                "bunda": null,
+                "academic_year": "2024/2025",
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Zahira Putri Aulia",
+                "ayah": "Ajid Abdul Majid",
+                "bunda": null,
+                "academic_year": "2024/2025",
+                "kode_registrasi": null,
+                "siblings": null
+            }
+        ]
+    },
+    {
+        "name": "Kuttab Awal 2C",
+        "teachers": [
+            {
+                "role": "Guru Iman & Qur'an",
+                "name": "Ustadzah Cici",
+                "phone": "+62 896-3777-5588"
+            }
+        ],
+        "students": [
+            {
+                "name": "Adibah Qathrunnada",
+                "ayah": "Dede Aam, S.Ud",
+                "bunda": null,
+                "academic_year": "2024/2025",
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Aisyah Syifaa Ariany Wafasyahidah",
+                "ayah": "Verry Aria Firmansyah",
+                "bunda": null,
+                "academic_year": "2024/2025",
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Akmal Karim Mubarok",
+                "ayah": "Irwan Iriyanto",
+                "bunda": null,
+                "academic_year": "2024/2025",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Asykar Hafizh Mubarok",
+                        "class": "Qonuni 4A",
+                        "academic_year": "2019/2020"
+                    }
+                ]
+            },
+            {
+                "name": "Ammar Ayyash Abdurrahman",
+                "ayah": "Budiman",
+                "bunda": null,
+                "academic_year": "2024/2025",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Muhammad Mumtaz Muzaffar",
+                        "class": "Qonuni 2A",
+                        "academic_year": "2021/2022"
+                    },
+                    {
+                        "name": "Fakhira Fatimah Al Fihri",
+                        "class": "Qonuni 4B",
+                        "academic_year": "2019/2020"
+                    }
+                ]
+            },
+            {
+                "name": "Arsyila Shofiyyah",
+                "ayah": "Muhammad Salman",
+                "bunda": null,
+                "academic_year": "2024/2025",
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Aziruddin Hanif El Haq",
+                "ayah": "Mohamad Wildan",
+                "bunda": null,
+                "academic_year": "2024/2025",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Muhammad Furqon Sabilillah",
+                        "class": "Qonuni 2A",
+                        "academic_year": "2022/2023"
+                    }
+                ]
+            },
+            {
+                "name": "Hasan Muhammad",
+                "ayah": "Fuadh Naim",
+                "bunda": null,
+                "academic_year": "2024/2025",
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Maryam Almahirah Rizqi",
+                "ayah": "Doddy Rizqi",
+                "bunda": null,
+                "academic_year": "2024/2025",
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Muhammad Zefa Putra Rasya",
+                "ayah": "Muhammad Syaeful Iman",
+                "bunda": null,
+                "academic_year": "2024/2025",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Muhammad Azka Putra Rasya",
+                        "class": "Qonuni 2A",
+                        "academic_year": "2021/2022"
+                    }
+                ]
+            },
+            {
+                "name": "Nayla Shafira Azzahra",
+                "ayah": "Endang Sutrisna",
+                "bunda": null,
+                "academic_year": "2024/2025",
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Raihana Aulia Khanza Salsabila",
+                "ayah": "Ahmad Sopian",
+                "bunda": null,
+                "academic_year": "2024/2025",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Muhammad Zahran Syarif",
+                        "class": "Qonuni 1A",
+                        "academic_year": "2023/2024"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Kuttab Awal 2D",
+        "teachers": [
+            {
+                "role": "Guru Iman",
+                "name": "Ustadzah Hesti",
+                "phone": "+62 857-8280-9896"
+            },
+            {
+                "role": "Guru Qur'an",
+                "name": "Ustadzah Qonita",
+                "phone": "+62 852-2050-5053"
+            }
+        ],
+        "students": [
+            {
+                "name": "Abrisam Rafif Abqori",
+                "ayah": "Riyadh Fikara Muhammadi",
+                "bunda": null,
+                "academic_year": "2025/2026",
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Aisyah",
+                "ayah": "Slamet Priyadi",
+                "bunda": null,
+                "academic_year": "2025/2026",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Maryam",
+                        "class": "Kuttab Awal 3A",
+                        "academic_year": "2023/2024"
+                    },
+                    {
+                        "name": "Yahya",
+                        "class": "Qonuni 4A",
+                        "academic_year": "2019/2020"
+                    }
+                ]
+            },
+            {
+                "name": "Arsyilla Farzana Ayesha",
+                "ayah": "Ramadhanul Fajri",
+                "bunda": null,
+                "academic_year": "2025/2026",
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Hanun Asma Shabira",
+                "ayah": "Muhlis Prasetiyo",
+                "bunda": null,
+                "academic_year": "2025/2026",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Ghaida Kana Shafiyya",
+                        "class": "Qonuni 2B",
+                        "academic_year": "2022/2023"
+                    },
+                    {
+                        "name": "Ubay Abiyya Arundaya",
+                        "class": "Qonuni 4A",
+                        "academic_year": "2020/2021"
+                    }
+                ]
+            },
+            {
+                "name": "Khadijah Putri Arifin",
+                "ayah": "Mahmud Arifin",
+                "bunda": null,
+                "academic_year": "2025/2026",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Muhammad Alfa Khalid Arifin",
+                        "class": "Kuttab Awal 3D",
+                        "academic_year": "2024/2025"
+                    }
+                ]
+            },
+            {
+                "name": "Miftahul Khairani Dalimunthe",
+                "ayah": "Nasrullah",
+                "bunda": null,
+                "academic_year": "2025/2026",
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Muhammad Arsyad Hilmi",
+                "ayah": "Encep Deden Zainal Mukarom",
+                "bunda": null,
+                "academic_year": "2025/2026",
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Muhammad Firash Abdullah",
+                "ayah": "M. Alfian Rendra Saputra",
+                "bunda": null,
+                "academic_year": "2025/2026",
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Rufaidah Al Anshoriyah",
+                "ayah": "Freddy Hermawan, S.Si",
+                "bunda": null,
+                "academic_year": "2025/2026",
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Umar Abdullah Arif",
+                "ayah": "Ridho Junas Saputra",
+                "bunda": null,
+                "academic_year": "2025/2026",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Nusaibah Muslimatul Arifah",
+                        "class": "Kuttab Awal 3D",
+                        "academic_year": "2024/2025"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Kuttab Awal 3A",
+        "teachers": [
+            {
+                "role": "Guru Iman & Qur'an",
+                "name": "Ustadzah Nabila",
+                "phone": "+62 895-1404-7021"
+            }
+        ],
+        "students": [
+            {
+                "name": "Abdullah Adzka Al Fatih",
+                "ayah": "Seno Andhanu",
+                "bunda": "Nurfitriani Fatimah",
+                "academic_year": "2023/2024",
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Abdullah Azzam",
+                "ayah": "Mushofa Sawa",
+                "bunda": "Nailiy Faizah",
+                "academic_year": "2023/2024",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Shofiyya Ittaqy",
+                        "class": "Qonuni 1C",
+                        "academic_year": "2021/2022"
+                    }
+                ]
+            },
+            {
+                "name": "Barra Muhammad Aqsho",
+                "ayah": "Ganjar Saefurahman",
+                "bunda": "Intan Dwita Kemala",
+                "academic_year": "2023/2024",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Hanzhalah Muhammad Faqih",
+                        "class": "Qonuni 4A",
+                        "academic_year": "2019/2020"
+                    }
+                ]
+            },
+            {
+                "name": "Ghaitsa Adzkiya Naqeeba",
+                "ayah": "Zaki Zakaria Muttaqin",
+                "bunda": "Destriyanti",
+                "academic_year": "2023/2024",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Ghazi Al-Adzki Nagendra",
+                        "class": "Kuttab Awal 1B",
+                        "academic_year": "2025/2026"
+                    }
+                ]
+            },
+            {
+                "name": "Ghazi Anandi Hasan",
+                "ayah": "Amirul Hasan",
+                "bunda": "Lina Rahmawati",
+                "academic_year": "2023/2024",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Ghaida Anindya Hasan",
+                        "class": "Qonuni 2B",
+                        "academic_year": "2021/2022"
+                    }
+                ]
+            },
+            {
+                "name": "Hafidzah Mikayla Hawa Putri Akbar",
+                "ayah": "Maulana Suryana Akbar",
+                "bunda": "Eneng Fitria Hamdani",
+                "academic_year": "2023/2024",
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Ibrahim Thufail Alghifari",
+                "ayah": "Rahmat Cepi Fajarulloh",
+                "bunda": "Dina Thorifah Rahmani",
+                "academic_year": "2023/2024",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Shofiah Hanifatul Karimah",
+                        "class": "Qonuni 1C",
+                        "academic_year": "2022/2023"
+                    }
+                ]
+            },
+            {
+                "name": "Maryam",
+                "ayah": "Slamet Priyadi",
+                "bunda": "Amelia Rahayu",
+                "academic_year": "2023/2024",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Aisyah",
+                        "class": "Kuttab Awal 1A",
+                        "academic_year": "2025/2026"
+                    },
+                    {
+                        "name": "Aisyah",
+                        "class": "Kuttab Awal 2D",
+                        "academic_year": "2025/2026"
+                    },
+                    {
+                        "name": "Yahya",
+                        "class": "Qonuni 4A",
+                        "academic_year": "2019/2020"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Kuttab Awal 3B",
+        "teachers": [
+            {
+                "role": "Guru Iman & Qur'an",
+                "name": "Ustadz Husin",
+                "phone": "+62 856-9319-7324"
+            }
+        ],
+        "students": [
+            {
+                "name": "Ahmad Umar Abdul Aziz",
+                "ayah": "Budiyanto",
+                "bunda": "Septiana Puspasari",
+                "academic_year": "2023/2024",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Maryam Salma Karimah",
+                        "class": "Qonuni 3B",
+                        "academic_year": "2020/2021"
+                    }
+                ]
+            },
+            {
+                "name": "Asiyah Tsabitah Alqudwah",
+                "ayah": "Muhammad Yanizal Reza",
+                "bunda": "Maulida Mulya Rahmawati",
+                "academic_year": "2023/2024",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Abdurrahman Ibrahim Alqudwah",
+                        "class": "Kuttab Awal 1B",
+                        "academic_year": "2025/2026"
+                    },
+                    {
+                        "name": "Abdullah Umar Alqudwah",
+                        "class": "Qonuni 3A",
+                        "academic_year": "2020/2021"
+                    }
+                ]
+            },
+            {
+                "name": "Hilya Salsabila",
+                "ayah": "Iqbal Maududi",
+                "bunda": "Linda Eka Prastiwi",
+                "academic_year": "2023/2024",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Inayatur Rohmah",
+                        "class": "Qonuni 1C",
+                        "academic_year": "2023/2024"
+                    }
+                ]
+            },
+            {
+                "name": "Khadijah",
+                "ayah": "Suhendar",
+                "bunda": "Intan Fatmawati",
+                "academic_year": "2023/2024",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Anas Said Abdurrahman",
+                        "class": "Kuttab Awal 1A",
+                        "academic_year": "2025/2026"
+                    }
+                ]
+            },
+            {
+                "name": "Muhammad Aliyuddin Wisam",
+                "ayah": "Septian AW",
+                "bunda": "Yuyun Novia",
+                "academic_year": "2023/2024",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Islamia Aribah Putri",
+                        "class": "Qonuni 2B",
+                        "academic_year": "2022/2023"
+                    }
+                ]
+            },
+            {
+                "name": "Muhammad Maahin Pangarep",
+                "ayah": "Torik Hudin",
+                "bunda": "Rika Purnamasari",
+                "academic_year": "2023/2024",
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Musa",
+                "ayah": "Krisna Dwi Wardhana",
+                "bunda": "Eva Nurpeti",
+                "academic_year": "2023/2024",
+                "kode_registrasi": null,
+                "siblings": null
+            }
+        ]
+    },
+    {
+        "name": "Kuttab Awal 3C",
+        "teachers": [
+            {
+                "role": "Guru Iman",
+                "name": "Ustadzah Sinta",
+                "phone": "+62 813-8328-4483"
+            },
+            {
+                "role": "Guru Qur'an",
+                "name": "Ustadzah Amel",
+                "phone": "+62 898-9513-993"
+            }
+        ],
+        "students": [
+            {
+                "name": "Aisyah Azalea Dzahin",
+                "ayah": "Bagus Prassetya",
+                "bunda": null,
+                "academic_year": "2024/2025",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Ayyash Ahmad Al Kahfi",
+                        "class": "Qonuni 1B",
+                        "academic_year": "2023/2024"
+                    }
+                ]
+            },
+            {
+                "name": "Aisyah Iskandar",
+                "ayah": "Sugih Iskandar",
+                "bunda": null,
+                "academic_year": "2024/2025",
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Aisyah Tsabita Arradita",
+                "ayah": "Rangga Ditya Yofa",
+                "bunda": null,
+                "academic_year": "2024/2025",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Alkhansa Hanania Arradita",
+                        "class": "Qonuni 2B",
+                        "academic_year": "2022/2023"
+                    },
+                    {
+                        "name": "Muhammad Alim Syaban Arradita",
+                        "class": "Qonuni 4A",
+                        "academic_year": "2020/2021"
+                    }
+                ]
+            },
+            {
+                "name": "Arsakha Jabbar Al Fatih",
+                "ayah": "Muhamad Sobari",
+                "bunda": null,
+                "academic_year": "2024/2025",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Alula Jasmine Altahfunnisa",
+                        "class": "Kuttab Awal 1A",
+                        "academic_year": "2025/2026"
+                    }
+                ]
+            },
+            {
+                "name": "Avcenna Runako Abqary Jati",
+                "ayah": "Fajar Hidayat Jati",
+                "bunda": null,
+                "academic_year": "2024/2025",
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Humaira",
+                "ayah": "Agus Setiawan",
+                "bunda": null,
+                "academic_year": "2024/2025",
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Muadz Qaulan Baliighaa",
+                "ayah": "Muhamad Solehudin",
+                "bunda": null,
+                "academic_year": "2024/2025",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Uwais Qaulan Sadiidaa",
+                        "class": "Qonuni 3A",
+                        "academic_year": "2021/2022"
+                    }
+                ]
+            },
+            {
+                "name": "Muhammad Arqam Abdullah",
+                "ayah": "Cakra Triaji",
+                "bunda": null,
+                "academic_year": "2024/2025",
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Nizam Arrayan",
+                "ayah": "Suhardiman",
+                "bunda": null,
+                "academic_year": "2024/2025",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Nayra Assyifa",
+                        "class": "Qonuni 4B",
+                        "academic_year": "2019/2020"
+                    }
+                ]
+            },
+            {
+                "name": "Orlin Naila Shaqueena",
+                "ayah": "M Nanda",
+                "bunda": null,
+                "academic_year": "2024/2025",
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Qonita Muna Muslihah",
+                "ayah": "La Ode Maharudin",
+                "bunda": null,
+                "academic_year": "2024/2025",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "La Ode Abdul Aziz Malik",
+                        "class": "Qonuni 3A",
+                        "academic_year": "2020/2021"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Kuttab Awal 3D",
+        "teachers": [
+            {
+                "role": "Guru Iman & Qur'an",
+                "name": "Ustadz Iko",
+                "phone": "+62 857-4243-7742"
+            }
+        ],
+        "students": [
+            {
+                "name": "Athaya Sanan Salih",
+                "ayah": "Syekh Abdul Qodir",
+                "bunda": null,
+                "academic_year": "2024/2025",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Qudsi Al Hakim",
+                        "class": "Qonuni 4A",
+                        "academic_year": "2020/2021"
+                    }
+                ]
+            },
+            {
+                "name": "Gendhis Astarina",
+                "ayah": "Girindra Wardhana",
+                "bunda": null,
+                "academic_year": "2024/2025",
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Harika Izzatunnisa",
+                "ayah": "Jupri Supriadi",
+                "bunda": null,
+                "academic_year": "2024/2025",
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Khalida Syakila Ismail",
+                "ayah": "Gerry Indra Ismanto",
+                "bunda": null,
+                "academic_year": "2024/2025",
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Muhammad Alfa Khalid Arifin",
+                "ayah": "Mahmud Arifin",
+                "bunda": null,
+                "academic_year": "2024/2025",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Khadijah Putri Arifin",
+                        "class": "Kuttab Awal 2D",
+                        "academic_year": "2025/2026"
+                    }
+                ]
+            },
+            {
+                "name": "Nusaibah Muslimatul Arifah",
+                "ayah": "Ridho Junas Saputra",
+                "bunda": null,
+                "academic_year": "2024/2025",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Umar Abdullah Arif",
+                        "class": "Kuttab Awal 2D",
+                        "academic_year": "2025/2026"
+                    }
+                ]
+            },
+            {
+                "name": "Omar Malik Abdullah",
+                "ayah": "Airlangga Isworo",
+                "bunda": null,
+                "academic_year": "2024/2025",
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Raffasya Arfan Affandi",
+                "ayah": "Rifki Apandi",
+                "bunda": null,
+                "academic_year": "2024/2025",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Emirza Salman Affandi",
+                        "class": "Qonuni 3A",
+                        "academic_year": "2021/2022"
+                    }
+                ]
+            },
+            {
+                "name": "Siti Aujah Nadhiroh",
+                "ayah": "Ahmad Zelmanto",
+                "bunda": null,
+                "academic_year": "2024/2025",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Ahmad Zayyinnal Quron",
+                        "class": "Qonuni 1B",
+                        "academic_year": "2024/2025"
+                    }
+                ]
+            },
+            {
+                "name": "Umar Abrisam Al Ayubbi",
+                "ayah": "R. Prasetya Darma Putranto",
+                "bunda": null,
+                "academic_year": "2024/2025",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Hanifah Fawwas Alkhansa",
+                        "class": "Qonuni 2B",
+                        "academic_year": "2022/2023"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Qonuni 1A",
+        "teachers": [
+            {
+                "role": "Guru Iman",
+                "name": "Ustadz Iqbal",
+                "phone": "+62 852-1002-2577"
+            },
+            {
+                "role": "Guru Qur'an",
+                "name": "Ustadz Suhendar",
+                "phone": "+62 821-2490-1947"
+            }
+        ],
+        "students": [
+            {
+                "name": "Abbad An-Nabhan Hakim",
+                "ayah": null,
+                "bunda": null,
+                "academic_year": null,
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Abdillah Falah",
+                "ayah": "Syaiful Falah",
+                "bunda": "Aprianti",
+                "academic_year": "2021/2022",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Fatimah Ghaziya Falah",
+                        "class": "Qonuni 4B",
+                        "academic_year": "2020/2021"
+                    }
+                ]
+            },
+            {
+                "name": "Ahmad Syawal Arrayyan",
+                "ayah": "Muhamad Iman Damara",
+                "bunda": "Elya Ekawati",
+                "academic_year": "2023/2024",
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Ahmad Zayyin Ilman Prasetio",
+                "ayah": "Riko Hadiyanto Prasetio , ST,M.T",
+                "bunda": "Siti Ina Sakinah ,ST",
+                "academic_year": "2022/2023",
+                "kode_registrasi": "KAFC014-078",
+                "siblings": null
+            },
+            {
+                "name": "Al Fatih Ramazan Bahari",
+                "ayah": "Robin",
+                "bunda": "Astri Nurnaafi",
+                "academic_year": "2023/2024",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Alifah Fauzya Bahari",
+                        "class": "Qonuni 3B",
+                        "academic_year": "2021/2022"
+                    }
+                ]
+            },
+            {
+                "name": "Ibrahim Hilmi Imanto",
+                "ayah": "Takdir Imanto",
+                "bunda": "Urip Sugiarti",
+                "academic_year": "2022/2023",
+                "kode_registrasi": "KAFC014-066",
+                "siblings": null
+            },
+            {
+                "name": "Muhammad",
+                "ayah": "Bayu Rustami",
+                "bunda": null,
+                "academic_year": "2025/2026",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Muhammad Riyad Alfathan",
+                        "class": "Kuttab Awal 1B",
+                        "academic_year": "2025/2026"
+                    }
+                ]
+            },
+            {
+                "name": "Muhammad Alfatih Wijaya",
+                "ayah": "Helman Wijaya",
+                "bunda": "Leni Melvita",
+                "academic_year": "2022/2023",
+                "kode_registrasi": "KAFC014-028",
+                "siblings": [
+                    {
+                        "name": "Muhammad Alfalah Wijaya",
+                        "class": "Qonuni 4A",
+                        "academic_year": "2019/2020"
+                    }
+                ]
+            },
+            {
+                "name": "Muhammad Dzafir Al Hafizd",
+                "ayah": "Muhammad Yanis Sawiti",
+                "bunda": "Vela Damayanti",
+                "academic_year": "2023/2024",
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Muhammad Faruq Al Fatih Rakhmawan",
+                "ayah": "Catur Basuki Rakhmawan",
+                "bunda": "Noor Baiti",
+                "academic_year": "2022/2023",
+                "kode_registrasi": "KAFC014-085",
+                "siblings": [
+                    {
+                        "name": "Fatimah Aulia Rakhmawan",
+                        "class": "Qonuni 3B",
+                        "academic_year": "2020/2021"
+                    }
+                ]
+            },
+            {
+                "name": "Muhammad Jahda Imana",
+                "ayah": "Aam Slamet Rusydiana",
+                "bunda": "Hasna Maliha",
+                "academic_year": "2022/2023",
+                "kode_registrasi": "KAFC014-020",
+                "siblings": [
+                    {
+                        "name": "Fatimata Althaf Huuriya",
+                        "class": "Qonuni 3B",
+                        "academic_year": "2020/2021"
+                    }
+                ]
+            },
+            {
+                "name": "Muhammad Zahran Syarif",
+                "ayah": "Ahmad Sopian",
+                "bunda": "Nurhasanah",
+                "academic_year": "2023/2024",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Raihana Aulia Khanza Salsabila",
+                        "class": "Kuttab Awal 2C",
+                        "academic_year": "2024/2025"
+                    }
+                ]
+            },
+            {
+                "name": "Muhammad Zaid Al-Fatih",
+                "ayah": "Dede Ahmad Muhtarom",
+                "bunda": "Hening Tyas",
+                "academic_year": "2022/2023",
+                "kode_registrasi": "KAFC014-062",
+                "siblings": null
+            },
+            {
+                "name": "Rasydan Haidarrahman Abdullah",
+                "ayah": "Kurnia Setiawan",
+                "bunda": "Suryani Wulandari",
+                "academic_year": "2022/2023",
+                "kode_registrasi": "KAFC014-024",
+                "siblings": [
+                    {
+                        "name": "Hanaa Nusaibah Qonita",
+                        "class": "Kuttab Awal 2B",
+                        "academic_year": "2024/2025"
+                    }
+                ]
+            },
+            {
+                "name": "Sahal Sesfao",
+                "ayah": "Sadam Husen Sesfao",
+                "bunda": "Sinta Yuli Indra",
+                "academic_year": "2021/2022",
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Shawqy Athalla Yerrie",
+                "ayah": "Ronny Yerrie",
+                "bunda": "Sasti Ambarwati Nursani",
+                "academic_year": "2022/2023",
+                "kode_registrasi": "KAFC014-043",
+                "siblings": null
+            }
+        ]
+    },
+    {
+        "name": "Qonuni 1B",
+        "teachers": [
+            {
+                "role": "Guru Iman",
+                "name": "Ustadz Indra",
+                "phone": "+62 857-1400-9996"
+            },
+            {
+                "role": "Guru Qur'an",
+                "name": "Ustadz Saddam",
+                "phone": "+62 823-8770-5293"
+            }
+        ],
+        "students": [
+            {
+                "name": "Ahmad Arsya Althafariz",
+                "ayah": null,
+                "bunda": null,
+                "academic_year": null,
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Ahmad Zayyinnal Quron",
+                "ayah": "Ahmad Zelmanto",
+                "bunda": null,
+                "academic_year": "2024/2025",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Siti Aujah Nadhiroh",
+                        "class": "Kuttab Awal 3D",
+                        "academic_year": "2024/2025"
+                    }
+                ]
+            },
+            {
+                "name": "Arsabyan Somba Hasry",
+                "ayah": "Febriandy Prima Hasry",
+                "bunda": "Nurlika Cahyani",
+                "academic_year": "2022/2023",
+                "kode_registrasi": "KAFC014-047",
+                "siblings": [
+                    {
+                        "name": "Aulian Anwarzayd Hasry",
+                        "class": "Kuttab Awal 2A",
+                        "academic_year": "2024/2025"
+                    },
+                    {
+                        "name": "Albirra Ghiyas Hasry",
+                        "class": "Qonuni 3A",
+                        "academic_year": "2021/2022"
+                    }
+                ]
+            },
+            {
+                "name": "Ayyash Ahmad Al Kahfi",
+                "ayah": "Bagus Prassetya",
+                "bunda": "Ananda Yashinta Rahmayanti",
+                "academic_year": "2023/2024",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Aisyah Azalea Dzahin",
+                        "class": "Kuttab Awal 3C",
+                        "academic_year": "2024/2025"
+                    }
+                ]
+            },
+            {
+                "name": "Bayhaqqi Al Ghani",
+                "ayah": "Karjito",
+                "bunda": "Vivi Dwi Juniati",
+                "academic_year": "2022/2023",
+                "kode_registrasi": "KAFC014-049",
+                "siblings": null
+            },
+            {
+                "name": "Fathan",
+                "ayah": "Ismail",
+                "bunda": "Refnizul",
+                "academic_year": "2022/2023",
+                "kode_registrasi": "KAFC014-038",
+                "siblings": [
+                    {
+                        "name": "Fatimah",
+                        "class": "Qonuni 4B",
+                        "academic_year": "2019/2020"
+                    }
+                ]
+            },
+            {
+                "name": "Hamas Syahid Abdullah",
+                "ayah": "Hermawan",
+                "bunda": "Dwi Agustina Triwisari",
+                "academic_year": "2022/2023",
+                "kode_registrasi": "KAFC014-050",
+                "siblings": [
+                    {
+                        "name": "Nur Humairah Khairunnisa",
+                        "class": "Kuttab Awal 2B",
+                        "academic_year": "2024/2025"
+                    },
+                    {
+                        "name": "Nur Qisya Ramadhani",
+                        "class": "Qonuni 4B",
+                        "academic_year": "2019/2020"
+                    }
+                ]
+            },
+            {
+                "name": "Ibrahim Abdullah Mukti",
+                "ayah": "Indra Wibawa Mukti",
+                "bunda": "Widy Kartika",
+                "academic_year": "2022/2023",
+                "kode_registrasi": "KAFC014-032",
+                "siblings": null
+            },
+            {
+                "name": "Izzan Ibadurrahman",
+                "ayah": "Jupri",
+                "bunda": "Shiva Ulya Azizah",
+                "academic_year": "2022/2023",
+                "kode_registrasi": "KAFC014-030",
+                "siblings": null
+            },
+            {
+                "name": "Khalid Akram Ziyad",
+                "ayah": "Indra Permana",
+                "bunda": "Radhen Inthan Leothriansari Vutaco",
+                "academic_year": "2022/2023",
+                "kode_registrasi": "KAFC014-022",
+                "siblings": null
+            },
+            {
+                "name": "Khalfan Aqmar Fazel",
+                "ayah": "Anangga Khairussalam",
+                "bunda": "Andita Pribana Dewi",
+                "academic_year": "2023/2024",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Kanna Shahia Khairuna",
+                        "class": "Kuttab Awal 1A",
+                        "academic_year": "2025/2026"
+                    }
+                ]
+            },
+            {
+                "name": "Muhammad Faiz Al Khalish",
+                "ayah": null,
+                "bunda": null,
+                "academic_year": null,
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Muhammad Faqih Alfatih",
+                "ayah": "Bimo Rekso Samudro",
+                "bunda": "Tia Restyani",
+                "academic_year": "2022/2023",
+                "kode_registrasi": "KAFC014-082",
+                "siblings": [
+                    {
+                        "name": "Azkadina Mumtazah Alwafa",
+                        "class": "Kuttab Awal 2A",
+                        "academic_year": "2024/2025"
+                    },
+                    {
+                        "name": "Hanna Azaria Zhafira",
+                        "class": "Qonuni 4B",
+                        "academic_year": "2020/2021"
+                    }
+                ]
+            },
+            {
+                "name": "Muhammad Zadinniqo Attaqy",
+                "ayah": "Ahmad Ulin Ni'am Shifriyan",
+                "bunda": "Qonita Diena Muchtar",
+                "academic_year": "2022/2023",
+                "kode_registrasi": "KAFC014-023",
+                "siblings": null
+            },
+            {
+                "name": "Raizel Zinan Muhammad",
+                "ayah": "Taufik",
+                "bunda": "Evalina Lia Yuliarti",
+                "academic_year": "2022/2023",
+                "kode_registrasi": "KAFC014-041",
+                "siblings": [
+                    {
+                        "name": "Tsurayya Nara Abida",
+                        "class": "Kuttab Awal 1B",
+                        "academic_year": "2025/2026"
+                    },
+                    {
+                        "name": "Rubaina Zahra Ayesha",
+                        "class": "Qonuni 3B",
+                        "academic_year": "2021/2022"
+                    }
+                ]
+            },
+            {
+                "name": "Yahya Abdurrahman Nugraha",
+                "ayah": "Herry Nugraha",
+                "bunda": "Bairanti Asriandhini Marwan",
+                "academic_year": "2022/2023",
+                "kode_registrasi": "KAFC014-083",
+                "siblings": null
+            }
+        ]
+    },
+    {
+        "name": "Qonuni 1C",
+        "teachers": [
+            {
+                "role": "Guru Iman",
+                "name": "Ustadzah Evi",
+                "phone": "+62 856-5560-5112"
+            },
+            {
+                "role": "Guru Qur'an",
+                "name": "Ustadzah Syarmila",
+                "phone": "+62 818-0290-7902"
+            }
+        ],
+        "students": [
+            {
+                "name": "Ahsanitaqwim Maula Mu'minah",
+                "ayah": "Ikhsan Sahid Sanjani",
+                "bunda": "Feni Yurisa",
+                "academic_year": "2022/2023",
+                "kode_registrasi": "KAFC014-079",
+                "siblings": [
+                    {
+                        "name": "Ana Mir'atu Khadijah",
+                        "class": "Kuttab Awal 1A",
+                        "academic_year": "2025/2026"
+                    }
+                ]
+            },
+            {
+                "name": "Aisyah Almira Saliha",
+                "ayah": "Rifki Fauzi",
+                "bunda": "Yuliana Mustikawati",
+                "academic_year": "2022/2023",
+                "kode_registrasi": "KAFC014-071",
+                "siblings": [
+                    {
+                        "name": "Muhammad Sulaiman Al Qanuni",
+                        "class": "Kuttab Awal 1B",
+                        "academic_year": "2025/2026"
+                    }
+                ]
+            },
+            {
+                "name": "Inayatur Rohmah",
+                "ayah": "Iqbal Maududi",
+                "bunda": "Linda Eka Prastiwi",
+                "academic_year": "2023/2024",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Hilya Salsabila",
+                        "class": "Kuttab Awal 3B",
+                        "academic_year": "2023/2024"
+                    }
+                ]
+            },
+            {
+                "name": "Kaeysha Ghania Gustika",
+                "ayah": null,
+                "bunda": null,
+                "academic_year": null,
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Kayyisa Niswah Afifah",
+                "ayah": "Irwansyah",
+                "bunda": "Wahyu Weratiningroom",
+                "academic_year": "2022/2023",
+                "kode_registrasi": "KAFC014-034",
+                "siblings": null
+            },
+            {
+                "name": "Khanara Putri Ramadhani Novisal",
+                "ayah": "Salman",
+                "bunda": "Novitasari",
+                "academic_year": "2022/2023",
+                "kode_registrasi": "KAFC014-052",
+                "siblings": null
+            },
+            {
+                "name": "Khansa Tsuraya Saudah",
+                "ayah": "Fathiyakan",
+                "bunda": "Arasy Fauzia",
+                "academic_year": "2023/2024",
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Raudhatul Jannah Hudrita",
+                "ayah": "Reza Primawan Hudrita",
+                "bunda": "Annisa Sophia",
+                "academic_year": "2022/2023",
+                "kode_registrasi": "KAFC014-073",
+                "siblings": [
+                    {
+                        "name": "Ruya Fathammubina Hudrita",
+                        "class": "Kuttab Awal 1A",
+                        "academic_year": "2025/2026"
+                    }
+                ]
+            },
+            {
+                "name": "Rumaysho",
+                "ayah": null,
+                "bunda": null,
+                "academic_year": null,
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Shofiah Hanifatul Karimah",
+                "ayah": "Rahmat Cepi Fajarulloh",
+                "bunda": "Dina Thorifah Rahmani",
+                "academic_year": "2022/2023",
+                "kode_registrasi": "KAFC014-051",
+                "siblings": [
+                    {
+                        "name": "Ibrahim Thufail Alghifari",
+                        "class": "Kuttab Awal 3A",
+                        "academic_year": "2023/2024"
+                    }
+                ]
+            },
+            {
+                "name": "Shofiyya Ittaqy",
+                "ayah": "Mushofa Sawa",
+                "bunda": "Nailiy Faizah",
+                "academic_year": "2021/2022",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Abdullah Azzam",
+                        "class": "Kuttab Awal 3A",
+                        "academic_year": "2023/2024"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Qonuni 2A",
+        "teachers": [
+            {
+                "role": "Guru Iman",
+                "name": "Ustadz Ajid",
+                "phone": "+62 857-8076-4015"
+            },
+            {
+                "role": "Guru Qur'an",
+                "name": "Ustadz Zulkifli",
+                "phone": "+62 821-1512-9670"
+            }
+        ],
+        "students": [
+            {
+                "name": "AdzDzakir Misyary Ahmad",
+                "ayah": "Achmad Syaefillah",
+                "bunda": "Arifah Rizqiani",
+                "academic_year": "2021/2022",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Ayman Attaqi Ahmad",
+                        "class": "Kuttab Awal 2A",
+                        "academic_year": "2024/2025"
+                    },
+                    {
+                        "name": "Azmi Arifin Ahmad",
+                        "class": "Qonuni 3A",
+                        "academic_year": "2021/2022"
+                    }
+                ]
+            },
+            {
+                "name": "Muhammad Fatan Hasri Harahap",
+                "ayah": "Hasrul harahap",
+                "bunda": "Rita Zahara",
+                "academic_year": "2021/2022",
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Muhammad Al fatih Syawwal",
+                "ayah": null,
+                "bunda": null,
+                "academic_year": "2024/2025",
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Muhammad Ayyash Al Fatih",
+                "ayah": "Diana Jamaludin",
+                "bunda": "Istianah Mulkiyah",
+                "academic_year": "2022/2023",
+                "kode_registrasi": "KAFC014-080",
+                "siblings": null
+            },
+            {
+                "name": "Muhammad Azka Putra Rasya",
+                "ayah": "Muhammad Syaeful Iman",
+                "bunda": "Ratna Marhendri Kusumawati",
+                "academic_year": "2021/2022",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Muhammad Zefa Putra Rasya",
+                        "class": "Kuttab Awal 2C",
+                        "academic_year": "2024/2025"
+                    }
+                ]
+            },
+            {
+                "name": "Muhammad Furqon Sabilillah",
+                "ayah": "Mohamad Wildan",
+                "bunda": "Muhimmmatussadah",
+                "academic_year": "2022/2023",
+                "kode_registrasi": "KAFC014-059",
+                "siblings": [
+                    {
+                        "name": "Aziruddin Hanif El Haq",
+                        "class": "Kuttab Awal 2C",
+                        "academic_year": "2024/2025"
+                    }
+                ]
+            },
+            {
+                "name": "Muhammad Jundi Ar Rahman Hardianto",
+                "ayah": null,
+                "bunda": null,
+                "academic_year": null,
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Muhammad Mumtaz Muzaffar",
+                "ayah": "Budiman",
+                "bunda": "Novi Pratiwi",
+                "academic_year": "2021/2022",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Ammar Ayyash Abdurrahman",
+                        "class": "Kuttab Awal 2C",
+                        "academic_year": "2024/2025"
+                    },
+                    {
+                        "name": "Fakhira Fatimah Al Fihri",
+                        "class": "Qonuni 4B",
+                        "academic_year": "2019/2020"
+                    }
+                ]
+            },
+            {
+                "name": "Muhammad Uwais Lubis",
+                "ayah": "Adam Malik Lubis",
+                "bunda": "Fathia Karima",
+                "academic_year": "2022/2023",
+                "kode_registrasi": "KAFC014-054",
+                "siblings": [
+                    {
+                        "name": "Aisyah Iqleema Lubis",
+                        "class": "Qonuni 2B",
+                        "academic_year": "2022/2023"
+                    }
+                ]
+            },
+            {
+                "name": "Muhammad Yusuf Muwafiq",
+                "ayah": "Muhammad Ridwan",
+                "bunda": "Sutiah",
+                "academic_year": "2021/2022",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Rayyan Syauqi Muhammad",
+                        "class": "Kuttab Awal 2B",
+                        "academic_year": "2024/2025"
+                    },
+                    {
+                        "name": "Humairaa Syifaa Izzatunnisa",
+                        "class": "Qonuni 2B",
+                        "academic_year": "2021/2022"
+                    },
+                    {
+                        "name": "Nida Fayza Qurratul'ain Syauqillah",
+                        "class": "Qonuni 3B",
+                        "academic_year": "2021/2022"
+                    }
+                ]
+            },
+            {
+                "name": "Sajid Ibrahim",
+                "ayah": "Rachmat Widyanto",
+                "bunda": "Ranti Futiawati",
+                "academic_year": "2021/2022",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Shiddiqa Humaira",
+                        "class": "Kuttab Awal 2A",
+                        "academic_year": "2024/2025"
+                    }
+                ]
+            },
+            {
+                "name": "Tsaqib Muhammad Al Fatih",
+                "ayah": "Sanna Silly Dayusman",
+                "bunda": "Nur Rahmah Andini",
+                "academic_year": "2021/2022",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Khadeejah Amelia Qurani",
+                        "class": "Kuttab Awal 1A",
+                        "academic_year": "2025/2026"
+                    }
+                ]
+            },
+            {
+                "name": "Zain Nabhan Ar-Ruzain",
+                "ayah": "Syaeful Mispan",
+                "bunda": "Resti Meitania",
+                "academic_year": "2021/2022",
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Zaki Dzulkarnain Nasution",
+                "ayah": "Husin Nasution",
+                "bunda": "Ledia Hesti",
+                "academic_year": "2021/2022",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Nailah Humairah Nasution",
+                        "class": "Kuttab Awal 2A",
+                        "academic_year": "2024/2025"
+                    },
+                    {
+                        "name": "Zafran Nasution",
+                        "class": "Qonuni 4A",
+                        "academic_year": "2019/2020"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Qonuni 2B",
+        "teachers": [
+            {
+                "role": "Guru Iman",
+                "name": "Ustadzah Feni",
+                "phone": "+62 856-9546-6492"
+            },
+            {
+                "role": "Guru Qur'an",
+                "name": "Ustadzah Nurkholifah",
+                "phone": "+62 858-1493-7897"
+            }
+        ],
+        "students": [
+            {
+                "name": "Adreena Malayeka Varisha",
+                "ayah": "Bambang Saefu",
+                "bunda": "Herviana Rika Reza",
+                "academic_year": "2021/2022",
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Afifa Rafanda Achmad",
+                "ayah": "Achmad Tedi",
+                "bunda": "Angghy kurniani",
+                "academic_year": "2022/2023",
+                "kode_registrasi": "KAFC014-070",
+                "siblings": null
+            },
+            {
+                "name": "Aisyah Iqleema Lubis",
+                "ayah": "Adam Malik Lubis",
+                "bunda": "Fathia Karima",
+                "academic_year": "2022/2023",
+                "kode_registrasi": "KAFC014-055",
+                "siblings": [
+                    {
+                        "name": "Muhammad Uwais Lubis",
+                        "class": "Qonuni 2A",
+                        "academic_year": "2022/2023"
+                    }
+                ]
+            },
+            {
+                "name": "Aliyah",
+                "ayah": "Trisna Dwi Wardhana",
+                "bunda": "Eva Nurpeti",
+                "academic_year": "2021/2022",
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Alkhansa Hanania Arradita",
+                "ayah": "Rangga Ditya Yofa",
+                "bunda": "Dinar Prasista Bachri",
+                "academic_year": "2022/2023",
+                "kode_registrasi": "KAFC014-010",
+                "siblings": [
+                    {
+                        "name": "Aisyah Tsabita Arradita",
+                        "class": "Kuttab Awal 3C",
+                        "academic_year": "2024/2025"
+                    },
+                    {
+                        "name": "Muhammad Alim Syaban Arradita",
+                        "class": "Qonuni 4A",
+                        "academic_year": "2020/2021"
+                    }
+                ]
+            },
+            {
+                "name": "Asy Syaima Ainul Mardhiyah",
+                "ayah": null,
+                "bunda": null,
+                "academic_year": null,
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Ghaida Anindya Hasan",
+                "ayah": "Amirul Hasan",
+                "bunda": "Lina Rahmawati",
+                "academic_year": "2021/2022",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Ghazi Anandi Hasan",
+                        "class": "Kuttab Awal 3A",
+                        "academic_year": "2023/2024"
+                    }
+                ]
+            },
+            {
+                "name": "Ghaida Kana Shafiyya",
+                "ayah": "Muhlis Prasetiyo",
+                "bunda": "Puji Rahayu",
+                "academic_year": "2022/2023",
+                "kode_registrasi": "KAFC014-025",
+                "siblings": [
+                    {
+                        "name": "Hanun Asma Shabira",
+                        "class": "Kuttab Awal 2D",
+                        "academic_year": "2025/2026"
+                    },
+                    {
+                        "name": "Ubay Abiyya Arundaya",
+                        "class": "Qonuni 4A",
+                        "academic_year": "2020/2021"
+                    }
+                ]
+            },
+            {
+                "name": "Hanifah Fawwas Alkhansa",
+                "ayah": "R. Prasetya Darma Putranto",
+                "bunda": "Pietra Kharisma",
+                "academic_year": "2022/2023",
+                "kode_registrasi": "KAFC014-006",
+                "siblings": [
+                    {
+                        "name": "Umar Abrisam Al Ayubbi",
+                        "class": "Kuttab Awal 3D",
+                        "academic_year": "2024/2025"
+                    }
+                ]
+            },
+            {
+                "name": "Humairaa Syifaa Izzatunnisa",
+                "ayah": "Muhammad Ridwan",
+                "bunda": "Evi Yanty Dinye Saputri",
+                "academic_year": "2021/2022",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Rayyan Syauqi Muhammad",
+                        "class": "Kuttab Awal 2B",
+                        "academic_year": "2024/2025"
+                    },
+                    {
+                        "name": "Muhammad Yusuf Muwafiq",
+                        "class": "Qonuni 2A",
+                        "academic_year": "2021/2022"
+                    },
+                    {
+                        "name": "Nida Fayza Qurratul'ain Syauqillah",
+                        "class": "Qonuni 3B",
+                        "academic_year": "2021/2022"
+                    }
+                ]
+            },
+            {
+                "name": "Islamia Aribah Putri",
+                "ayah": "Septian AW",
+                "bunda": "Yuyun Novia",
+                "academic_year": "2022/2023",
+                "kode_registrasi": "KAFC014-042",
+                "siblings": [
+                    {
+                        "name": "Muhammad Aliyuddin Wisam",
+                        "class": "Kuttab Awal 3B",
+                        "academic_year": "2023/2024"
+                    }
+                ]
+            },
+            {
+                "name": "Mecca Andalusia Hamzah",
+                "ayah": "Hafizd Hamzah",
+                "bunda": "Yuseu Yustianti",
+                "academic_year": "2022/2023",
+                "kode_registrasi": "KAFC014-029",
+                "siblings": null
+            },
+            {
+                "name": "Nailah Humaira Abdillah",
+                "ayah": "Yadi Abdillah",
+                "bunda": "Erna Wulan Jamilah",
+                "academic_year": "2022/2023",
+                "kode_registrasi": "KAFC014-017",
+                "siblings": null
+            },
+            {
+                "name": "Rahmania Taqiyya Zamzami",
+                "ayah": "Oslowmihaj Zamzami",
+                "bunda": "Fitri Mulya Verakadita",
+                "academic_year": "2021/2022",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Halimah Qonita Zamzami",
+                        "class": "Kuttab Awal 1B",
+                        "academic_year": "2025/2026"
+                    }
+                ]
+            },
+            {
+                "name": "Sayyidah Fatimah Al-Anshoriyah",
+                "ayah": null,
+                "bunda": null,
+                "academic_year": null,
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Shanum Shaistanaya",
+                "ayah": "Bambang oktaryan bramantyo",
+                "bunda": "Cici Cahyati",
+                "academic_year": "2022/2023",
+                "kode_registrasi": "KAFC014-011",
+                "siblings": [
+                    {
+                        "name": "Rumaisha Azzahra",
+                        "class": "Kuttab Awal 1B",
+                        "academic_year": "2025/2026"
+                    },
+                    {
+                        "name": "Rizhan Alzena Qaireen",
+                        "class": "Qonuni 4B",
+                        "academic_year": "2020/2021"
+                    }
+                ]
+            },
+            {
+                "name": "Shofia Maryam Alhanin",
+                "ayah": "Achmad Indrawan Heryadi",
+                "bunda": "Finny Hiraini Noor Azizah",
+                "academic_year": "2021/2022",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Salsabila Ihdal Husnayain",
+                        "class": "Kuttab Awal 2B",
+                        "academic_year": "2024/2025"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Qonuni 3A",
+        "teachers": [
+            {
+                "role": "Guru Iman",
+                "name": "Ustadz Muhajir",
+                "phone": "+62 857-7717-2002"
+            },
+            {
+                "role": "Guru Qur'an",
+                "name": "Ustadz Ni'am",
+                "phone": "+62 852-2289-9449"
+            }
+        ],
+        "students": [
+            {
+                "name": "Abdullah Fadhlan Amir",
+                "ayah": null,
+                "bunda": null,
+                "academic_year": null,
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Abdullah Umar Alqudwah",
+                "ayah": "Muhammad Yanizal Reza",
+                "bunda": "Maulida Mulya Rahmawati",
+                "academic_year": "2020/2021",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Abdurrahman Ibrahim Alqudwah",
+                        "class": "Kuttab Awal 1B",
+                        "academic_year": "2025/2026"
+                    },
+                    {
+                        "name": "Asiyah Tsabitah Alqudwah",
+                        "class": "Kuttab Awal 3B",
+                        "academic_year": "2023/2024"
+                    }
+                ]
+            },
+            {
+                "name": "Abdurahman Fariz",
+                "ayah": "Rangga Mahardika",
+                "bunda": "Chaerunnisa",
+                "academic_year": "2021/2022",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Aisyah Fathiya Hanum",
+                        "class": "Kuttab Awal 2A",
+                        "academic_year": "2024/2025"
+                    }
+                ]
+            },
+            {
+                "name": "Ahmad Fayyadh Satria",
+                "ayah": "Budi Satria",
+                "bunda": "Susy Yulia",
+                "academic_year": "2020/2021",
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Albirra Ghiyas Hasry",
+                "ayah": "Febriandy Prima Hasry",
+                "bunda": "Nurlika Cahyani",
+                "academic_year": "2021/2022",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Aulian Anwarzayd Hasry",
+                        "class": "Kuttab Awal 2A",
+                        "academic_year": "2024/2025"
+                    },
+                    {
+                        "name": "Arsabyan Somba Hasry",
+                        "class": "Qonuni 1B",
+                        "academic_year": "2022/2023"
+                    }
+                ]
+            },
+            {
+                "name": "Azmi Arifin Ahmad",
+                "ayah": "Achmad Syaefillah",
+                "bunda": "Arifah Rizqiani",
+                "academic_year": "2021/2022",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Ayman Attaqi Ahmad",
+                        "class": "Kuttab Awal 2A",
+                        "academic_year": "2024/2025"
+                    },
+                    {
+                        "name": "AdzDzakir Misyary Ahmad",
+                        "class": "Qonuni 2A",
+                        "academic_year": "2021/2022"
+                    }
+                ]
+            },
+            {
+                "name": "Emirza Salman Affandi",
+                "ayah": "Rifki Apandi",
+                "bunda": "Nurlela",
+                "academic_year": "2021/2022",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Raffasya Arfan Affandi",
+                        "class": "Kuttab Awal 3D",
+                        "academic_year": "2024/2025"
+                    }
+                ]
+            },
+            {
+                "name": "Ghassan Abdourabbuh Musthafainal Akhyar",
+                "ayah": "Samsam Nurhidayat",
+                "bunda": "Asti Saraswati",
+                "academic_year": "2021/2022",
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "La Ode Abdul Aziz Malik",
+                "ayah": "La ode Maharudin",
+                "bunda": "Eko Apriyanti",
+                "academic_year": "2020/2021",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Qonita Muna Muslihah",
+                        "class": "Kuttab Awal 3C",
+                        "academic_year": "2024/2025"
+                    }
+                ]
+            },
+            {
+                "name": "Muchammad Sabil Ar Rusydi",
+                "ayah": "Rahadi Subiantoro",
+                "bunda": "Ila Cholilah",
+                "academic_year": "2020/2021",
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Muhammad Abdul Karim",
+                "ayah": "Hasan Fadhilah",
+                "bunda": "Syarmila",
+                "academic_year": "2021/2022",
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Muhammad Abrar Hartono",
+                "ayah": "Mukti Faizal Hartono",
+                "bunda": "Dini Safitri",
+                "academic_year": "2021/2022",
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Muhammad Alam Al Fatih",
+                "ayah": null,
+                "bunda": null,
+                "academic_year": "2025/2026",
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Muhammad Al-Fattah Anandisa Harahap",
+                "ayah": "Suandi Hasan",
+                "bunda": "Lisa Nofita Sari",
+                "academic_year": "2021/2022",
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Muhammad Ozil Nail Faeyza Pratama",
+                "ayah": null,
+                "bunda": null,
+                "academic_year": null,
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Muhammad Rafid Rasyad Chaidar",
+                "ayah": null,
+                "bunda": null,
+                "academic_year": null,
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Muhammad Thoriq Abdurrahman",
+                "ayah": "Danil Nurmansyah",
+                "bunda": "Evi Yusmiawati",
+                "academic_year": "2020/2021",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Atika Fahima Zahra",
+                        "class": "Kuttab Awal 2B",
+                        "academic_year": "2024/2025"
+                    }
+                ]
+            },
+            {
+                "name": "Sulthan Alkhalifi Elfathan Fauzi",
+                "ayah": "Fauzi Firmansyah",
+                "bunda": "Erisya Indah Rahmania Tonedy",
+                "academic_year": "2020/2021",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Sayyidah Maryam Rayya Fauzi",
+                        "class": "Kuttab Awal 1B",
+                        "academic_year": "2025/2026"
+                    }
+                ]
+            },
+            {
+                "name": "Syamil Al-Fatih",
+                "ayah": null,
+                "bunda": null,
+                "academic_year": null,
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Uwais Qaulan Sadiidaa",
+                "ayah": "Muhamad Solehudin",
+                "bunda": "Linda Puspitasari",
+                "academic_year": "2021/2022",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Muadz Qaulan Baliighaa",
+                        "class": "Kuttab Awal 3C",
+                        "academic_year": "2024/2025"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Qonuni 3B",
+        "teachers": [
+            {
+                "role": "Guru Iman",
+                "name": "Ustadzah Dewi Ramdhania",
+                "phone": "+62 812-8401-7573"
+            },
+            {
+                "role": "Guru Qur'an",
+                "name": "Ustadzah Arifah",
+                "phone": "+62 856-7769-415"
+            }
+        ],
+        "students": [
+            {
+                "name": "Alifah Fauzya Bahari",
+                "ayah": "Robin",
+                "bunda": "Astri Nurnaafi",
+                "academic_year": "2021/2022",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Al Fatih Ramazan Bahari",
+                        "class": "Qonuni 1A",
+                        "academic_year": "2023/2024"
+                    }
+                ]
+            },
+            {
+                "name": "Arrumaisha Qonita Huwaidah",
+                "ayah": "Imam Muda Gunawan",
+                "bunda": "Aryani Laspuri",
+                "academic_year": "2020/2021",
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Fatimah Aulia Rakhmawan",
+                "ayah": "Catur Basuki Rakhmawan",
+                "bunda": "Noor Baiti",
+                "academic_year": "2020/2021",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Muhammad Faruq Al Fatih Rakhmawan",
+                        "class": "Qonuni 1A",
+                        "academic_year": "2022/2023"
+                    }
+                ]
+            },
+            {
+                "name": "Fatimata Althaf Huuriya",
+                "ayah": "Aam Slamet Rusydiana",
+                "bunda": "Hasna Maliha",
+                "academic_year": "2020/2021",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Muhammad Jahda Imana",
+                        "class": "Qonuni 1A",
+                        "academic_year": "2022/2023"
+                    }
+                ]
+            },
+            {
+                "name": "Maryam Salma Karimah",
+                "ayah": "Budiyanto",
+                "bunda": "Septiana Puspasari",
+                "academic_year": "2020/2021",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Ahmad Umar Abdul Aziz",
+                        "class": "Kuttab Awal 3B",
+                        "academic_year": "2023/2024"
+                    }
+                ]
+            },
+            {
+                "name": "Nailah Tabanna Azkaddina",
+                "ayah": "Muhammad Ibrohim",
+                "bunda": "Widya Hapsari Citrowati",
+                "academic_year": "2021/2022",
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Nida Fayza Qurratul'ain Syauqillah",
+                "ayah": "Muhammad Ridwan",
+                "bunda": "Evi Yanty Dinye Saputri",
+                "academic_year": "2021/2022",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Rayyan Syauqi Muhammad",
+                        "class": "Kuttab Awal 2B",
+                        "academic_year": "2024/2025"
+                    },
+                    {
+                        "name": "Muhammad Yusuf Muwafiq",
+                        "class": "Qonuni 2A",
+                        "academic_year": "2021/2022"
+                    },
+                    {
+                        "name": "Humairaa Syifaa Izzatunnisa",
+                        "class": "Qonuni 2B",
+                        "academic_year": "2021/2022"
+                    }
+                ]
+            },
+            {
+                "name": "Raufa Amira Faizah",
+                "ayah": "Adi Nurdiansyah",
+                "bunda": "Baidhuri Purna Edi",
+                "academic_year": "2021/2022",
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Rubaina Zahra Ayesha",
+                "ayah": "Taufik",
+                "bunda": "Evalina Lia Y",
+                "academic_year": "2021/2022",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Tsurayya Nara Abida",
+                        "class": "Kuttab Awal 1B",
+                        "academic_year": "2025/2026"
+                    },
+                    {
+                        "name": "Raizel Zinan Muhammad",
+                        "class": "Qonuni 1B",
+                        "academic_year": "2022/2023"
+                    }
+                ]
+            },
+            {
+                "name": "Rufaida Najma Tsurayya El Naqia",
+                "ayah": "Ahmad Ulin Niam Shifriyan",
+                "bunda": "Qonita Diena Muchtar",
+                "academic_year": "2020/2021",
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Rumaisha Althafunisa",
+                "ayah": null,
+                "bunda": null,
+                "academic_year": null,
+                "kode_registrasi": null,
+                "siblings": null
+            }
+        ]
+    },
+    {
+        "name": "Qonuni 4A",
+        "teachers": [
+            {
+                "role": "Guru Iman",
+                "name": "Ustadz Febriansyah",
+                "phone": "+62 857-7862-0727"
+            },
+            {
+                "role": "Guru Qur'an",
+                "name": "Ustadz Ridwan",
+                "phone": "+62 821-7289-9033"
+            }
+        ],
+        "students": [
+            {
+                "name": "Abdullah Faqih",
+                "ayah": null,
+                "bunda": null,
+                "academic_year": "2025/2026",
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Arjuna Bagaskara Mahayattika",
+                "ayah": "Idzma Mahayyatika",
+                "bunda": null,
+                "academic_year": "2018/2019",
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Asykar Hafizh Mubarok",
+                "ayah": "Irwan Iriyanto",
+                "bunda": "Ridlo Eviyanti",
+                "academic_year": "2019/2020",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Akmal Karim Mubarok",
+                        "class": "Kuttab Awal 2C",
+                        "academic_year": "2024/2025"
+                    }
+                ]
+            },
+            {
+                "name": "Faeyza Ghaaziy Gustika",
+                "ayah": "ade gustika",
+                "bunda": "tri reti rahmawati",
+                "academic_year": "2019/2020",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Zaeyyid Buana Gustika",
+                        "class": "Kuttab Awal 1A",
+                        "academic_year": "2025/2026"
+                    }
+                ]
+            },
+            {
+                "name": "Farih Abdurrahman",
+                "ayah": "R. Fufu S.",
+                "bunda": "Wida Ratna",
+                "academic_year": "2020/2021",
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Ghazi Ariqin Safaraz",
+                "ayah": "Asep Saepul Ma'ruf",
+                "bunda": "Aprilia Intan Murniati",
+                "academic_year": "2020/2021",
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Ghifari Luthfi Cahyadi",
+                "ayah": "Agus Cahyadi",
+                "bunda": "S. Dewi",
+                "academic_year": "2020/2021",
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Hanzhalah Muhammad Faqih",
+                "ayah": "Ganjar Saefurahman",
+                "bunda": "Intan Dwita Kemala",
+                "academic_year": "2019/2020",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Barra Muhammad Aqsho",
+                        "class": "Kuttab Awal 3A",
+                        "academic_year": "2023/2024"
+                    }
+                ]
+            },
+            {
+                "name": "Ja'far Shuqurul Izz Al Ghofiqi",
+                "ayah": null,
+                "bunda": null,
+                "academic_year": null,
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Muhammad Adnan Rasyid",
+                "ayah": null,
+                "bunda": null,
+                "academic_year": null,
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Muhammad Afif Bukhari",
+                "ayah": null,
+                "bunda": null,
+                "academic_year": null,
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Muhammad Alfalah Wijaya",
+                "ayah": "HELMAN WIJAYA",
+                "bunda": "LENI MELVITA",
+                "academic_year": "2019/2020",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Muhammad Alfatih Wijaya",
+                        "class": "Qonuni 1A",
+                        "academic_year": "2022/2023"
+                    }
+                ]
+            },
+            {
+                "name": "Muhammad Alfatih Adzka Abdillah",
+                "ayah": null,
+                "bunda": null,
+                "academic_year": null,
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Muhammad Alim Syaban Arradita",
+                "ayah": "Rangga Ditya Yofa",
+                "bunda": "Dinar Prasista Bachri",
+                "academic_year": "2020/2021",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Aisyah Tsabita Arradita",
+                        "class": "Kuttab Awal 3C",
+                        "academic_year": "2024/2025"
+                    },
+                    {
+                        "name": "Alkhansa Hanania Arradita",
+                        "class": "Qonuni 2B",
+                        "academic_year": "2022/2023"
+                    }
+                ]
+            },
+            {
+                "name": "Muhammad Aria Abdurrahman Hufazh",
+                "ayah": null,
+                "bunda": null,
+                "academic_year": null,
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Nadhif Akhtar Karim",
+                "ayah": null,
+                "bunda": null,
+                "academic_year": null,
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Philantropi Hafizh",
+                "ayah": "Agung Wibowo",
+                "bunda": "Tresna Resmi Asih",
+                "academic_year": "2020/2021",
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Qudsi Al Hakim",
+                "ayah": "Syekh Abdul Qodir",
+                "bunda": "Jatining Siti Handayani",
+                "academic_year": "2020/2021",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Athaya Sanan Salih",
+                        "class": "Kuttab Awal 3D",
+                        "academic_year": "2024/2025"
+                    }
+                ]
+            },
+            {
+                "name": "Rizqi Ghazy Muhammad Shalahuddin Al Ayubi",
+                "ayah": "Sapto Nur Edie",
+                "bunda": "Mardhiyyah Fitria Ekawati",
+                "academic_year": "2020/2021",
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Sultan Muhammad Al-Fatih",
+                "ayah": null,
+                "bunda": null,
+                "academic_year": null,
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Ubay Abiyya Arundaya",
+                "ayah": "Muhlis Prasetiyo",
+                "bunda": "Puji Rahayu",
+                "academic_year": "2020/2021",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Hanun Asma Shabira",
+                        "class": "Kuttab Awal 2D",
+                        "academic_year": "2025/2026"
+                    },
+                    {
+                        "name": "Ghaida Kana Shafiyya",
+                        "class": "Qonuni 2B",
+                        "academic_year": "2022/2023"
+                    }
+                ]
+            },
+            {
+                "name": "Yahya",
+                "ayah": "Slamet Priyadi",
+                "bunda": "Amelia Rahayu",
+                "academic_year": "2019/2020",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Aisyah",
+                        "class": "Kuttab Awal 1A",
+                        "academic_year": "2025/2026"
+                    },
+                    {
+                        "name": "Aisyah",
+                        "class": "Kuttab Awal 2D",
+                        "academic_year": "2025/2026"
+                    },
+                    {
+                        "name": "Maryam",
+                        "class": "Kuttab Awal 3A",
+                        "academic_year": "2023/2024"
+                    }
+                ]
+            },
+            {
+                "name": "Zafran Nasution",
+                "ayah": "Husin Nasution",
+                "bunda": "Ledia Hesti",
+                "academic_year": "2019/2020",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Nailah Humairah Nasution",
+                        "class": "Kuttab Awal 2A",
+                        "academic_year": "2024/2025"
+                    },
+                    {
+                        "name": "Zaki Dzulkarnain Nasution",
+                        "class": "Qonuni 2A",
+                        "academic_year": "2021/2022"
+                    }
+                ]
+            },
+            {
+                "name": "Zeeshan Nawaz Al-Hameezy",
+                "ayah": "syaefulmispan",
+                "bunda": "resti meitania",
+                "academic_year": "2019/2020",
+                "kode_registrasi": null,
+                "siblings": null
+            }
+        ]
+    },
+    {
+        "name": "Qonuni 4B",
+        "teachers": [
+            {
+                "role": "Guru Iman",
+                "name": "Ustadzah Eva",
+                "phone": "+62 898-8229-508"
+            },
+            {
+                "role": "Guru Qur'an",
+                "name": "Ustadzah Ranih",
+                "phone": "+62 857-1617-2065"
+            }
+        ],
+        "students": [
+            {
+                "name": "Adzkia Alya Rindio",
+                "ayah": "Rindio Santoso",
+                "bunda": "Imas Widya Asih",
+                "academic_year": "2020/2021",
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Adzkiyaa ul Haya Fissilmi Kaaffah",
+                "ayah": "Dede Rukmana",
+                "bunda": "Pipin Latifah",
+                "academic_year": "2019/2020",
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Afiqah Fathiyyaturahma Purnomo",
+                "ayah": "Nanang Dwi Purnomo",
+                "bunda": "Mutia Febrina",
+                "academic_year": "2019/2020",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Taqiyyanisa Khadijah Purnomo",
+                        "class": "Kuttab Awal 2B",
+                        "academic_year": "2024/2025"
+                    }
+                ]
+            },
+            {
+                "name": "Fakhira Fatimah Al Fihri",
+                "ayah": "Budiman",
+                "bunda": "Novi Pratiwi",
+                "academic_year": "2019/2020",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Ammar Ayyash Abdurrahman",
+                        "class": "Kuttab Awal 2C",
+                        "academic_year": "2024/2025"
+                    },
+                    {
+                        "name": "Muhammad Mumtaz Muzaffar",
+                        "class": "Qonuni 2A",
+                        "academic_year": "2021/2022"
+                    }
+                ]
+            },
+            {
+                "name": "Fatimah",
+                "ayah": "Ismail",
+                "bunda": "Refnizul",
+                "academic_year": "2019/2020",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Fathan",
+                        "class": "Qonuni 1B",
+                        "academic_year": "2022/2023"
+                    }
+                ]
+            },
+            {
+                "name": "Fatimah Ghaziya Falah",
+                "ayah": "Syaiful Falah",
+                "bunda": "Aprianti",
+                "academic_year": "2020/2021",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Abdillah Falah",
+                        "class": "Qonuni 1A",
+                        "academic_year": "2021/2022"
+                    }
+                ]
+            },
+            {
+                "name": "Fleur Fakhira Zalfa",
+                "ayah": null,
+                "bunda": null,
+                "academic_year": null,
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Hanian Nafisah",
+                "ayah": "Dede Aam",
+                "bunda": "Silviana Sari",
+                "academic_year": "2019/2020",
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Hanna Azaria Zhafira",
+                "ayah": "Bimo Rekso Samudro",
+                "bunda": "Tia Restyani",
+                "academic_year": "2020/2021",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Azkadina Mumtazah Alwafa",
+                        "class": "Kuttab Awal 2A",
+                        "academic_year": "2024/2025"
+                    },
+                    {
+                        "name": "Muhammad Faqih Alfatih",
+                        "class": "Qonuni 1B",
+                        "academic_year": "2022/2023"
+                    }
+                ]
+            },
+            {
+                "name": "Kalila Mayka Arsyfa",
+                "ayah": "Muhammad Imam Hanafi",
+                "bunda": "Cut Mamesa",
+                "academic_year": "2020/2021",
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Nayra Assyifa",
+                "ayah": "suhardiman",
+                "bunda": "wena fitra ayudia",
+                "academic_year": "2019/2020",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Nizam Arrayan",
+                        "class": "Kuttab Awal 3C",
+                        "academic_year": "2024/2025"
+                    }
+                ]
+            },
+            {
+                "name": "Nur Qisya Ramadhani",
+                "ayah": "Hermawan",
+                "bunda": "Dwi Agustina Triwisari",
+                "academic_year": "2019/2020",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Nur Humairah Khairunnisa",
+                        "class": "Kuttab Awal 2B",
+                        "academic_year": "2024/2025"
+                    },
+                    {
+                        "name": "Hamas Syahid Abdullah",
+                        "class": "Qonuni 1B",
+                        "academic_year": "2022/2023"
+                    }
+                ]
+            },
+            {
+                "name": "Rizhan Alzena Qaireen",
+                "ayah": "Bambang Oktaryan Bramantyo",
+                "bunda": "Cici Cahyati",
+                "academic_year": "2020/2021",
+                "kode_registrasi": null,
+                "siblings": [
+                    {
+                        "name": "Rumaisha Azzahra",
+                        "class": "Kuttab Awal 1B",
+                        "academic_year": "2025/2026"
+                    },
+                    {
+                        "name": "Shanum Shaistanaya",
+                        "class": "Qonuni 2B",
+                        "academic_year": "2022/2023"
+                    }
+                ]
+            },
+            {
+                "name": "Rofida Shofiqo Zahiro",
+                "ayah": null,
+                "bunda": null,
+                "academic_year": null,
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Siti Nayla Farah",
+                "ayah": "H. M. Taufiq Daud",
+                "bunda": "Liandamayni",
+                "academic_year": "2020/2021",
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Sofia Zahidah",
+                "ayah": "Febrie Subhan",
+                "bunda": "Dewi Ramdhania",
+                "academic_year": "2020/2021",
+                "kode_registrasi": null,
+                "siblings": null
+            },
+            {
+                "name": "Yasmina Mazaya Qurrotaaina",
+                "ayah": "Ervin Endro Sasongko",
+                "bunda": "Solekha Aprianti",
+                "academic_year": "2019/2020",
+                "kode_registrasi": null,
+                "siblings": null
+            }
+        ]
+    }
+]

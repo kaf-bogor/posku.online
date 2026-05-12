@@ -18,6 +18,32 @@ import ContentWrapper from '../components/ContentWrapper';
 import { db } from '~/lib/firebase';
 import type { DonationPage } from '~/lib/types/donation';
 
+const CACHE_KEY = 'amal-campaigns';
+const CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes
+
+function readCache(): DonationPage[] | null {
+  try {
+    const raw = sessionStorage.getItem(CACHE_KEY);
+    if (!raw) return null;
+    const { data, ts } = JSON.parse(raw) as {
+      data: DonationPage[];
+      ts: number;
+    };
+    if (Date.now() - ts > CACHE_TTL_MS) return null;
+    return data;
+  } catch {
+    return null;
+  }
+}
+
+function writeCache(data: DonationPage[]) {
+  try {
+    sessionStorage.setItem(CACHE_KEY, JSON.stringify({ data, ts: Date.now() }));
+  } catch {
+    // storage quota exceeded — ignore
+  }
+}
+
 const AmalPage = () => {
   // Color theme - Must be called first and in consistent order
   const textColor = useColorModeValue('gray.600', 'gray.300');
@@ -35,6 +61,14 @@ const AmalPage = () => {
     const fetchCampaigns = async () => {
       try {
         setError(null);
+
+        const cached = readCache();
+        if (cached) {
+          setCampaigns(cached);
+          setLoading(false);
+          return;
+        }
+
         // Query only active campaigns from Firebase
         const q = query(
           collection(db, 'donations'),
@@ -46,6 +80,7 @@ const AmalPage = () => {
           (doc) => ({ id: doc.id, ...doc.data() }) as DonationPage
         );
 
+        writeCache(data);
         setCampaigns(data);
       } catch (err) {
         // eslint-disable-next-line no-console
