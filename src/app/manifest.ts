@@ -1,7 +1,7 @@
 import type { MetadataRoute } from 'next';
 
 const manifest = (): MetadataRoute.Manifest => ({
-  short_name: 'posku-online',
+  short_name: 'poskubogor',
   name: 'Persatuan Orangtua Santri Kuttab Al-Fatih Bogor',
   lang: 'en',
   start_url: '/',
@@ -12,9 +12,9 @@ const manifest = (): MetadataRoute.Manifest => ({
   prefer_related_applications: false,
   icons: [
     {
-      src: '/vercel.svg',
-      purpose: 'any',
-      sizes: '48x48 72x72 96x96 128x128 256x256',
+      src: 'https://gtxkitey0g3yotdg.public.blob.vercel-storage.com/logo_posku.png?alt=media',
+      type: 'image/png',
+      sizes: '512x512',
     },
   ],
 });

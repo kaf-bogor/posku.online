@@ -9,11 +9,11 @@ type RootLayoutProps = {
   children: React.ReactNode;
 };
 
-const APP_NAME = 'Posku Online';
+const APP_NAME = 'poskubogor';
 
 export const metadata: Metadata = {
-  title: { default: APP_NAME, template: '%s | Posku-online' },
-  description: 'Next.js + chakra-ui + TypeScript template',
+  title: { default: APP_NAME, template: '%s | poskubogor' },
+  description: 'Website Persatuan Orangtua Santri Kuttab Al-Fatih Bogor',
   applicationName: APP_NAME,
   appleWebApp: {
     capable: true,
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     url: 'https://posku.online',
-    title: 'Posku Online',
+    title: 'poskubogor',
     description: 'Website Persatuan Orangtua Santri Kuttab Al-Fatih Bogor',
   },
 };
