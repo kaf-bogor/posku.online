@@ -22,7 +22,6 @@ import {
 } from '@chakra-ui/react';
 import type { IconType } from 'react-icons';
 import {
-  FaBell,
   FaClipboardCheck,
   FaDonate,
   FaNewspaper,
@@ -356,13 +355,6 @@ export default function AdminPage() {
                 icon={FaClipboardCheck}
                 href="/admin/kehadiran"
                 color="cyan"
-              />
-              <QuickActionCard
-                title="Push Notification"
-                description="Kirim notifikasi langsung ke perangkat semua pengguna yang telah subscribe"
-                icon={FaBell}
-                href="/admin/push"
-                color="blue"
               />
             </SimpleGrid>
           </VStack>

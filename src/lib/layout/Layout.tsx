@@ -7,7 +7,6 @@ import { useContext, useEffect } from 'react';
 
 import AddToHomeScreen from '~/app/components/AddToHomeScreen';
 import BottomNav from '~/app/components/BottomNav';
-import PushNotification from '~/app/components/PushNotification';
 import Promo from '~/lib/components/Promo';
 import { AppContext } from '~/lib/context/app';
 
@@ -55,7 +54,6 @@ const Layout = ({ children }: LayoutProps) => {
       >
         {children}
       </Box>
-      <PushNotification />
       <AddToHomeScreen />
       <BottomNav />
     </Box>
