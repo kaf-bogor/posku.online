@@ -5,6 +5,12 @@ import ContentWrapper from '~/app/components/ContentWrapper';
 
 const menuItems = [
   {
+    title: 'Laporan Renovasi Gedung KAF Bogor 2025',
+    link: '/reports/renovasi_ats',
+    description:
+      'Laporan Konsolidasi Baitul Maal Khatulistiwa - Proyek Renovasi BAF',
+  },
+  {
     title: 'Laporan Wakaf ATS (deprecated: last update was 2025-06-27)',
     link: '/reports/wakaf_ats',
     description: null,
