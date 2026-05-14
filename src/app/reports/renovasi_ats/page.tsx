@@ -760,6 +760,7 @@ export default function RenovasiAtsPage() {
     let totalKredit = 0;
     const labels: string[] = [];
     const balances: number[] = [];
+    const dailyDebits: number[] = [];
     let runningBalance = 0;
 
     const summary = {
@@ -817,6 +818,7 @@ export default function RenovasiAtsPage() {
         })
       );
       balances.push(runningBalance);
+      dailyDebits.push(d);
     });
 
     return {
@@ -825,6 +827,7 @@ export default function RenovasiAtsPage() {
       balance: runningBalance,
       labels,
       balances,
+      dailyDebits,
       summary,
     };
   }, []);
@@ -833,6 +836,7 @@ export default function RenovasiAtsPage() {
     labels: stats.labels,
     datasets: [
       {
+        label: 'Saldo',
         data: stats.balances,
         borderColor: '#6366f1',
         backgroundColor: 'rgba(99, 102, 241, 0.08)',
@@ -845,6 +849,21 @@ export default function RenovasiAtsPage() {
         pointHoverBorderWidth: 2,
         borderWidth: 3,
       },
+      {
+        label: 'Pengeluaran',
+        data: stats.dailyDebits,
+        borderColor: '#ef4444',
+        backgroundColor: 'rgba(239, 68, 68, 0.08)',
+        fill: true,
+        tension: 0.3,
+        pointRadius: 0,
+        pointHoverRadius: 6,
+        pointHoverBackgroundColor: '#ef4444',
+        pointHoverBorderColor: '#fff',
+        pointHoverBorderWidth: 2,
+        borderWidth: 2,
+        borderDash: [4, 4],
+      },
     ],
   };
 
@@ -856,17 +875,27 @@ export default function RenovasiAtsPage() {
       intersect: false,
     },
     plugins: {
-      legend: { display: false },
+      legend: {
+        display: true,
+        labels: {
+          boxWidth: 12,
+          font: { size: 10 },
+          color: chartTickColor,
+        },
+      },
       tooltip: {
         backgroundColor: 'rgba(0,0,0,0.8)',
         titleFont: { size: 11 },
         bodyFont: { size: 12, weight: 'bold' as const },
         padding: 10,
         cornerRadius: 8,
-        displayColors: false,
+        displayColors: true,
         callbacks: {
-          label: (ctx: { parsed: { y: number } }) =>
-            `Saldo: Rp ${ctx.parsed.y.toLocaleString('id-ID')}`,
+          label: (ctx: {
+            dataset: { label?: string };
+            parsed: { y: number };
+          }) =>
+            `${ctx.dataset.label}: Rp ${ctx.parsed.y.toLocaleString('id-ID')}`,
         },
       },
     },
@@ -1118,7 +1147,7 @@ export default function RenovasiAtsPage() {
           textTransform="uppercase"
           mb={4}
         >
-          Grafik Arus Saldo
+          Grafik Saldo & Pengeluaran
         </Text>
         <Box h="200px">
           <Line data={chartData} options={chartOptions as never} />
