@@ -839,7 +839,10 @@ export default function RenovasiAtsPage() {
         fill: true,
         tension: 0.3,
         pointRadius: 0,
-        pointHoverRadius: 5,
+        pointHoverRadius: 6,
+        pointHoverBackgroundColor: '#6366f1',
+        pointHoverBorderColor: '#fff',
+        pointHoverBorderWidth: 2,
         borderWidth: 3,
       },
     ],
@@ -848,7 +851,25 @@ export default function RenovasiAtsPage() {
   const chartOptions = {
     responsive: true,
     maintainAspectRatio: false,
-    plugins: { legend: { display: false } },
+    interaction: {
+      mode: 'index' as const,
+      intersect: false,
+    },
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        backgroundColor: 'rgba(0,0,0,0.8)',
+        titleFont: { size: 11 },
+        bodyFont: { size: 12, weight: 'bold' as const },
+        padding: 10,
+        cornerRadius: 8,
+        displayColors: false,
+        callbacks: {
+          label: (ctx: { parsed: { y: number } }) =>
+            `Saldo: Rp ${ctx.parsed.y.toLocaleString('id-ID')}`,
+        },
+      },
+    },
     scales: {
       x: {
         grid: { display: false },
