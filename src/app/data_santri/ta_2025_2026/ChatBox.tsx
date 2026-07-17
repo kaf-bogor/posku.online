@@ -1,5 +1,6 @@
 'use client';
 
+import { useChat } from '@ai-sdk/react';
 import {
   Box,
   Button,
@@ -11,10 +12,11 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react';
 import { DefaultChatTransport } from 'ai';
-import { useChat } from '@ai-sdk/react';
 import { useRef, useEffect, useState, useMemo } from 'react';
 
-function getTextFromParts(parts: Array<{ type: string; text?: string }>): string {
+function getTextFromParts(
+  parts: Array<{ type: string; text?: string }>
+): string {
   return parts
     .filter((p) => p.type === 'text' && p.text)
     .map((p) => p.text)
@@ -43,6 +45,7 @@ export default function ChatBox() {
   const assistantTextColor = useColorModeValue('gray.800', 'gray.100');
   const inputBg = useColorModeValue('white', 'gray.700');
   const placeholderColor = useColorModeValue('gray.400', 'gray.400');
+  const headerBg = useColorModeValue('blue.600', 'blue.700');
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -112,7 +115,7 @@ export default function ChatBox() {
       <HStack
         px={4}
         py={3}
-        bg={useColorModeValue('blue.600', 'blue.700')}
+        bg={headerBg}
         color="white"
         justify="space-between"
         flexShrink={0}
@@ -169,7 +172,9 @@ export default function ChatBox() {
           </Box>
         )}
         {messages.map((msg) => {
-          const text = getTextFromParts(msg.parts as Array<{ type: string; text?: string }>);
+          const text = getTextFromParts(
+            msg.parts as Array<{ type: string; text?: string }>
+          );
           if (!text) return null;
           return (
             <Box

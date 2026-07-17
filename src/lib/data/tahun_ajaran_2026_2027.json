@@ -1,2143 +1,2142 @@
-
 [
-    {
-        "name": "Kuttab Awal 1A",
-        "teachers": [
-            {
-                "role": "Guru Iman",
-                "name": "Ustadzah Dian",
-                "phone": "+62 882-9110-4750"
-            },
-            {
-                "role": "Guru Qur'an",
-                "name": "Ustadzah Hesti",
-                "phone": "+62 857-8280-9896"
-            }
-        ],
-        "students": [
-            {
-                "name": "Abudzar Qaulan Maruufaa",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Annisa Nur Jannah",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Banafsya Nasimatun Nahdhah",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Fahima Ghaziyatul Abrar",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Fatimah Azzahra",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Hanna Safira Hamilatul Qur'an",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Hazimah Dzihny el-Zura",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Salik Muhammad",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Siti Rumaisha Az Zahra",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Yahya Adhan Ash Shiddiq",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            }
-        ]
-    },
-    {
-        "name": "Kuttab Awal 1B",
-        "teachers": [
-            {
-                "role": "Guru Iman",
-                "name": "Ustadzah Uswah",
-                "phone": "+62 858-1762-4449"
-            },
-            {
-                "role": "Guru Qur'an",
-                "name": "Ustadzah Qonita",
-                "phone": "+62 852-2050-5053"
-            }
-        ],
-        "students": [
-            {
-                "name": "Abdan Maulana Rasyid",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Adzkiya Zahra Alfatih",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Asma Sakhiya Dayyinah",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Fathan Abdulhamid",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Hafshah Hilmiyatuha Al-Faiqoh",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Kayyisah Aerilyn Rachmayani",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Makky Al Madany Akbar",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Nusaibah Sesfao",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Sakeynah Firauhillah Ahmad",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Sarah Fayza Hafeeyah",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            }
-        ]
-    },
-    {
-        "name": "Kuttab Awal 2A",
-        "teachers": [
-            {
-                "role": "Guru Iman & Qur'an",
-                "name": "Ustadzah Sinta",
-                "phone": "+62 813-8328-4483"
-            }
-        ],
-        "students": [
-            {
-                "name": "Aisyah",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Alula Jasmine Altahfunnisa",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Ana Mir'atu Khadijah",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Anas Said Abdurrahman",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Kanna Shahia Khairuna",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Khadeejah Amelia Qurani",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Muhammad Umar Ihsan",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Ruya Fathammubina Hudrita",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Taqiyyah Nur Rahmah",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Uwais Abdul Aziz",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Zaeyyid Buana Gustika",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            }
-        ]
-    },
-    {
-        "name": "Kuttab Awal 2B",
-        "teachers": [
-            {
-                "role": "Guru Iman & Qur'an",
-                "name": "Ustadz Husin",
-                "phone": "+62 856-9319-7324"
-            }
-        ],
-        "students": [
-            {
-                "name": "Abdurrahman Ibrahim Alqudwah",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Ghazi Al-Adzki Nagendra",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Halimah Qonita Zamzami",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Khaulah Nuun Hakim",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Muhammad Riyad Alfathan",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Muhammad Sulaiman Al Qanuni",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Nuruddin Mahmud Zanki Assiraj",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Rumaisha Azzahra",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Sayyidah Maryam Rayya Fauzi",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Shidqia Nisa Alkarima",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Tsurayya Nara Abida",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            }
-        ]
-    },
-    {
-        "name": "Kuttab Awal 2C",
-        "teachers": [
-            {
-                "role": "Guru Iman",
-                "name": "Ustadzah Shafira",
-                "phone": "+62 899-0963-148"
-            },
-            {
-                "role": "Guru Qur'an",
-                "name": "Ustadzah Amel",
-                "phone": "+62 898-9513-993"
-            }
-        ],
-        "students": [
-            {
-                "name": "Achmad Sajeed Subiantoro",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Harun Abdullah",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Khalifa Syahida Ismail",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Marwah Zubairotul Makhyar",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Mush'ab",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Rajj Abdurrahman Bagindo Jaya",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Rufaida Nafisa Raihana",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Savanna Ahsani Abdillah",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Wan Khalid Ibnu Muazzam",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Zainab",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Zeana Aliana Dzaheem",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            }
-        ]
-    },
-    {
-        "name": "Kuttab Awal 3A",
-        "teachers": [
-            {
-                "role": "Guru Iman & Qur'an",
-                "name": "Ustadzah Nabila",
-                "phone": "+62 895-1404-7021"
-            }
-        ],
-        "students": [
-            {
-                "name": "Aisyah Fathiya Hanum",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Aulian Anwarzayd Hasry",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Ayman Attaqi Ahmad",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Azkadina Mumtazah Alwafa",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Galuh Ayuning Palupi",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Khoiru Shofinatul Jiyad",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Nailah Humairah Nasution",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Qorry Aynan Maryama",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Rosyidah Maryam Qurroh",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Sayf Abdullah Al-Faruq",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Shiddiqa Humaira",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            }
-        ]
-    },
-    {
-        "name": "Kuttab Awal 3B",
-        "teachers": [
-            {
-                "role": "Guru Iman & Qur'an",
-                "name": "Ustadzah Cici",
-                "phone": "+62 896-3777-5588"
-            }
-        ],
-        "students": [
-            {
-                "name": "Abdullah Sufyan Ats tsauri",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Atika Fahima Zahra",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Hanaa Nusaibah Qonita",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Khidir Sesfao",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Muhammad Habibi",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Nur Humairah Khairunnisa",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Rayyan Syauqi Muhammad",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Salsabila Ihdal Husnayain",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Taqiyyanisa Khadijah Purnomo",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Usamah Aidan Al-Hibb",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Zahira Putri Aulia",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            }
-        ]
-    },
-    {
-        "name": "Kuttab Awal 3C",
-        "teachers": [
-            {
-                "role": "Guru Iman & Qur'an",
-                "name": "Ustadz Fauzan",
-                "phone": "+62 821-2501-7258"
-            }
-        ],
-        "students": [
-            {
-                "name": "Adibah Qathrunnada",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Aisyah Syifaa Ariany Wafasyahidah",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Akmal Karim Mubarok",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Ammar Ayyash Abdurrahman",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Arsyila Shofiyyah",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Aziruddin Hanif El Haq",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Hasan Muhammad",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Maryam Almahirah Rizqi",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Muhammad Zefa Putra Rasya",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Nayla Shafira Azzahra",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Raihana Aulia Khanza Salsabila",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            }
-        ]
-    },
-    {
-        "name": "Kuttab Awal 3D",
-        "teachers": [
-            {
-                "role": "Guru Iman & Qur'an",
-                "name": "Ustadz Iko",
-                "phone": "+62 857-4243-7742"
-            }
-        ],
-        "students": [
-            {
-                "name": "Abrisam Rafif Abqori",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Aisyah",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Arsyilla Farzana Ayesha",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Hanun Asma Shabira",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Khadijah Putri Arifin",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Miftahul Khairani Dalimunthe",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Muadz Qaulan Baliighaa",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Muhammad Arsyad Hilmi",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Muhammad Firash Abdullah",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Rufaidah Al Anshoriyah",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Umar Abdullah Arif",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            }
-        ]
-    },
-    {
-        "name": "Qonuni 1A",
-        "teachers": [
-            {
-                "role": "Guru Iman",
-                "name": "Ustadz Indra",
-                "phone": "+62 813-1668-0206"
-            },
-            {
-                "role": "Guru Qur'an",
-                "name": "Ustadz Saddam",
-                "phone": "+62 823-8770-5293"
-            }
-        ],
-        "students": [
-            {
-                "name": "Abdullah Adzka Al Fatih",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Abdullah Azzam",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Ahmad Umar Abdul Aziz",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Arsakha Jabbar Al Fatih",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Avcenna Runako Abqary Jati",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Barra Muhammad Aqsho",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Ghazi Anandi Hasan",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Ibrahim Thufail Alghifari",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Muhammad Alfa Khalid Arifin",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Muhammad Aliyuddin Wisam",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Muhammad Arqam Abdullah",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Muhammad Faiz Al Khalish",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Muhammad Maahin Pangarep",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Musa",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Nizam Arrayan",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Omar Malik Abdullah",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Raffasya Arfan Affandi",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Umar Abrisam Al Ayubbi",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            }
-        ]
-    },
-    {
-        "name": "Qonuni 1B",
-        "teachers": [
-            {
-                "role": "Guru Iman",
-                "name": "Ustadzah Shanti",
-                "phone": "+62 812-1323-5557"
-            },
-            {
-                "role": "Guru Qur'an",
-                "name": "Ustadzah Syarmila",
-                "phone": "+62 818-0290-7902"
-            }
-        ],
-        "students": [
-            {
-                "name": "Aisyah Azalea Dzahin",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Aisyah Iskandar",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Aisyah Tsabita Arradita",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Asiyah Tsabitah Alqudwah",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Gendhis Astarina",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Ghaitsa Adzkiya Naqeeba",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Hafidzah Mikayla Hawa Putri Akbar",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Harika Izzatunnisa",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Hilya Salsabila",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Humaira",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Khadijah",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Khalida Syakila Ismail",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Maryam",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Nusaibah Muslimatul Arifah",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Orlin Naila Shaqueena",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Qonita Muna Muslihah",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Siti Aujah Nadhiroh",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            }
-        ]
-    },
-    {
-        "name": "Qonuni 2A",
-        "teachers": [
-            {
-                "role": "Guru Iman",
-                "name": "Ustadz Iqbal",
-                "phone": "+62 852-1002-2577"
-            },
-            {
-                "role": "Guru Qur'an",
-                "name": "Ustadz Ni'am",
-                "phone": "+62 852-2289-9449"
-            }
-        ],
-        "students": [
-            {
-                "name": "Abbad An-Nabhan Hakim",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Abdillah Falah",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Ahmad Syawal Arrayyan",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Ahmad Zayyin Ilman Prasetio",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Al Fatih Ramazan Bahari",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Ibrahim Hilmi Imanto",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Muhammad",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Muhammad Alfatih Wijaya",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Muhammad Dzafir Al Hafizd",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Muhammad Faruq Al Fatih Rakhmawan",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Muhammad Zahran Syarif",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Muhammad Zaid Al-Fatih",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Rasydan Haidarrahman Abdullah",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Sahal Sesfao",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Shawqy Athalla Yerrie",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            }
-        ]
-    },
-    {
-        "name": "Qonuni 2B",
-        "teachers": [
-            {
-                "role": "Guru Iman",
-                "name": "Ustadz Ajid",
-                "phone": "+62 857-8076-4015"
-            },
-            {
-                "role": "Guru Qur'an",
-                "name": "Ustadz Suhendar",
-                "phone": "+62 821-2490-1947"
-            }
-        ],
-        "students": [
-            {
-                "name": "Ahmad Arsya Althafariz",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Ahmad Zayyinnal Quron",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Arsabyan Somba Hasry",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Ayyash Ahmad Al Kahfi",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Bayhaqqi Al Ghani",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Fathan",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Hamas Syahid Abdullah",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Ibrahim Abdullah Mukti",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Izzan Ibadurrahman",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Khalfan Aqmar Fazel",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Khalid Akram Ziyad",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Muhammad Faqih Alfatih",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Muhammad Zadinniqo Attaqy",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Raizel Zinan Muhammad",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Yahya Abdurrahman Nugraha",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            }
-        ]
-    },
-    {
-        "name": "Qonuni 2C",
-        "teachers": [
-            {
-                "role": "Guru Iman",
-                "name": "Ustadzah Evi",
-                "phone": "+62 856-5560-5112"
-            },
-            {
-                "role": "Guru Qur'an",
-                "name": "Ustadzah Winda",
-                "phone": "+62 898-6652-067"
-            }
-        ],
-        "students": [
-            {
-                "name": "Ahsanitaqwim Maula Mu'minah",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Aisyah Almira Saliha",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Inayatur Rohmah",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Kaeysha Ghania Gustika",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Kayyisa Niswah Afifah",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Khanara Putri Ramadhani Novisal",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Khansa Tsuraya Saudah",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Raudhatul Jannah Hudrita",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Rumaysho",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Shofiah Hanifatul Karimah",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Shofiyya Ittaqy",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            }
-        ]
-    },
-    {
-        "name": "Qonuni 3A",
-        "teachers": [
-            {
-                "role": "Guru Iman",
-                "name": "Ustadz Febriansyah",
-                "phone": "+62 857-7862-0727"
-            },
-            {
-                "role": "Guru Qur'an",
-                "name": "Ustadz Zulkifli",
-                "phone": "+62 821-1512-9670"
-            }
-        ],
-        "students": [
-            {
-                "name": "AdzDzakir Misyary Ahmad",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Muhammad Al fatih Syawwal",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Muhammad Ayyash Al Fatih",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Muhammad Azka Putra Rasya",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Muhammad Fathan Hasri Harahap",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Muhammad Furqon Sabilillah",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Muhammad Jundi Ar Rahman Hardianto",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Muhammad Mumtaz Muzaffar",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Muhammad Uwais Lubis",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Sajid Ibrahim",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Syamil Al-Fatih",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Tsaqib Muhammad Al Fatih",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Zain Nabhan Ar-Ruzain",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Zaki Dzulkarnain Nasution",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            }
-        ]
-    },
-    {
-        "name": "Qonuni 3B",
-        "teachers": [
-            {
-                "role": "Guru Iman",
-                "name": "Ustadzah Feni",
-                "phone": "+62 856-9546-6492"
-            },
-            {
-                "role": "Guru Qur'an",
-                "name": "Ustadzah Naily Faizah",
-                "phone": "+62 857-3558-3617"
-            }
-        ],
-        "students": [
-            {
-                "name": "Adreena Malayeka Varisha",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Afifa Rafanda Achmad",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Aisyah Iqleema Lubis",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Aliyah",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Alkhansa Hanania Arradita",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Asy Syaima Ainul Mardhiyah",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Ghaida Anindya Hasan",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Ghaida Kana Shafiyya",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Hanifah Fawwas Alkhansa",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Humairaa Syifaa Izzatunnisa",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Islamia Aribah Putri",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Mecca Andalusia Hamzah",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Nailah Humaira Abdillah",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Rahmania Taqiyya Zamzami",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Sayyidah Fatimah Al-Anshoriyah",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Shanum Shaistanaya",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Shofia Maryam Alhanin",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            }
-        ]
-    },
-    {
-        "name": "Qonuni 4A",
-        "teachers": [
-            {
-                "role": "Guru Iman",
-                "name": "Ustadz Muhajir",
-                "phone": "+62 857-7717-2002"
-            },
-            {
-                "role": "Guru Qur'an",
-                "name": "Ustadz Dahlan",
-                "phone": "+62 821-1002-2527"
-            }
-        ],
-        "students": [
-            {
-                "name": "Abdullah Fadhlan Amir",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Abdullah Umar Alqudwah",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Abdurahman Fariz",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Ahmad Fayyadh Satria",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Albirra Ghiyas Hasry",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Azmi Arifin Ahmad",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Emirza Salman Affandi",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Ghassan Abdourabbuh",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "La Ode Abdul Aziz Malik",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Muchammad Sabil Ar Rusydi",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Muhammad Abdul Karim",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Muhammad Abrar Hartono",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Muhammad Alam Al Fatih",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Muhammad Al-Fattah Anandisa Harahap",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Muhammad Ozil Nail Faeyza Pratama",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Muhammad Rafid Rasyad Chaidar",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Muhammad Thoriq Abdurrahman",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Sulthan Alkhalifi Elfathan Fauzi",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Uwais Qaulan Sadiidaa",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            }
-        ]
-    },
-    {
-        "name": "Qonuni 4B",
-        "teachers": [
-            {
-                "role": "Guru Iman",
-                "name": "Ustadzah Eva",
-                "phone": "+62 898-8229-508"
-            },
-            {
-                "role": "Guru Qur'an",
-                "name": "Ustadzah Arifah",
-                "phone": "+62 856-7769-415"
-            }
-        ],
-        "students": [
-            {
-                "name": "Alifah Fauzya Bahari",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Arrumaisha Qonita Huwaidah",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Fatimah Aulia Rakhmawan",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Maryam Salma Karimah",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Nailah Tabanna Azkaddina",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Nida Fayza Qurratul'ain Syauqillah",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Raufa Amira Faizah",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Rubaina Zahra Ayesha",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Rufaida Najma Tsurayya El Naqia",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            },
-            {
-                "name": "Rumaisha Althafunisa",
-                "ayah": null,
-                "bunda": null,
-                "academic_year": null,
-                "kode_registrasi": null,
-                "siblings": null
-            }
-        ]
-    }
+  {
+    "name": "Kuttab Awal 1A",
+    "teachers": [
+      {
+        "role": "Guru Iman",
+        "name": "Ustadzah Dian",
+        "phone": "+62 882-9110-4750"
+      },
+      {
+        "role": "Guru Qur'an",
+        "name": "Ustadzah Hesti",
+        "phone": "+62 857-8280-9896"
+      }
+    ],
+    "students": [
+      {
+        "name": "Abudzar Qaulan Maruufaa",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Annisa Nur Jannah",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Banafsya Nasimatun Nahdhah",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Fahima Ghaziyatul Abrar",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Fatimah Azzahra",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Hanna Safira Hamilatul Qur'an",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Hazimah Dzihny el-Zura",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Salik Muhammad",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Siti Rumaisha Az Zahra",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Yahya Adhan Ash Shiddiq",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      }
+    ]
+  },
+  {
+    "name": "Kuttab Awal 1B",
+    "teachers": [
+      {
+        "role": "Guru Iman",
+        "name": "Ustadzah Uswah",
+        "phone": "+62 858-1762-4449"
+      },
+      {
+        "role": "Guru Qur'an",
+        "name": "Ustadzah Qonita",
+        "phone": "+62 852-2050-5053"
+      }
+    ],
+    "students": [
+      {
+        "name": "Abdan Maulana Rasyid",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Adzkiya Zahra Alfatih",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Asma Sakhiya Dayyinah",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Fathan Abdulhamid",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Hafshah Hilmiyatuha Al-Faiqoh",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Kayyisah Aerilyn Rachmayani",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Makky Al Madany Akbar",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Nusaibah Sesfao",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Sakeynah Firauhillah Ahmad",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Sarah Fayza Hafeeyah",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      }
+    ]
+  },
+  {
+    "name": "Kuttab Awal 2A",
+    "teachers": [
+      {
+        "role": "Guru Iman & Qur'an",
+        "name": "Ustadzah Sinta",
+        "phone": "+62 813-8328-4483"
+      }
+    ],
+    "students": [
+      {
+        "name": "Aisyah",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Alula Jasmine Altahfunnisa",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Ana Mir'atu Khadijah",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Anas Said Abdurrahman",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Kanna Shahia Khairuna",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Khadeejah Amelia Qurani",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Muhammad Umar Ihsan",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Ruya Fathammubina Hudrita",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Taqiyyah Nur Rahmah",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Uwais Abdul Aziz",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Zaeyyid Buana Gustika",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      }
+    ]
+  },
+  {
+    "name": "Kuttab Awal 2B",
+    "teachers": [
+      {
+        "role": "Guru Iman & Qur'an",
+        "name": "Ustadz Husin",
+        "phone": "+62 856-9319-7324"
+      }
+    ],
+    "students": [
+      {
+        "name": "Abdurrahman Ibrahim Alqudwah",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Ghazi Al-Adzki Nagendra",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Halimah Qonita Zamzami",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Khaulah Nuun Hakim",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Muhammad Riyad Alfathan",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Muhammad Sulaiman Al Qanuni",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Nuruddin Mahmud Zanki Assiraj",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Rumaisha Azzahra",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Sayyidah Maryam Rayya Fauzi",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Shidqia Nisa Alkarima",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Tsurayya Nara Abida",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      }
+    ]
+  },
+  {
+    "name": "Kuttab Awal 2C",
+    "teachers": [
+      {
+        "role": "Guru Iman",
+        "name": "Ustadzah Shafira",
+        "phone": "+62 899-0963-148"
+      },
+      {
+        "role": "Guru Qur'an",
+        "name": "Ustadzah Amel",
+        "phone": "+62 898-9513-993"
+      }
+    ],
+    "students": [
+      {
+        "name": "Achmad Sajeed Subiantoro",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Harun Abdullah",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Khalifa Syahida Ismail",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Marwah Zubairotul Makhyar",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Mush'ab",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Rajj Abdurrahman Bagindo Jaya",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Rufaida Nafisa Raihana",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Savanna Ahsani Abdillah",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Wan Khalid Ibnu Muazzam",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Zainab",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Zeana Aliana Dzaheem",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      }
+    ]
+  },
+  {
+    "name": "Kuttab Awal 3A",
+    "teachers": [
+      {
+        "role": "Guru Iman & Qur'an",
+        "name": "Ustadzah Nabila",
+        "phone": "+62 895-1404-7021"
+      }
+    ],
+    "students": [
+      {
+        "name": "Aisyah Fathiya Hanum",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Aulian Anwarzayd Hasry",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Ayman Attaqi Ahmad",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Azkadina Mumtazah Alwafa",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Galuh Ayuning Palupi",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Khoiru Shofinatul Jiyad",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Nailah Humairah Nasution",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Qorry Aynan Maryama",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Rosyidah Maryam Qurroh",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Sayf Abdullah Al-Faruq",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Shiddiqa Humaira",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      }
+    ]
+  },
+  {
+    "name": "Kuttab Awal 3B",
+    "teachers": [
+      {
+        "role": "Guru Iman & Qur'an",
+        "name": "Ustadzah Cici",
+        "phone": "+62 896-3777-5588"
+      }
+    ],
+    "students": [
+      {
+        "name": "Abdullah Sufyan Ats tsauri",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Atika Fahima Zahra",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Hanaa Nusaibah Qonita",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Khidir Sesfao",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Muhammad Habibi",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Nur Humairah Khairunnisa",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Rayyan Syauqi Muhammad",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Salsabila Ihdal Husnayain",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Taqiyyanisa Khadijah Purnomo",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Usamah Aidan Al-Hibb",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Zahira Putri Aulia",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      }
+    ]
+  },
+  {
+    "name": "Kuttab Awal 3C",
+    "teachers": [
+      {
+        "role": "Guru Iman & Qur'an",
+        "name": "Ustadz Fauzan",
+        "phone": "+62 821-2501-7258"
+      }
+    ],
+    "students": [
+      {
+        "name": "Adibah Qathrunnada",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Aisyah Syifaa Ariany Wafasyahidah",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Akmal Karim Mubarok",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Ammar Ayyash Abdurrahman",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Arsyila Shofiyyah",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Aziruddin Hanif El Haq",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Hasan Muhammad",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Maryam Almahirah Rizqi",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Muhammad Zefa Putra Rasya",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Nayla Shafira Azzahra",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Raihana Aulia Khanza Salsabila",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      }
+    ]
+  },
+  {
+    "name": "Kuttab Awal 3D",
+    "teachers": [
+      {
+        "role": "Guru Iman & Qur'an",
+        "name": "Ustadz Iko",
+        "phone": "+62 857-4243-7742"
+      }
+    ],
+    "students": [
+      {
+        "name": "Abrisam Rafif Abqori",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Aisyah",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Arsyilla Farzana Ayesha",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Hanun Asma Shabira",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Khadijah Putri Arifin",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Miftahul Khairani Dalimunthe",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Muadz Qaulan Baliighaa",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Muhammad Arsyad Hilmi",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Muhammad Firash Abdullah",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Rufaidah Al Anshoriyah",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Umar Abdullah Arif",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      }
+    ]
+  },
+  {
+    "name": "Qonuni 1A",
+    "teachers": [
+      {
+        "role": "Guru Iman",
+        "name": "Ustadz Indra",
+        "phone": "+62 813-1668-0206"
+      },
+      {
+        "role": "Guru Qur'an",
+        "name": "Ustadz Saddam",
+        "phone": "+62 823-8770-5293"
+      }
+    ],
+    "students": [
+      {
+        "name": "Abdullah Adzka Al Fatih",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Abdullah Azzam",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Ahmad Umar Abdul Aziz",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Arsakha Jabbar Al Fatih",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Avcenna Runako Abqary Jati",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Barra Muhammad Aqsho",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Ghazi Anandi Hasan",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Ibrahim Thufail Alghifari",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Muhammad Alfa Khalid Arifin",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Muhammad Aliyuddin Wisam",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Muhammad Arqam Abdullah",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Muhammad Faiz Al Khalish",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Muhammad Maahin Pangarep",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Musa",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Nizam Arrayan",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Omar Malik Abdullah",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Raffasya Arfan Affandi",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Umar Abrisam Al Ayubbi",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      }
+    ]
+  },
+  {
+    "name": "Qonuni 1B",
+    "teachers": [
+      {
+        "role": "Guru Iman",
+        "name": "Ustadzah Shanti",
+        "phone": "+62 812-1323-5557"
+      },
+      {
+        "role": "Guru Qur'an",
+        "name": "Ustadzah Syarmila",
+        "phone": "+62 818-0290-7902"
+      }
+    ],
+    "students": [
+      {
+        "name": "Aisyah Azalea Dzahin",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Aisyah Iskandar",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Aisyah Tsabita Arradita",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Asiyah Tsabitah Alqudwah",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Gendhis Astarina",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Ghaitsa Adzkiya Naqeeba",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Hafidzah Mikayla Hawa Putri Akbar",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Harika Izzatunnisa",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Hilya Salsabila",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Humaira",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Khadijah",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Khalida Syakila Ismail",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Maryam",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Nusaibah Muslimatul Arifah",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Orlin Naila Shaqueena",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Qonita Muna Muslihah",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Siti Aujah Nadhiroh",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      }
+    ]
+  },
+  {
+    "name": "Qonuni 2A",
+    "teachers": [
+      {
+        "role": "Guru Iman",
+        "name": "Ustadz Iqbal",
+        "phone": "+62 852-1002-2577"
+      },
+      {
+        "role": "Guru Qur'an",
+        "name": "Ustadz Ni'am",
+        "phone": "+62 852-2289-9449"
+      }
+    ],
+    "students": [
+      {
+        "name": "Abbad An-Nabhan Hakim",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Abdillah Falah",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Ahmad Syawal Arrayyan",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Ahmad Zayyin Ilman Prasetio",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Al Fatih Ramazan Bahari",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Ibrahim Hilmi Imanto",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Muhammad",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Muhammad Alfatih Wijaya",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Muhammad Dzafir Al Hafizd",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Muhammad Faruq Al Fatih Rakhmawan",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Muhammad Zahran Syarif",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Muhammad Zaid Al-Fatih",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Rasydan Haidarrahman Abdullah",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Sahal Sesfao",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Shawqy Athalla Yerrie",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      }
+    ]
+  },
+  {
+    "name": "Qonuni 2B",
+    "teachers": [
+      {
+        "role": "Guru Iman",
+        "name": "Ustadz Ajid",
+        "phone": "+62 857-8076-4015"
+      },
+      {
+        "role": "Guru Qur'an",
+        "name": "Ustadz Suhendar",
+        "phone": "+62 821-2490-1947"
+      }
+    ],
+    "students": [
+      {
+        "name": "Ahmad Arsya Althafariz",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Ahmad Zayyinnal Quron",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Arsabyan Somba Hasry",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Ayyash Ahmad Al Kahfi",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Bayhaqqi Al Ghani",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Fathan",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Hamas Syahid Abdullah",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Ibrahim Abdullah Mukti",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Izzan Ibadurrahman",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Khalfan Aqmar Fazel",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Khalid Akram Ziyad",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Muhammad Faqih Alfatih",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Muhammad Zadinniqo Attaqy",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Raizel Zinan Muhammad",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Yahya Abdurrahman Nugraha",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      }
+    ]
+  },
+  {
+    "name": "Qonuni 2C",
+    "teachers": [
+      {
+        "role": "Guru Iman",
+        "name": "Ustadzah Evi",
+        "phone": "+62 856-5560-5112"
+      },
+      {
+        "role": "Guru Qur'an",
+        "name": "Ustadzah Winda",
+        "phone": "+62 898-6652-067"
+      }
+    ],
+    "students": [
+      {
+        "name": "Ahsanitaqwim Maula Mu'minah",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Aisyah Almira Saliha",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Inayatur Rohmah",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Kaeysha Ghania Gustika",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Kayyisa Niswah Afifah",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Khanara Putri Ramadhani Novisal",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Khansa Tsuraya Saudah",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Raudhatul Jannah Hudrita",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Rumaysho",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Shofiah Hanifatul Karimah",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Shofiyya Ittaqy",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      }
+    ]
+  },
+  {
+    "name": "Qonuni 3A",
+    "teachers": [
+      {
+        "role": "Guru Iman",
+        "name": "Ustadz Febriansyah",
+        "phone": "+62 857-7862-0727"
+      },
+      {
+        "role": "Guru Qur'an",
+        "name": "Ustadz Zulkifli",
+        "phone": "+62 821-1512-9670"
+      }
+    ],
+    "students": [
+      {
+        "name": "AdzDzakir Misyary Ahmad",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Muhammad Al fatih Syawwal",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Muhammad Ayyash Al Fatih",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Muhammad Azka Putra Rasya",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Muhammad Fathan Hasri Harahap",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Muhammad Furqon Sabilillah",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Muhammad Jundi Ar Rahman Hardianto",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Muhammad Mumtaz Muzaffar",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Muhammad Uwais Lubis",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Sajid Ibrahim",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Syamil Al-Fatih",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Tsaqib Muhammad Al Fatih",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Zain Nabhan Ar-Ruzain",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Zaki Dzulkarnain Nasution",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      }
+    ]
+  },
+  {
+    "name": "Qonuni 3B",
+    "teachers": [
+      {
+        "role": "Guru Iman",
+        "name": "Ustadzah Feni",
+        "phone": "+62 856-9546-6492"
+      },
+      {
+        "role": "Guru Qur'an",
+        "name": "Ustadzah Naily Faizah",
+        "phone": "+62 857-3558-3617"
+      }
+    ],
+    "students": [
+      {
+        "name": "Adreena Malayeka Varisha",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Afifa Rafanda Achmad",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Aisyah Iqleema Lubis",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Aliyah",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Alkhansa Hanania Arradita",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Asy Syaima Ainul Mardhiyah",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Ghaida Anindya Hasan",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Ghaida Kana Shafiyya",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Hanifah Fawwas Alkhansa",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Humairaa Syifaa Izzatunnisa",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Islamia Aribah Putri",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Mecca Andalusia Hamzah",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Nailah Humaira Abdillah",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Rahmania Taqiyya Zamzami",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Sayyidah Fatimah Al-Anshoriyah",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Shanum Shaistanaya",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Shofia Maryam Alhanin",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      }
+    ]
+  },
+  {
+    "name": "Qonuni 4A",
+    "teachers": [
+      {
+        "role": "Guru Iman",
+        "name": "Ustadz Muhajir",
+        "phone": "+62 857-7717-2002"
+      },
+      {
+        "role": "Guru Qur'an",
+        "name": "Ustadz Dahlan",
+        "phone": "+62 821-1002-2527"
+      }
+    ],
+    "students": [
+      {
+        "name": "Abdullah Fadhlan Amir",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Abdullah Umar Alqudwah",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Abdurahman Fariz",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Ahmad Fayyadh Satria",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Albirra Ghiyas Hasry",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Azmi Arifin Ahmad",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Emirza Salman Affandi",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Ghassan Abdourabbuh",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "La Ode Abdul Aziz Malik",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Muchammad Sabil Ar Rusydi",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Muhammad Abdul Karim",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Muhammad Abrar Hartono",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Muhammad Alam Al Fatih",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Muhammad Al-Fattah Anandisa Harahap",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Muhammad Ozil Nail Faeyza Pratama",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Muhammad Rafid Rasyad Chaidar",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Muhammad Thoriq Abdurrahman",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Sulthan Alkhalifi Elfathan Fauzi",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Uwais Qaulan Sadiidaa",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      }
+    ]
+  },
+  {
+    "name": "Qonuni 4B",
+    "teachers": [
+      {
+        "role": "Guru Iman",
+        "name": "Ustadzah Eva",
+        "phone": "+62 898-8229-508"
+      },
+      {
+        "role": "Guru Qur'an",
+        "name": "Ustadzah Arifah",
+        "phone": "+62 856-7769-415"
+      }
+    ],
+    "students": [
+      {
+        "name": "Alifah Fauzya Bahari",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Arrumaisha Qonita Huwaidah",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Fatimah Aulia Rakhmawan",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Maryam Salma Karimah",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Nailah Tabanna Azkaddina",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Nida Fayza Qurratul'ain Syauqillah",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Raufa Amira Faizah",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Rubaina Zahra Ayesha",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Rufaida Najma Tsurayya El Naqia",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      },
+      {
+        "name": "Rumaisha Althafunisa",
+        "ayah": null,
+        "bunda": null,
+        "academic_year": null,
+        "kode_registrasi": null,
+        "siblings": null
+      }
+    ]
+  }
 ]
