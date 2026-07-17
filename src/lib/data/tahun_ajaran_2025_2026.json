@@ -31,7 +31,8 @@
                         "class": "Qonuni 4A",
                         "academic_year": "2019/2020"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Ana Mir'atu Khadijah",
@@ -45,7 +46,8 @@
                         "class": "Qonuni 1C",
                         "academic_year": "2022/2023"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Anas Said Abdurrahman",
@@ -59,7 +61,8 @@
                         "class": "Kuttab Awal 3B",
                         "academic_year": "2023/2024"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Alula Jasmine Altahfunnisa",
@@ -73,7 +76,8 @@
                         "class": "Kuttab Awal 3C",
                         "academic_year": "2024/2025"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Hilya Adzkiya Thessalonika",
@@ -81,7 +85,8 @@
                 "bunda": null,
                 "academic_year": "2025/2026",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "pindah"
             },
             {
                 "name": "Kanna Shahia Khairuna",
@@ -95,7 +100,8 @@
                         "class": "Qonuni 1B",
                         "academic_year": "2023/2024"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Khadeejah Amelia Qurani",
@@ -109,7 +115,8 @@
                         "class": "Qonuni 2A",
                         "academic_year": "2021/2022"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Ruya Fathammubina Hudrita",
@@ -123,7 +130,8 @@
                         "class": "Qonuni 1C",
                         "academic_year": "2022/2023"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Taqiyyah Nur Rahmah",
@@ -137,7 +145,8 @@
                         "class": "Kuttab Awal 2A",
                         "academic_year": "2024/2025"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Uwais Abdul Aziz",
@@ -145,7 +154,8 @@
                 "bunda": null,
                 "academic_year": "2025/2026",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Zaeyyid Buana Gustika",
@@ -159,7 +169,8 @@
                         "class": "Qonuni 4A",
                         "academic_year": "2019/2020"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             }
         ]
     },
@@ -195,7 +206,8 @@
                         "class": "Qonuni 3A",
                         "academic_year": "2020/2021"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Fayeisha Shafana Avichayil",
@@ -203,7 +215,8 @@
                 "bunda": null,
                 "academic_year": "2025/2026",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "pindah"
             },
             {
                 "name": "Ghazi Al-Adzki Nagendra",
@@ -217,7 +230,8 @@
                         "class": "Kuttab Awal 3A",
                         "academic_year": "2023/2024"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Halimah Qonita Zamzami",
@@ -231,7 +245,8 @@
                         "class": "Qonuni 2B",
                         "academic_year": "2021/2022"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Khaulah Nuun Hakim",
@@ -239,7 +254,8 @@
                 "bunda": null,
                 "academic_year": "2025/2026",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Muhammad Riyad Alfathan",
@@ -253,7 +269,8 @@
                         "class": "Qonuni 1A",
                         "academic_year": "2025/2026"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Muhammad Sulaiman Al Qanuni",
@@ -267,7 +284,8 @@
                         "class": "Qonuni 1C",
                         "academic_year": "2022/2023"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Nuruddin Mahmud Zanki Assiraj",
@@ -275,7 +293,8 @@
                 "bunda": null,
                 "academic_year": "2025/2026",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Sayyidah Maryam Rayya Fauzi",
@@ -289,7 +308,8 @@
                         "class": "Qonuni 3A",
                         "academic_year": "2020/2021"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Rumaisha Azzahra",
@@ -308,7 +328,8 @@
                         "class": "Qonuni 4B",
                         "academic_year": "2020/2021"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Shidqia Nisa Alkarima",
@@ -316,7 +337,8 @@
                 "bunda": null,
                 "academic_year": "2025/2026",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Tsurayya Nara Abida",
@@ -335,7 +357,8 @@
                         "class": "Qonuni 3B",
                         "academic_year": "2021/2022"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             }
         ]
     },
@@ -366,7 +389,8 @@
                         "class": "Qonuni 3A",
                         "academic_year": "2021/2022"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Aulian Anwarzayd Hasry",
@@ -385,7 +409,8 @@
                         "class": "Qonuni 3A",
                         "academic_year": "2021/2022"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Ayman Attaqi Ahmad",
@@ -404,7 +429,8 @@
                         "class": "Qonuni 3A",
                         "academic_year": "2021/2022"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Azkadina Mumtazah Alwafa",
@@ -423,7 +449,8 @@
                         "class": "Qonuni 4B",
                         "academic_year": "2020/2021"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Galuh Ayuning Palupi",
@@ -431,7 +458,8 @@
                 "bunda": null,
                 "academic_year": "2024/2025",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Khoiru Shofinatul Jiyad",
@@ -439,7 +467,8 @@
                 "bunda": null,
                 "academic_year": "2024/2025",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Nailah Humairah Nasution",
@@ -458,7 +487,8 @@
                         "class": "Qonuni 4A",
                         "academic_year": "2019/2020"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Qorry Aynan Maryama",
@@ -466,7 +496,8 @@
                 "bunda": null,
                 "academic_year": "2024/2025",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Rosyidah Maryam Qurroh",
@@ -480,7 +511,8 @@
                         "class": "Kuttab Awal 1A",
                         "academic_year": "2025/2026"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Sayf Abdullah Al-Faruq",
@@ -488,7 +520,8 @@
                 "bunda": null,
                 "academic_year": "2024/2025",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Shiddiqa Humaira",
@@ -502,7 +535,8 @@
                         "class": "Qonuni 2A",
                         "academic_year": "2021/2022"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             }
         ]
     },
@@ -522,7 +556,8 @@
                 "bunda": null,
                 "academic_year": "2024/2025",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Atika Fahima Zahra",
@@ -536,7 +571,8 @@
                         "class": "Qonuni 3A",
                         "academic_year": "2020/2021"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Hanaa Nusaibah Qonita",
@@ -550,7 +586,8 @@
                         "class": "Qonuni 1A",
                         "academic_year": "2022/2023"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Khidir Sesfao",
@@ -558,7 +595,8 @@
                 "bunda": null,
                 "academic_year": "2024/2025",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Muhammad Habibi",
@@ -566,7 +604,8 @@
                 "bunda": null,
                 "academic_year": null,
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Nur Humairah Khairunnisa",
@@ -585,7 +624,8 @@
                         "class": "Qonuni 4B",
                         "academic_year": "2019/2020"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Rayyan Syauqi Muhammad",
@@ -609,7 +649,8 @@
                         "class": "Qonuni 3B",
                         "academic_year": "2021/2022"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Salsabila Ihdal Husnayain",
@@ -623,7 +664,8 @@
                         "class": "Qonuni 2B",
                         "academic_year": "2021/2022"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Taqiyyanisa Khadijah Purnomo",
@@ -637,7 +679,8 @@
                         "class": "Qonuni 4B",
                         "academic_year": "2019/2020"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Usamah Aidan Al-Hibb",
@@ -645,7 +688,8 @@
                 "bunda": null,
                 "academic_year": "2024/2025",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Zahira Putri Aulia",
@@ -653,7 +697,8 @@
                 "bunda": null,
                 "academic_year": "2024/2025",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             }
         ]
     },
@@ -673,7 +718,8 @@
                 "bunda": null,
                 "academic_year": "2024/2025",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Aisyah Syifaa Ariany Wafasyahidah",
@@ -681,7 +727,8 @@
                 "bunda": null,
                 "academic_year": "2024/2025",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Akmal Karim Mubarok",
@@ -695,7 +742,8 @@
                         "class": "Qonuni 4A",
                         "academic_year": "2019/2020"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Ammar Ayyash Abdurrahman",
@@ -714,7 +762,8 @@
                         "class": "Qonuni 4B",
                         "academic_year": "2019/2020"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Arsyila Shofiyyah",
@@ -722,7 +771,8 @@
                 "bunda": null,
                 "academic_year": "2024/2025",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Aziruddin Hanif El Haq",
@@ -736,7 +786,8 @@
                         "class": "Qonuni 2A",
                         "academic_year": "2022/2023"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Hasan Muhammad",
@@ -744,7 +795,8 @@
                 "bunda": null,
                 "academic_year": "2024/2025",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Maryam Almahirah Rizqi",
@@ -752,7 +804,8 @@
                 "bunda": null,
                 "academic_year": "2024/2025",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Muhammad Zefa Putra Rasya",
@@ -766,7 +819,8 @@
                         "class": "Qonuni 2A",
                         "academic_year": "2021/2022"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Nayla Shafira Azzahra",
@@ -774,7 +828,8 @@
                 "bunda": null,
                 "academic_year": "2024/2025",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Raihana Aulia Khanza Salsabila",
@@ -788,7 +843,8 @@
                         "class": "Qonuni 1A",
                         "academic_year": "2023/2024"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             }
         ]
     },
@@ -813,7 +869,8 @@
                 "bunda": null,
                 "academic_year": "2025/2026",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Aisyah",
@@ -832,7 +889,8 @@
                         "class": "Qonuni 4A",
                         "academic_year": "2019/2020"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Arsyilla Farzana Ayesha",
@@ -840,7 +898,8 @@
                 "bunda": null,
                 "academic_year": "2025/2026",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Hanun Asma Shabira",
@@ -859,7 +918,8 @@
                         "class": "Qonuni 4A",
                         "academic_year": "2020/2021"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Khadijah Putri Arifin",
@@ -873,7 +933,8 @@
                         "class": "Kuttab Awal 3D",
                         "academic_year": "2024/2025"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Miftahul Khairani Dalimunthe",
@@ -881,7 +942,8 @@
                 "bunda": null,
                 "academic_year": "2025/2026",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Muhammad Arsyad Hilmi",
@@ -889,7 +951,8 @@
                 "bunda": null,
                 "academic_year": "2025/2026",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Muhammad Firash Abdullah",
@@ -897,7 +960,8 @@
                 "bunda": null,
                 "academic_year": "2025/2026",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Rufaidah Al Anshoriyah",
@@ -905,7 +969,8 @@
                 "bunda": null,
                 "academic_year": "2025/2026",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Umar Abdullah Arif",
@@ -919,7 +984,8 @@
                         "class": "Kuttab Awal 3D",
                         "academic_year": "2024/2025"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             }
         ]
     },
@@ -939,7 +1005,8 @@
                 "bunda": "Nurfitriani Fatimah",
                 "academic_year": "2023/2024",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Abdullah Azzam",
@@ -953,7 +1020,8 @@
                         "class": "Qonuni 1C",
                         "academic_year": "2021/2022"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Barra Muhammad Aqsho",
@@ -967,7 +1035,8 @@
                         "class": "Qonuni 4A",
                         "academic_year": "2019/2020"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Ghaitsa Adzkiya Naqeeba",
@@ -981,7 +1050,8 @@
                         "class": "Kuttab Awal 1B",
                         "academic_year": "2025/2026"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Ghazi Anandi Hasan",
@@ -995,7 +1065,8 @@
                         "class": "Qonuni 2B",
                         "academic_year": "2021/2022"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Hafidzah Mikayla Hawa Putri Akbar",
@@ -1003,7 +1074,8 @@
                 "bunda": "Eneng Fitria Hamdani",
                 "academic_year": "2023/2024",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Ibrahim Thufail Alghifari",
@@ -1017,7 +1089,8 @@
                         "class": "Qonuni 1C",
                         "academic_year": "2022/2023"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Maryam",
@@ -1041,7 +1114,8 @@
                         "class": "Qonuni 4A",
                         "academic_year": "2019/2020"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             }
         ]
     },
@@ -1067,7 +1141,8 @@
                         "class": "Qonuni 3B",
                         "academic_year": "2020/2021"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Asiyah Tsabitah Alqudwah",
@@ -1086,7 +1161,8 @@
                         "class": "Qonuni 3A",
                         "academic_year": "2020/2021"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Hilya Salsabila",
@@ -1100,7 +1176,8 @@
                         "class": "Qonuni 1C",
                         "academic_year": "2023/2024"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Khadijah",
@@ -1114,7 +1191,8 @@
                         "class": "Kuttab Awal 1A",
                         "academic_year": "2025/2026"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Muhammad Aliyuddin Wisam",
@@ -1128,7 +1206,8 @@
                         "class": "Qonuni 2B",
                         "academic_year": "2022/2023"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Muhammad Maahin Pangarep",
@@ -1136,7 +1215,8 @@
                 "bunda": "Rika Purnamasari",
                 "academic_year": "2023/2024",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Musa",
@@ -1144,7 +1224,8 @@
                 "bunda": "Eva Nurpeti",
                 "academic_year": "2023/2024",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             }
         ]
     },
@@ -1175,7 +1256,8 @@
                         "class": "Qonuni 1B",
                         "academic_year": "2023/2024"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Aisyah Iskandar",
@@ -1183,7 +1265,8 @@
                 "bunda": null,
                 "academic_year": "2024/2025",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Aisyah Tsabita Arradita",
@@ -1202,7 +1285,8 @@
                         "class": "Qonuni 4A",
                         "academic_year": "2020/2021"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Arsakha Jabbar Al Fatih",
@@ -1216,7 +1300,8 @@
                         "class": "Kuttab Awal 1A",
                         "academic_year": "2025/2026"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Avcenna Runako Abqary Jati",
@@ -1224,7 +1309,8 @@
                 "bunda": null,
                 "academic_year": "2024/2025",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Humaira",
@@ -1232,7 +1318,8 @@
                 "bunda": null,
                 "academic_year": "2024/2025",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Muadz Qaulan Baliighaa",
@@ -1246,7 +1333,8 @@
                         "class": "Qonuni 3A",
                         "academic_year": "2021/2022"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Muhammad Arqam Abdullah",
@@ -1254,7 +1342,8 @@
                 "bunda": null,
                 "academic_year": "2024/2025",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Nizam Arrayan",
@@ -1268,7 +1357,8 @@
                         "class": "Qonuni 4B",
                         "academic_year": "2019/2020"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Orlin Naila Shaqueena",
@@ -1276,7 +1366,8 @@
                 "bunda": null,
                 "academic_year": "2024/2025",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Qonita Muna Muslihah",
@@ -1290,7 +1381,8 @@
                         "class": "Qonuni 3A",
                         "academic_year": "2020/2021"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             }
         ]
     },
@@ -1316,7 +1408,8 @@
                         "class": "Qonuni 4A",
                         "academic_year": "2020/2021"
                     }
-                ]
+                ],
+                "status": "pindah"
             },
             {
                 "name": "Gendhis Astarina",
@@ -1324,7 +1417,8 @@
                 "bunda": null,
                 "academic_year": "2024/2025",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Harika Izzatunnisa",
@@ -1332,7 +1426,8 @@
                 "bunda": null,
                 "academic_year": "2024/2025",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Khalida Syakila Ismail",
@@ -1340,7 +1435,8 @@
                 "bunda": null,
                 "academic_year": "2024/2025",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Muhammad Alfa Khalid Arifin",
@@ -1354,7 +1450,8 @@
                         "class": "Kuttab Awal 2D",
                         "academic_year": "2025/2026"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Nusaibah Muslimatul Arifah",
@@ -1368,7 +1465,8 @@
                         "class": "Kuttab Awal 2D",
                         "academic_year": "2025/2026"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Omar Malik Abdullah",
@@ -1376,7 +1474,8 @@
                 "bunda": null,
                 "academic_year": "2024/2025",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Raffasya Arfan Affandi",
@@ -1390,7 +1489,8 @@
                         "class": "Qonuni 3A",
                         "academic_year": "2021/2022"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Siti Aujah Nadhiroh",
@@ -1404,7 +1504,8 @@
                         "class": "Qonuni 1B",
                         "academic_year": "2024/2025"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Umar Abrisam Al Ayubbi",
@@ -1418,7 +1519,8 @@
                         "class": "Qonuni 2B",
                         "academic_year": "2022/2023"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             }
         ]
     },
@@ -1443,7 +1545,8 @@
                 "bunda": null,
                 "academic_year": null,
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Abdillah Falah",
@@ -1457,7 +1560,8 @@
                         "class": "Qonuni 4B",
                         "academic_year": "2020/2021"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Ahmad Syawal Arrayyan",
@@ -1465,7 +1569,8 @@
                 "bunda": "Elya Ekawati",
                 "academic_year": "2023/2024",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Ahmad Zayyin Ilman Prasetio",
@@ -1473,7 +1578,8 @@
                 "bunda": "Siti Ina Sakinah ,ST",
                 "academic_year": "2022/2023",
                 "kode_registrasi": "KAFC014-078",
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Al Fatih Ramazan Bahari",
@@ -1487,7 +1593,8 @@
                         "class": "Qonuni 3B",
                         "academic_year": "2021/2022"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Ibrahim Hilmi Imanto",
@@ -1495,7 +1602,8 @@
                 "bunda": "Urip Sugiarti",
                 "academic_year": "2022/2023",
                 "kode_registrasi": "KAFC014-066",
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Muhammad",
@@ -1509,7 +1617,8 @@
                         "class": "Kuttab Awal 1B",
                         "academic_year": "2025/2026"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Muhammad Alfatih Wijaya",
@@ -1523,7 +1632,8 @@
                         "class": "Qonuni 4A",
                         "academic_year": "2019/2020"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Muhammad Dzafir Al Hafizd",
@@ -1531,7 +1641,8 @@
                 "bunda": "Vela Damayanti",
                 "academic_year": "2023/2024",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Muhammad Faruq Al Fatih Rakhmawan",
@@ -1545,7 +1656,8 @@
                         "class": "Qonuni 3B",
                         "academic_year": "2020/2021"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Muhammad Jahda Imana",
@@ -1559,7 +1671,8 @@
                         "class": "Qonuni 3B",
                         "academic_year": "2020/2021"
                     }
-                ]
+                ],
+                "status": "pindah"
             },
             {
                 "name": "Muhammad Zahran Syarif",
@@ -1573,7 +1686,8 @@
                         "class": "Kuttab Awal 2C",
                         "academic_year": "2024/2025"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Muhammad Zaid Al-Fatih",
@@ -1581,7 +1695,8 @@
                 "bunda": "Hening Tyas",
                 "academic_year": "2022/2023",
                 "kode_registrasi": "KAFC014-062",
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Rasydan Haidarrahman Abdullah",
@@ -1595,7 +1710,8 @@
                         "class": "Kuttab Awal 2B",
                         "academic_year": "2024/2025"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Sahal Sesfao",
@@ -1603,7 +1719,8 @@
                 "bunda": "Sinta Yuli Indra",
                 "academic_year": "2021/2022",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Shawqy Athalla Yerrie",
@@ -1611,7 +1728,8 @@
                 "bunda": "Sasti Ambarwati Nursani",
                 "academic_year": "2022/2023",
                 "kode_registrasi": "KAFC014-043",
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             }
         ]
     },
@@ -1636,7 +1754,8 @@
                 "bunda": null,
                 "academic_year": null,
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Ahmad Zayyinnal Quron",
@@ -1650,7 +1769,8 @@
                         "class": "Kuttab Awal 3D",
                         "academic_year": "2024/2025"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Arsabyan Somba Hasry",
@@ -1669,7 +1789,8 @@
                         "class": "Qonuni 3A",
                         "academic_year": "2021/2022"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Ayyash Ahmad Al Kahfi",
@@ -1683,7 +1804,8 @@
                         "class": "Kuttab Awal 3C",
                         "academic_year": "2024/2025"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Bayhaqqi Al Ghani",
@@ -1691,7 +1813,8 @@
                 "bunda": "Vivi Dwi Juniati",
                 "academic_year": "2022/2023",
                 "kode_registrasi": "KAFC014-049",
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Fathan",
@@ -1705,7 +1828,8 @@
                         "class": "Qonuni 4B",
                         "academic_year": "2019/2020"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Hamas Syahid Abdullah",
@@ -1724,7 +1848,8 @@
                         "class": "Qonuni 4B",
                         "academic_year": "2019/2020"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Ibrahim Abdullah Mukti",
@@ -1732,7 +1857,8 @@
                 "bunda": "Widy Kartika",
                 "academic_year": "2022/2023",
                 "kode_registrasi": "KAFC014-032",
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Izzan Ibadurrahman",
@@ -1740,7 +1866,8 @@
                 "bunda": "Shiva Ulya Azizah",
                 "academic_year": "2022/2023",
                 "kode_registrasi": "KAFC014-030",
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Khalid Akram Ziyad",
@@ -1748,7 +1875,8 @@
                 "bunda": "Radhen Inthan Leothriansari Vutaco",
                 "academic_year": "2022/2023",
                 "kode_registrasi": "KAFC014-022",
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Khalfan Aqmar Fazel",
@@ -1762,7 +1890,8 @@
                         "class": "Kuttab Awal 1A",
                         "academic_year": "2025/2026"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Muhammad Faiz Al Khalish",
@@ -1770,7 +1899,8 @@
                 "bunda": null,
                 "academic_year": null,
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Muhammad Faqih Alfatih",
@@ -1789,7 +1919,8 @@
                         "class": "Qonuni 4B",
                         "academic_year": "2020/2021"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Muhammad Zadinniqo Attaqy",
@@ -1797,7 +1928,8 @@
                 "bunda": "Qonita Diena Muchtar",
                 "academic_year": "2022/2023",
                 "kode_registrasi": "KAFC014-023",
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Raizel Zinan Muhammad",
@@ -1816,7 +1948,8 @@
                         "class": "Qonuni 3B",
                         "academic_year": "2021/2022"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Yahya Abdurrahman Nugraha",
@@ -1824,7 +1957,8 @@
                 "bunda": "Bairanti Asriandhini Marwan",
                 "academic_year": "2022/2023",
                 "kode_registrasi": "KAFC014-083",
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             }
         ]
     },
@@ -1855,7 +1989,8 @@
                         "class": "Kuttab Awal 1A",
                         "academic_year": "2025/2026"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Aisyah Almira Saliha",
@@ -1869,7 +2004,8 @@
                         "class": "Kuttab Awal 1B",
                         "academic_year": "2025/2026"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Inayatur Rohmah",
@@ -1883,7 +2019,8 @@
                         "class": "Kuttab Awal 3B",
                         "academic_year": "2023/2024"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Kaeysha Ghania Gustika",
@@ -1891,7 +2028,8 @@
                 "bunda": null,
                 "academic_year": null,
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Kayyisa Niswah Afifah",
@@ -1899,7 +2037,8 @@
                 "bunda": "Wahyu Weratiningroom",
                 "academic_year": "2022/2023",
                 "kode_registrasi": "KAFC014-034",
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Khanara Putri Ramadhani Novisal",
@@ -1907,7 +2046,8 @@
                 "bunda": "Novitasari",
                 "academic_year": "2022/2023",
                 "kode_registrasi": "KAFC014-052",
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Khansa Tsuraya Saudah",
@@ -1915,7 +2055,8 @@
                 "bunda": "Arasy Fauzia",
                 "academic_year": "2023/2024",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Raudhatul Jannah Hudrita",
@@ -1929,7 +2070,8 @@
                         "class": "Kuttab Awal 1A",
                         "academic_year": "2025/2026"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Rumaysho",
@@ -1937,7 +2079,8 @@
                 "bunda": null,
                 "academic_year": null,
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Shofiah Hanifatul Karimah",
@@ -1951,7 +2094,8 @@
                         "class": "Kuttab Awal 3A",
                         "academic_year": "2023/2024"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Shofiyya Ittaqy",
@@ -1965,7 +2109,8 @@
                         "class": "Kuttab Awal 3A",
                         "academic_year": "2023/2024"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             }
         ]
     },
@@ -2001,7 +2146,8 @@
                         "class": "Qonuni 3A",
                         "academic_year": "2021/2022"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Muhammad Fatan Hasri Harahap",
@@ -2009,7 +2155,8 @@
                 "bunda": "Rita Zahara",
                 "academic_year": "2021/2022",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Muhammad Al fatih Syawwal",
@@ -2017,7 +2164,8 @@
                 "bunda": null,
                 "academic_year": "2024/2025",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Muhammad Ayyash Al Fatih",
@@ -2025,7 +2173,8 @@
                 "bunda": "Istianah Mulkiyah",
                 "academic_year": "2022/2023",
                 "kode_registrasi": "KAFC014-080",
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Muhammad Azka Putra Rasya",
@@ -2039,7 +2188,8 @@
                         "class": "Kuttab Awal 2C",
                         "academic_year": "2024/2025"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Muhammad Furqon Sabilillah",
@@ -2053,7 +2203,8 @@
                         "class": "Kuttab Awal 2C",
                         "academic_year": "2024/2025"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Muhammad Jundi Ar Rahman Hardianto",
@@ -2061,7 +2212,8 @@
                 "bunda": null,
                 "academic_year": null,
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Muhammad Mumtaz Muzaffar",
@@ -2080,7 +2232,8 @@
                         "class": "Qonuni 4B",
                         "academic_year": "2019/2020"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Muhammad Uwais Lubis",
@@ -2094,7 +2247,8 @@
                         "class": "Qonuni 2B",
                         "academic_year": "2022/2023"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Muhammad Yusuf Muwafiq",
@@ -2118,7 +2272,8 @@
                         "class": "Qonuni 3B",
                         "academic_year": "2021/2022"
                     }
-                ]
+                ],
+                "status": "pindah"
             },
             {
                 "name": "Sajid Ibrahim",
@@ -2132,7 +2287,8 @@
                         "class": "Kuttab Awal 2A",
                         "academic_year": "2024/2025"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Tsaqib Muhammad Al Fatih",
@@ -2146,7 +2302,8 @@
                         "class": "Kuttab Awal 1A",
                         "academic_year": "2025/2026"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Zain Nabhan Ar-Ruzain",
@@ -2154,7 +2311,8 @@
                 "bunda": "Resti Meitania",
                 "academic_year": "2021/2022",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Zaki Dzulkarnain Nasution",
@@ -2173,7 +2331,8 @@
                         "class": "Qonuni 4A",
                         "academic_year": "2019/2020"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             }
         ]
     },
@@ -2198,7 +2357,8 @@
                 "bunda": "Herviana Rika Reza",
                 "academic_year": "2021/2022",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Afifa Rafanda Achmad",
@@ -2206,7 +2366,8 @@
                 "bunda": "Angghy kurniani",
                 "academic_year": "2022/2023",
                 "kode_registrasi": "KAFC014-070",
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Aisyah Iqleema Lubis",
@@ -2220,7 +2381,8 @@
                         "class": "Qonuni 2A",
                         "academic_year": "2022/2023"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Aliyah",
@@ -2228,7 +2390,8 @@
                 "bunda": "Eva Nurpeti",
                 "academic_year": "2021/2022",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Alkhansa Hanania Arradita",
@@ -2247,7 +2410,8 @@
                         "class": "Qonuni 4A",
                         "academic_year": "2020/2021"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Asy Syaima Ainul Mardhiyah",
@@ -2255,7 +2419,8 @@
                 "bunda": null,
                 "academic_year": null,
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Ghaida Anindya Hasan",
@@ -2269,7 +2434,8 @@
                         "class": "Kuttab Awal 3A",
                         "academic_year": "2023/2024"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Ghaida Kana Shafiyya",
@@ -2288,7 +2454,8 @@
                         "class": "Qonuni 4A",
                         "academic_year": "2020/2021"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Hanifah Fawwas Alkhansa",
@@ -2302,7 +2469,8 @@
                         "class": "Kuttab Awal 3D",
                         "academic_year": "2024/2025"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Humairaa Syifaa Izzatunnisa",
@@ -2326,7 +2494,8 @@
                         "class": "Qonuni 3B",
                         "academic_year": "2021/2022"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Islamia Aribah Putri",
@@ -2340,7 +2509,8 @@
                         "class": "Kuttab Awal 3B",
                         "academic_year": "2023/2024"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Mecca Andalusia Hamzah",
@@ -2348,7 +2518,8 @@
                 "bunda": "Yuseu Yustianti",
                 "academic_year": "2022/2023",
                 "kode_registrasi": "KAFC014-029",
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Nailah Humaira Abdillah",
@@ -2356,7 +2527,8 @@
                 "bunda": "Erna Wulan Jamilah",
                 "academic_year": "2022/2023",
                 "kode_registrasi": "KAFC014-017",
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Rahmania Taqiyya Zamzami",
@@ -2370,7 +2542,8 @@
                         "class": "Kuttab Awal 1B",
                         "academic_year": "2025/2026"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Sayyidah Fatimah Al-Anshoriyah",
@@ -2378,7 +2551,8 @@
                 "bunda": null,
                 "academic_year": null,
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Shanum Shaistanaya",
@@ -2397,7 +2571,8 @@
                         "class": "Qonuni 4B",
                         "academic_year": "2020/2021"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Shofia Maryam Alhanin",
@@ -2411,7 +2586,8 @@
                         "class": "Kuttab Awal 2B",
                         "academic_year": "2024/2025"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             }
         ]
     },
@@ -2436,7 +2612,8 @@
                 "bunda": null,
                 "academic_year": null,
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Abdullah Umar Alqudwah",
@@ -2455,7 +2632,8 @@
                         "class": "Kuttab Awal 3B",
                         "academic_year": "2023/2024"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Abdurahman Fariz",
@@ -2469,7 +2647,8 @@
                         "class": "Kuttab Awal 2A",
                         "academic_year": "2024/2025"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Ahmad Fayyadh Satria",
@@ -2477,7 +2656,8 @@
                 "bunda": "Susy Yulia",
                 "academic_year": "2020/2021",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Albirra Ghiyas Hasry",
@@ -2496,7 +2676,8 @@
                         "class": "Qonuni 1B",
                         "academic_year": "2022/2023"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Azmi Arifin Ahmad",
@@ -2515,7 +2696,8 @@
                         "class": "Qonuni 2A",
                         "academic_year": "2021/2022"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Emirza Salman Affandi",
@@ -2529,7 +2711,8 @@
                         "class": "Kuttab Awal 3D",
                         "academic_year": "2024/2025"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Ghassan Abdourabbuh Musthafainal Akhyar",
@@ -2537,7 +2720,8 @@
                 "bunda": "Asti Saraswati",
                 "academic_year": "2021/2022",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "La Ode Abdul Aziz Malik",
@@ -2551,7 +2735,8 @@
                         "class": "Kuttab Awal 3C",
                         "academic_year": "2024/2025"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Muchammad Sabil Ar Rusydi",
@@ -2559,7 +2744,8 @@
                 "bunda": "Ila Cholilah",
                 "academic_year": "2020/2021",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Muhammad Abdul Karim",
@@ -2567,7 +2753,8 @@
                 "bunda": "Syarmila",
                 "academic_year": "2021/2022",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Muhammad Abrar Hartono",
@@ -2575,7 +2762,8 @@
                 "bunda": "Dini Safitri",
                 "academic_year": "2021/2022",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Muhammad Alam Al Fatih",
@@ -2583,7 +2771,8 @@
                 "bunda": null,
                 "academic_year": "2025/2026",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Muhammad Al-Fattah Anandisa Harahap",
@@ -2591,7 +2780,8 @@
                 "bunda": "Lisa Nofita Sari",
                 "academic_year": "2021/2022",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Muhammad Ozil Nail Faeyza Pratama",
@@ -2599,7 +2789,8 @@
                 "bunda": null,
                 "academic_year": null,
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Muhammad Rafid Rasyad Chaidar",
@@ -2607,7 +2798,8 @@
                 "bunda": null,
                 "academic_year": null,
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Muhammad Thoriq Abdurrahman",
@@ -2621,7 +2813,8 @@
                         "class": "Kuttab Awal 2B",
                         "academic_year": "2024/2025"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Sulthan Alkhalifi Elfathan Fauzi",
@@ -2635,7 +2828,8 @@
                         "class": "Kuttab Awal 1B",
                         "academic_year": "2025/2026"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Syamil Al-Fatih",
@@ -2643,7 +2837,8 @@
                 "bunda": null,
                 "academic_year": null,
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Uwais Qaulan Sadiidaa",
@@ -2657,7 +2852,8 @@
                         "class": "Kuttab Awal 3C",
                         "academic_year": "2024/2025"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             }
         ]
     },
@@ -2688,7 +2884,8 @@
                         "class": "Qonuni 1A",
                         "academic_year": "2023/2024"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Arrumaisha Qonita Huwaidah",
@@ -2696,7 +2893,8 @@
                 "bunda": "Aryani Laspuri",
                 "academic_year": "2020/2021",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Fatimah Aulia Rakhmawan",
@@ -2710,7 +2908,8 @@
                         "class": "Qonuni 1A",
                         "academic_year": "2022/2023"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Fatimata Althaf Huuriya",
@@ -2724,7 +2923,8 @@
                         "class": "Qonuni 1A",
                         "academic_year": "2022/2023"
                     }
-                ]
+                ],
+                "status": "pindah"
             },
             {
                 "name": "Maryam Salma Karimah",
@@ -2738,7 +2938,8 @@
                         "class": "Kuttab Awal 3B",
                         "academic_year": "2023/2024"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Nailah Tabanna Azkaddina",
@@ -2746,7 +2947,8 @@
                 "bunda": "Widya Hapsari Citrowati",
                 "academic_year": "2021/2022",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Nida Fayza Qurratul'ain Syauqillah",
@@ -2770,7 +2972,8 @@
                         "class": "Qonuni 2B",
                         "academic_year": "2021/2022"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Raufa Amira Faizah",
@@ -2778,7 +2981,8 @@
                 "bunda": "Baidhuri Purna Edi",
                 "academic_year": "2021/2022",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Rubaina Zahra Ayesha",
@@ -2797,7 +3001,8 @@
                         "class": "Qonuni 1B",
                         "academic_year": "2022/2023"
                     }
-                ]
+                ],
+                "status": "naik_kelas"
             },
             {
                 "name": "Rufaida Najma Tsurayya El Naqia",
@@ -2805,7 +3010,8 @@
                 "bunda": "Qonita Diena Muchtar",
                 "academic_year": "2020/2021",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             },
             {
                 "name": "Rumaisha Althafunisa",
@@ -2813,7 +3019,8 @@
                 "bunda": null,
                 "academic_year": null,
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "naik_kelas"
             }
         ]
     },
@@ -2838,7 +3045,8 @@
                 "bunda": null,
                 "academic_year": "2025/2026",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "lulus"
             },
             {
                 "name": "Arjuna Bagaskara Mahayattika",
@@ -2846,7 +3054,8 @@
                 "bunda": null,
                 "academic_year": "2018/2019",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "lulus"
             },
             {
                 "name": "Asykar Hafizh Mubarok",
@@ -2860,7 +3069,8 @@
                         "class": "Kuttab Awal 2C",
                         "academic_year": "2024/2025"
                     }
-                ]
+                ],
+                "status": "lulus"
             },
             {
                 "name": "Faeyza Ghaaziy Gustika",
@@ -2874,7 +3084,8 @@
                         "class": "Kuttab Awal 1A",
                         "academic_year": "2025/2026"
                     }
-                ]
+                ],
+                "status": "lulus"
             },
             {
                 "name": "Farih Abdurrahman",
@@ -2882,7 +3093,8 @@
                 "bunda": "Wida Ratna",
                 "academic_year": "2020/2021",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "lulus"
             },
             {
                 "name": "Ghazi Ariqin Safaraz",
@@ -2890,7 +3102,8 @@
                 "bunda": "Aprilia Intan Murniati",
                 "academic_year": "2020/2021",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "lulus"
             },
             {
                 "name": "Ghifari Luthfi Cahyadi",
@@ -2898,7 +3111,8 @@
                 "bunda": "S. Dewi",
                 "academic_year": "2020/2021",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "lulus"
             },
             {
                 "name": "Hanzhalah Muhammad Faqih",
@@ -2912,7 +3126,8 @@
                         "class": "Kuttab Awal 3A",
                         "academic_year": "2023/2024"
                     }
-                ]
+                ],
+                "status": "lulus"
             },
             {
                 "name": "Ja'far Shuqurul Izz Al Ghofiqi",
@@ -2920,7 +3135,8 @@
                 "bunda": null,
                 "academic_year": null,
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "lulus"
             },
             {
                 "name": "Muhammad Adnan Rasyid",
@@ -2928,7 +3144,8 @@
                 "bunda": null,
                 "academic_year": null,
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "lulus"
             },
             {
                 "name": "Muhammad Afif Bukhari",
@@ -2936,7 +3153,8 @@
                 "bunda": null,
                 "academic_year": null,
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "lulus"
             },
             {
                 "name": "Muhammad Alfalah Wijaya",
@@ -2950,7 +3168,8 @@
                         "class": "Qonuni 1A",
                         "academic_year": "2022/2023"
                     }
-                ]
+                ],
+                "status": "lulus"
             },
             {
                 "name": "Muhammad Alfatih Adzka Abdillah",
@@ -2958,7 +3177,8 @@
                 "bunda": null,
                 "academic_year": null,
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "lulus"
             },
             {
                 "name": "Muhammad Alim Syaban Arradita",
@@ -2977,7 +3197,8 @@
                         "class": "Qonuni 2B",
                         "academic_year": "2022/2023"
                     }
-                ]
+                ],
+                "status": "lulus"
             },
             {
                 "name": "Muhammad Aria Abdurrahman Hufazh",
@@ -2985,7 +3206,8 @@
                 "bunda": null,
                 "academic_year": null,
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "lulus"
             },
             {
                 "name": "Nadhif Akhtar Karim",
@@ -2993,7 +3215,8 @@
                 "bunda": null,
                 "academic_year": null,
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "lulus"
             },
             {
                 "name": "Philantropi Hafizh",
@@ -3001,7 +3224,8 @@
                 "bunda": "Tresna Resmi Asih",
                 "academic_year": "2020/2021",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "lulus"
             },
             {
                 "name": "Qudsi Al Hakim",
@@ -3015,7 +3239,8 @@
                         "class": "Kuttab Awal 3D",
                         "academic_year": "2024/2025"
                     }
-                ]
+                ],
+                "status": "lulus"
             },
             {
                 "name": "Rizqi Ghazy Muhammad Shalahuddin Al Ayubi",
@@ -3023,7 +3248,8 @@
                 "bunda": "Mardhiyyah Fitria Ekawati",
                 "academic_year": "2020/2021",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "lulus"
             },
             {
                 "name": "Sultan Muhammad Al-Fatih",
@@ -3031,7 +3257,8 @@
                 "bunda": null,
                 "academic_year": null,
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "lulus"
             },
             {
                 "name": "Ubay Abiyya Arundaya",
@@ -3050,7 +3277,8 @@
                         "class": "Qonuni 2B",
                         "academic_year": "2022/2023"
                     }
-                ]
+                ],
+                "status": "lulus"
             },
             {
                 "name": "Yahya",
@@ -3074,7 +3302,8 @@
                         "class": "Kuttab Awal 3A",
                         "academic_year": "2023/2024"
                     }
-                ]
+                ],
+                "status": "lulus"
             },
             {
                 "name": "Zafran Nasution",
@@ -3093,7 +3322,8 @@
                         "class": "Qonuni 2A",
                         "academic_year": "2021/2022"
                     }
-                ]
+                ],
+                "status": "lulus"
             },
             {
                 "name": "Zeeshan Nawaz Al-Hameezy",
@@ -3101,7 +3331,8 @@
                 "bunda": "resti meitania",
                 "academic_year": "2019/2020",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "lulus"
             }
         ]
     },
@@ -3126,7 +3357,8 @@
                 "bunda": "Imas Widya Asih",
                 "academic_year": "2020/2021",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "lulus"
             },
             {
                 "name": "Adzkiyaa ul Haya Fissilmi Kaaffah",
@@ -3134,7 +3366,8 @@
                 "bunda": "Pipin Latifah",
                 "academic_year": "2019/2020",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "lulus"
             },
             {
                 "name": "Afiqah Fathiyyaturahma Purnomo",
@@ -3148,7 +3381,8 @@
                         "class": "Kuttab Awal 2B",
                         "academic_year": "2024/2025"
                     }
-                ]
+                ],
+                "status": "lulus"
             },
             {
                 "name": "Fakhira Fatimah Al Fihri",
@@ -3167,7 +3401,8 @@
                         "class": "Qonuni 2A",
                         "academic_year": "2021/2022"
                     }
-                ]
+                ],
+                "status": "lulus"
             },
             {
                 "name": "Fatimah",
@@ -3181,7 +3416,8 @@
                         "class": "Qonuni 1B",
                         "academic_year": "2022/2023"
                     }
-                ]
+                ],
+                "status": "lulus"
             },
             {
                 "name": "Fatimah Ghaziya Falah",
@@ -3195,7 +3431,8 @@
                         "class": "Qonuni 1A",
                         "academic_year": "2021/2022"
                     }
-                ]
+                ],
+                "status": "lulus"
             },
             {
                 "name": "Fleur Fakhira Zalfa",
@@ -3203,7 +3440,8 @@
                 "bunda": null,
                 "academic_year": null,
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "lulus"
             },
             {
                 "name": "Hanian Nafisah",
@@ -3211,7 +3449,8 @@
                 "bunda": "Silviana Sari",
                 "academic_year": "2019/2020",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "lulus"
             },
             {
                 "name": "Hanna Azaria Zhafira",
@@ -3230,7 +3469,8 @@
                         "class": "Qonuni 1B",
                         "academic_year": "2022/2023"
                     }
-                ]
+                ],
+                "status": "lulus"
             },
             {
                 "name": "Kalila Mayka Arsyfa",
@@ -3238,7 +3478,8 @@
                 "bunda": "Cut Mamesa",
                 "academic_year": "2020/2021",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "lulus"
             },
             {
                 "name": "Nayra Assyifa",
@@ -3252,7 +3493,8 @@
                         "class": "Kuttab Awal 3C",
                         "academic_year": "2024/2025"
                     }
-                ]
+                ],
+                "status": "lulus"
             },
             {
                 "name": "Nur Qisya Ramadhani",
@@ -3271,7 +3513,8 @@
                         "class": "Qonuni 1B",
                         "academic_year": "2022/2023"
                     }
-                ]
+                ],
+                "status": "lulus"
             },
             {
                 "name": "Rizhan Alzena Qaireen",
@@ -3290,7 +3533,8 @@
                         "class": "Qonuni 2B",
                         "academic_year": "2022/2023"
                     }
-                ]
+                ],
+                "status": "lulus"
             },
             {
                 "name": "Rofida Shofiqo Zahiro",
@@ -3298,7 +3542,8 @@
                 "bunda": null,
                 "academic_year": null,
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "lulus"
             },
             {
                 "name": "Siti Nayla Farah",
@@ -3306,7 +3551,8 @@
                 "bunda": "Liandamayni",
                 "academic_year": "2020/2021",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "lulus"
             },
             {
                 "name": "Sofia Zahidah",
@@ -3314,7 +3560,8 @@
                 "bunda": "Dewi Ramdhania",
                 "academic_year": "2020/2021",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "lulus"
             },
             {
                 "name": "Yasmina Mazaya Qurrotaaina",
@@ -3322,7 +3569,8 @@
                 "bunda": "Solekha Aprianti",
                 "academic_year": "2019/2020",
                 "kode_registrasi": null,
-                "siblings": null
+                "siblings": null,
+                "status": "lulus"
             }
         ]
     }

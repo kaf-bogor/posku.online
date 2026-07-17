@@ -15,6 +15,11 @@ import { AppContext } from '~/lib/context/app';
 
 const TAHUN_AJARAN = [
   {
+    label: 'Tahun Ajaran 2026 / 2027',
+    href: '/data_santri/ta_2026_2027',
+    description: 'Pembagian kelas, pengajar, dan daftar santri TA 2026/2027',
+  },
+  {
     label: 'Tahun Ajaran 2025 / 2026',
     href: '/data_santri/ta_2025_2026',
     description: 'Pembagian kelas, pengajar, dan daftar santri TA 2025/2026',

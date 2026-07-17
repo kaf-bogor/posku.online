@@ -30,7 +30,7 @@ import {
 import { useContext, useEffect, useMemo, useState } from 'react';
 
 import { AppContext } from '~/lib/context/app';
-import rawData from '~/lib/data/tahun_ajaran_2025_2026.json';
+import rawData from '~/lib/data/tahun_ajaran_2026_2027.json';
 import ChatBox from './ChatBox';
 
 interface Teacher {
@@ -52,7 +52,6 @@ interface Student {
   kode_registrasi: string | null;
   academic_year: string | null;
   siblings: Sibling[] | null;
-  status?: 'naik_kelas' | 'lulus' | 'pindah';
 }
 
 interface ClassInfo {
@@ -102,7 +101,7 @@ function highlight(text: string, term: string): string {
   );
 }
 
-export default function DataSantriTA20252026Page() {
+export default function DataSantriTA20262027Page() {
   const { bgColor, borderColor } = useContext(AppContext);
   const { colorMode } = useColorMode();
   const isDark = colorMode === 'dark';
@@ -302,7 +301,7 @@ export default function DataSantriTA20252026Page() {
                 Kuttab Al-Fatih Bogor
               </Heading>
               <Text fontSize="lg" color="gray.500">
-                TA. 2025-2026, Total Santri:{' '}
+                TA. 2026-2027, Total Santri:{' '}
                 <Text as="span" fontWeight="bold">
                   {totalSantri}
                 </Text>
@@ -538,50 +537,28 @@ export default function DataSantriTA20252026Page() {
                                 fontSize="sm"
                                 _hover={{ bg: studentHoverBg }}
                               >
-                                <HStack spacing={2}>
-                                  <Box
-                                    cursor={isUnlocked ? 'pointer' : 'default'}
-                                    _hover={
-                                      isUnlocked
-                                        ? { textDecoration: 'underline' }
-                                        : {}
-                                    }
-                                    data-student-name={student.name}
-                                    data-class-name={classInfo.name}
-                                    onClick={handleStudentClick}
-                                    title={
-                                      isUnlocked
-                                        ? ''
-                                        : 'Aktifkan info santri untuk melihat detail'
-                                    }
-                                    dangerouslySetInnerHTML={{
-                                      __html: highlight(
-                                        `${sIdx + 1}. ${student.name}`,
-                                        search
-                                      ),
-                                    }}
-                                  />
-                                  {student.status === 'pindah' && (
-                                    <Badge
-                                      colorScheme="red"
-                                      fontSize="2xs"
-                                      borderRadius="full"
-                                      px={1.5}
-                                    >
-                                      Pindah
-                                    </Badge>
-                                  )}
-                                  {student.status === 'lulus' && (
-                                    <Badge
-                                      colorScheme="green"
-                                      fontSize="2xs"
-                                      borderRadius="full"
-                                      px={1.5}
-                                    >
-                                      Lulus
-                                    </Badge>
-                                  )}
-                                </HStack>
+                                <Box
+                                  cursor={isUnlocked ? 'pointer' : 'default'}
+                                  _hover={
+                                    isUnlocked
+                                      ? { textDecoration: 'underline' }
+                                      : {}
+                                  }
+                                  data-student-name={student.name}
+                                  data-class-name={classInfo.name}
+                                  onClick={handleStudentClick}
+                                  title={
+                                    isUnlocked
+                                      ? ''
+                                      : 'Aktifkan info santri untuk melihat detail'
+                                  }
+                                  dangerouslySetInnerHTML={{
+                                    __html: highlight(
+                                      `${sIdx + 1}. ${student.name}`,
+                                      search
+                                    ),
+                                  }}
+                                />
                               </ListItem>
                             );
                           })}
