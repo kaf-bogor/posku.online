@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Estimator Biaya Cloudflare Realtime: RealtimeKit vs SFU</title>
+<style>
+  :root{
+    --bg:#0f172a; --panel:#1e293b; --panel2:#151b27; --border:#2e3a52;
+    --text:#e2e8f0; --muted:#94a3b8; --accent:#38bdf8; --accent2:#22d3ee;
+    --kit:#a78bfa; --sfu:#34d399; --warn:#f59e0b;
+    --radius:14px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    background:var(--bg);color:var(--text);line-height:1.5}
+  .wrap{max-width:1080px;margin:0 auto;padding:28px 20px 80px}
+  header h1{font-size:26px;margin:0 0 4px}
+  header p{color:var(--muted);margin:0 0 6px;font-size:14px}
+  .updated{color:var(--muted);font-size:12px}
+  .grid{display:grid;gap:18px;margin-top:22px}
+  .controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;
+    background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:18px}
+  .ctl label{display:block;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:6px;letter-spacing:.02em}
+  .ctl input[type=number],.ctl select{width:100%;background:var(--panel2);color:var(--text);
+    border:1px solid var(--border);border-radius:10px;padding:9px 11px;font-size:15px}
+  .ctl input[type=range]{width:100%;accent-color:var(--accent)}
+  .range-val{color:var(--accent);font-weight:700;font-size:14px}
+  .cards{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:760px){.cards{grid-template-columns:1fr}}
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:18px;display:flex;flex-direction:column;gap:10px}
+  .card h2{display:flex;align-items:center;gap:8px;margin:0;font-size:16px}
+  .tag{font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px}
+  .tag.kit{background:rgba(167,139,250,.18);color:var(--kit)}
+  .tag.sfu{background:rgba(52,211,153,.16);color:var(--sfu)}
+  .cost{font-size:30px;font-weight:800}
+  .kit .cost{color:var(--kit)} .sfu .cost{color:var(--sfu)}
+  .cost .per{font-size:14px;color:var(--muted);font-weight:500}
+  .rows{margin-top:4px}
+  .row{display:flex;justify-content:space-between;padding:5px 0;font-size:13px;border-bottom:1px dashed var(--border)}
+  .row:last-child{border:none}
+  .row b{font-weight:700}
+  .note{font-size:12px;color:var(--muted)}
+  .winner{background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.4);color:var(--sfu);
+    border-radius:10px;padding:8px 12px;font-weight:700;font-size:13px}
+  .winner.kit{background:rgba(167,139,250,.12);border-color:rgba(167,139,250,.4);color:var(--kit)}
+  .details{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:16px}
+  .details h3{margin:0 0 8px;font-size:14px}
+  .bar{height:22px;border-radius:6px;overflow:hidden;background:var(--panel2);position:relative;margin:6px 0}
+  .bar > div{height:100%;transition:width .25s}
+  .bar.kit > div{background:linear-gradient(90deg,#a78bfa,#7c3aed)}
+  .bar.sfu > div{background:linear-gradient(90deg,#34d399,#059669)}
+  .lbl{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:3px}
+  footer{color:var(--muted);font-size:11px;margin-top:26px}
+  .hint{color:var(--warn);font-size:12px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Estimator Biaya — Cloudflare Realtime</h1>
+    <p>RealtimeKit (per-menit) vs Realtime SFU (per-GB egress) · perkiraan untuk meeting grup</p>
+    <div class="updated">Harga: RealtimeKit $0.002/menit/AV peserta · audio-only $0.0005 · SFU $0.05/GB (1.000 GB/bulan gratis)</div>
+  </header>
+
+  <div class="grid">
+    <div class="controls">
+      <div class="ctl">
+        <label>Jumlah peserta</label>
+        <input type="number" id="participants" min="2" max="1000" value="10">
+      </div>
+      <div class="ctl">
+        <label>Durasi meeting (menit)</label>
+        <input type="number" id="minutes" min="5" max="1440" value="120">
+      </div>
+      <div class="ctl">
+        <label>Kamera aktif (dari total peserta)</label>
+        <input type="number" id="cameraOn" min="0" value="10">
+        <div class="hint" id="hintCam"></div>
+      </div>
+      <div class="ctl">
+        <label>Rata-rata bitrate video/peserta (Mbps)</label>
+        <div class="range-val" id="bitrateVal">0.8 Mbps</div>
+        <input type="range" id="bitrate" min="0.2" max="2.0" step="0.1" value="0.8">
+      </div>
+      <div class="ctl">
+        <label>Audio bitrate (kbps)</label>
+        <div class="range-val" id="audioVal">50 kbps</div>
+        <input type="range" id="audio" min="16" max="128" step="1" value="50">
+      </div>
+      <div class="ctl">
+        <label>Meeting per bulan</label>
+        <input type="number" id="meetings" min="1" max="1000" value="30">
+      </div>
+      <div class="ctl">
+        <label>Simulcast / hanya subscribe pembicara aktif?</label>
+        <select id="mode">
+          <option value="grid">Grid — semua terima semua track (paling boros)</option>
+          <option value="stage">Stage — rata-rata semua melihat ±3 layar video (Zoom umum)</option>
+          <option value="audio">Audio-only call</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="cards">
+      <div class="card kit">
+        <h2><span class="tag kit">RealtimeKit</span> Biaya tetap per peserta</h2>
+        <div class="cost" id="kitCost">$0.00</div>
+        <div class="rows" id="kitRows"></div>
+        <div class="note">Simpel & prediktabel. Sudah termasuk UI, signaling, recording, dll. Tak tergantung bitrate.</div>
+      </div>
+      <div class="card sfu">
+        <h2><span class="tag sfu">Realtime SFU</span> Biaya egress media</h2>
+        <div class="cost" id="sfuCost">$0.00</div>
+        <div class="rows" id="sfuRows"></div>
+        <div class="note">Free tier 1.000 GB/bulan. Egress ≈ jumlah track diterima × bitrate × durasi.</div>
+      </div>
+    </div>
+
+    <div id="verdict" class="winner"></div>
+
+    <div class="details">
+      <h3>Total egress per meeting (dasar biaya SFU)</h3>
+      <div class="bar kit"><div id="kitBar" style="width:100%"></div></div>
+      <div class="lbl"><span id="lblKit"></span><span></span></div>
+      <div class="bar sfu"><div id="sfuBar" style="width:0%"></div></div>
+      <div class="lbl"><span id="lblSfu"></span></div>
+      <p class="note" style="margin-top:10px">
+        Model: video tile rata-rata 0,8 Mbps setelah scale-down, audio 50 kbps. Nilai riil bisa 2–3× lebih kecil
+        dgn simulcast + hanya menerima layer rendah untuk tile kecil.
+      </p>
+    </div>
+  </div>
+
+  <footer>
+    Estimasi kasar untuk perbandingan — bukan invoice resmi. Selalu cek
+    <a href="https://workers.cloudflare.com/pricing" style="color:var(--accent)">harga Cloudflare terkini</a>.
+  </footer>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+const fmt = n => n.toLocaleString('id-ID',{maximumFractionDigits:2});
+const fmtGB = gb => gb.toLocaleString('id-ID',{maximumFractionDigits:1});
+
+function compute(){
+  const P = Math.max(2, +$('participants').value||2);
+  const MIN = Math.max(1, +$('minutes').value||1);
+  const CAM = Math.min(P, Math.max(0, +$('cameraOn').value||0));
+  $('hintCam').textContent = CAM < P ? (P-CAM)+' peserta audio-only' : 'semua video aktif';
+  const bit = +$('bitrate').value;
+  const aud = +$('audio').value;
+  const meetings = Math.max(1, +$('meetings').value||1);
+  const mode = $('mode').value;
+  $('bitrateVal').textContent = bit.toFixed(1)+' Mbps';
+  $('audioVal').textContent = aud+' kbps';
+
+  // Perceived avg video bitrate after scale-down/mode factor
+  let factor = 1;
+  if (mode==='audio') factor = 0;
+  else if (mode==='stage') factor = 3/P; // ~3 video tiles avg
+  const avBit = bit*factor*1e6;   // bps video
+  const audBit = aud*1000;
+
+  // RealtimeKit
+  const videoPart = CAM;
+  const audioPart = P - CAM;
+  const kitPerMeeting = videoPart*MIN*0.002 + audioPart*MIN*0.0005;
+  const kitMonth = kitPerMeeting*meetings;
+
+  // SFU egress
+  // Per participant publishes av+audio once. Receivers:
+  //  video egress GB = (CAM published) * (CAM-1 receivers of video) * avBit... plus audio
+  let sec = MIN*60;
+  // Publishers
+  let gbVideo=0, gbAudio=0;
+  // video: each camera-on participant's stream fanned out to other camera-on
+  // participants (grid) or subscribers seeing it.
+  // We approximate total video egress = CAM * (receiversPerVideoStream) * avBit * sec
+  // receiversPerVideoStream: grid -> P-1 (all others incl audio-only viewers see video)
+  // stage -> factor uses P-1 too but scaled by bitrate above; audio mode none
+  let rxV = mode==='grid' ? P-1 : (mode==='stage' ? P-1 : 0);
+  // audio egress: each participant's audio to all P-1 others
+  let rxA = P-1;
+
+  gbVideo = CAM * rxV * avBit * sec / 8 / 1e9;
+  gbAudio = P * rxA * audBit * sec / 8 / 1e9;
+
+  const gbPerMeeting = gbVideo + gbAudio;
+  const gbMonth = gbPerMeeting * meetings;
+  const freeGb = 1000;
+  const paidGb = Math.max(0, gbMonth - freeGb);
+  const sfuMonth = paidGb * 0.05;
+  const sfuPerMeeting = gbPerMeeting * 0.05;
+
+  // UI
+  $('kitCost').textContent = '$'+kitMonth.toFixed(2);
+  $('kitRows').innerHTML =
+    row('Biaya per meeting','$'+fmt(kitPerMeeting)) +
+    row('AV ('+CAM+' × $0.002 × '+MIN+'m)','$'+fmt(videoPart*MIN*0.002)) +
+    row('Audio-only ('+audioPart+' × $0.0005 × '+MIN+'m)','$'+fmt(audioPart*MIN*0.0005)) +
+    row('Total / bulan ('+meetings+'×)','<b>$'+fmt(kitMonth)+'</b>');
+
+  $('sfuCost').textContent = '$'+sfuMonth.toFixed(2);
+  const isFree = paidGb<=0;
+  $('sfuRows').innerHTML =
+    row('Video egress / meeting', fmtGB(gbVideo)+' GB') +
+    row('Audio egress / meeting', fmtGB(gbAudio)+' GB') +
+    row('Total egress / meeting','<b>'+fmtGB(gbPerMeeting)+' GB</b>') +
+    row('Total / bulan','<b>'+fmtGB(gbMonth)+' GB</b>') +
+    row('Free tier', '1.000 GB') +
+    row('Tersisa / berbayar', isFree ? '<b style="color:#34d399">0 (masih gratis)</b>' : fmtGB(paidGb)+' GB') +
+    row('Biaya egress / bulan', '<b>$'+fmt(sfuMonth)+'</b>');
+
+  // Verdict
+  const v = $('verdict');
+  v.classList.remove('kit');
+  if (kitMonth < sfuMonth){ v.textContent='✅ Lebih hemat: RealtimeKit ($'+fmt(kitMonth)+' vs $'+fmt(sfuMonth)+' /bulan)'; v.classList.add('kit'); }
+  else if (sfuMonth < kitMonth){ v.textContent='✅ Lebih hemat: Realtime SFU ($'+fmt(sfuMonth)+' vs $'+fmt(kitMonth)+' /bulan)'; }
+  else v.textContent='⚖️ Biaya hampir sama ('+fmt(sfuMonth)+' /bulan).';
+
+  // bars (SFU share of kit)
+  const sfuMonthRaw = gbMonth*0.05; // no free tier
+  const maxBar = Math.max(kitMonth, sfuMonthRaw, 0.001);
+  $('kitBar').style.width = (kitMonth/maxBar*100)+'%';
+  $('sfuBar').style.width = (sfuMonthRaw/maxBar*100)+'%';
+  $('lblKit').textContent = 'RealtimeKit: $'+fmt(kitMonth);
+  $('lblSfu').textContent = 'SFU (tanpa free tier): $'+fmt(sfuMonthRaw);
+}
+function row(l,v){ return '<div class="row"><span>'+l+'</span><span>'+v+'</span></div>'; }
+
+document.querySelectorAll('#participants,#minutes,#cameraOn,#bitrate,#audio,#meetings,#mode').forEach(el=>{
+  el.addEventListener('input', compute);
+});
+compute();
+</script>
+</body>
+</html>

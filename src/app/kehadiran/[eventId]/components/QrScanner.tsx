@@ -14,13 +14,11 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 interface QrScannerProps {
   expectedEventId: string;
   userEmail: string;
-  onCheckInSuccess: () => void;
 }
 
 export default function QrScanner({
   expectedEventId,
   userEmail,
-  onCheckInSuccess,
 }: QrScannerProps) {
   const [scanning, setScanning] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
@@ -69,7 +67,6 @@ export default function QrScanner({
             status: 'success',
             duration: 3000,
           });
-          onCheckInSuccess();
         } else {
           setMessage(data.message || 'Gagal check-in');
           setMessageStatus('error');
@@ -81,7 +78,7 @@ export default function QrScanner({
         setSubmitting(false);
       }
     },
-    [submitting, stopScanner, userEmail, toast, onCheckInSuccess]
+    [submitting, stopScanner, userEmail, toast]
   );
 
   useEffect(() => {

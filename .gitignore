@@ -45,6 +45,9 @@ sitemap*.xml
 # TS
 *.tsbuildinfo
 
+# Cloudflare local dev state
+.wrangler/
+
 # Turbo
 .turbo
 

@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 
 import { db } from '~/lib/firebase';
 import type { AttendanceEventDTO } from '~/lib/types/attendance';
+import { mapAttendanceEvent } from '~/lib/utils/attendance';
 
 export default function useAttendanceEvents() {
   const [events, setEvents] = useState<AttendanceEventDTO[]>([]);
@@ -18,29 +19,7 @@ export default function useAttendanceEvents() {
     const unsub = onSnapshot(
       q,
       (snap) => {
-        const items: AttendanceEventDTO[] = snap.docs.map((d) => {
-          const data = d.data() as {
-            title?: string;
-            description?: string;
-            date?: { toDate: () => Date };
-            createdAt?: { toDate: () => Date };
-            createdBy?: string;
-          };
-
-          return {
-            id: d.id,
-            title: data.title ?? '',
-            description: data.description ?? '',
-            date: data.date
-              ? data.date.toDate().toISOString()
-              : new Date(0).toISOString(),
-            createdAt: data.createdAt
-              ? data.createdAt.toDate().toISOString()
-              : new Date(0).toISOString(),
-            createdBy: data.createdBy ?? '',
-          };
-        });
-        setEvents(items);
+        setEvents(snap.docs.map((d) => mapAttendanceEvent(d.id, d.data())));
         setLoading(false);
       },
       (err) => {

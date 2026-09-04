@@ -2,6 +2,7 @@
 
 import {
   Alert,
+  AlertIcon,
   Box,
   Button,
   Center,
@@ -12,44 +13,76 @@ import {
   Text,
   useColorModeValue,
 } from '@chakra-ui/react';
-import { useRouter } from 'next/navigation';
-import { useCallback, useMemo } from 'react';
+import { useMemo } from 'react';
 import { FaCheckCircle } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
 
+import useAttendanceRecords from '~/lib/hooks/useAttendanceRecords';
 import useAuth from '~/lib/hooks/useAuth';
-import type {
-  AttendanceEventDTO,
-  AttendanceRecordDTO,
-} from '~/lib/types/attendance';
+import type { AttendanceEventDTO } from '~/lib/types/attendance';
 
 import QrCodeDisplay from './QrCodeDisplay';
 import QrScanner from './QrScanner';
 
 export default function KehadiranEventDetailClient({
   event,
-  records,
   eventId,
 }: {
   event: AttendanceEventDTO | null;
-  records: AttendanceRecordDTO[];
   eventId: string;
 }) {
-  const { user, loading, login } = useAuth();
-  const router = useRouter();
+  const { user, loading: authLoading, login } = useAuth();
+  const {
+    records,
+    loading: recordsLoading,
+    error: recordsError,
+  } = useAttendanceRecords(eventId);
   const cardBg = useColorModeValue('white', 'gray.700');
   const muted = useColorModeValue('gray.600', 'gray.300');
-
-  const handleCheckInSuccess = useCallback(() => {
-    router.refresh();
-  }, [router]);
 
   const myRecord = useMemo(
     () => records.find((r) => r.userEmail === user?.email),
     [records, user?.email]
   );
 
-  if (loading) {
+  let recordsContent;
+  if (recordsError) {
+    recordsContent = (
+      <Alert status="error" borderRadius="lg">
+        <AlertIcon />
+        <Text fontSize="sm">{recordsError}</Text>
+      </Alert>
+    );
+  } else if (recordsLoading) {
+    recordsContent = (
+      <Center py={6}>
+        <Spinner size="md" color="purple.500" />
+      </Center>
+    );
+  } else if (records.length === 0) {
+    recordsContent = (
+      <Box bg={cardBg} borderRadius="xl" p={6} boxShadow="md">
+        <Text color={muted} fontSize="sm">
+          Belum ada yang check-in.
+        </Text>
+      </Box>
+    );
+  } else {
+    recordsContent = (
+      <Stack spacing={3}>
+        {records.map((r) => (
+          <Box key={r.id} bg={cardBg} borderRadius="xl" p={4} boxShadow="md">
+            <Text fontWeight="semibold">{r.userEmail}</Text>
+            <Text fontSize="xs" color={muted} mt={1}>
+              {new Date(r.checkedInAt).toLocaleString('id-ID')}
+            </Text>
+          </Box>
+        ))}
+      </Stack>
+    );
+  }
+
+  if (authLoading) {
     return (
       <Center py={12}>
         <Spinner size="lg" color="purple.500" />
@@ -113,11 +146,7 @@ export default function KehadiranEventDetailClient({
         </Alert>
       ) : (
         <Box bg={cardBg} borderRadius="xl" p={5} boxShadow="md" mb={4}>
-          <QrScanner
-            expectedEventId={eventId}
-            userEmail={user.email || ''}
-            onCheckInSuccess={handleCheckInSuccess}
-          />
+          <QrScanner expectedEventId={eventId} userEmail={user.email || ''} />
         </Box>
       )}
 
@@ -130,30 +159,7 @@ export default function KehadiranEventDetailClient({
           Daftar Kehadiran
         </Heading>
 
-        {records.length === 0 ? (
-          <Box bg={cardBg} borderRadius="xl" p={6} boxShadow="md">
-            <Text color={muted} fontSize="sm">
-              Belum ada yang check-in.
-            </Text>
-          </Box>
-        ) : (
-          <Stack spacing={3}>
-            {records.map((r) => (
-              <Box
-                key={r.id}
-                bg={cardBg}
-                borderRadius="xl"
-                p={4}
-                boxShadow="md"
-              >
-                <Text fontWeight="semibold">{r.userEmail}</Text>
-                <Text fontSize="xs" color={muted} mt={1}>
-                  {new Date(r.checkedInAt).toLocaleString('id-ID')}
-                </Text>
-              </Box>
-            ))}
-          </Stack>
-        )}
+        {recordsContent}
       </Box>
     </Box>
   );

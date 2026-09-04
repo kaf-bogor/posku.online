@@ -29,10 +29,10 @@ import {
 } from '@chakra-ui/react';
 import { useContext, useEffect, useMemo, useState } from 'react';
 
+import DataChatBox from '~/app/components/DataChatBox';
 import { AppContext } from '~/lib/context/app';
 import rawData from '~/lib/data/tahun_ajaran_2026_2027.json';
-
-import ChatBox from './ChatBox';
+import { useTahunAjaran } from '~/lib/hooks/useTahunAjaran';
 
 interface Teacher {
   role: string;
@@ -125,7 +125,10 @@ export default function DataSantriTA20262027Page() {
   const lockBtnBg = useColorModeValue('gray.100', 'gray.700');
   const lockBtnColor = useColorModeValue('gray.700', 'gray.200');
 
-  const classes = rawData as ClassInfo[];
+  const { data: classes } = useTahunAjaran<ClassInfo[]>({
+    tahun: '2026/2027',
+    fallback: rawData as ClassInfo[],
+  });
   const [search, setSearch] = useState('');
   const [openIdxs, setOpenIdxs] = useState<number[]>([]);
   const [selected, setSelected] = useState<{
@@ -732,7 +735,16 @@ export default function DataSantriTA20262027Page() {
         </ModalContent>
       </Modal>
 
-      <ChatBox />
+      <DataChatBox
+        title="Tanya Data Santri"
+        hint="Tanyakan apa saja tentang santri, guru, dan kelas pada TA 2026/2027."
+        loadingSteps={[
+          'Menghubungi data santri 2026/2027...',
+          'Mencari guru & kelas...',
+          'Mengolah konteks...',
+          'Menyusun jawaban...',
+        ]}
+      />
     </>
   );
 }

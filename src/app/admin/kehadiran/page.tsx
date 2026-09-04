@@ -8,6 +8,7 @@ import {
   HStack,
   Button,
   Spinner,
+  Badge,
   useColorModeValue,
   Input,
   Textarea,
@@ -56,6 +57,8 @@ interface FormState {
 
 const COLLECTION = 'attendanceEvents';
 const emptyForm: FormState = { title: '', description: '', date: '' };
+
+const isPastEvent = (date: string) => new Date(date).getTime() < Date.now();
 
 export default function AdminKehadiranPage() {
   const { user } = useAuth('admin');
@@ -133,6 +136,7 @@ export default function AdminKehadiranPage() {
   };
 
   const handleEdit = (item: AttendanceEvent) => {
+    if (isPastEvent(item.date)) return;
     setEditId(item.id);
     setForm({
       title: item.title,
@@ -259,11 +263,15 @@ export default function AdminKehadiranPage() {
                     </Text>
                   </HStack>
                   <Text>By {item.createdBy}</Text>
+                  {isPastEvent(item.date) && (
+                    <Badge colorScheme="gray">Sudah berlalu</Badge>
+                  )}
                 </HStack>
                 <HStack>
                   <Button
                     size="sm"
                     colorScheme="blue"
+                    isDisabled={isPastEvent(item.date)}
                     onClick={() => handleEdit(item)}
                   >
                     Edit

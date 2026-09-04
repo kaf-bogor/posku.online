@@ -1,0 +1,16 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "posku-d1",
+  "main": "src/index.js",
+  "compatibility_date": "2025-08-01",
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "posku-db",
+      "database_id": "6f84665d-dbb6-43bd-b530-f002e6ea9f34"
+    }
+  ],
+  "observability": {
+    "enabled": true
+  }
+}

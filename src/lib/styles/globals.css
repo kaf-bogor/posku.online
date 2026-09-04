@@ -1,1 +1,46 @@
 /* Global Styling here */
+
+/* ---- DataChatBox: shared animations ---- */
+
+@keyframes datachat-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.datachat-spinner {
+  animation: datachat-spin 0.8s linear infinite;
+}
+
+@keyframes datachat-blink {
+  0%,
+  80%,
+  100% {
+    opacity: 0.25;
+  }
+  40% {
+    opacity: 1;
+  }
+}
+
+.datachat-dot {
+  animation: datachat-blink 1.3s infinite both;
+}
+
+@keyframes datachat-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.datachat-msg {
+  animation: datachat-fade-up 0.22s ease-out both;
+}

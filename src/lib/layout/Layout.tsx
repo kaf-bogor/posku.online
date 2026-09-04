@@ -6,6 +6,7 @@ import type { ReactNode } from 'react';
 import { useContext, useEffect } from 'react';
 
 import AddToHomeScreen from '~/app/components/AddToHomeScreen';
+import AppProgressBar from '~/app/components/AppProgressBar';
 import BottomNav from '~/app/components/BottomNav';
 import Promo from '~/lib/components/Promo';
 import { AppContext } from '~/lib/context/app';
@@ -43,6 +44,8 @@ const Layout = ({ children }: LayoutProps) => {
       position="relative"
     >
       {isDisplayPromo && <Promo />}
+
+      <AppProgressBar />
 
       <Header image={image} title={title} subtitle={subtitle} />
 

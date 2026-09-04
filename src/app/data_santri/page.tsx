@@ -11,6 +11,7 @@ import {
 import NextLink from 'next/link';
 import { useContext } from 'react';
 
+import DataChatBox from '~/app/components/DataChatBox';
 import { AppContext } from '~/lib/context/app';
 
 const TAHUN_AJARAN = [
@@ -79,6 +80,11 @@ export default function DataSantriPage() {
           </Link>
         ))}
       </VStack>
+
+      <DataChatBox
+        title="Tanya Data Santri"
+        hint="Tanyakan apa saja tentang santri, kelas, guru, dan wali santri (TA 2025/2026 & 2026/2027)."
+      />
     </Box>
   );
 }

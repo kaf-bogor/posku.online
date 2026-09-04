@@ -2,6 +2,7 @@
 
 import {
   VStack,
+  HStack,
   Box,
   Text,
   Spinner,
@@ -9,18 +10,20 @@ import {
   useColorModeValue,
   Flex,
   Icon,
+  Badge,
 } from '@chakra-ui/react';
 import { format } from 'date-fns';
 import { id as localeID } from 'date-fns/locale';
 import Link from 'next/link';
-import { useContext } from 'react';
+import { useContext, useMemo } from 'react';
 import {
   FaUsers,
   FaEnvelopeOpenText,
-  FaRegFileAlt,
   FaNewspaper,
   FaCalendarAlt,
-  FaHandsHelping,
+  FaHourglassHalf,
+  FaCalendarCheck,
+  FaUserCheck,
 } from 'react-icons/fa';
 import { FiHelpCircle } from 'react-icons/fi';
 
@@ -28,11 +31,153 @@ import HeroSection from '~/lib/components/HeroSection';
 import SectionHeader from '~/lib/components/SectionHeader';
 import { AppContext } from '~/lib/context/app';
 import { storageUrl } from '~/lib/context/baseUrl';
+import rawKalender from '~/lib/data/kalender_posku.json';
 import { useCrudManager } from '~/lib/hooks/useCrudManager';
 import type { EventItem } from '~/lib/types/event';
 import type { NewsItem } from '~/lib/types/news';
+import type {
+  KalenderData,
+  KalenderEvent,
+  KalenderOngoing,
+} from '~/lib/utils/kalender';
+import {
+  KATEGORI_COLOR,
+  KATEGORI_LABEL,
+  formatRentang,
+  upcomingEvents,
+} from '~/lib/utils/kalender';
 
 import MainMenus from './components/MainMenus';
+
+const KalenderSection = ({
+  upcoming,
+  ongoing,
+}: {
+  upcoming: KalenderEvent[];
+  ongoing: KalenderOngoing[];
+}) => {
+  const { bgColor } = useContext(AppContext);
+  const dateColor = useColorModeValue('gray.600', 'gray.300');
+  const mutedColor = useColorModeValue('gray.500', 'gray.400');
+  const borderColor = useColorModeValue('gray.200', 'gray.600');
+  const alwaysOn = ongoing.filter((o) =>
+    /menyusul|belum ditentukan|insidental/i.test(o.cadence)
+  );
+  const othersOngoing = ongoing.filter(
+    (o) => !/menyusul|belum ditentukan|insidental/i.test(o.cadence)
+  );
+  const displayOnGoing = [...alwaysOn, ...othersOngoing];
+
+  return (
+    <Box>
+      <SectionHeader
+        title="Kalender POSKU"
+        icon={FaCalendarAlt}
+        viewAllLink="/kalender_posku"
+        viewAllText="Lihat Semua Kegiatan"
+      />
+
+      {/* 4 kegiatan akan datang — dalam satu baris */}
+      <Box overflowX="auto" pb={1}>
+        {upcoming.length === 0 && displayOnGoing.length === 0 && (
+          <Text color={mutedColor} fontSize="sm">
+            Belum ada kegiatan.
+          </Text>
+        )}
+        <HStack spacing={3} align="stretch" minW="max-content">
+          {upcoming.map((ev) => (
+            <Flex
+              key={`${ev.name}-${ev.start}`}
+              bg={bgColor}
+              w={{ base: '200px', md: '220px' }}
+              flexShrink={0}
+              p={3}
+              flexDir="column"
+              rounded="xl"
+              boxShadow="md"
+              border="1px solid"
+              borderColor={borderColor}
+            >
+              <HStack spacing={1.5} mb={2}>
+                <Box
+                  color={
+                    KATEGORI_COLOR[ev.category] === 'purple'
+                      ? 'purple.400'
+                      : 'blue.400'
+                  }
+                >
+                  <FaCalendarCheck size={13} />
+                </Box>
+                <Badge
+                  colorScheme={KATEGORI_COLOR[ev.category]}
+                  variant="subtle"
+                  fontSize="10px"
+                >
+                  {KATEGORI_LABEL[ev.category]}
+                </Badge>
+              </HStack>
+              <Text fontSize="sm" fontWeight="semibold" noOfLines={2} flex={1}>
+                {ev.name}
+              </Text>
+              <Text fontSize="xs" color={mutedColor} mt={1} noOfLines={1}>
+                {formatRentang(ev)}
+              </Text>
+            </Flex>
+          ))}
+        </HStack>
+      </Box>
+
+      {/* Kegiatan berjalan / belum berjadwal — selalu tampil */}
+      {displayOnGoing.length > 0 && (
+        <VStack spacing={2} align="stretch" mt={3}>
+          {displayOnGoing.map((o) => (
+            <Flex
+              key={o.name}
+              bg={bgColor}
+              p={2.5}
+              rounded="xl"
+              alignItems="center"
+              boxShadow="md"
+              border="1px solid"
+              borderColor={borderColor}
+              borderLeft="4px solid"
+              borderLeftColor="teal.400"
+            >
+              <Box mr={3} color="teal.500">
+                <FaHourglassHalf size={14} />
+              </Box>
+              <Box flex={1} minW={0}>
+                <Text
+                  as="span"
+                  fontSize="sm"
+                  fontWeight="semibold"
+                  noOfLines={1}
+                >
+                  {o.name}
+                </Text>
+                <Text as="div" fontSize="xs" color={mutedColor} noOfLines={1}>
+                  {o.cadence}
+                </Text>
+              </Box>
+              <Badge
+                colorScheme="teal"
+                variant="subtle"
+                fontSize="10px"
+                ml={2}
+                flexShrink={0}
+              >
+                Berjalan
+              </Badge>
+            </Flex>
+          ))}
+        </VStack>
+      )}
+      <Text fontSize="xs" color={dateColor} mt={3}>
+        Sumber: kalender program POSKU tahun ajaran 2026/2027
+      </Text>
+    </Box>
+  );
+};
 
 const LoadingSection = () => (
   <Center py={8}>
@@ -226,6 +371,13 @@ const Home = () => {
       },
     });
 
+  const kalender = useMemo(() => {
+    const data = rawKalender as KalenderData;
+    const today = new Date();
+    const upcoming = upcomingEvents(data.events, today, 4);
+    return { data, upcoming };
+  }, []);
+
   return (
     <VStack spacing={6} align="stretch" w="100%">
       <HeroSection />
@@ -245,19 +397,14 @@ const Home = () => {
               imageUrl: `${storageUrl}/mc_light.png?alt=media`,
             },
             {
-              label: 'Quiz',
-              href: '/quiz',
-              icon: FiHelpCircle,
-            },
-            {
-              label: 'Kehadiran',
-              href: '/kehadiran',
-              icon: FaCalendarAlt,
-            },
-            {
               label: 'Pengurus',
               href: '/pengurus',
               icon: FaUsers,
+            },
+            {
+              label: 'Kalender POSKU',
+              href: '/kalender_posku',
+              icon: FaCalendarAlt,
             },
             {
               label: 'Newsletter',
@@ -265,14 +412,14 @@ const Home = () => {
               icon: FaEnvelopeOpenText,
             },
             {
-              label: 'Laporan',
-              href: '/reports',
-              icon: FaRegFileAlt,
+              label: 'Quiz',
+              href: '/quiz',
+              icon: FiHelpCircle,
             },
             {
-              label: 'Amal',
-              href: '/amal',
-              icon: FaHandsHelping,
+              label: 'Kehadiran',
+              href: '/kehadiran',
+              icon: FaUserCheck,
             },
           ]}
         />
@@ -280,6 +427,12 @@ const Home = () => {
 
       <NewsSection newsItems={newsItems} loading={newsLoading} />
       <EventsSection eventItems={eventItems} loading={eventsLoading} />
+
+      {/* Kalender POSKU — diletakkan di bagian paling bawah */}
+      <KalenderSection
+        upcoming={kalender.upcoming}
+        ongoing={kalender.data.ongoing_programs}
+      />
 
       <Box h={{ base: '20px', md: '40px' }} />
     </VStack>

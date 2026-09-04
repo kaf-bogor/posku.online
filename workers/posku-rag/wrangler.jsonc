@@ -1,0 +1,28 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "posku-rag",
+  "main": "src/index.js",
+  "compatibility_date": "2025-08-01",
+  "triggers": {
+    "crons": ["0 3 * * *"]
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "posku-db",
+      "database_id": "6f84665d-dbb6-43bd-b530-f002e6ea9f34"
+    }
+  ],
+  "ai": {
+    "binding": "AI"
+  },
+  "vectorize": [
+    {
+      "binding": "VECTORIZE",
+      "index_name": "posku-index"
+    }
+  ],
+  "observability": {
+    "enabled": true
+  }
+}

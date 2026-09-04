@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 
 import { db } from '~/lib/firebase';
 import type { AttendanceRecordDTO } from '~/lib/types/attendance';
+import { mapAttendanceRecord } from '~/lib/utils/attendance';
 
 export default function useAttendanceRecords(eventId: string) {
   const [records, setRecords] = useState<AttendanceRecordDTO[]>([]);
@@ -31,23 +32,9 @@ export default function useAttendanceRecords(eventId: string) {
     const unsub = onSnapshot(
       q,
       (snap) => {
-        const items: AttendanceRecordDTO[] = snap.docs.map((d) => {
-          const data = d.data() as {
-            eventId?: string;
-            userEmail?: string;
-            checkedInAt?: { toDate: () => Date };
-          };
-
-          return {
-            id: d.id,
-            eventId: data.eventId ?? eventId,
-            userEmail: data.userEmail ?? '',
-            checkedInAt: data.checkedInAt
-              ? data.checkedInAt.toDate().toISOString()
-              : new Date(0).toISOString(),
-          };
-        });
-        setRecords(items);
+        setRecords(
+          snap.docs.map((d) => mapAttendanceRecord(d.id, d.data(), eventId))
+        );
         setLoading(false);
       },
       (err) => {

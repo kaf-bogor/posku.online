@@ -1,0 +1,616 @@
+{
+  "title": "Kalender Program POSKU Al Fatih Bogor",
+  "subtitle": "Kuttab Al Fatih Bogor — Rencana Kegiatan Tahun Ajaran 2026/2027",
+  "range": "Agustus 2026 – Juli 2027",
+  "legend": {
+    "event": "Program Non-Rutin (Event)",
+    "rutin": "Program Rutin",
+    "insidential": "Insidental",
+    "libur": "Hari Libur (Ahad & Nasional)"
+  },
+  "events": [
+    {
+      "name": "Rakor & Raker POSKU",
+      "category": "rutin",
+      "start": "2026-08-02",
+      "pic": "Pak Bimo (Ketua POSKU)",
+      "support": "Kesekretariatan",
+      "committee": "Pengurus POSKU",
+      "desc": "Persiapan setiap program dan evaluasi program — dilaksanakan tiap kuartal.",
+      "target": "Seluruh Pengurus POSKU"
+    },
+    {
+      "name": "Lomba 17 Agustusan",
+      "category": "event",
+      "start": "2026-08-17",
+      "pic": "Pak Bimo",
+      "support": "All",
+      "committee": "Pengurus POSKU",
+      "desc": "Memeriahkan hari kemerdekaan dengan perlombaan untuk para santri.",
+      "target": "Santri Kuttab Al Fatih"
+    },
+    {
+      "name": "KBO (Kajian Bulanan Ortu)",
+      "category": "rutin",
+      "start": "2026-09-05",
+      "pic": "Pak Febri",
+      "support": "Sekretariat, Bendahara, Media, Korlas",
+      "committee": "Walisantri",
+      "desc": "Pembinaan keilmuan dan penguatan sinergi orangtua–Kuttab dalam membersamai pendidikan santri.",
+      "target": "Walisantri Kuttab Al Fatih Bogor"
+    },
+    {
+      "name": "Parenting Nabawiyah",
+      "category": "rutin",
+      "start": "2026-09-15",
+      "pic": "Ibu Leni Melvita & Ibu Lela",
+      "support": "—",
+      "committee": "Tim PN (Literasi)",
+      "desc": "Pembinaan orangtua berfokus pada pola pengasuhan dan pendidikan anak berdasarkan petunjuk Nabi ﷺ, berlandaskan Al-Qur'an dan Sunnah.",
+      "target": "Walisantri Ummahat dan alumni Kuttab Al Fatih Bogor"
+    },
+    {
+      "name": "Kajian Qowammah",
+      "category": "rutin",
+      "start": "2026-09-19",
+      "pic": "Pak Dede",
+      "support": "Tarbiyah",
+      "desc": "Kajian keilmuan bagi walisantri ayah.",
+      "target": "Walisantri Ayah Kuttab Al Fatih Bogor"
+    },
+    {
+      "name": "Kajian Ummahat",
+      "category": "rutin",
+      "start": "2026-09-22",
+      "pic": "Ibu Ranti Futiawati",
+      "support": "Sekretariat, Bendahara, Media, Korlas",
+      "committee": "Walisantri",
+      "desc": "Pembinaan dan penguatan keilmuan bagi para ummahat, serta menguatkan peran ummahat dalam mendampingi tarbiyah anak di rumah.",
+      "target": "Walisantri Ummahat Seluruh Kuttab Al Fatih Bogor"
+    },
+    {
+      "name": "DAHAM (Daurah Hamasiyah)",
+      "category": "event",
+      "start": "2026-10-03",
+      "end": "2026-11-01",
+      "pic": "Pak Muchlis",
+      "support": "Sekretariat, Bendahara, Media, Korlas",
+      "committee": "Walisantri Qonuni 3",
+      "desc": "Program pembinaan intensif bagi santri Q4 untuk menguatkan hafalan Al-Qur'an, menyelesaikan target, dan mendekatkan santri pada kebiasaan ibadah dan murojaah.",
+      "target": "Santri Ikhwan dan Akhwat Qonuni 4"
+    },
+    {
+      "name": "KBO (Kajian Bulanan Ortu)",
+      "category": "rutin",
+      "start": "2026-10-03",
+      "pic": "Pak Febri",
+      "support": "Sekretariat, Bendahara, Media, Korlas",
+      "committee": "Walisantri",
+      "desc": "Pembinaan keilmuan dan penguatan sinergi orangtua–Kuttab dalam membersamai pendidikan santri.",
+      "target": "Walisantri Kuttab Al Fatih Bogor"
+    },
+    {
+      "name": "Parenting Nabawiyah",
+      "category": "rutin",
+      "start": "2026-10-06",
+      "pic": "Ibu Leni Melvita & Ibu Lela",
+      "support": "—",
+      "committee": "Tim PN (Literasi)",
+      "desc": "Pembinaan orangtua berfokus pada pola pengasuhan dan pendidikan anak berdasarkan petunjuk Nabi ﷺ, berlandaskan Al-Qur'an dan Sunnah.",
+      "target": "Walisantri Ummahat dan alumni Kuttab Al Fatih Bogor"
+    },
+    {
+      "name": "Parenting Nabawiyah",
+      "category": "rutin",
+      "start": "2026-10-20",
+      "pic": "Ibu Leni Melvita & Ibu Lela",
+      "support": "—",
+      "committee": "Tim PN (Literasi)",
+      "desc": "Pembinaan orangtua berfokus pada pola pengasuhan dan pendidikan anak berdasarkan petunjuk Nabi ﷺ, berlandaskan Al-Qur'an dan Sunnah.",
+      "target": "Walisantri Ummahat dan alumni Kuttab Al Fatih Bogor"
+    },
+    {
+      "name": "Kajian Qowammah",
+      "category": "rutin",
+      "start": "2026-10-24",
+      "pic": "Pak Dede",
+      "support": "Tarbiyah",
+      "desc": "Kajian keilmuan bagi walisantri ayah.",
+      "target": "Walisantri Ayah Kuttab Al Fatih Bogor"
+    },
+    {
+      "name": "Kajian Ummahat",
+      "category": "rutin",
+      "start": "2026-10-27",
+      "pic": "Ibu Ranti Futiawati",
+      "support": "Sekretariat, Bendahara, Media, Korlas",
+      "committee": "Walisantri",
+      "desc": "Pembinaan dan penguatan keilmuan bagi para ummahat, serta menguatkan peran ummahat dalam mendampingi tarbiyah anak di rumah.",
+      "target": "Walisantri Ummahat Seluruh Kuttab Al Fatih Bogor"
+    },
+    {
+      "name": "Parenting Nabawiyah",
+      "category": "rutin",
+      "start": "2026-11-03",
+      "pic": "Ibu Leni Melvita & Ibu Lela",
+      "support": "—",
+      "committee": "Tim PN (Literasi)",
+      "desc": "Pembinaan orangtua berfokus pada pola pengasuhan dan pendidikan anak berdasarkan petunjuk Nabi ﷺ, berlandaskan Al-Qur'an dan Sunnah.",
+      "target": "Walisantri Ummahat dan alumni Kuttab Al Fatih Bogor"
+    },
+    {
+      "name": "KBO (Kajian Bulanan Ortu)",
+      "category": "rutin",
+      "start": "2026-11-07",
+      "pic": "Pak Febri",
+      "support": "Sekretariat, Bendahara, Media, Korlas",
+      "committee": "Walisantri",
+      "desc": "Pembinaan keilmuan dan penguatan sinergi orangtua–Kuttab dalam membersamai pendidikan santri.",
+      "target": "Walisantri Kuttab Al Fatih Bogor"
+    },
+    {
+      "name": "RAFAH",
+      "category": "event",
+      "start": "2026-11-15",
+      "pic": "—",
+      "support": "Sekretariat, Bendahara, Media, Korlas",
+      "committee": "Tim Muslimah Center",
+      "desc": "Kegiatan Ukhuwah Ummahat dengan konsep tema Palestina: tarbiyah berkelompok, pemaparan tugas online, ditutup kajian bersama dr. Al Fatih.",
+      "target": "Walisantri Ummahat Seluruh Kuttab Bogor"
+    },
+    {
+      "name": "Parenting Nabawiyah",
+      "category": "rutin",
+      "start": "2026-11-17",
+      "pic": "Ibu Leni Melvita & Ibu Lela",
+      "support": "—",
+      "committee": "Tim PN (Literasi)",
+      "desc": "Pembinaan orangtua berfokus pada pola pengasuhan dan pendidikan anak berdasarkan petunjuk Nabi ﷺ, berlandaskan Al-Qur'an dan Sunnah.",
+      "target": "Walisantri Ummahat dan alumni Kuttab Al Fatih Bogor"
+    },
+    {
+      "name": "Kajian Qowammah",
+      "category": "rutin",
+      "start": "2026-11-21",
+      "pic": "Pak Dede",
+      "support": "Tarbiyah",
+      "desc": "Kajian keilmuan bagi walisantri ayah.",
+      "target": "Walisantri Ayah Kuttab Al Fatih Bogor"
+    },
+    {
+      "name": "Kajian Ummahat",
+      "category": "rutin",
+      "start": "2026-11-24",
+      "pic": "Ibu Ranti Futiawati",
+      "support": "Sekretariat, Bendahara, Media, Korlas",
+      "committee": "Walisantri",
+      "desc": "Pembinaan dan penguatan keilmuan bagi para ummahat, serta menguatkan peran ummahat dalam mendampingi tarbiyah anak di rumah.",
+      "target": "Walisantri Ummahat Seluruh Kuttab Al Fatih Bogor"
+    },
+    {
+      "name": "Parenting Nabawiyah",
+      "category": "rutin",
+      "start": "2026-12-01",
+      "pic": "Ibu Leni Melvita & Ibu Lela",
+      "support": "—",
+      "committee": "Tim PN (Literasi)",
+      "desc": "Pembinaan orangtua berfokus pada pola pengasuhan dan pendidikan anak berdasarkan petunjuk Nabi ﷺ, berlandaskan Al-Qur'an dan Sunnah.",
+      "target": "Walisantri Ummahat dan alumni Kuttab Al Fatih Bogor"
+    },
+    {
+      "name": "KBO (Kajian Bulanan Ortu)",
+      "category": "rutin",
+      "start": "2026-12-05",
+      "pic": "Pak Febri",
+      "support": "Sekretariat, Bendahara, Media, Korlas",
+      "committee": "Walisantri",
+      "desc": "Pembinaan keilmuan dan penguatan sinergi orangtua–Kuttab dalam membersamai pendidikan santri.",
+      "target": "Walisantri Kuttab Al Fatih Bogor"
+    },
+    {
+      "name": "Rakor & Raker POSKU",
+      "category": "rutin",
+      "start": "2026-12-05",
+      "pic": "Pak Bimo (Ketua POSKU)",
+      "support": "Kesekretariatan",
+      "committee": "Pengurus POSKU",
+      "desc": "Persiapan setiap program dan evaluasi program — dilaksanakan tiap kuartal.",
+      "target": "Seluruh Pengurus POSKU"
+    },
+    {
+      "name": "Mabit Ayah / Ngopi",
+      "category": "event",
+      "start": "2026-12-12",
+      "pic": "Pak Ridwan",
+      "support": "—",
+      "committee": "Kuttab Awal 3",
+      "desc": "Sharing dan kebersamaan para ayah walisantri.",
+      "target": "Walisantri Ayah Kuttab Bogor"
+    },
+    {
+      "name": "KBO (Kajian Bulanan Ortu)",
+      "category": "rutin",
+      "start": "2027-01-09",
+      "pic": "Pak Febri",
+      "support": "Sekretariat, Bendahara, Media, Korlas",
+      "committee": "Walisantri",
+      "desc": "Pembinaan keilmuan dan penguatan sinergi orangtua–Kuttab dalam membersamai pendidikan santri.",
+      "target": "Walisantri Kuttab Al Fatih Bogor"
+    },
+    {
+      "name": "Parenting Nabawiyah",
+      "category": "rutin",
+      "start": "2027-01-19",
+      "pic": "Ibu Leni Melvita & Ibu Lela",
+      "support": "—",
+      "committee": "Tim PN (Literasi)",
+      "desc": "Pembinaan orangtua berfokus pada pola pengasuhan dan pendidikan anak berdasarkan petunjuk Nabi ﷺ, berlandaskan Al-Qur'an dan Sunnah.",
+      "target": "Walisantri Ummahat dan alumni Kuttab Al Fatih Bogor"
+    },
+    {
+      "name": "MAQOM",
+      "category": "event",
+      "start": "2027-01-23",
+      "pic": "Pak Ridwan",
+      "support": "Tarbiyah, Sentra Sosial dan Kreatif, Sentra Bugar, Korlas",
+      "committee": "Walisantri Qonuni 2",
+      "desc": "Kegiatan untuk walisantri ayah Kuttab Bogor (deskripsi lengkap menyusul).",
+      "target": "Walisantri Ayah Kuttab Bogor"
+    },
+    {
+      "name": "Kajian Qowammah",
+      "category": "rutin",
+      "start": "2027-01-23",
+      "pic": "Pak Dede",
+      "support": "Tarbiyah",
+      "desc": "Kajian keilmuan bagi walisantri ayah.",
+      "target": "Walisantri Ayah Kuttab Al Fatih Bogor"
+    },
+    {
+      "name": "Kajian Ummahat",
+      "category": "rutin",
+      "start": "2027-01-26",
+      "pic": "Ibu Ranti Futiawati",
+      "support": "Sekretariat, Bendahara, Media, Korlas",
+      "committee": "Walisantri",
+      "desc": "Pembinaan dan penguatan keilmuan bagi para ummahat, serta menguatkan peran ummahat dalam mendampingi tarbiyah anak di rumah.",
+      "target": "Walisantri Ummahat Seluruh Kuttab Al Fatih Bogor"
+    },
+    {
+      "name": "Parenting Nabawiyah",
+      "category": "rutin",
+      "start": "2027-02-06",
+      "pic": "Ibu Leni Melvita & Ibu Lela",
+      "support": "—",
+      "committee": "Tim PN (Literasi)",
+      "desc": "Pembinaan orangtua berfokus pada pola pengasuhan dan pendidikan anak berdasarkan petunjuk Nabi ﷺ, berlandaskan Al-Qur'an dan Sunnah.",
+      "target": "Walisantri Ummahat dan alumni Kuttab Al Fatih Bogor"
+    },
+    {
+      "name": "KBO (Kajian Bulanan Ortu)",
+      "category": "rutin",
+      "start": "2027-02-13",
+      "pic": "Pak Febri",
+      "support": "Sekretariat, Bendahara, Media, Korlas",
+      "committee": "Walisantri",
+      "desc": "Pembinaan keilmuan dan penguatan sinergi orangtua–Kuttab dalam membersamai pendidikan santri.",
+      "target": "Walisantri Kuttab Al Fatih Bogor"
+    },
+    {
+      "name": "Parenting Nabawiyah",
+      "category": "rutin",
+      "start": "2027-02-16",
+      "pic": "Ibu Leni Melvita & Ibu Lela",
+      "support": "—",
+      "committee": "Tim PN (Literasi)",
+      "desc": "Pembinaan orangtua berfokus pada pola pengasuhan dan pendidikan anak berdasarkan petunjuk Nabi ﷺ, berlandaskan Al-Qur'an dan Sunnah.",
+      "target": "Walisantri Ummahat dan alumni Kuttab Al Fatih Bogor"
+    },
+    {
+      "name": "Kajian Qowammah",
+      "category": "rutin",
+      "start": "2027-02-20",
+      "pic": "Pak Dede",
+      "support": "Tarbiyah",
+      "desc": "Kajian keilmuan bagi walisantri ayah.",
+      "target": "Walisantri Ayah Kuttab Al Fatih Bogor"
+    },
+    {
+      "name": "Kajian Ummahat",
+      "category": "rutin",
+      "start": "2027-02-23",
+      "pic": "Ibu Ranti Futiawati",
+      "support": "Sekretariat, Bendahara, Media, Korlas",
+      "committee": "Walisantri",
+      "desc": "Pembinaan dan penguatan keilmuan bagi para ummahat, serta menguatkan peran ummahat dalam mendampingi tarbiyah anak di rumah.",
+      "target": "Walisantri Ummahat Seluruh Kuttab Al Fatih Bogor"
+    },
+    {
+      "name": "I'tikaf",
+      "category": "event",
+      "start": "2027-03-01",
+      "end": "2027-03-09",
+      "pic": "Pak Roni",
+      "support": "Tarbiyah",
+      "committee": "Walisantri Qonuni 4",
+      "desc": "Program pembinaan ruhiyah di masjid pada 10 hari terakhir Ramadhan — menghidupkan malam dengan ibadah, mendekatkan diri kepada Allah, dan menguatkan ukhuwah.",
+      "target": "—"
+    },
+    {
+      "name": "Kajian Ummahat",
+      "category": "rutin",
+      "start": "2027-03-23",
+      "pic": "Ibu Ranti Futiawati",
+      "support": "Sekretariat, Bendahara, Media, Korlas",
+      "committee": "Walisantri",
+      "desc": "Pembinaan dan penguatan keilmuan bagi para ummahat, serta menguatkan peran ummahat dalam mendampingi tarbiyah anak di rumah.",
+      "target": "Walisantri Ummahat Seluruh Kuttab Al Fatih Bogor"
+    },
+    {
+      "name": "Parenting Nabawiyah",
+      "category": "rutin",
+      "start": "2027-04-02",
+      "pic": "Ibu Leni Melvita & Ibu Lela",
+      "support": "—",
+      "committee": "Tim PN (Literasi)",
+      "desc": "Pembinaan orangtua berfokus pada pola pengasuhan dan pendidikan anak berdasarkan petunjuk Nabi ﷺ, berlandaskan Al-Qur'an dan Sunnah.",
+      "target": "Walisantri Ummahat dan alumni Kuttab Al Fatih Bogor"
+    },
+    {
+      "name": "Safari Halal Bihal",
+      "category": "event",
+      "start": "2027-04-03",
+      "end": "2027-04-04",
+      "pic": "Pak Bimo",
+      "support": "All",
+      "committee": "—",
+      "desc": "Safari kunjungan ke PJ Syar'i dan Kepala Kuttab.",
+      "target": "—"
+    },
+    {
+      "name": "KBO (Kajian Bulanan Ortu)",
+      "category": "rutin",
+      "start": "2027-04-03",
+      "pic": "Pak Febri",
+      "support": "Sekretariat, Bendahara, Media, Korlas",
+      "committee": "Walisantri",
+      "desc": "Pembinaan keilmuan dan penguatan sinergi orangtua–Kuttab dalam membersamai pendidikan santri.",
+      "target": "Walisantri Kuttab Al Fatih Bogor"
+    },
+    {
+      "name": "Rakor & Raker POSKU",
+      "category": "rutin",
+      "start": "2027-04-03",
+      "end": "2027-04-04",
+      "pic": "Pak Bimo (Ketua POSKU)",
+      "support": "Kesekretariatan",
+      "committee": "Pengurus POSKU",
+      "desc": "Persiapan setiap program dan evaluasi program — dilaksanakan tiap kuartal.",
+      "target": "Seluruh Pengurus POSKU"
+    },
+    {
+      "name": "Parenting Nabawiyah",
+      "category": "rutin",
+      "start": "2027-04-06",
+      "pic": "Ibu Leni Melvita & Ibu Lela",
+      "support": "—",
+      "committee": "Tim PN (Literasi)",
+      "desc": "Pembinaan orangtua berfokus pada pola pengasuhan dan pendidikan anak berdasarkan petunjuk Nabi ﷺ, berlandaskan Al-Qur'an dan Sunnah.",
+      "target": "Walisantri Ummahat dan alumni Kuttab Al Fatih Bogor"
+    },
+    {
+      "name": "Kajian Qowammah",
+      "category": "rutin",
+      "start": "2027-04-17",
+      "pic": "Pak Dede",
+      "support": "Tarbiyah",
+      "desc": "Kajian keilmuan bagi walisantri ayah.",
+      "target": "Walisantri Ayah Kuttab Al Fatih Bogor"
+    },
+    {
+      "name": "Parenting Nabawiyah",
+      "category": "rutin",
+      "start": "2027-04-20",
+      "pic": "Ibu Leni Melvita & Ibu Lela",
+      "support": "—",
+      "committee": "Tim PN (Literasi)",
+      "desc": "Pembinaan orangtua berfokus pada pola pengasuhan dan pendidikan anak berdasarkan petunjuk Nabi ﷺ, berlandaskan Al-Qur'an dan Sunnah.",
+      "target": "Walisantri Ummahat dan alumni Kuttab Al Fatih Bogor"
+    },
+    {
+      "name": "Kajian Ummahat",
+      "category": "rutin",
+      "start": "2027-04-27",
+      "pic": "Ibu Ranti Futiawati",
+      "support": "Sekretariat, Bendahara, Media, Korlas",
+      "committee": "Walisantri",
+      "desc": "Pembinaan dan penguatan keilmuan bagi para ummahat, serta menguatkan peran ummahat dalam mendampingi tarbiyah anak di rumah.",
+      "target": "Walisantri Ummahat Seluruh Kuttab Al Fatih Bogor"
+    },
+    {
+      "name": "Parenting Nabawiyah",
+      "category": "rutin",
+      "start": "2027-05-04",
+      "pic": "Ibu Leni Melvita & Ibu Lela",
+      "support": "—",
+      "committee": "Tim PN (Literasi)",
+      "desc": "Pembinaan orangtua berfokus pada pola pengasuhan dan pendidikan anak berdasarkan petunjuk Nabi ﷺ, berlandaskan Al-Qur'an dan Sunnah.",
+      "target": "Walisantri Ummahat dan alumni Kuttab Al Fatih Bogor"
+    },
+    {
+      "name": "KBO (Kajian Bulanan Ortu)",
+      "category": "rutin",
+      "start": "2027-05-09",
+      "pic": "Pak Febri",
+      "support": "Sekretariat, Bendahara, Media, Korlas",
+      "committee": "Walisantri",
+      "desc": "Pembinaan keilmuan dan penguatan sinergi orangtua–Kuttab dalam membersamai pendidikan santri.",
+      "target": "Walisantri Kuttab Al Fatih Bogor"
+    },
+    {
+      "name": "Qurban",
+      "category": "event",
+      "start": "2027-05-20",
+      "pic": "Pak Giri",
+      "support": "—",
+      "committee": "Qonuni 1",
+      "desc": "Pemotongan hewan kurban dan Dauroh Kurban.",
+      "target": "Seluruh Warga Kuttab Alfatih Bogor"
+    },
+    {
+      "name": "Kajian Qowammah",
+      "category": "rutin",
+      "start": "2027-05-22",
+      "pic": "Pak Dede",
+      "support": "Tarbiyah",
+      "desc": "Kajian keilmuan bagi walisantri ayah.",
+      "target": "Walisantri Ayah Kuttab Al Fatih Bogor"
+    },
+    {
+      "name": "Kajian Ummahat",
+      "category": "rutin",
+      "start": "2027-05-25",
+      "pic": "Ibu Ranti Futiawati",
+      "support": "Sekretariat, Bendahara, Media, Korlas",
+      "committee": "Walisantri",
+      "desc": "Pembinaan dan penguatan keilmuan bagi para ummahat, serta menguatkan peran ummahat dalam mendampingi tarbiyah anak di rumah.",
+      "target": "Walisantri Ummahat Seluruh Kuttab Al Fatih Bogor"
+    },
+    {
+      "name": "KBO (Kajian Bulanan Ortu)",
+      "category": "rutin",
+      "start": "2027-06-05",
+      "pic": "Pak Febri",
+      "support": "Sekretariat, Bendahara, Media, Korlas",
+      "committee": "Walisantri",
+      "desc": "Pembinaan keilmuan dan penguatan sinergi orangtua–Kuttab dalam membersamai pendidikan santri.",
+      "target": "Walisantri Kuttab Al Fatih Bogor"
+    },
+    {
+      "name": "Rakor & Raker POSKU",
+      "category": "rutin",
+      "start": "2027-06-17",
+      "end": "2027-06-18",
+      "pic": "Pak Bimo (Ketua POSKU)",
+      "support": "Kesekretariatan",
+      "committee": "Pengurus POSKU",
+      "desc": "Persiapan setiap program dan evaluasi program — dilaksanakan tiap kuartal.",
+      "target": "Seluruh Pengurus POSKU"
+    },
+    {
+      "name": "Hidzaqoh",
+      "category": "event",
+      "start": "2027-06-12",
+      "pic": "Pak Sopian",
+      "support": "—",
+      "committee": "Walisantri Qonuni 3",
+      "desc": "Selebrasi dan apresiasi bagi santri Qonuni 4 yang telah menuntaskan pembelajaran — momentum syukur atas perjalanan pendidikan dan penghargaan atas kesungguhan para santri.",
+      "target": "Seluruh Santri Qonuni 3 & 4, Walisantri Qonuni 4, Seluruh Asatidz Kuttab Bogor"
+    }
+  ],
+  "holidays": [
+    {
+      "name": "Hari Kemerdekaan RI",
+      "start": "2026-08-17",
+      "note": "resmi"
+    },
+    {
+      "name": "Maulid Nabi Muhammad SAW",
+      "start": "2026-08-25",
+      "note": "resmi"
+    },
+    {
+      "name": "Libur Kuttab Semester Ganjil",
+      "start": "2026-12-21",
+      "end": "2027-01-04",
+      "note": "Libur Kuttab"
+    },
+    {
+      "name": "Hari Raya Natal",
+      "start": "2026-12-25",
+      "note": "resmi"
+    },
+    {
+      "name": "Isra Mi'raj Nabi Muhammad SAW",
+      "start": "2027-01-05",
+      "note": "perkiraan"
+    },
+    {
+      "name": "Tahun Baru Imlek",
+      "start": "2027-02-02",
+      "note": "perkiraan"
+    },
+    {
+      "name": "Idul Fitri 1448 H",
+      "start": "2027-03-10",
+      "note": "perkiraan"
+    },
+    {
+      "name": "Idul Fitri 1448 H",
+      "start": "2027-03-11",
+      "note": "perkiraan"
+    },
+    {
+      "name": "Wafat Yesus Kristus",
+      "start": "2027-03-26",
+      "note": "perkiraan"
+    },
+    {
+      "name": "Hari Paskah",
+      "start": "2027-03-28",
+      "note": "perkiraan"
+    },
+    {
+      "name": "Hari Buruh Internasional",
+      "start": "2027-05-01",
+      "note": "resmi"
+    },
+    {
+      "name": "Kenaikan Yesus Kristus",
+      "start": "2027-05-06",
+      "note": "perkiraan"
+    },
+    {
+      "name": "Idul Adha 1448 H",
+      "start": "2027-05-17",
+      "note": "perkiraan"
+    },
+    {
+      "name": "Hari Lahir Pancasila",
+      "start": "2027-06-01",
+      "note": "resmi"
+    },
+    {
+      "name": "Libur Kuttab Semester Genap",
+      "start": "2027-06-14",
+      "end": "2027-06-25",
+      "note": "Libur Kuttab"
+    }
+  ],
+  "ongoing_programs": [
+    {
+      "name": "Tahsin Ummahat",
+      "cadence": "Setiap Jumat (offline) & Senin (online, luar KAF Bogor)",
+      "desc": "Pembinaan Al-Qur'an bagi ummahat/walisantri untuk memperbaiki bacaan sekaligus menghadirkan keteladanan Qur'ani di rumah.",
+      "pic": "Ibu Ghia Astri"
+    },
+    {
+      "name": "Tahsin Ayah",
+      "cadence": "Jadwal menyusul",
+      "desc": "Pembinaan bacaan Al-Qur'an bagi para ayah, santri, dan asatidz.",
+      "pic": "Pak Ahmad Saefillah"
+    },
+    {
+      "name": "Baca Bareng",
+      "cadence": "Rutin mingguan, jadwal menyusul",
+      "desc": "Membaca bersama buku modul Kuttab secara offline.",
+      "pic": "Pak Helman"
+    },
+    {
+      "name": "Seminar Kajian Ust. Herfi",
+      "cadence": "Insidental — tanggal belum ditentukan",
+      "desc": "Kajian insidental bersama Ustadz Herfi.",
+      "pic": "M. Yanis"
+    }
+  ]
+}
