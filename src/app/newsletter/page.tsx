@@ -2,6 +2,7 @@ import { Box, SimpleGrid, Image, Text, Link } from '@chakra-ui/react';
 
 import ContentWrapper from '~/app/components/ContentWrapper';
 import newsletterSeed from '~/lib/data/newsletter.json';
+import { listNewsletters } from '~/lib/services/contentService';
 import { resolveStorageUrl } from '~/lib/utils/newsletter';
 
 export const dynamic = 'force-dynamic';
@@ -15,6 +16,14 @@ type NewsletterItem = {
 };
 
 async function getNewsletters(): Promise<NewsletterItem[]> {
+  try {
+    const list = await listNewsletters();
+    if (list.length > 0) {
+      return list as NewsletterItem[];
+    }
+  } catch {
+    // worker tidak terjangkau — fallback ke seed
+  }
   return newsletterSeed as NewsletterItem[];
 }
 
