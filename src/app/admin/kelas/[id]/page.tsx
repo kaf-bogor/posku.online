@@ -16,60 +16,29 @@ import {
   Spinner,
   Text,
   VStack,
+  useToast,
 } from '@chakra-ui/react';
-import { getAuth } from 'firebase/auth';
-import {
-  arrayUnion,
-  doc,
-  onSnapshot,
-  setDoc,
-  updateDoc,
-  getDoc,
-  increment,
-  runTransaction,
-} from 'firebase/firestore';
 import { useParams, useRouter } from 'next/navigation';
 import { useContext, useEffect, useState } from 'react';
 import { FaTrash } from 'react-icons/fa';
 
 import { AppContext } from '~/lib/context/app';
-import { db } from '~/lib/firebase';
+import {
+  addWakafParticipant,
+  getWakafKelas,
+  removeWakafParticipant,
+  updateWakafKelasTarget,
+} from '~/lib/services/kelasService';
+import type {
+  WakafActivity,
+  WakafKelas as Kelas,
+} from '~/lib/services/kelasService';
 import { formatIDR } from '~/lib/utils/currency';
-
-const getUserInfo = () => {
-  const u = getAuth().currentUser;
-  return {
-    userId: u?.uid ?? 'anonymous',
-    userName: u?.displayName ?? u?.email ?? 'Anonymous',
-  };
-};
-
-interface Participant {
-  name: string;
-  value: number;
-  datetime: string;
-}
-
-interface Activity {
-  userId: string;
-  userName: string | null;
-  type: 'add' | 'remove' | 'update_target';
-  description: string;
-  datetime: string;
-}
-
-interface Kelas {
-  name: string;
-  santriCount: number;
-  target?: number;
-  activities?: Activity[];
-  participants?: Participant[];
-  collected?: number;
-}
 
 export default function KelasDetailPage() {
   const { id } = useParams<{ id: string }>();
   const router = useRouter();
+  const toast = useToast();
   const { bgColor, textColor, borderColor } = useContext(AppContext);
 
   const kelasName = decodeURIComponent(id);
@@ -84,7 +53,6 @@ export default function KelasDetailPage() {
   const [saving, setSaving] = useState(false);
   const [newTarget, setNewTarget] = useState('');
 
-  // Sync editable target when kelas data arrives
   useEffect(() => {
     if (kelas?.target !== undefined) {
       setNewTarget(kelas.target.toString());
@@ -92,109 +60,67 @@ export default function KelasDetailPage() {
   }, [kelas?.target]);
 
   useEffect(() => {
-    const ref = doc(db, 'kelas', kelasName);
-
-    // Ensure doc exists
-    (async () => {
-      const snap = await getDoc(ref);
-      if (!snap.exists()) {
-        await setDoc(ref, {
-          name: kelasName,
-          santriCount: 0,
-          target: 0,
-          participants: [],
-          activities: [],
-          collected: 0,
-        } as Kelas);
+    let active = true;
+    const load = async () => {
+      try {
+        const data = await getWakafKelas(kelasName);
+        if (active) setKelas(data);
+      } catch {
+        if (active) setLoading(false);
+      } finally {
+        if (active) setLoading(false);
       }
-    })();
-
-    const unsub = onSnapshot(ref, (snap) => {
-      if (snap.exists()) {
-        setKelas(snap.data() as Kelas);
-      }
-      setLoading(false);
-    });
-
-    return () => unsub();
+    };
+    load();
+    const interval = setInterval(load, 10000);
+    return () => {
+      active = false;
+      clearInterval(interval);
+    };
   }, [kelasName]);
+
+  const refresh = async () => {
+    const data = await getWakafKelas(kelasName);
+    setKelas(data);
+  };
 
   const addParticipant = async () => {
     if (!participantName || !participantValue || !participantDate) return;
     setSaving(true);
-    const ref = doc(db, 'kelas', kelasName);
-    const valueNum = Number(participantValue);
-    const { userId, userName } = getUserInfo();
-
-    const newActivity: Activity = {
-      userId,
-      userName,
-      type: 'add',
-      description: `Menambah peserta ${participantName} dengan nominal Rp ${valueNum.toLocaleString('id-ID')}`,
-      datetime: new Date().toISOString(),
-    };
-    await updateDoc(ref, {
-      participants: arrayUnion({
+    try {
+      await addWakafParticipant(kelasName, {
         name: participantName,
-        value: valueNum,
+        value: Number(participantValue),
         datetime: new Date(participantDate).toISOString(),
-      } as Participant),
-      collected: increment(valueNum),
-      activities: arrayUnion(newActivity),
-    });
-    setParticipantName('');
-    setParticipantValue('');
-    setParticipantDate(new Date().toISOString().substring(0, 10));
-    setSaving(false);
+      });
+      setParticipantName('');
+      setParticipantValue('');
+      setParticipantDate(new Date().toISOString().substring(0, 10));
+      refresh();
+    } catch (err) {
+      toast({
+        title: 'Gagal menambah peserta',
+        description: err instanceof Error ? err.message : 'Terjadi kesalahan',
+        status: 'error',
+        duration: 4000,
+      });
+    } finally {
+      setSaving(false);
+    }
   };
 
-  const removeParticipant = async (participant: Participant) => {
+  const removeParticipant = async (participant: {
+    name: string;
+    value: number;
+    datetime: string;
+  }) => {
     if (!participant) return;
     setSaving(true);
-    const ref = doc(db, 'kelas', kelasName);
-    const { userId: delUid, userName: delName } = getUserInfo();
     try {
-      await runTransaction(db, async (tx) => {
-        const snap = await tx.get(ref);
-        if (!snap.exists()) throw new Error('Dokumen kelas tidak ditemukan');
-        const data = snap.data() as Kelas;
-        const participants = data.participants ?? [];
-
-        // Find exact participant by all fields
-        const idx = participants.findIndex(
-          (p) =>
-            p.name === participant.name &&
-            p.value === participant.value &&
-            p.datetime === participant.datetime
-        );
-        if (idx === -1) throw new Error('Peserta tidak ditemukan');
-
-        const newParticipants = [
-          ...participants.slice(0, idx),
-          ...participants.slice(idx + 1),
-        ];
-        const newCollected = newParticipants.reduce(
-          (sum, p) => sum + (p?.value ?? 0),
-          0
-        );
-
-        const delActivity: Activity = {
-          userId: delUid,
-          userName: delName,
-          type: 'remove',
-          description: `Menghapus peserta ${participant.name} dengan nominal Rp ${participant.value.toLocaleString('id-ID')}`,
-          datetime: new Date(participantDate).toISOString(),
-        };
-
-        // Update atomically
-        tx.update(ref, {
-          participants: newParticipants,
-          collected: newCollected,
-          activities: arrayUnion(delActivity),
-        });
-      });
+      await removeWakafParticipant(kelasName, participant);
+      refresh();
     } catch {
-      // swallow error; UI will reflect current snapshot
+      // UI akan merefresh dari snapshot terbaru
     } finally {
       setSaving(false);
     }
@@ -203,20 +129,19 @@ export default function KelasDetailPage() {
   const updateTarget = async () => {
     if (!newTarget) return;
     setSaving(true);
-    const ref = doc(db, 'kelas', kelasName);
-    const { userId: updUid, userName: updName } = getUserInfo();
-    const updActivity: Activity = {
-      userId: updUid,
-      userName: updName,
-      type: 'update_target',
-      description: `Mengubah target dari Rp ${(kelas?.target ?? 0).toLocaleString('id-ID')} ke Rp ${Number(newTarget).toLocaleString('id-ID')}`,
-      datetime: new Date(participantDate).toISOString(),
-    };
-    await updateDoc(ref, {
-      target: Number(newTarget),
-      activities: arrayUnion(updActivity),
-    });
-    setSaving(false);
+    try {
+      await updateWakafKelasTarget(kelasName, Number(newTarget));
+      refresh();
+    } catch (err) {
+      toast({
+        title: 'Gagal menyimpan target',
+        description: err instanceof Error ? err.message : 'Terjadi kesalahan',
+        status: 'error',
+        duration: 4000,
+      });
+    } finally {
+      setSaving(false);
+    }
   };
 
   if (loading || !kelas) {
@@ -227,7 +152,6 @@ export default function KelasDetailPage() {
     );
   }
 
-  // Derive collected from participants for consistent UI
   const derivedCollected = (kelas.participants ?? []).reduce(
     (total, p) => total + (p?.value ?? 0),
     0
@@ -379,14 +303,18 @@ export default function KelasDetailPage() {
         {kelas.activities && kelas.activities.length > 0 ? (
           <List spacing={3} maxH="300px" overflowY="auto">
             {kelas.activities
-              .slice() // copy
+              .slice()
               .sort(
-                (a, b) =>
+                (a: WakafActivity, b: WakafActivity) =>
                   new Date(b.datetime).getTime() -
                   new Date(a.datetime).getTime()
               )
               .map((act) => (
-                <ListItem key={act.datetime} borderBottomWidth="1px" pb={2}>
+                <ListItem
+                  key={act.datetime + act.type + act.description}
+                  borderBottomWidth="1px"
+                  pb={2}
+                >
                   <VStack align="start" spacing={0}>
                     <Text fontSize="sm" fontWeight="bold">
                       {act.userName ?? 'Unknown'}{' '}

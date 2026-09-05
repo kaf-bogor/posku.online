@@ -9,7 +9,7 @@ import { storageUrl } from '~/lib/context/baseUrl';
 export const siteConfig = {
   title: 'POSKU Al-Fatih Bogor',
   subtitle: 'Persatuan Orang tua Santri Kuttab Al-Fatih Bogor',
-  image: `${storageUrl}/logo_posku.png?alt=media`,
+  image: `${storageUrl}/logo_posku.png`,
   isDisplayPromo: false,
   bgColor: 'white',
   borderColor: 'gray.200',

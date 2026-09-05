@@ -9,13 +9,12 @@ import {
   useColorModeValue,
   IconButton,
 } from '@chakra-ui/react';
-import { collection, getDocs, orderBy, query, where } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import { FaArrowLeft, FaHandsHelping } from 'react-icons/fa';
 
 import DonationCard from '../admin/components/DonationCard';
 import ContentWrapper from '../components/ContentWrapper';
-import { db } from '~/lib/firebase';
+import { listDonations } from '~/lib/services/donationService';
 import type { DonationPage } from '~/lib/types/donation';
 
 const CACHE_KEY = 'amal-campaigns';
@@ -69,16 +68,8 @@ const AmalPage = () => {
           return;
         }
 
-        // Query only active campaigns from Firebase
-        const q = query(
-          collection(db, 'donations'),
-          where('is_active', '==', true),
-          orderBy('order', 'asc')
-        );
-        const querySnapshot = await getDocs(q);
-        const data: DonationPage[] = querySnapshot.docs.map(
-          (doc) => ({ id: doc.id, ...doc.data() }) as DonationPage
-        );
+        // Ambil hanya campaign aktif dari worker D1 (data ternormalisasi)
+        const data = await listDonations({ active: true });
 
         writeCache(data);
         setCampaigns(data);

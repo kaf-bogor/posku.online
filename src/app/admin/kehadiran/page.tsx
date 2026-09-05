@@ -23,23 +23,17 @@ import {
   AlertDialogFooter,
 } from '@chakra-ui/react';
 import { format } from 'date-fns';
-import {
-  addDoc,
-  collection,
-  deleteDoc,
-  doc,
-  getDocs,
-  orderBy,
-  query,
-  serverTimestamp,
-  updateDoc,
-} from 'firebase/firestore';
 import { useContext, useEffect, useRef, useState, useCallback } from 'react';
 import { FaCalendarAlt } from 'react-icons/fa';
 
 import { AppContext } from '~/lib/context/app';
-import { db } from '~/lib/firebase';
 import useAuth from '~/lib/hooks/useAuth';
+import {
+  createAttendanceEvent,
+  deleteAttendanceEvent,
+  listAttendanceEvents,
+  updateAttendanceEvent,
+} from '~/lib/services/attendanceService';
 
 interface AttendanceEvent {
   id: string;
@@ -55,13 +49,12 @@ interface FormState {
   date: string;
 }
 
-const COLLECTION = 'attendanceEvents';
 const emptyForm: FormState = { title: '', description: '', date: '' };
 
 const isPastEvent = (date: string) => new Date(date).getTime() < Date.now();
 
 export default function AdminKehadiranPage() {
-  const { user } = useAuth('admin');
+  useAuth('admin');
 
   const [items, setItems] = useState<AttendanceEvent[]>([]);
   const [loading, setLoading] = useState(true);
@@ -79,22 +72,15 @@ export default function AdminKehadiranPage() {
   const fetchItems = useCallback(async () => {
     setLoading(true);
     try {
-      const q = query(collection(db, COLLECTION), orderBy('date', 'desc'));
-      const snap = await getDocs(q);
-      const data: AttendanceEvent[] = snap.docs.map((d) => {
-        const raw = d.data() as Record<string, unknown>;
-        const dateVal = raw.date as { toDate?: () => Date } | undefined;
-        return {
-          id: d.id,
-          title: (raw.title as string) ?? '',
-          description: (raw.description as string) ?? '',
-          date: dateVal?.toDate
-            ? dateVal.toDate().toISOString()
-            : new Date(0).toISOString(),
-          createdBy: (raw.createdBy as string) ?? '',
-        };
-      });
-      setItems(data);
+      const data = await listAttendanceEvents();
+      const mapped: AttendanceEvent[] = data.map((d) => ({
+        id: d.id,
+        title: d.title,
+        description: d.description,
+        date: d.date,
+        createdBy: d.createdBy,
+      }));
+      setItems(mapped);
     } finally {
       setLoading(false);
     }
@@ -114,21 +100,16 @@ export default function AdminKehadiranPage() {
     e.preventDefault();
     if (!form.title.trim() || !form.date) return;
 
+    const payload = {
+      title: form.title.trim(),
+      description: form.description.trim(),
+      date: new Date(form.date).toISOString(),
+    };
+
     if (editId) {
-      await updateDoc(doc(db, COLLECTION, editId), {
-        title: form.title.trim(),
-        description: form.description.trim(),
-        date: new Date(form.date),
-        updatedAt: serverTimestamp(),
-      });
+      await updateAttendanceEvent(editId, payload);
     } else {
-      await addDoc(collection(db, COLLECTION), {
-        title: form.title.trim(),
-        description: form.description.trim(),
-        date: new Date(form.date),
-        createdAt: serverTimestamp(),
-        createdBy: user?.email ?? '',
-      });
+      await createAttendanceEvent(payload);
     }
 
     resetForm();
@@ -148,7 +129,7 @@ export default function AdminKehadiranPage() {
 
   const handleConfirmDelete = async () => {
     if (!deleteId) return;
-    await deleteDoc(doc(db, COLLECTION, deleteId));
+    await deleteAttendanceEvent(deleteId);
     setDeleteId(null);
     onClose();
     fetchItems();

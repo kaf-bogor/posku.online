@@ -4,6 +4,13 @@
 //   GET /api/wali                            -> bentuk mirip data_wali_santri.json
 //   GET /api/health                          -> { ok: true }
 
+import { handleAttendance } from './attendance';
+import { meStatus } from './auth';
+import { handleComments } from './comments';
+import { handleContent } from './content';
+import { handleDonations } from './donations';
+import { handleKelas } from './kelas';
+import { handleQuizzes } from './quizzes';
 import { json } from './json';
 
 export default {
@@ -16,8 +23,29 @@ export default {
     }
 
     try {
+      if (path.startsWith('/api/attendance/')) {
+        return await handleAttendance(request, env, url);
+      }
+      if (path.startsWith('/api/comments')) {
+        return await handleComments(request, env, url);
+      }
+      if (path.startsWith('/api/wakaf-kelas')) {
+        return await handleKelas(request, env, url);
+      }
+      if (path.startsWith('/api/news') || path.startsWith('/api/events') || path.startsWith('/api/podcasts')) {
+        return await handleContent(request, env, url);
+      }
+      if (path.startsWith('/api/quizzes')) {
+        return await handleQuizzes(request, env, url);
+      }
+      if (path.startsWith('/api/donations')) {
+        return await handleDonations(request, env, url);
+      }
       if (path === '/api/health') {
         return json({ ok: true, time: new Date().toISOString() });
+      }
+      if (path === '/api/me') {
+        return meStatus(request, env);
       }
       if (path === '/api/tahun-ajaran') {
         return await handleTahunAjaran(env, url);
@@ -38,8 +66,8 @@ export default {
 function corsHeaders() {
   return {
     'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'GET, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type',
+    'Access-Control-Allow-Methods': 'GET, POST, PUT, PATCH, DELETE, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
   };
 }
 

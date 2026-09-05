@@ -25,8 +25,8 @@ const MuslimahCenterPage = () => {
     useContext(AppContext);
 
   const logoUrl = useColorModeValue(
-    `${storageUrl}/mc_light.png?alt=media`,
-    `${storageUrl}/mc_dark.png?alt=media`
+    `${storageUrl}/mc_light.png`,
+    `${storageUrl}/mc_dark.png`
   );
 
   const accordionBg = useColorModeValue('gray.100', 'gray.700');

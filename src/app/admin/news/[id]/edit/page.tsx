@@ -13,13 +13,12 @@ import {
   FormLabel,
   HStack,
 } from '@chakra-ui/react';
-import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { useRouter, useParams } from 'next/navigation';
 import { useEffect, useState, useContext } from 'react';
 
 import ManagerForm from '~/app/admin/ManagerForm';
 import { AppContext } from '~/lib/context/app';
-import { db } from '~/lib/firebase';
+import { getNews, updateNews } from '~/lib/services/contentService';
 import type { NewsItem } from '~/lib/types/news';
 import { generateSlug } from '~/lib/utils/slug';
 
@@ -38,9 +37,8 @@ export default function EditNewsPage() {
     const fetchNews = async () => {
       if (!paramsId) return;
       try {
-        const snap = await getDoc(doc(db, 'news', paramsId));
-        if (snap.exists()) {
-          const data = snap.data() as NewsItem;
+        const data = await getNews(paramsId);
+        if (data) {
           const { id, ...rest } = data;
           setForm(rest);
         } else {
@@ -76,7 +74,7 @@ export default function EditNewsPage() {
     if (!form || !paramsId) return;
     setLoading(true);
     try {
-      await updateDoc(doc(db, 'news', paramsId), form);
+      await updateNews(paramsId, form);
       toast({
         title: 'Success',
         description: 'News updated successfully.',

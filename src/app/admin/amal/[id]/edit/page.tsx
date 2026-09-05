@@ -21,8 +21,8 @@ import {
   Text,
   Badge,
   Progress,
+  useToast,
 } from '@chakra-ui/react';
-import { doc, getDoc } from 'firebase/firestore';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
 import { useContext, useEffect, useState } from 'react';
@@ -33,10 +33,12 @@ import ManagerForm from '~/app/admin/ManagerForm';
 import DonorsFormSection from '~/app/admin/ManagerForm/DonorsForm';
 import OrganizerFormSection from '~/app/admin/ManagerForm/OrganizerForm';
 import { AppContext } from '~/lib/context/app';
-import { db } from '~/lib/firebase'; // adjust the import path to your firebase config
-import { useCrudManager } from '~/lib/hooks/useCrudManager';
+import {
+  getAdminToken,
+  getDonation,
+  updateDonation,
+} from '~/lib/services/donationService';
 import type { Activity, DonationPage } from '~/lib/types/donation';
-import { initialDonationState } from '~/lib/types/donation';
 import { formatIDR } from '~/lib/utils/currency';
 import { generateSlug } from '~/lib/utils/slug';
 
@@ -45,37 +47,99 @@ const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 const DonationDetailPage = ({ params }: { params: { id: string } }) => {
   const { id } = params;
   const router = useRouter();
+  const toast = useToast();
 
   const [donation, setDonation] = useState<DonationPage | null>(null);
+  const [editForm, setEditForm] = useState<DonationPage | null>(null);
+  const [editSelectedFiles, setEditSelectedFiles] = useState<File[]>([]);
+  const [isSaving, setIsSaving] = useState(false);
   const { bgColor, textColor, borderColor } = useContext(AppContext);
-
-  const {
-    editForm,
-    setEditForm,
-    editSelectedFiles,
-    setEditSelectedFiles,
-    handleSaveEdit,
-    isSaving,
-  } = useCrudManager<DonationPage>({
-    collectionName: 'donations',
-    blobFolderName: 'donation',
-    itemSchema: initialDonationState,
-    omitOnEditSave: ['donors', 'donorsCount'],
-    cancelEditOnSave: false,
-  });
 
   useEffect(() => {
     if (!id) return;
     const fetchDonation = async () => {
-      const docRef = doc(db, 'donations', id);
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        setDonation({ id: docSnap.id, ...docSnap.data() } as DonationPage);
-        setEditForm({ id: docSnap.id, ...docSnap.data() } as DonationPage);
+      const data = await getDonation(id);
+      if (data) {
+        setDonation(data);
+        setEditForm(data);
       }
     };
     fetchDonation();
-  }, [id, setEditForm]);
+  }, [id]);
+
+  const uploadImagesToServer = async (files: File[], category: string) => {
+    const formData = new FormData();
+    files.forEach((file) => formData.append('files', file));
+    formData.append('category', category);
+    const response = await fetch('/api/upload/images', {
+      method: 'POST',
+      body: formData,
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to upload images');
+    }
+
+    const data = await response.json();
+    return data.imageUrls as string[];
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editForm || !donation) return;
+    setIsSaving(true);
+    try {
+      const token = await getAdminToken();
+      if (!token) throw new Error('Anda harus login sebagai admin');
+
+      let { imageUrls } = editForm;
+      if (editSelectedFiles.length > 0) {
+        const newImageUrls = await uploadImagesToServer(
+          editSelectedFiles,
+          'donation'
+        );
+        imageUrls = [...imageUrls, ...newImageUrls];
+      }
+
+      await updateDonation(token, donation.id, {
+        slug: editForm.slug,
+        title: editForm.title,
+        summary: editForm.summary,
+        target: editForm.target,
+        link: editForm.link,
+        imageUrls,
+        order: editForm.order,
+        published: editForm.published,
+        is_active: editForm.is_active,
+        organizer: editForm.organizer,
+      });
+
+      toast({
+        title: 'Sukses',
+        description: 'Kampanye amal berhasil diperbarui.',
+        status: 'success',
+        duration: 3000,
+      });
+      setEditSelectedFiles([]);
+      const refreshed = await getDonation(donation.id);
+      if (refreshed) {
+        setDonation(refreshed);
+        setEditForm(refreshed);
+      }
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error('Error updating donation:', error);
+      toast({
+        title: 'Error',
+        description:
+          error instanceof Error ? error.message : 'Terjadi kesalahan',
+        status: 'error',
+        duration: 5000,
+      });
+    } finally {
+      setIsSaving(false);
+    }
+  };
 
   const handleEditFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) setEditSelectedFiles(Array.from(e.target.files));
@@ -108,7 +172,7 @@ const DonationDetailPage = ({ params }: { params: { id: string } }) => {
       title={`Edit: ${donation.title}`}
       formState={editForm}
       isLoading={isSaving}
-      onSubmit={(e) => handleSaveEdit(e, donation.id)}
+      onSubmit={handleSubmit}
       onCancel={() => router.push('/admin/amal')}
     >
       <Tabs variant="soft-rounded" isFitted>
@@ -242,38 +306,33 @@ const DonationDetailPage = ({ params }: { params: { id: string } }) => {
                 />
 
                 <HStack mt={2} spacing={2} wrap="wrap">
-                  {/* Display existing images and new files */}
-                  {donation.imageUrls.map((imageUrl, index) => (
+                  {(editForm?.imageUrls ?? []).map((imageUrl, index) => (
                     <FormImagePreview
+                      key={imageUrl}
                       imageUrl={imageUrl}
                       onRemoveImage={() => {
-                        const updatedImageUrls = donation.imageUrls.filter(
-                          (_, i) => i !== index
-                        );
-                        handleEditFileChange({
-                          target: {
-                            name: 'imageUrls',
-                            value: updatedImageUrls.join(','),
-                          },
-                        } as React.ChangeEvent<HTMLInputElement>);
+                        if (editForm) {
+                          const updatedImageUrls = editForm.imageUrls.filter(
+                            (_, i) => i !== index
+                          );
+                          setEditForm({
+                            ...editForm,
+                            imageUrls: updatedImageUrls,
+                          });
+                        }
                       }}
                     />
                   ))}
 
-                  {/* Display newly selected files */}
                   {editSelectedFiles.map((file, index) => (
                     <FormImagePreview
+                      key={file.name}
                       imageUrl={URL.createObjectURL(file)}
                       onRemoveImage={() => {
-                        const updatedImageUrls = editSelectedFiles.filter(
+                        const updatedFiles = editSelectedFiles.filter(
                           (_, i) => i !== index
                         );
-                        handleEditFileChange({
-                          target: {
-                            name: 'imageUrls',
-                            value: updatedImageUrls.join(','),
-                          },
-                        } as React.ChangeEvent<HTMLInputElement>);
+                        setEditSelectedFiles(updatedFiles);
                       }}
                     />
                   ))}
@@ -299,7 +358,7 @@ const DonationDetailPage = ({ params }: { params: { id: string } }) => {
                     )
                     .map((act: Activity) => (
                       <ListItem
-                        key={act.datetime}
+                        key={act.datetime + act.type + act.description}
                         borderBottomWidth="1px"
                         pb={2}
                       >

@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     telephone: false,
   },
   openGraph: {
-    url: 'https://posku.online',
+    url: 'https://poskubogor.com',
     title: 'poskubogor',
     description: 'Website Persatuan Orangtua Santri Kuttab Al-Fatih Bogor',
   },

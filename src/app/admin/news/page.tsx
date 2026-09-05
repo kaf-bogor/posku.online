@@ -16,6 +16,7 @@ import {
   FormControl,
   FormLabel,
   useDisclosure,
+  useToast,
   AlertDialog,
   AlertDialogOverlay,
   AlertDialogContent,
@@ -24,51 +25,68 @@ import {
   AlertDialogFooter,
 } from '@chakra-ui/react';
 import { format } from 'date-fns';
-import { doc, updateDoc } from 'firebase/firestore';
 import { useRouter } from 'next/navigation';
-import { useContext, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { FaCalendarAlt } from 'react-icons/fa';
 
 import ManagerForm from '~/app/admin/ManagerForm';
 import { AppContext } from '~/lib/context/app';
-import { db } from '~/lib/firebase';
 import useAuth from '~/lib/hooks/useAuth';
-import { useCrudManager } from '~/lib/hooks/useCrudManager';
+import {
+  createNews,
+  listNews,
+  updateNews,
+} from '~/lib/services/contentService';
 import type { NewsItem } from '~/lib/types/news';
 import { generateSlug } from '~/lib/utils/slug';
 
 export default function NewsAdminPage() {
   const router = useRouter();
+  const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef<HTMLButtonElement>(null);
   const [deleteId, setDeleteId] = useState<string | null>(null);
 
   const { user } = useAuth('admin');
 
-  const {
-    items: news,
-    loading,
-    showForm,
-    toggleForm,
-    form,
-    setForm,
-    selectedFiles,
-    setSelectedFiles,
-    editForm,
-    handleAdd,
-  } = useCrudManager<NewsItem>({
-    collectionName: 'news',
-    blobFolderName: 'news',
-    itemSchema: {
-      title: '',
-      slug: '',
-      summary: '',
-      imageUrls: [],
-      publishDate: new Date().toISOString(),
-      author: user?.displayName || '',
-      isPublished: false,
-    },
+  const [news, setNews] = useState<NewsItem[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [showForm, setShowForm] = useState(false);
+  const [form, setForm] = useState<Omit<NewsItem, 'id'>>({
+    title: '',
+    slug: '',
+    summary: '',
+    imageUrls: [],
+    publishDate: new Date().toISOString(),
+    author: user?.displayName || '',
+    isPublished: false,
   });
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+  const editForm: NewsItem | null = null;
+  const toggleForm = () => setShowForm((prev) => !prev);
+
+  const reload = async () => {
+    const data = await listNews();
+    setNews(data);
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    reload();
+  }, []);
+
+  const uploadImagesToServer = async (files: File[], category: string) => {
+    const formData = new FormData();
+    files.forEach((file) => formData.append('files', file));
+    formData.append('category', category);
+    const response = await fetch('/api/upload/images', {
+      method: 'POST',
+      body: formData,
+    });
+    if (!response.ok) throw new Error('Failed to upload images');
+    const data = await response.json();
+    return data.imageUrls as string[];
+  };
 
   const { bgColor, textColor } = useContext(AppContext);
 
@@ -88,18 +106,67 @@ export default function NewsAdminPage() {
 
   const handleSoftDelete = async () => {
     if (!deleteId) return;
-    await updateDoc(doc(db, 'news', deleteId), { isPublished: false });
-    setDeleteId(null);
-    onClose();
+    try {
+      await updateNews(deleteId, { isPublished: false });
+      setNews((prev) =>
+        prev.map((n) => (n.id === deleteId ? { ...n, isPublished: false } : n))
+      );
+      toast({
+        title: 'Berhasil',
+        description: 'Berita disembunyikan dari publik.',
+        status: 'success',
+        duration: 3000,
+      });
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error(err);
+      toast({
+        title: 'Error',
+        description: 'Gagal menambahkan berita.',
+        status: 'error',
+        duration: 4000,
+      });
+    }
   };
 
-  const handleAddNews = (e: React.FormEvent) => {
-    // Ensure slug is set before submission
-    if (!form.slug && form.title) {
-      const slug = generateSlug(form.title);
-      Object.assign(form, { slug });
+  const handleAdd = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const slug = form.slug || generateSlug(form.title);
+      const imageUrls = await uploadImagesToServer(selectedFiles, 'news');
+      await createNews({ ...form, slug, imageUrls });
+      toast({
+        title: 'Sukses',
+        description: 'Berita berhasil ditambahkan.',
+        status: 'success',
+        duration: 3000,
+      });
+      setForm({
+        title: '',
+        slug: '',
+        summary: '',
+        imageUrls: [],
+        publishDate: new Date().toISOString(),
+        author: user?.displayName || '',
+        isPublished: false,
+      });
+      setSelectedFiles([]);
+      setShowForm(false);
+      reload();
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error(err);
+      toast({
+        title: 'Error',
+        description: 'Gagal menambahkan berita.',
+        status: 'error',
+        duration: 4000,
+      });
     }
-    handleAdd(e);
+  };
+
+  const handleAddNews = async (e: React.FormEvent) => {
+    await handleAdd(e);
   };
 
   return (

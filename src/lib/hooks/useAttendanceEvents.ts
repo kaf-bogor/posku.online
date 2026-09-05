@@ -1,9 +1,7 @@
-import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 
-import { db } from '~/lib/firebase';
+import { listAttendanceEvents } from '~/lib/services/attendanceService';
 import type { AttendanceEventDTO } from '~/lib/types/attendance';
-import { mapAttendanceEvent } from '~/lib/utils/attendance';
 
 export default function useAttendanceEvents() {
   const [events, setEvents] = useState<AttendanceEventDTO[]>([]);
@@ -11,24 +9,27 @@ export default function useAttendanceEvents() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const q = query(
-      collection(db, 'attendanceEvents'),
-      orderBy('date', 'desc')
-    );
-
-    const unsub = onSnapshot(
-      q,
-      (snap) => {
-        setEvents(snap.docs.map((d) => mapAttendanceEvent(d.id, d.data())));
-        setLoading(false);
-      },
-      (err) => {
-        setError(err.message);
-        setLoading(false);
+    let active = true;
+    const load = async () => {
+      try {
+        const data = await listAttendanceEvents();
+        if (active) {
+          setEvents(data);
+          setError(null);
+        }
+      } catch (err) {
+        if (active)
+          setError(err instanceof Error ? err.message : 'Gagal memuat');
+      } finally {
+        if (active) setLoading(false);
       }
-    );
-
-    return () => unsub();
+    };
+    load();
+    const interval = setInterval(load, 10000);
+    return () => {
+      active = false;
+      clearInterval(interval);
+    };
   }, []);
 
   return { events, loading, error };

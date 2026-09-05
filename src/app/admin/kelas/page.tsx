@@ -28,22 +28,14 @@ import {
   Icon,
   TableContainer,
 } from '@chakra-ui/react';
-import { onSnapshot, collection } from 'firebase/firestore';
 import Link from 'next/link';
 import { useContext, useState, useMemo, useEffect } from 'react';
 import { FaMedal } from 'react-icons/fa';
 
 import { AppContext } from '~/lib/context/app';
-import { db } from '~/lib/firebase';
+import { listWakafKelas } from '~/lib/services/kelasService';
+import type { WakafKelas as Kelas } from '~/lib/services/kelasService';
 import { formatIDR } from '~/lib/utils/currency';
-
-type Kelas = {
-  name: string;
-  santriCount: number;
-  target?: number;
-  collected?: number;
-  participants?: { name: string; value: number; datetime: string }[];
-};
 
 export default function Page() {
   const [kelasList, setKelasList] = useState<Kelas[]>([]);
@@ -64,18 +56,23 @@ export default function Page() {
   );
   const { bgColor, textColor } = useContext(AppContext);
 
-  // Seed Firestore and subscribe to changes
+  // Load kelas dari D1 (polling ringan sebagai pengganti realtime)
   useEffect(() => {
-    const unsub = onSnapshot(collection(db, 'kelas'), async (snap) => {
-      const data: Kelas[] = [];
-      snap.docs.forEach((d) => {
-        const kd = d.data() as Kelas;
-        data.push(kd);
-      });
-
-      setKelasList(data);
-    });
-    return () => unsub();
+    let active = true;
+    const load = async () => {
+      try {
+        const data = await listWakafKelas();
+        if (active) setKelasList(data);
+      } catch {
+        // ignore — biarkan data sebelumnya
+      }
+    };
+    load();
+    const interval = setInterval(load, 10000);
+    return () => {
+      active = false;
+      clearInterval(interval);
+    };
   }, []);
 
   // Rank calculation based on total collected (descending)

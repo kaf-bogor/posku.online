@@ -76,7 +76,7 @@ export default function AssistantMarkdown({ text }: { text: string }) {
         remarkPlugins={[remarkGfm]}
         urlTransform={(url) => {
           try {
-            const u = new URL(url, 'https://posku.online');
+            const u = new URL(url, 'https://poskubogor.com');
             return ['http:', 'https:', 'tel:', 'mailto:'].includes(u.protocol)
               ? u.href
               : '';

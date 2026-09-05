@@ -151,8 +151,9 @@ const QuizTakingPage = () => {
         try {
           const leaderboardData = await getQuizLeaderboard(quizId, 10);
           setLeaderboard(leaderboardData);
-        } catch {
-          // Error loading leaderboard
+        } catch (error) {
+          // eslint-disable-next-line no-console
+          console.error('Error loading leaderboard:', error);
         } finally {
           setLeaderboardLoading(false);
         }

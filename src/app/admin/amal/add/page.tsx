@@ -8,14 +8,15 @@ import {
   Input,
   NumberInput,
   NumberInputField,
+  useToast,
 } from '@chakra-ui/react';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 
 import ManagerForm from '~/app/admin/ManagerForm';
 import { AppContext } from '~/lib/context/app';
-import { useCrudManager } from '~/lib/hooks/useCrudManager';
+import { createDonation, getAdminToken } from '~/lib/services/donationService';
 import type { DonationPage } from '~/lib/types/donation';
 import { initialDonationState } from '~/lib/types/donation';
 import { generateSlug } from '~/lib/utils/slug';
@@ -26,22 +27,62 @@ const ADMIN_DONATIONS_PATH = '/admin/amal';
 
 export default function AddDonationPage() {
   const router = useRouter();
+  const toast = useToast();
   const { bgColor } = useContext(AppContext);
 
-  const { form, setForm, selectedFiles, setSelectedFiles, handleAdd } =
-    useCrudManager<DonationPage>({
-      collectionName: 'donations',
-      blobFolderName: 'donation',
-      itemSchema: { ...initialDonationState, is_active: true },
+  const [form, setForm] = useState<Omit<DonationPage, 'id'>>({
+    ...initialDonationState,
+    is_active: true,
+  });
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+  const [isSaving, setIsSaving] = useState(false);
+
+  const uploadImagesToServer = async (files: File[], category: string) => {
+    const formData = new FormData();
+    files.forEach((file) => formData.append('files', file));
+    formData.append('category', category);
+    const response = await fetch('/api/upload/images', {
+      method: 'POST',
+      body: formData,
     });
 
+    if (!response.ok) {
+      throw new Error('Failed to upload images');
+    }
+
+    const data = await response.json();
+    return data.imageUrls as string[];
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSaving(true);
     try {
-      await handleAdd(e);
+      const token = await getAdminToken();
+      if (!token) throw new Error('Anda harus login sebagai admin');
+
+      const imageUrls = await uploadImagesToServer(selectedFiles, 'donation');
+      await createDonation(token, { ...form, imageUrls });
+
+      toast({
+        title: 'Sukses',
+        description: 'Kampanye amal berhasil ditambahkan.',
+        status: 'success',
+        duration: 3000,
+      });
       router.push(ADMIN_DONATIONS_PATH);
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error('Error adding donation:', error);
+      toast({
+        title: 'Error',
+        description:
+          error instanceof Error ? error.message : 'Terjadi kesalahan',
+        status: 'error',
+        duration: 5000,
+      });
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -58,6 +99,7 @@ export default function AddDonationPage() {
         onSubmit={handleSubmit}
         onCancel={() => router.push(ADMIN_DONATIONS_PATH)}
         title="Add New Donation"
+        isLoading={isSaving}
       >
         <FormControl isRequired>
           <FormLabel>Title</FormLabel>

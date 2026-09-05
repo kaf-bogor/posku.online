@@ -55,3 +55,6 @@ sitemap*.xml
 .vscode/settings.json
 .env
 .env*.local
+
+# Hasil dump Firestore (generate ulang via scripts/firestore-export.mjs)
+d1/firestore/

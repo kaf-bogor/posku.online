@@ -28,7 +28,7 @@ export default function Promo() {
           display="flex"
         >
           <Image
-            src={`${storageUrl}/promo%20maqom%202025.webp?alt=media`}
+            src={`${storageUrl}/promo%20maqom%202025.webp`}
             alt="Promo"
             objectFit="contain"
             w="500px"

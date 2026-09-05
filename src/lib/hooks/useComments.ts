@@ -1,16 +1,6 @@
-import {
-  addDoc,
-  collection,
-  onSnapshot,
-  orderBy,
-  query,
-  serverTimestamp,
-  where,
-} from 'firebase/firestore';
-import type { Timestamp } from 'firebase/firestore';
 import { useCallback, useEffect, useState } from 'react';
 
-import { db } from '~/lib/firebase';
+import { addComment, listComments } from '~/lib/services/commentsService';
 import type { CommentItem } from '~/lib/types/comment';
 
 interface UseCommentsOptions {
@@ -30,77 +20,39 @@ export function useComments({ resourceType, resourceId }: UseCommentsOptions) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (!resourceType || !resourceId) return undefined;
-
-    const q = query(
-      collection(db, 'comments'),
-      where('resourceType', '==', resourceType),
-      where('resourceId', '==', resourceId),
-      orderBy('createdAtTs', 'asc')
-    );
-
-    const unsub = onSnapshot(
-      q,
-      (snap) => {
-        const items: CommentItem[] = snap.docs.map((d) => {
-          const data = d.data() as {
-            resourceType: string;
-            resourceId: string;
-            userId: string;
-            userName: string;
-            userPhotoURL?: string | null;
-            comment: string;
-            createdAt?: string;
-            createdAtTs?: Timestamp;
-          };
-
-          let createdAtStr = new Date().toISOString();
-          if (data.createdAt) {
-            createdAtStr = data.createdAt;
-          } else if (data.createdAtTs) {
-            createdAtStr = data.createdAtTs.toDate().toISOString();
-          }
-
-          return {
-            id: d.id,
-            resourceType: data.resourceType,
-            resourceId: data.resourceId,
-            userId: data.userId,
-            userName: data.userName,
-            userPhotoURL: data.userPhotoURL ?? undefined,
-            comment: data.comment,
-            createdAt: createdAtStr,
-          };
-        });
-        setComments(items);
-        setLoading(false);
-      },
-      (err) => {
-        setError(err.message);
-        setLoading(false);
-      }
-    );
-
-    return () => unsub();
+  const load = useCallback(async () => {
+    if (!resourceType || !resourceId) return;
+    try {
+      const items = await listComments(resourceType, resourceId);
+      setComments(items);
+      setError(null);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Gagal memuat komentar');
+    } finally {
+      setLoading(false);
+    }
   }, [resourceType, resourceId]);
 
-  const addComment = useCallback(
-    async ({ userId, userName, userPhotoURL, comment }: AddCommentParams) => {
+  useEffect(() => {
+    setLoading(true);
+    load();
+    const interval = setInterval(load, 8000);
+    return () => clearInterval(interval);
+  }, [load]);
+
+  const addCommentFn = useCallback(
+    async ({ userPhotoURL, comment }: AddCommentParams) => {
       if (!comment.trim()) return;
-      await addDoc(collection(db, 'comments'), {
+      await addComment({
         resourceType,
         resourceId,
-        userId,
-        userName,
-        userPhotoURL: userPhotoURL || null,
+        userPhotoURL: userPhotoURL || undefined,
         comment: comment.trim(),
-        createdAt: new Date().toISOString(),
-        createdAtTs: serverTimestamp(),
       });
+      load();
     },
-    [resourceType, resourceId]
+    [resourceType, resourceId, load]
   );
 
-  return { comments, loading, error, addComment };
+  return { comments, loading, error, addComment: addCommentFn };
 }

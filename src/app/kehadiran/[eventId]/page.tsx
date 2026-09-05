@@ -1,16 +1,10 @@
-import { doc, getDoc } from 'firebase/firestore';
-
-import { db } from '~/lib/firebase';
+import { getAttendanceEvent } from '~/lib/services/attendanceService';
 import type { AttendanceEventDTO } from '~/lib/types/attendance';
-import { mapAttendanceEvent } from '~/lib/utils/attendance';
 
 import KehadiranEventDetailClient from './components/KehadiranEventDetailClient';
 
 async function getEvent(eventId: string): Promise<AttendanceEventDTO | null> {
-  const snap = await getDoc(doc(db, 'attendanceEvents', eventId));
-  if (!snap.exists()) return null;
-
-  return mapAttendanceEvent(snap.id, snap.data());
+  return getAttendanceEvent(eventId);
 }
 
 export default async function KehadiranEventDetailPage({

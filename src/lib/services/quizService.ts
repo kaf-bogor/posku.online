@@ -1,23 +1,6 @@
 /* eslint-disable no-useless-catch */
 /* eslint-disable sonarjs/no-useless-catch */
-import {
-  collection,
-  doc,
-  addDoc,
-  updateDoc,
-  deleteDoc,
-  getDocs,
-  getDoc,
-  setDoc,
-  query,
-  where,
-  orderBy,
-  limit,
-  serverTimestamp,
-  writeBatch,
-} from 'firebase/firestore';
-
-import { db } from '~/lib/firebase';
+import { D1_API_URL } from '../config/d1';
 import type {
   Quiz,
   Question,
@@ -26,262 +9,189 @@ import type {
   QuizFormData,
 } from '~/lib/types/quiz';
 
-// Collections
-const USERS_COLLECTION = 'users';
-const QUIZZES_COLLECTION = 'quizzes';
-const QUIZ_ATTEMPTS_COLLECTION = 'quiz_attempts';
-
-// User operations
-export const saveUserProfile = async (user: Omit<User, 'createdAt'>) => {
-  const userRef = doc(db, USERS_COLLECTION, user.uid);
-  const userDoc = await getDoc(userRef);
-
-  if (!userDoc.exists()) {
-    await setDoc(userRef, {
-      ...user,
-      createdAt: serverTimestamp(),
-    });
+async function getToken(): Promise<string | null> {
+  try {
+    const { getAuth } = await import('firebase/auth');
+    const user = getAuth().currentUser;
+    return user ? await user.getIdToken() : null;
+  } catch {
+    return null;
   }
+}
+
+async function request<T>(
+  path: string,
+  options: { method?: string; token?: string | null; body?: unknown } = {}
+): Promise<T> {
+  const headers: Record<string, string> = { Accept: 'application/json' };
+  if (options.body !== undefined) headers['Content-Type'] = 'application/json';
+  if (options.token) headers.Authorization = `Bearer ${options.token}`;
+
+  const res = await fetch(`${D1_API_URL}${path}`, {
+    method: options.method ?? 'GET',
+    headers,
+    body: options.body !== undefined ? JSON.stringify(options.body) : undefined,
+  });
+
+  if (!res.ok) {
+    let message = `HTTP ${res.status}`;
+    try {
+      const data = (await res.json()) as { error?: string };
+      if (data.error) message = data.error;
+    } catch {
+      // ignore body parse error
+    }
+    throw new Error(message);
+  }
+  return (await res.json()) as T;
+}
+
+const toDate = (v?: string | null): Date => (v ? new Date(v) : new Date(0));
+
+const toQuiz = (q: Record<string, unknown>): Quiz =>
+  ({
+    ...q,
+    createdAt: toDate(q.createdAt as string | undefined),
+    updatedAt: toDate(q.updatedAt as string | undefined),
+  }) as unknown as Quiz;
+
+const toAttempt = (a: Record<string, unknown>): QuizAttempt =>
+  ({
+    ...a,
+    submittedAt: toDate(a.submittedAt as string | undefined),
+  }) as unknown as QuizAttempt;
+
+interface QuizListResponse {
+  data: Quiz[];
+}
+
+// User operations (profil user di D1 belum dipakai; dipertahankan sbg no-op)
+export const saveUserProfile = async (
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  user: Omit<User, 'createdAt'>
+): Promise<void> => {
+  // Profil user saat ini tetap dikelola Firebase Auth + fs_admin (untuk admin).
 };
 
-export const getUserProfile = async (uid: string): Promise<User | null> => {
-  try {
-    const userRef = doc(db, USERS_COLLECTION, uid);
-    const userDoc = await getDoc(userRef);
-
-    if (userDoc.exists()) {
-      const data = userDoc.data();
-      return {
-        uid: userDoc.id,
-        ...data,
-        createdAt: data.createdAt?.toDate() || new Date(),
-      } as User;
-    }
-    return null;
-  } catch (error) {
-    // Error getting user profile
-    throw error;
-  }
+export const getUserProfile = async (
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  uid: string
+): Promise<User | null> => {
+  return null;
 };
 
 // Quiz operations
 export const createQuiz = async (
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   quizData: QuizFormData,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   createdBy: string
 ): Promise<string> => {
-  try {
-    const batch = writeBatch(db);
-
-    // Create quiz document
-    const quizRef = doc(collection(db, QUIZZES_COLLECTION));
-    const quiz: Omit<Quiz, 'id'> = {
-      ...quizData,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      createdBy,
-    };
-
-    batch.set(quizRef, {
-      ...quiz,
-      createdAt: serverTimestamp(),
-      updatedAt: serverTimestamp(),
-    });
-
-    await batch.commit();
-    return quizRef.id;
-  } catch (error) {
-    // Error creating quiz
-    throw error;
-  }
+  throw new Error('createQuiz belum tersedia di D1.');
 };
 
 export const updateQuiz = async (
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   quizId: string,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   quizData: Partial<QuizFormData>
 ): Promise<void> => {
-  try {
-    const quizRef = doc(db, QUIZZES_COLLECTION, quizId);
-    await updateDoc(quizRef, {
-      ...quizData,
-      updatedAt: serverTimestamp(),
-    });
-  } catch (error) {
-    // Error updating quiz
-    throw error;
-  }
+  throw new Error('updateQuiz belum tersedia di D1.');
 };
 
 export const deleteQuiz = async (quizId: string): Promise<void> => {
-  try {
-    const quizRef = doc(db, QUIZZES_COLLECTION, quizId);
-    await deleteDoc(quizRef);
-  } catch (error) {
-    // Error deleting quiz
-    throw error;
-  }
+  const token = await getToken();
+  await request<{ ok: boolean }>(`/api/quizzes/${encodeURIComponent(quizId)}`, {
+    method: 'DELETE',
+    token,
+  });
 };
 
 export const getQuiz = async (quizId: string): Promise<Quiz | null> => {
   try {
-    const quizRef = doc(db, QUIZZES_COLLECTION, quizId);
-    const quizDoc = await getDoc(quizRef);
-
-    if (quizDoc.exists()) {
-      const data = quizDoc.data();
-      return {
-        id: quizDoc.id,
-        ...data,
-        createdAt: data.createdAt?.toDate() || new Date(),
-        updatedAt: data.updatedAt?.toDate() || new Date(),
-      } as Quiz;
-    }
+    const data = await request<Quiz>(
+      `/api/quizzes/${encodeURIComponent(quizId)}`
+    );
+    return toQuiz(data as unknown as Record<string, unknown>);
+  } catch {
     return null;
-  } catch (error) {
-    // Error getting quiz
-    throw error;
   }
 };
 
 export const getAllQuizzes = async (): Promise<Quiz[]> => {
-  try {
-    const quizzesQuery = query(
-      collection(db, QUIZZES_COLLECTION),
-      orderBy('createdAt', 'desc')
-    );
-    const querySnapshot = await getDocs(quizzesQuery);
-
-    return querySnapshot.docs.map((docSnapshot) => {
-      const data = docSnapshot.data();
-      return {
-        id: docSnapshot.id,
-        ...data,
-        createdAt: data.createdAt?.toDate() || new Date(),
-        updatedAt: data.updatedAt?.toDate() || new Date(),
-      } as Quiz;
-    });
-  } catch (error) {
-    // Error getting quizzes
-    throw error;
-  }
+  const res = await request<QuizListResponse>('/api/quizzes');
+  return (res.data ?? []).map((q) =>
+    toQuiz(q as unknown as Record<string, unknown>)
+  );
 };
 
 export const getQuizzesByLevel = async (level: string): Promise<Quiz[]> => {
-  try {
-    const quizzesQuery = query(
-      collection(db, QUIZZES_COLLECTION),
-      where('level', '==', level),
-      orderBy('createdAt', 'desc')
-    );
-    const querySnapshot = await getDocs(quizzesQuery);
-
-    return querySnapshot.docs.map((docSnapshot) => {
-      const data = docSnapshot.data();
-      return {
-        id: docSnapshot.id,
-        ...data,
-        createdAt: data.createdAt?.toDate() || new Date(),
-        updatedAt: data.updatedAt?.toDate() || new Date(),
-      } as Quiz;
-    });
-  } catch (error) {
-    // Error getting quizzes by level
-    throw error;
-  }
+  const quizzes = await getAllQuizzes();
+  return quizzes.filter((q) => q.level === level);
 };
 
 // Quiz attempt operations
 export const submitQuizAttempt = async (
   attempt: Omit<QuizAttempt, 'id' | 'submittedAt'>
 ): Promise<string> => {
-  try {
-    const attemptRef = await addDoc(collection(db, QUIZ_ATTEMPTS_COLLECTION), {
-      ...attempt,
-      submittedAt: serverTimestamp(),
-    });
-    return attemptRef.id;
-  } catch (error) {
-    // Error submitting quiz attempt
-    throw error;
-  }
+  const token = await getToken();
+  const res = await request<{ id: string }>(
+    `/api/quizzes/${encodeURIComponent(attempt.quizId)}/attempts`,
+    {
+      method: 'POST',
+      token,
+      body: {
+        score: attempt.score,
+        totalQuestions: attempt.totalQuestions,
+        answers: attempt.answers,
+        timeSpent: attempt.timeSpent,
+      },
+    }
+  );
+  return res.id;
 };
 
 export const getUserQuizAttempt = async (
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   userId: string,
   quizId: string
 ): Promise<QuizAttempt | null> => {
   try {
-    const attemptQuery = query(
-      collection(db, QUIZ_ATTEMPTS_COLLECTION),
-      where('userId', '==', userId),
-      where('quizId', '==', quizId),
-      limit(1)
+    const token = await getToken();
+    const data = await request<QuizAttempt>(
+      `/api/quizzes/${encodeURIComponent(quizId)}/attempt`,
+      { token }
     );
-    const querySnapshot = await getDocs(attemptQuery);
-
-    if (!querySnapshot.empty) {
-      const attemptDoc = querySnapshot.docs[0];
-      const data = attemptDoc.data();
-      return {
-        id: attemptDoc.id,
-        ...data,
-        submittedAt: data.submittedAt?.toDate() || new Date(),
-      } as QuizAttempt;
-    }
+    return toAttempt(data as unknown as Record<string, unknown>);
+  } catch {
     return null;
-  } catch (error) {
-    // Error getting user quiz attempt
-    throw error;
   }
 };
 
 export const getUserQuizAttempts = async (
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   userId: string
 ): Promise<QuizAttempt[]> => {
-  try {
-    const attemptsQuery = query(
-      collection(db, QUIZ_ATTEMPTS_COLLECTION),
-      where('userId', '==', userId),
-      orderBy('submittedAt', 'desc')
-    );
-    const querySnapshot = await getDocs(attemptsQuery);
-
-    return querySnapshot.docs.map((docSnapshot) => {
-      const data = docSnapshot.data();
-      return {
-        id: docSnapshot.id,
-        ...data,
-        submittedAt: data.submittedAt?.toDate() || new Date(),
-      } as QuizAttempt;
-    });
-  } catch (error) {
-    // Error getting user quiz attempts
-    throw error;
-  }
+  const token = await getToken();
+  const res = await request<{ data: QuizAttempt[] }>('/api/quizzes/attempts', {
+    token,
+  });
+  return (res.data ?? []).map((a) =>
+    toAttempt(a as unknown as Record<string, unknown>)
+  );
 };
 
 export const getQuizAttempts = async (
   quizId: string
 ): Promise<QuizAttempt[]> => {
-  try {
-    const attemptsQuery = query(
-      collection(db, QUIZ_ATTEMPTS_COLLECTION),
-      where('quizId', '==', quizId),
-      orderBy('submittedAt', 'desc')
-    );
-    const querySnapshot = await getDocs(attemptsQuery);
-
-    return querySnapshot.docs.map((docSnapshot) => {
-      const data = docSnapshot.data();
-      return {
-        id: docSnapshot.id,
-        ...data,
-        submittedAt: data.submittedAt?.toDate() || new Date(),
-      } as QuizAttempt;
-    });
-  } catch (error) {
-    // Error getting quiz attempts
-    throw error;
-  }
+  const token = await getToken();
+  const res = await request<{ data: QuizAttempt[] }>(
+    `/api/quizzes/${encodeURIComponent(quizId)}/attempts`,
+    { token }
+  );
+  return (res.data ?? []).map((a) =>
+    toAttempt(a as unknown as Record<string, unknown>)
+  );
 };
 
 // Utility functions
@@ -316,46 +226,20 @@ export const getQuizLeaderboard = async (
   maxResults: number = 10
 ): Promise<Array<QuizAttempt & { userName: string }>> => {
   try {
-    const attemptsQuery = query(
-      collection(db, QUIZ_ATTEMPTS_COLLECTION),
-      where('quizId', '==', quizId),
-      orderBy('score', 'desc'),
-      limit(maxResults)
+    const token = await getToken();
+    const res = await request<{
+      data: Array<QuizAttempt & { userName: string }>;
+    }>(
+      `/api/quizzes/${encodeURIComponent(quizId)}/leaderboard?limit=${maxResults}`,
+      {
+        token,
+      }
     );
-    const querySnapshot = await getDocs(attemptsQuery);
 
-    const attempts: Array<QuizAttempt & { userName: string }> =
-      await Promise.all(
-        querySnapshot.docs.map(async (attemptDoc) => {
-          const attemptData = attemptDoc.data();
-          const attempt = {
-            id: attemptDoc.id,
-            ...attemptData,
-            submittedAt: attemptData.submittedAt?.toDate() || new Date(),
-          } as QuizAttempt;
-
-          // Get user name
-          let userName = 'Unknown User';
-          try {
-            const userDoc = await getDoc(
-              doc(db, USERS_COLLECTION, attempt.userId)
-            );
-            if (userDoc.exists()) {
-              userName =
-                userDoc.data().displayName ||
-                userDoc.data().email ||
-                'Unknown User';
-            }
-          } catch {
-            // Error getting user data
-          }
-
-          return {
-            ...attempt,
-            userName,
-          };
-        })
-      );
+    const attempts = (res.data ?? []).map((entry) => ({
+      ...toAttempt(entry as unknown as Record<string, unknown>),
+      userName: entry.userName || 'Unknown User',
+    }));
 
     // Sort by score descending, then by time spent ascending (faster time wins)
     attempts.sort((a, b) => {
@@ -365,7 +249,7 @@ export const getQuizLeaderboard = async (
       return a.timeSpent - b.timeSpent; // Faster time wins for same score
     });
 
-    return attempts;
+    return attempts.slice(0, maxResults);
   } catch (error) {
     // Error getting quiz leaderboard
     throw error;

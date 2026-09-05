@@ -15,7 +15,7 @@ import {
 import { format } from 'date-fns';
 import { id as localeID } from 'date-fns/locale';
 import Link from 'next/link';
-import { useContext, useMemo } from 'react';
+import { useContext, useEffect, useMemo, useState } from 'react';
 import {
   FaUsers,
   FaEnvelopeOpenText,
@@ -32,7 +32,7 @@ import SectionHeader from '~/lib/components/SectionHeader';
 import { AppContext } from '~/lib/context/app';
 import { storageUrl } from '~/lib/context/baseUrl';
 import rawKalender from '~/lib/data/kalender_posku.json';
-import { useCrudManager } from '~/lib/hooks/useCrudManager';
+import { listEvents, listNews } from '~/lib/services/contentService';
 import type { EventItem } from '~/lib/types/event';
 import type { NewsItem } from '~/lib/types/news';
 import type {
@@ -341,35 +341,19 @@ const EventsSection = ({
 };
 
 const Home = () => {
-  const { items: newsItems, loading: newsLoading } = useCrudManager<NewsItem>({
-    collectionName: 'news',
-    blobFolderName: 'news',
-    itemSchema: {
-      title: '',
-      slug: '',
-      summary: '',
-      imageUrls: [],
-      publishDate: new Date().toISOString(),
-      author: '',
-      isPublished: false,
-    },
-  });
+  const [newsItems, setNewsItems] = useState<NewsItem[]>([]);
+  const [newsLoading, setNewsLoading] = useState(true);
+  const [eventItems, setEventItems] = useState<EventItem[]>([]);
+  const [eventsLoading, setEventsLoading] = useState(true);
 
-  const { items: eventItems, loading: eventsLoading } =
-    useCrudManager<EventItem>({
-      collectionName: 'events',
-      blobFolderName: 'events',
-      itemSchema: {
-        title: '',
-        slug: '',
-        summary: '',
-        imageUrls: [],
-        startDate: new Date().toISOString(),
-        endDate: new Date().toISOString(),
-        location: '',
-        isActive: false,
-      },
-    });
+  useEffect(() => {
+    listNews()
+      .then(setNewsItems)
+      .finally(() => setNewsLoading(false));
+    listEvents()
+      .then(setEventItems)
+      .finally(() => setEventsLoading(false));
+  }, []);
 
   const kalender = useMemo(() => {
     const data = rawKalender as KalenderData;
@@ -389,12 +373,12 @@ const Home = () => {
             {
               label: 'Tentang POSKU',
               href: '/tentang',
-              imageUrl: `${storageUrl}/logo_posku.png?alt=media`,
+              imageUrl: `${storageUrl}/logo_posku.png`,
             },
             {
               label: 'Muslimah Center',
               href: '/muslimah_center',
-              imageUrl: `${storageUrl}/mc_light.png?alt=media`,
+              imageUrl: `${storageUrl}/mc_light.png`,
             },
             {
               label: 'Pengurus',

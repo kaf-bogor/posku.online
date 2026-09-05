@@ -1,29 +1,25 @@
 'use client';
 
 import { VStack, SimpleGrid } from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
 import { FaNewspaper } from 'react-icons/fa';
 
 import EmptySection from '../components/EmptySection';
 import LoadingSection from '../components/LoadingSection';
 import NewsCard from '~/lib/components/NewsCard';
 import SectionHeader from '~/lib/components/SectionHeader';
-import { useCrudManager } from '~/lib/hooks/useCrudManager';
+import { listNews } from '~/lib/services/contentService';
 import type { NewsItem } from '~/lib/types/news';
 
 export default function NewsPage() {
-  const { items: newsItems, loading: newsLoading } = useCrudManager<NewsItem>({
-    collectionName: 'news',
-    blobFolderName: 'news',
-    itemSchema: {
-      title: '',
-      slug: '',
-      summary: '',
-      imageUrls: [],
-      publishDate: new Date().toISOString(),
-      author: '',
-      isPublished: false,
-    },
-  });
+  const [newsItems, setNewsItems] = useState<NewsItem[]>([]);
+  const [newsLoading, setNewsLoading] = useState(true);
+
+  useEffect(() => {
+    listNews()
+      .then(setNewsItems)
+      .finally(() => setNewsLoading(false));
+  }, []);
 
   // Filter published news
   const publishedNews = newsItems.filter((news) => news.isPublished);

@@ -11,24 +11,22 @@ import {
   Spinner,
   Center,
 } from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
 
-import { useCrudManager } from '~/lib/hooks/useCrudManager';
+import { listPodcasts } from '~/lib/services/contentService';
 
 const PodcastPage = () => {
   const cardBg = useColorModeValue('white', 'gray.700');
   const cardBorder = useColorModeValue('gray.200', 'gray.600');
 
-  const { items: podcasts, loading } = useCrudManager<PodcastItem>({
-    collectionName: 'podcasts',
-    blobFolderName: 'podcasts',
-    itemSchema: {
-      title: '',
-      summary: '',
-      imageUrls: [],
-      description: '',
-      url: '',
-    },
-  });
+  const [podcasts, setPodcasts] = useState<PodcastItem[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    listPodcasts()
+      .then(setPodcasts)
+      .finally(() => setLoading(false));
+  }, []);
 
   if (loading) {
     return (

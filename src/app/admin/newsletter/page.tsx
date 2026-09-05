@@ -23,22 +23,16 @@ import {
   Image,
   useToast,
 } from '@chakra-ui/react';
-import {
-  addDoc,
-  collection,
-  deleteDoc,
-  doc,
-  getDocs,
-  orderBy,
-  query,
-  serverTimestamp,
-  updateDoc,
-} from 'firebase/firestore';
 import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 
 import { AppContext } from '~/lib/context/app';
-import { db } from '~/lib/firebase';
 import useAuth from '~/lib/hooks/useAuth';
+import {
+  createNewsletter,
+  deleteNewsletter,
+  listNewsletters,
+  updateNewsletter,
+} from '~/lib/services/contentService';
 import type { NewsletterItem } from '~/lib/types/newsletter';
 import { resolveStorageUrl } from '~/lib/utils/newsletter';
 
@@ -58,7 +52,7 @@ const emptyForm: FormState = {
 };
 
 export default function AdminNewsletterPage() {
-  const { user } = useAuth('admin');
+  useAuth('admin');
   const toast = useToast();
 
   const [items, setItems] = useState<NewsletterItem[]>([]);
@@ -81,19 +75,15 @@ export default function AdminNewsletterPage() {
   const fetchItems = useCallback(async () => {
     setLoading(true);
     try {
-      const q = query(collection(db, COLLECTION), orderBy('order', 'asc'));
-      const snap = await getDocs(q);
-      const data: NewsletterItem[] = snap.docs.map((d) => {
-        const raw = d.data() as Record<string, unknown>;
-        return {
-          id: d.id,
-          order: Number(raw.order ?? 0),
-          title: (raw.title as string) ?? '',
-          image_url: (raw.image_url as string) ?? '',
-          document_url: (raw.document_url as string) ?? null,
-        };
-      });
-      setItems(data);
+      const data = await listNewsletters();
+      const mapped: NewsletterItem[] = data.map((raw) => ({
+        id: raw.id as string,
+        order: raw.order,
+        title: raw.title,
+        image_url: raw.image_url,
+        document_url: raw.document_url ?? null,
+      }));
+      setItems(mapped);
     } finally {
       setLoading(false);
     }
@@ -143,21 +133,14 @@ export default function AdminNewsletterPage() {
       };
 
       if (editId) {
-        await updateDoc(doc(db, COLLECTION, editId), {
-          ...payload,
-          updatedAt: serverTimestamp(),
-        });
+        await updateNewsletter(editId, payload);
         toast({
           title: 'Newsletter diperbarui',
           status: 'success',
           duration: 3000,
         });
       } else {
-        await addDoc(collection(db, COLLECTION), {
-          ...payload,
-          createdAt: serverTimestamp(),
-          createdBy: user?.email ?? '',
-        });
+        await createNewsletter(payload);
         toast({
           title: 'Newsletter ditambahkan',
           status: 'success',
@@ -193,7 +176,7 @@ export default function AdminNewsletterPage() {
 
   const handleConfirmDelete = async () => {
     if (!deleteId) return;
-    await deleteDoc(doc(db, COLLECTION, deleteId));
+    await deleteNewsletter(deleteId);
     setDeleteId(null);
     onClose();
     fetchItems();
@@ -283,7 +266,7 @@ export default function AdminNewsletterPage() {
                   <FormLabel>Image URL / path</FormLabel>
                   <Input
                     value={form.image_url}
-                    placeholder="2024%2Fjuli%2Fjuli_thumb.png?alt=media"
+                    placeholder="2024/juli/juli_thumb.png"
                     onChange={(e) =>
                       setForm({ ...form, image_url: e.target.value })
                     }

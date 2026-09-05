@@ -1,9 +1,8 @@
 import type { User } from 'firebase/auth';
 import { signOut } from 'firebase/auth';
-import { collection, getDocs } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 
-import { auth, db } from '~/lib/firebase';
+import { auth } from '~/lib/firebase';
 
 export type UseAdminAuthorizationResult = {
   adminEmails: string[];
@@ -13,10 +12,8 @@ export type UseAdminAuthorizationResult = {
 };
 
 /**
- * Check whether a user is authorized as admin by comparing their email
- * against the emails stored in the `admin` Firestore collection.
- *
- * Side-effect: if the user is not authorized, it triggers signOut after 2s.
+ * Cek apakah user adalah admin dengan membandingkan email (dari token) terhadap
+ * daftar admin di fs_admin (worker D1). Side-effect: jika bukan admin, signOut.
  */
 export default function useAdminAuthorization(
   user: User | null
@@ -26,25 +23,46 @@ export default function useAdminAuthorization(
   const [notAllowed, setNotAllowed] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Fetch admin emails
   useEffect(() => {
     let unsubscribed = false;
 
-    async function fetchAdmins() {
+    async function check() {
+      if (!user) {
+        if (!unsubscribed) {
+          setAdminEmails([]);
+          setNotAllowed(false);
+          setAdminsLoading(false);
+        }
+        return;
+      }
+
       setAdminsLoading(true);
       setError(null);
-
       try {
-        const snapshot = await getDocs(collection(db, 'admin'));
-        const emails = snapshot.docs.map(
-          (document) => (document.data() as { email?: string }).email || ''
-        );
-        if (!unsubscribed) setAdminEmails(emails.filter(Boolean));
+        const token = await user.getIdToken();
+        const base =
+          process.env.NEXT_PUBLIC_D1_API_URL ||
+          'https://posku-d1.kubido.workers.dev';
+        const res = await fetch(`${base}/api/me`, {
+          headers: {
+            Accept: 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const data = (await res.json().catch(() => ({}))) as {
+          admin?: boolean;
+          email?: string;
+        };
+
+        if (!unsubscribed) {
+          setAdminEmails(data.admin && data.email ? [data.email] : []);
+          setNotAllowed(Boolean(user && !data.admin));
+        }
       } catch (err) {
         if (!unsubscribed) {
           setAdminEmails([]);
           setError(
-            `Failed to fetch admin list: ${
+            `Failed to fetch admin status: ${
               err instanceof Error ? err.message : 'Unknown error'
             }`
           );
@@ -54,23 +72,24 @@ export default function useAdminAuthorization(
       }
     }
 
-    fetchAdmins();
+    check();
 
     return () => {
       unsubscribed = true;
     };
-  }, []);
+  }, [user]);
 
-  // Check if user is authorized
+  // Sign out jika user bukan admin
   useEffect(() => {
-    if (!adminsLoading && user && !adminEmails.includes(user.email || '')) {
-      setNotAllowed(true);
-      setTimeout(() => {
+    if (!adminsLoading && user && notAllowed) {
+      const timer = setTimeout(() => {
         signOut(auth);
         setNotAllowed(false);
       }, 2000);
+      return () => clearTimeout(timer);
     }
-  }, [user, adminEmails, adminsLoading]);
+    return undefined;
+  }, [user, notAllowed, adminsLoading]);
 
   return { adminEmails, adminsLoading, notAllowed, error };
 }

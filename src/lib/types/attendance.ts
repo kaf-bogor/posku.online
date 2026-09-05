@@ -1,16 +1,4 @@
-import type { Timestamp } from 'firebase/firestore';
-
-// Firestore document shape (with Timestamps)
-export interface AttendanceEventDoc {
-  title: string;
-  description: string;
-  date: Timestamp;
-  createdAt: Timestamp;
-  createdBy: string;
-  updatedAt?: Timestamp;
-}
-
-// Serialised DTO (ISO strings instead of Timestamps)
+// Serialised DTO (ISO strings)
 export interface AttendanceEventDTO {
   id: string;
   title: string;
@@ -18,13 +6,6 @@ export interface AttendanceEventDTO {
   date: string;
   createdAt: string;
   createdBy: string;
-}
-
-// Firestore document shape
-export interface AttendanceRecordDoc {
-  eventId: string;
-  userEmail: string;
-  checkedInAt: Timestamp;
 }
 
 // Serialised DTO

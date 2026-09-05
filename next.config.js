@@ -14,6 +14,6 @@ module.exports = withPWA({
     dirs: ['src'],
   },
   images: {
-    domains: ['gtxkitey0g3yotdg.public.blob.vercel-storage.com'],
+    domains: ['files.rifkifauzi.id'],
   },
 });

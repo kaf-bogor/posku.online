@@ -20,7 +20,7 @@ const HeroSection = () => {
     >
       <VStack spacing={3} align="center" textAlign="center">
         <Image
-          src={`${storageUrl}/logo_posku.png?alt=media`}
+          src={`${storageUrl}/logo_posku.png`}
           alt="POSKU Al-Fatih"
           width={{ base: '60px', md: '80px' }}
           height={{ base: '60px', md: '80px' }}

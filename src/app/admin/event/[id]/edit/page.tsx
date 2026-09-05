@@ -12,14 +12,13 @@ import {
   FormLabel,
   HStack,
 } from '@chakra-ui/react';
-import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import dynamic from 'next/dynamic';
 import { useRouter, useParams } from 'next/navigation';
 import { useEffect, useState, useContext } from 'react';
 
 import ManagerForm from '~/app/admin/ManagerForm';
 import { AppContext } from '~/lib/context/app';
-import { db } from '~/lib/firebase';
+import { getEvent, updateEvent } from '~/lib/services/contentService';
 import type { EventItem } from '~/lib/types/event';
 import { generateSlug } from '~/lib/utils/slug';
 
@@ -40,9 +39,8 @@ export default function EditEventPage() {
     const fetchEvent = async () => {
       if (!paramsId) return;
       try {
-        const snap = await getDoc(doc(db, 'events', paramsId));
-        if (snap.exists()) {
-          const data = snap.data() as EventItem;
+        const data = await getEvent(paramsId);
+        if (data) {
           const { id, ...rest } = data;
           setForm(rest);
         } else {
@@ -78,7 +76,7 @@ export default function EditEventPage() {
     if (!form || !paramsId) return;
     setLoading(true);
     try {
-      await updateDoc(doc(db, 'events', paramsId), form);
+      await updateEvent(paramsId, form);
       toast({
         title: 'Success',
         description: 'Event updated successfully.',

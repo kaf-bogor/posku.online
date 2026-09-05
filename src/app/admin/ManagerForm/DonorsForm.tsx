@@ -8,12 +8,11 @@ import {
   Input,
   Button,
 } from '@chakra-ui/react';
-import { doc, updateDoc } from 'firebase/firestore';
 import { useState, useEffect, useContext } from 'react';
 
 import Donors from '~/app/reports/wakaf_ats/Donors';
 import { AppContext } from '~/lib/context/app';
-import { db } from '~/lib/firebase';
+import { getAdminToken, setDonors } from '~/lib/services/donationService';
 import type { Donor } from '~/lib/types/donation';
 
 const DEFAULT_NAME = null;
@@ -73,8 +72,9 @@ export default function DonorsFormSection({
     );
     setLocalDonors(sorted);
     try {
-      const donationRef = doc(db, 'donations', donationId);
-      await updateDoc(donationRef, { donors: sorted });
+      const token = await getAdminToken();
+      if (!token) return;
+      await setDonors(token, donationId, sorted);
     } catch (err) {
       // eslint-disable-next-line no-console
       console.error('Failed to update donors', err);
@@ -92,8 +92,9 @@ export default function DonorsFormSection({
     const updatedDonors = localDonors.filter((donor) => donor.id !== donorId);
     setLocalDonors(updatedDonors);
     try {
-      const donationRef = doc(db, 'donations', donationId);
-      await updateDoc(donationRef, { donors: updatedDonors });
+      const token = await getAdminToken();
+      if (!token) return;
+      await setDonors(token, donationId, updatedDonors);
     } catch (err) {
       // eslint-disable-next-line no-console
       console.error('Failed to remove donor', err);

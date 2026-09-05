@@ -17,6 +17,7 @@ import { FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
 
 import useAuth from '~/lib/hooks/useAuth';
+import { checkInAttendance } from '~/lib/services/attendanceService';
 
 type CheckInStatus = 'idle' | 'loading' | 'success' | 'already' | 'error';
 
@@ -36,27 +37,19 @@ export default function CheckInPage() {
     setStatus('loading');
 
     try {
-      const res = await fetch('/api/attendance-records', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ eventId, userEmail: user.email }),
-      });
-
-      const data = await res.json();
-
-      if (res.status === 201) {
+      const result = await checkInAttendance(eventId, user.email);
+      if (result.created) {
         setStatus('success');
-        setMessage(data.message || 'Check-in berhasil!');
-      } else if (res.status === 409) {
-        setStatus('already');
-        setMessage(data.message || 'Anda sudah check-in.');
+        setMessage(result.message);
       } else {
-        setStatus('error');
-        setMessage(data.message || 'Gagal check-in.');
+        setStatus('already');
+        setMessage(result.message);
       }
-    } catch {
+    } catch (err) {
       setStatus('error');
-      setMessage('Terjadi kesalahan jaringan.');
+      setMessage(
+        err instanceof Error ? err.message : 'Terjadi kesalahan jaringan.'
+      );
     }
   }, [user, eventId]);
 

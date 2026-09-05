@@ -15,7 +15,6 @@ import {
 } from '@chakra-ui/react';
 import { format, isAfter, isBefore, isSameDay } from 'date-fns';
 import { id as localeID } from 'date-fns/locale';
-import { collection, query, where, onSnapshot } from 'firebase/firestore';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
@@ -24,7 +23,7 @@ import { FaCalendarAlt, FaMapMarkerAlt } from 'react-icons/fa';
 
 import Summary from '~/app/admin/components/DonationCard/Summary';
 import CommentsSection from '~/lib/components/CommentsSection';
-import { db } from '~/lib/firebase';
+import { getEvent } from '~/lib/services/contentService';
 import type { EventItem } from '~/lib/types/event';
 
 export default function EventDetailPage() {
@@ -42,25 +41,16 @@ export default function EventDetailPage() {
   const [isImageExpanded, setIsImageExpanded] = useState(false);
 
   useEffect(() => {
-    if (!slug) return undefined;
-
-    const eventsRef = collection(db, 'events');
-    const q = query(eventsRef, where('slug', '==', slug));
-
-    const unsub = onSnapshot(q, (snapshot) => {
-      if (!snapshot.empty) {
-        const doc = snapshot.docs[0];
-        const data = doc.data() as Omit<EventItem, 'id'>;
-        setEvent({ id: doc.id, ...data });
-      } else {
-        setEvent(null);
-      }
+    if (!slug) {
       setLoading(false);
-    });
+      return;
+    }
 
-    return () => {
-      unsub();
-    };
+    getEvent(slug)
+      .then((item) => {
+        setEvent(item);
+      })
+      .finally(() => setLoading(false));
   }, [slug]);
 
   const startDate = useMemo(() => {

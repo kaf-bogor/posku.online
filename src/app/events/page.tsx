@@ -1,35 +1,27 @@
 'use client';
 
 import { Heading, VStack, SimpleGrid, Text } from '@chakra-ui/react';
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import ContentWrapper from '~/app/components/ContentWrapper';
 import EmptySection from '~/app/components/EmptySection';
 import LoadingSection from '~/app/components/LoadingSection';
 import EventCard from '~/lib/components/EventCard';
 import { AppContext } from '~/lib/context/app';
-import { useCrudManager } from '~/lib/hooks/useCrudManager';
+import { listEvents } from '~/lib/services/contentService';
 import type { EventItem } from '~/lib/types/event';
 
 export default function EventsPage() {
   const { textColor } = useContext(AppContext);
-  const { items: eventItems, loading: eventsLoading } =
-    useCrudManager<EventItem>({
-      collectionName: 'events',
-      blobFolderName: 'events',
-      itemSchema: {
-        title: '',
-        slug: '',
-        summary: '',
-        imageUrls: [],
-        startDate: new Date().toISOString(),
-        endDate: new Date().toISOString(),
-        location: '',
-        isActive: false,
-      },
-      orderByField: 'startDate',
-      orderByDirection: 'desc',
-    });
+  const [eventItems, setEventItems] = useState<EventItem[]>([]);
+  const [eventsLoading, setEventsLoading] = useState(true);
+
+  useEffect(() => {
+    listEvents()
+      .then(setEventItems)
+      .finally(() => setEventsLoading(false));
+  }, []);
+
   const activeEvents = eventItems.filter((event) => event.isActive);
 
   if (eventsLoading) {

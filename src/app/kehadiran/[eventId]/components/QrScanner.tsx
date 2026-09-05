@@ -11,6 +11,8 @@ import {
 import { Html5QrcodeScanner } from 'html5-qrcode';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
+import { checkInAttendance } from '~/lib/services/attendanceService';
+
 interface QrScannerProps {
   expectedEventId: string;
   userEmail: string;
@@ -48,31 +50,25 @@ export default function QrScanner({
       stopScanner();
 
       try {
-        const res = await fetch('/api/attendance-records', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            eventId: scannedEventId,
-            userEmail,
-          }),
-        });
-
-        const data = await res.json();
-
-        if (res.ok) {
-          setMessage(data.message || 'Check-in berhasil!');
-          setMessageStatus('success');
+        const result = await checkInAttendance(scannedEventId, userEmail);
+        setMessage(result.message);
+        setMessageStatus(result.created ? 'success' : 'error');
+        if (result.created) {
           toast({
             title: 'Check-in berhasil!',
             status: 'success',
             duration: 3000,
           });
         } else {
-          setMessage(data.message || 'Gagal check-in');
-          setMessageStatus('error');
+          toast({
+            title: result.message,
+            status: 'warning',
+            duration: 3000,
+          });
         }
-      } catch {
-        setMessage('Terjadi kesalahan saat check-in');
+      } catch (err) {
+        const msg = err instanceof Error ? err.message : 'Gagal check-in';
+        setMessage(msg);
         setMessageStatus('error');
       } finally {
         setSubmitting(false);

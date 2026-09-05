@@ -15,17 +15,18 @@ import {
   Text,
   VStack,
 } from '@chakra-ui/react';
-import { doc, writeBatch } from 'firebase/firestore';
 import { Reorder, useDragControls } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { FaGripVertical } from 'react-icons/fa';
 
 import DonationCard from '../components/DonationCard';
-import { db } from '~/lib/firebase';
-import { useCrudManager } from '~/lib/hooks/useCrudManager';
+import {
+  getAdminToken,
+  listDonations,
+  reorderDonations,
+} from '~/lib/services/donationService';
 import type { DonationPage } from '~/lib/types/donation';
-import { initialDonationState } from '~/lib/types/donation';
 
 const DraggableDonationItem = ({
   donation,
@@ -64,11 +65,23 @@ const DraggableDonationItem = ({
 const DonationsPage = () => {
   const router = useRouter();
 
-  const { items: donations, loading } = useCrudManager<DonationPage>({
-    collectionName: 'donations',
-    blobFolderName: 'donation',
-    itemSchema: initialDonationState,
-  });
+  const [donations, setDonations] = useState<DonationPage[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const data = await listDonations();
+        setDonations(data);
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error('Error loading donations', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    load();
+  }, []);
 
   const [orderedDonations, setOrderedDonations] = useState<DonationPage[]>([]);
 
@@ -111,11 +124,16 @@ const DonationsPage = () => {
   });
 
   const persistSubsetOrder = async (ids: string[]) => {
-    const batch = writeBatch(db);
-    ids.forEach((id, index) => {
-      batch.update(doc(db, 'donations', id), { order: index });
-    });
-    await batch.commit();
+    try {
+      const token = await getAdminToken();
+      if (!token) return;
+      await reorderDonations(
+        token,
+        ids.map((id, index) => ({ id, order: index }))
+      );
+    } catch {
+      // ignore
+    }
   };
 
   const schedulePersistSubsetOrder = (

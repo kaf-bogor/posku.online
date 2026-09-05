@@ -39,7 +39,7 @@ const App = () => {
   useEffect(() => {
     setTitle('Baitul Maal Khatulistiwa');
     setSubtitle('Bilistiwa - Laporan wakaf ATS');
-    setImage(`${storageUrl}/bilistiwa.jpg?alt=media`);
+    setImage(`${storageUrl}/bilistiwa.jpg`);
     return () => {
       setImage(siteConfig.image);
       setTitle(siteConfig.title);

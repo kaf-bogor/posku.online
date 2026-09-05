@@ -15,7 +15,6 @@ import {
 } from '@chakra-ui/react';
 import { format } from 'date-fns';
 import { id as localeID } from 'date-fns/locale';
-import { collection, query, where, onSnapshot } from 'firebase/firestore';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
@@ -23,7 +22,7 @@ import { useEffect, useState } from 'react';
 import { FaCalendarAlt, FaUser } from 'react-icons/fa';
 
 import CommentsSection from '~/lib/components/CommentsSection';
-import { db } from '~/lib/firebase';
+import { getNews } from '~/lib/services/contentService';
 import type { NewsItem } from '~/lib/types/news';
 
 export default function NewsDetailPage() {
@@ -40,25 +39,16 @@ export default function NewsDetailPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!slug) return undefined;
-
-    const newsRef = collection(db, 'news');
-    const q = query(newsRef, where('slug', '==', slug));
-
-    const unsub = onSnapshot(q, (snapshot) => {
-      if (!snapshot.empty) {
-        const doc = snapshot.docs[0];
-        const data = doc.data() as Omit<NewsItem, 'id'>;
-        setNews({ id: doc.id, ...data });
-      } else {
-        setNews(null);
-      }
+    if (!slug) {
       setLoading(false);
-    });
+      return;
+    }
 
-    return () => {
-      unsub();
-    };
+    getNews(slug)
+      .then((item) => {
+        setNews(item);
+      })
+      .finally(() => setLoading(false));
   }, [slug]);
 
   if (loading) {
