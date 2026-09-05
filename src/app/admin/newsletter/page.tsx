@@ -17,9 +17,15 @@ import {
   Icon,
   Divider,
   Input,
+  Select,
   FormControl,
   FormLabel,
   FormHelperText,
+  Tabs,
+  TabList,
+  TabPanels,
+  TabPanel,
+  Tab,
   useDisclosure,
   useToast,
   useColorModeValue,
@@ -40,13 +46,7 @@ import {
   useRef,
   useState,
 } from 'react';
-import {
-  FaEnvelopeOpenText,
-  FaEdit,
-  FaTrash,
-  FaPlus,
-  FaExternalLinkAlt,
-} from 'react-icons/fa';
+import { FaEnvelopeOpenText, FaEdit, FaTrash, FaPlus } from 'react-icons/fa';
 
 import { AppContext } from '~/lib/context/app';
 import useAuth from '~/lib/hooks/useAuth';
@@ -61,21 +61,28 @@ import type { NewsletterItem } from '~/lib/types/newsletter';
 import {
   filterNewsletters,
   isNewsletterPublished,
+  MONTHS_ID,
+  monthToOrder,
+  monthToTitle,
+  parseNewsletterMonth,
 } from '~/lib/utils/adminNewsletter';
 import { resolveStorageUrl } from '~/lib/utils/newsletter';
 
 interface FormState {
-  title: string;
-  order: string;
+  month: number;
+  year: number;
   image_url: string;
   document_url: string;
 }
 
-const emptyForm: FormState = {
-  title: '',
-  order: '',
-  image_url: '',
-  document_url: '',
+const makeEmptyForm = (): FormState => {
+  const now = new Date();
+  return {
+    month: now.getMonth() + 1,
+    year: now.getFullYear(),
+    image_url: '',
+    document_url: '',
+  };
 };
 
 export default function AdminNewsletterPage() {
@@ -87,9 +94,10 @@ export default function AdminNewsletterPage() {
   const [saving, setSaving] = useState(false);
   const [query, setQuery] = useState('');
   const [showForm, setShowForm] = useState(false);
-  const [form, setForm] = useState<FormState>(emptyForm);
+  const [form, setForm] = useState<FormState>(makeEmptyForm);
   const [editId, setEditId] = useState<string | null>(null);
   const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imageTab, setImageTab] = useState<'upload' | 'url'>('upload');
   const [deleteId, setDeleteId] = useState<string | null>(null);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -127,9 +135,10 @@ export default function AdminNewsletterPage() {
   );
 
   const resetForm = () => {
-    setForm(emptyForm);
+    setForm(makeEmptyForm());
     setEditId(null);
     setImageFile(null);
+    setImageTab('upload');
     setShowForm(false);
     if (fileInputRef.current) fileInputRef.current.value = '';
   };
@@ -138,15 +147,16 @@ export default function AdminNewsletterPage() {
     if (showForm) resetForm();
     else {
       setEditId(null);
-      setForm(emptyForm);
+      setForm(makeEmptyForm());
       setImageFile(null);
+      setImageTab('upload');
       setShowForm(true);
     }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.title.trim() || !form.order.trim()) return;
+    if (!form.month || !form.year) return;
 
     setSaving(true);
     try {
@@ -155,9 +165,10 @@ export default function AdminNewsletterPage() {
         imageUrl = await uploadImage(imageFile);
       }
 
+      const title = monthToTitle(form.month, form.year);
       const payload = {
-        title: form.title.trim(),
-        order: Number(form.order),
+        title,
+        order: monthToOrder(form.month, form.year),
         image_url: imageUrl,
         document_url: form.document_url.trim() || null,
       };
@@ -193,14 +204,17 @@ export default function AdminNewsletterPage() {
   };
 
   const handleEdit = (item: NewsletterItem) => {
+    const parsed = parseNewsletterMonth(item.title);
+    const now = new Date();
     setEditId(item.id);
     setForm({
-      title: item.title,
-      order: String(item.order),
+      month: parsed?.month ?? now.getMonth() + 1,
+      year: parsed?.year ?? now.getFullYear(),
       image_url: item.image_url,
       document_url: item.document_url ?? '',
     });
     setImageFile(null);
+    setImageTab('upload');
     setShowForm(true);
   };
 
@@ -219,6 +233,13 @@ export default function AdminNewsletterPage() {
       ? resolveStorageUrl(form.image_url)
       : '';
 
+  const years = useMemo(() => {
+    const currentYear = new Date().getFullYear();
+    const list: number[] = [];
+    for (let y = currentYear + 1; y >= currentYear - 6; y -= 1) list.push(y);
+    return list;
+  }, []);
+
   const formPanel = (
     <Box
       p={5}
@@ -235,7 +256,7 @@ export default function AdminNewsletterPage() {
         <Text color={muted} fontSize="sm" mb={5}>
           {editId
             ? 'Perbarui detail newsletter ini.'
-            : 'Tambahkan newsletter baru untuk halaman publik.'}
+            : 'Pilih bulan terbit untuk newsletter baru.'}
         </Text>
 
         <VStack align="stretch" spacing={4}>
@@ -251,71 +272,121 @@ export default function AdminNewsletterPage() {
             </Heading>
             <VStack align="stretch" spacing={4}>
               <FormControl isRequired>
-                <FormLabel>Judul</FormLabel>
-                <Input
-                  value={form.title}
-                  placeholder="cth: Juli 2024"
-                  onChange={(e) => setForm({ ...form, title: e.target.value })}
-                />
-              </FormControl>
-
-              <FormControl isRequired>
-                <FormLabel>Urutan</FormLabel>
-                <Input
-                  type="number"
-                  value={form.order}
-                  placeholder="1"
-                  onChange={(e) => setForm({ ...form, order: e.target.value })}
-                />
+                <FormLabel>Bulan / Tahun Terbit</FormLabel>
+                <Flex direction={{ base: 'column', md: 'row' }} gap={3}>
+                  <Select
+                    value={form.month}
+                    onChange={(e) =>
+                      setForm({ ...form, month: Number(e.target.value) })
+                    }
+                    maxW={{ base: '100%', md: '220px' }}
+                  >
+                    {MONTHS_ID.map((m, idx) => (
+                      <option key={m} value={idx + 1}>
+                        {m}
+                      </option>
+                    ))}
+                  </Select>
+                  <Select
+                    value={form.year}
+                    onChange={(e) =>
+                      setForm({ ...form, year: Number(e.target.value) })
+                    }
+                    maxW={{ base: '100%', md: '160px' }}
+                  >
+                    {years.map((y) => (
+                      <option key={y} value={y}>
+                        {y}
+                      </option>
+                    ))}
+                  </Select>
+                </Flex>
                 <FormHelperText>
-                  Semakin besar angka, semakin tampil di depan.
+                  Judul otomatis: <b>{monthToTitle(form.month, form.year)}</b>
                 </FormHelperText>
               </FormControl>
-
-              <FormControl>
-                <FormLabel>Gambar (upload)</FormLabel>
-                <Input
-                  ref={fileInputRef}
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => {
-                    const file = e.target.files?.[0] ?? null;
-                    setImageFile(file);
-                  }}
-                />
-              </FormControl>
-
-              <FormControl>
-                <FormLabel>Image URL / path</FormLabel>
-                <Input
-                  value={form.image_url}
-                  placeholder="2024/juli/juli_thumb.png"
-                  onChange={(e) =>
-                    setForm({ ...form, image_url: e.target.value })
-                  }
-                />
-                <FormHelperText>
-                  Path blob (tanpa domain) atau URL lengkap. Diisi manual jika
-                  tidak upload.
-                </FormHelperText>
-              </FormControl>
-
-              {previewSrc && (
-                <Box>
-                  <Image
-                    src={previewSrc}
-                    alt="Preview"
-                    boxSize="96px"
-                    objectFit="contain"
-                    border="1px solid"
-                    borderColor={borderColor}
-                    borderRadius="md"
-                    bg="white"
-                    p={1}
-                  />
-                </Box>
-              )}
             </VStack>
+          </Box>
+
+          <Box
+            borderWidth="1px"
+            borderColor={borderColor}
+            borderRadius="lg"
+            p={5}
+            w="100%"
+          >
+            <Heading size="sm" mb={4} color={titleColor}>
+              Gambar
+            </Heading>
+            <Tabs
+              variant="soft-rounded"
+              colorScheme="green"
+              index={imageTab === 'upload' ? 0 : 1}
+              onChange={(idx) => {
+                const next = idx === 0 ? 'upload' : 'url';
+                setImageTab(next);
+                if (next === 'upload') {
+                  setForm({ ...form, image_url: '' });
+                } else {
+                  setImageFile(null);
+                  if (fileInputRef.current) fileInputRef.current.value = '';
+                }
+              }}
+            >
+              <TabList mb={4}>
+                <Tab>Upload File</Tab>
+                <Tab>Paste URL</Tab>
+              </TabList>
+              <TabPanels>
+                <TabPanel px={0}>
+                  <FormControl>
+                    <Input
+                      ref={fileInputRef}
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0] ?? null;
+                        setImageFile(file);
+                        if (file) setForm({ ...form, image_url: '' });
+                      }}
+                    />
+                    <FormHelperText>
+                      Pilih berkas gambar untuk diunggah (utama).
+                    </FormHelperText>
+                  </FormControl>
+                </TabPanel>
+                <TabPanel px={0}>
+                  <FormControl>
+                    <Input
+                      value={form.image_url}
+                      placeholder="https://files.rifkifauzi.id/... atau path 2024/juli/x.png"
+                      onChange={(e) =>
+                        setForm({ ...form, image_url: e.target.value })
+                      }
+                    />
+                    <FormHelperText>
+                      Tempel URL gambar yang sudah ada.
+                    </FormHelperText>
+                  </FormControl>
+                </TabPanel>
+              </TabPanels>
+            </Tabs>
+
+            {previewSrc && (
+              <Box mt={3}>
+                <Image
+                  src={previewSrc}
+                  alt="Preview"
+                  boxSize="96px"
+                  objectFit="contain"
+                  border="1px solid"
+                  borderColor={borderColor}
+                  borderRadius="md"
+                  bg="white"
+                  p={1}
+                />
+              </Box>
+            )}
           </Box>
 
           <Box
@@ -337,7 +408,9 @@ export default function AdminNewsletterPage() {
                   setForm({ ...form, document_url: e.target.value })
                 }
               />
-              <FormHelperText>Kosongkan jika belum terbit.</FormHelperText>
+              <FormHelperText>
+                Kosongkan jika belum terbit (status Draft).
+              </FormHelperText>
             </FormControl>
           </Box>
 
@@ -443,6 +516,9 @@ export default function AdminNewsletterPage() {
             <VStack align="stretch" spacing={4}>
               {filtered.map((item) => {
                 const published = isNewsletterPublished(item);
+                const docUrl = item.document_url
+                  ? resolveStorageUrl(item.document_url)
+                  : '';
                 return (
                   <Box
                     key={item.id}
@@ -476,9 +552,6 @@ export default function AdminNewsletterPage() {
 
                       <VStack align="start" spacing={1} flex={1} minW={0}>
                         <HStack spacing={2}>
-                          <Badge colorScheme="gray" variant="subtle">
-                            #{item.order}
-                          </Badge>
                           <Badge colorScheme={published ? 'green' : 'gray'}>
                             {published ? 'Terbit' : 'Draft'}
                           </Badge>
@@ -486,15 +559,22 @@ export default function AdminNewsletterPage() {
                         <Heading size="sm" color={titleColor}>
                           {item.title}
                         </Heading>
-                        {item.document_url && (
+                        {item.document_url ? (
                           <Text
-                            as="span"
+                            as="a"
+                            href={docUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
                             fontSize="sm"
-                            color={muted}
-                            noOfLines={1}
+                            color="blue.500"
                             wordBreak="break-all"
+                            _hover={{ textDecoration: 'underline' }}
                           >
-                            {resolveStorageUrl(item.document_url)}
+                            {docUrl}
+                          </Text>
+                        ) : (
+                          <Text fontSize="sm" color={muted}>
+                            Belum ada link dokumen.
                           </Text>
                         )}
                       </VStack>
@@ -503,19 +583,6 @@ export default function AdminNewsletterPage() {
                         spacing={2}
                         justify={{ base: 'flex-start', md: 'flex-end' }}
                       >
-                        {item.document_url && (
-                          <Button
-                            size="sm"
-                            variant="ghost"
-                            as="a"
-                            href={resolveStorageUrl(item.document_url)}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            leftIcon={<FaExternalLinkAlt />}
-                          >
-                            Lihat
-                          </Button>
-                        )}
                         <Button
                           size="sm"
                           colorScheme="blue"
