@@ -5,7 +5,7 @@
 //   GET /api/health                          -> { ok: true }
 
 import { handleAttendance } from './attendance';
-import { meStatus } from './auth';
+import { listAdmins, meStatus } from './auth';
 import { handleComments } from './comments';
 import { handleContent } from './content';
 import { handleDonations } from './donations';
@@ -46,6 +46,9 @@ export default {
       }
       if (path === '/api/me') {
         return meStatus(request, env);
+      }
+      if (path === '/api/admins') {
+        return listAdmins(env);
       }
       if (path === '/api/tahun-ajaran') {
         return await handleTahunAjaran(env, url);

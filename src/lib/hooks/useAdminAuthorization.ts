@@ -12,8 +12,9 @@ export type UseAdminAuthorizationResult = {
 };
 
 /**
- * Cek apakah user adalah admin dengan membandingkan email (dari token) terhadap
- * daftar admin di fs_admin (worker D1). Side-effect: jika bukan admin, signOut.
+ * Cek apakah user adalah admin dengan membandingkan email terhadap daftar
+ * admin publik dari worker D1 (GET /api/admins). Mirip perilaku lama yang
+ * membaca daftar admin. Side-effect: jika bukan admin, signOut otomatis.
  */
 export default function useAdminAuthorization(
   user: User | null
@@ -26,43 +27,27 @@ export default function useAdminAuthorization(
   useEffect(() => {
     let unsubscribed = false;
 
-    async function check() {
-      if (!user) {
-        if (!unsubscribed) {
-          setAdminEmails([]);
-          setNotAllowed(false);
-          setAdminsLoading(false);
-        }
-        return;
-      }
-
+    async function fetchAdmins() {
       setAdminsLoading(true);
       setError(null);
       try {
-        const token = await user.getIdToken();
         const base =
           process.env.NEXT_PUBLIC_D1_API_URL ||
           'https://posku-d1.kubido.workers.dev';
-        const res = await fetch(`${base}/api/me`, {
-          headers: {
-            Accept: 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
+        const res = await fetch(`${base}/api/admins`, {
+          headers: { Accept: 'application/json' },
         });
-        const data = (await res.json().catch(() => ({}))) as {
-          admin?: boolean;
-          email?: string;
-        };
-
-        if (!unsubscribed) {
-          setAdminEmails(data.admin && data.email ? [data.email] : []);
-          setNotAllowed(Boolean(user && !data.admin));
-        }
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = (await res.json()) as { data?: string[] };
+        const emails = (data.data ?? [])
+          .filter(Boolean)
+          .map((e) => e.toLowerCase());
+        if (!unsubscribed) setAdminEmails(emails);
       } catch (err) {
         if (!unsubscribed) {
           setAdminEmails([]);
           setError(
-            `Failed to fetch admin status: ${
+            `Failed to fetch admin list: ${
               err instanceof Error ? err.message : 'Unknown error'
             }`
           );
@@ -72,16 +57,28 @@ export default function useAdminAuthorization(
       }
     }
 
-    check();
+    fetchAdmins();
 
     return () => {
       unsubscribed = true;
     };
-  }, [user]);
+  }, []);
+
+  // Cek otorisasi user berdasarkan daftar email
+  useEffect(() => {
+    if (
+      !adminsLoading &&
+      !error &&
+      user &&
+      !adminEmails.includes(user.email || '')
+    ) {
+      setNotAllowed(true);
+    }
+  }, [user, adminEmails, adminsLoading, error]);
 
   // Sign out jika user bukan admin
   useEffect(() => {
-    if (!adminsLoading && user && notAllowed) {
+    if (notAllowed) {
       const timer = setTimeout(() => {
         signOut(auth);
         setNotAllowed(false);
@@ -89,7 +86,7 @@ export default function useAdminAuthorization(
       return () => clearTimeout(timer);
     }
     return undefined;
-  }, [user, notAllowed, adminsLoading]);
+  }, [notAllowed]);
 
   return { adminEmails, adminsLoading, notAllowed, error };
 }

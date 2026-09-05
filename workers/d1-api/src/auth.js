@@ -80,3 +80,10 @@ export async function meStatus(request, env) {
     uid: result.user.uid,
   });
 }
+
+export async function listAdmins(env) {
+  const { results } = await env.DB.prepare(
+    'SELECT id FROM fs_admin ORDER BY id ASC'
+  ).all();
+  return json({ data: results.map((r) => r.id) });
+}
