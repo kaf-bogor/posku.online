@@ -1,5 +1,8 @@
 'use client';
 
+/* eslint-disable no-nested-ternary */
+
+import { Search2Icon } from '@chakra-ui/icons';
 import {
   Box,
   VStack,
@@ -9,13 +12,20 @@ import {
   Button,
   Spinner,
   Badge,
-  useColorModeValue,
+  Flex,
+  Image,
+  Icon,
+  Divider,
   Input,
   Checkbox,
   FormControl,
   FormLabel,
+  InputGroup,
+  InputLeftElement,
+  Select,
   useDisclosure,
   useToast,
+  useColorModeValue,
   AlertDialog,
   AlertDialogOverlay,
   AlertDialogContent,
@@ -24,10 +34,17 @@ import {
   AlertDialogFooter,
 } from '@chakra-ui/react';
 import { format } from 'date-fns';
+import { id as localeID } from 'date-fns/locale';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
-import { useContext, useEffect, useRef, useState } from 'react';
-import { FaCalendarAlt, FaMapMarkerAlt } from 'react-icons/fa';
+import { useContext, useEffect, useMemo, useRef, useState } from 'react';
+import {
+  FaCalendarAlt,
+  FaMapMarkerAlt,
+  FaEdit,
+  FaTrash,
+  FaPlus,
+} from 'react-icons/fa';
 
 import ManagerForm from '~/app/admin/ManagerForm';
 import { AppContext } from '~/lib/context/app';
@@ -41,6 +58,8 @@ import { generateSlug } from '~/lib/utils/slug';
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
+type StatusFilter = 'all' | 'upcoming' | 'active' | 'past' | 'hidden';
+
 export default function EventsAdminPage() {
   const router = useRouter();
   const toast = useToast();
@@ -50,6 +69,9 @@ export default function EventsAdminPage() {
 
   const [events, setEvents] = useState<EventItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
+  const [query, setQuery] = useState('');
+  const [statusFilter, setStatusFilter] = useState<StatusFilter>('all');
   const [showForm, setShowForm] = useState(false);
   const [form, setForm] = useState<Omit<EventItem, 'id'>>({
     title: '',
@@ -62,13 +84,22 @@ export default function EventsAdminPage() {
     isActive: false,
   });
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
-  const editForm: EventItem | null = null;
-  const toggleForm = () => setShowForm((prev) => !prev);
+
+  const { bgColor, borderColor } = useContext(AppContext);
+  const titleColor = useColorModeValue('gray.800', 'white');
+  const muted = useColorModeValue('gray.500', 'gray.400');
 
   const reload = async () => {
-    const data = await listEvents();
-    setEvents(data);
-    setLoading(false);
+    setLoading(true);
+    try {
+      const data = await listEvents();
+      setEvents(data);
+      setLoadError(null);
+    } catch (err) {
+      setLoadError(err instanceof Error ? err.message : 'Gagal memuat data.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -88,21 +119,65 @@ export default function EventsAdminPage() {
     return data.imageUrls as string[];
   };
 
-  const { bgColor, textColor } = useContext(AppContext);
+  const eventStatus = (event: EventItem) => {
+    const now = new Date();
+    if (!event.isActive)
+      return { label: 'Disembunyikan', color: 'gray' as const };
+    if (new Date(event.startDate) > now)
+      return { label: 'Akan datang', color: 'blue' as const };
+    if (new Date(event.endDate) < now)
+      return { label: 'Selesai', color: 'orange' as const };
+    return { label: 'Berlangsung', color: 'green' as const };
+  };
 
-  const borderColor = useColorModeValue('gray.200', 'gray.600');
-  const titleColor = useColorModeValue('gray.800', 'white');
+  const filtered = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    return events.filter((event) => {
+      const matchQ =
+        !q ||
+        event.title.toLowerCase().includes(q) ||
+        (event.location ?? '').toLowerCase().includes(q);
+      if (!matchQ) return false;
 
-  if (loading) {
-    return (
-      <HStack justify="center" py={20}>
-        <Spinner />
-        <Text>Loading events...</Text>
-      </HStack>
-    );
-  }
+      const now = new Date();
+      switch (statusFilter) {
+        case 'upcoming':
+          return event.isActive && new Date(event.startDate) > now;
+        case 'active':
+          return (
+            event.isActive &&
+            new Date(event.startDate) <= now &&
+            new Date(event.endDate) >= now
+          );
+        case 'past':
+          return new Date(event.endDate) < now;
+        case 'hidden':
+          return !event.isActive;
+        default:
+          return true;
+      }
+    });
+  }, [events, query, statusFilter]);
 
-  const isEditing = !!editForm;
+  const activeCount = useMemo(
+    () => events.filter((e) => e.isActive).length,
+    [events]
+  );
+
+  const toggleForm = () => {
+    setShowForm((prev) => !prev);
+    setForm({
+      title: '',
+      slug: '',
+      summary: '',
+      imageUrls: [],
+      startDate: new Date().toISOString(),
+      endDate: new Date().toISOString(),
+      location: '',
+      isActive: false,
+    });
+    setSelectedFiles([]);
+  };
 
   const handleSoftDelete = async () => {
     if (!deleteId) return;
@@ -112,20 +187,21 @@ export default function EventsAdminPage() {
         prev.map((ev) => (ev.id === deleteId ? { ...ev, isActive: false } : ev))
       );
       toast({
-        title: 'Berhasil',
-        description: 'Acara disembunyikan dari publik.',
+        title: 'Acara disembunyikan',
+        description: 'Acara tidak lagi tampil di halaman publik.',
         status: 'success',
         duration: 3000,
       });
     } catch (err) {
-      // eslint-disable-next-line no-console
-      console.error(err);
       toast({
         title: 'Error',
-        description: 'Gagal menambahkan acara.',
+        description: err instanceof Error ? err.message : 'Gagal menyimpan.',
         status: 'error',
         duration: 4000,
       });
+    } finally {
+      setDeleteId(null);
+      onClose();
     }
   };
 
@@ -136,108 +212,125 @@ export default function EventsAdminPage() {
       const imageUrls = await uploadImagesToServer(selectedFiles, 'events');
       await createEvent({ ...form, slug, imageUrls });
       toast({
-        title: 'Sukses',
-        description: 'Acara berhasil ditambahkan.',
+        title: 'Acara ditambahkan',
         status: 'success',
         duration: 3000,
       });
-      setForm({
-        title: '',
-        slug: '',
-        summary: '',
-        imageUrls: [],
-        startDate: new Date().toISOString(),
-        endDate: new Date().toISOString(),
-        location: '',
-        isActive: false,
-      });
-      setSelectedFiles([]);
-      setShowForm(false);
+      toggleForm();
       reload();
     } catch (err) {
-      // eslint-disable-next-line no-console
-      console.error(err);
       toast({
         title: 'Error',
-        description: 'Gagal menambahkan acara.',
+        description:
+          err instanceof Error ? err.message : 'Gagal menambahkan acara.',
         status: 'error',
         duration: 4000,
       });
     }
   };
 
-  const handleAddEvent = async (e: React.FormEvent) => {
-    await handleAdd(e);
-  };
+  const createForm = (
+    <Box
+      bg={bgColor}
+      borderRadius="xl"
+      borderWidth="1px"
+      borderColor={borderColor}
+      shadow="sm"
+    >
+      <ManagerForm
+        formState={form}
+        onSubmit={handleAdd}
+        onCancel={toggleForm}
+        title="Buat Acara Baru"
+      >
+        <Box
+          borderWidth="1px"
+          borderColor={borderColor}
+          borderRadius="lg"
+          p={5}
+          w="100%"
+        >
+          <Heading size="sm" mb={4} color={titleColor}>
+            Informasi Acara
+          </Heading>
+          <VStack align="stretch" spacing={4}>
+            <FormControl isRequired>
+              <FormLabel>Judul Acara</FormLabel>
+              <Input
+                name="title"
+                value={form.title}
+                placeholder="cth: Kajian Bulanan Orang Tua"
+                onChange={(e) => {
+                  const newTitle = e.target.value;
+                  setForm({
+                    ...form,
+                    title: newTitle,
+                    slug: generateSlug(newTitle),
+                  });
+                }}
+              />
+            </FormControl>
 
-  return (
-    <>
-      <VStack align="stretch" spacing={4}>
-        <Button alignSelf="start" colorScheme="green" onClick={toggleForm}>
-          Add Event
-        </Button>
+            <FormControl>
+              <FormLabel>Slug (otomatis)</FormLabel>
+              <Input
+                name="slug"
+                value={form.slug}
+                isReadOnly
+                placeholder="url-friendly-slug"
+                bg="gray.50"
+              />
+            </FormControl>
 
-        {showForm && !isEditing && (
-          <Box bg={bgColor}>
-            <ManagerForm
-              formState={form}
-              onSubmit={handleAddEvent}
-              onCancel={toggleForm}
-              title="Add New Event"
-            >
+            <FormControl isRequired>
+              <FormLabel>Deskripsi</FormLabel>
+              <ReactQuill
+                theme="snow"
+                value={form.summary}
+                onChange={(value) => setForm({ ...form, summary: value })}
+              />
+            </FormControl>
+
+            <FormControl isRequired={selectedFiles.length === 0}>
+              <FormLabel>Gambar Sampul</FormLabel>
+              <Input
+                type="file"
+                multiple
+                accept="image/*"
+                onChange={(e) =>
+                  setSelectedFiles(Array.from(e.target.files || []))
+                }
+              />
+            </FormControl>
+          </VStack>
+        </Box>
+
+        <Box
+          borderWidth="1px"
+          borderColor={borderColor}
+          borderRadius="lg"
+          p={5}
+          w="100%"
+        >
+          <Heading size="sm" mb={4} color={titleColor}>
+            Detail & Publikasi
+          </Heading>
+          <VStack align="stretch" spacing={4}>
+            <Flex direction={{ base: 'column', md: 'row' }} gap={4}>
               <FormControl isRequired>
-                <FormLabel>Title</FormLabel>
-                <Input
-                  name="title"
-                  value={form.title}
-                  onChange={(e) => {
-                    const newTitle = e.target.value;
-                    setForm({
-                      ...form,
-                      title: newTitle,
-                      slug: generateSlug(newTitle),
-                    });
-                  }}
-                />
-              </FormControl>
-
-              <FormControl isRequired>
-                <FormLabel>Slug (auto-generated)</FormLabel>
-                <Input
-                  name="slug"
-                  value={form.slug}
-                  isReadOnly
-                  placeholder="url-friendly-slug"
-                  bg="gray.50"
-                />
-              </FormControl>
-
-              <FormControl isRequired>
-                <FormLabel>Summary</FormLabel>
-                <ReactQuill
-                  theme="snow"
-                  value={form.summary}
-                  onChange={(value) => setForm({ ...form, summary: value })}
-                />
-              </FormControl>
-
-              <FormControl isRequired>
-                <FormLabel>Start Date</FormLabel>
+                <FormLabel>Mulai</FormLabel>
                 <Input
                   type="datetime-local"
                   name="startDate"
                   value={form.startDate}
                   onChange={(e) =>
-                    setForm({
-                      ...form,
-                      startDate: e.target.value,
-                    })
+                    setForm({ ...form, startDate: e.target.value })
                   }
                 />
               </FormControl>
 
               <FormControl isRequired>
-                <FormLabel>End Date</FormLabel>
+                <FormLabel>Selesai</FormLabel>
                 <Input
                   type="date"
                   name="endDate"
@@ -250,106 +343,264 @@ export default function EventsAdminPage() {
                   }
                 />
               </FormControl>
+            </Flex>
 
-              <FormControl isRequired>
-                <FormLabel>Location</FormLabel>
-                <Input
-                  name="location"
-                  value={form.location}
-                  onChange={(e) =>
-                    setForm({ ...form, location: e.target.value })
-                  }
-                />
-              </FormControl>
+            <FormControl isRequired>
+              <FormLabel>Lokasi</FormLabel>
+              <Input
+                name="location"
+                value={form.location}
+                placeholder="cth: Masjid Jami' At-Taqwa AURI"
+                onChange={(e) => setForm({ ...form, location: e.target.value })}
+              />
+            </FormControl>
 
-              <FormControl>
-                <Checkbox
-                  isChecked={form.isActive}
-                  onChange={(e) =>
-                    setForm({ ...form, isActive: e.target.checked })
-                  }
-                >
-                  Active
-                </Checkbox>
-              </FormControl>
+            <Checkbox
+              isChecked={form.isActive}
+              onChange={(e) => setForm({ ...form, isActive: e.target.checked })}
+              colorScheme="green"
+            >
+              Tampilkan di publik
+            </Checkbox>
+          </VStack>
+        </Box>
+      </ManagerForm>
+    </Box>
+  );
 
-              <FormControl isRequired={selectedFiles.length === 0}>
-                <FormLabel>Images</FormLabel>
-                <Input
-                  type="file"
-                  multiple
-                  accept="image/*"
-                  onChange={(e) =>
-                    setSelectedFiles(Array.from(e.target.files || []))
-                  }
-                />
-              </FormControl>
-            </ManagerForm>
-          </Box>
-        )}
+  return (
+    <VStack align="stretch" spacing={6}>
+      {/* Header */}
+      <Flex
+        direction={{ base: 'column', md: 'row' }}
+        justify="space-between"
+        align={{ base: 'stretch', md: 'center' }}
+        gap={3}
+      >
+        <Box>
+          <Heading size="lg" color={titleColor}>
+            Events
+          </Heading>
+          <Text color={muted} fontSize="sm" mt={1}>
+            Kelola acara & kegiatan. {activeCount} acara aktif dari{' '}
+            {events.length} total.
+          </Text>
+        </Box>
+        <Button
+          colorScheme="green"
+          leftIcon={<FaPlus />}
+          onClick={toggleForm}
+          alignSelf="flex-start"
+        >
+          Buat Acara
+        </Button>
+      </Flex>
 
-        {events.length === 0 ? (
-          <Box textAlign="center" py={10}>
-            <Text color={textColor}>Belum ada data event.</Text>
-          </Box>
-        ) : (
-          events.map((event) => (
+      {showForm && createForm}
+
+      <Divider />
+
+      {loading ? (
+        <Box textAlign="center" py={16}>
+          <Spinner size="xl" color="green.500" thickness="3px" />
+          <Text color={muted} mt={4}>
+            Memuat acara...
+          </Text>
+        </Box>
+      ) : loadError ? (
+        <Box
+          textAlign="center"
+          py={16}
+          bg={bgColor}
+          borderRadius="xl"
+          borderWidth="1px"
+          borderColor={borderColor}
+        >
+          <Heading size="md" mb={2}>
+            Gagal memuat acara
+          </Heading>
+          <Text color={muted} mb={4}>
+            {loadError}
+          </Text>
+          <Button colorScheme="blue" onClick={reload}>
+            Coba Lagi
+          </Button>
+        </Box>
+      ) : (
+        <>
+          {/* Toolbar */}
+          <Flex direction={{ base: 'column', md: 'row' }} gap={3}>
+            <InputGroup maxW={{ base: '100%', md: '320px' }}>
+              <InputLeftElement pointerEvents="none">
+                <Search2Icon color="gray.400" />
+              </InputLeftElement>
+              <Input
+                placeholder="Cari acara..."
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+              />
+            </InputGroup>
+            <Select
+              maxW={{ base: '100%', md: '200px' }}
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value as StatusFilter)}
+            >
+              <option value="all">Semua status</option>
+              <option value="upcoming">Akan datang</option>
+              <option value="active">Berlangsung</option>
+              <option value="past">Selesai</option>
+              <option value="hidden">Disembunyikan</option>
+            </Select>
+          </Flex>
+
+          {filtered.length === 0 ? (
             <Box
-              key={event.id}
-              p={4}
+              textAlign="center"
+              py={16}
               bg={bgColor}
+              borderRadius="xl"
               borderWidth="1px"
-              borderRadius="md"
               borderColor={borderColor}
             >
-              <VStack align="stretch" spacing={3}>
-                <Heading size="md" color={titleColor}>
-                  {event.title}
-                </Heading>
-
-                <HStack fontSize="sm" color={textColor} spacing={3}>
-                  <HStack spacing={1}>
-                    <FaCalendarAlt />
-                    <Text>
-                      {format(new Date(event.startDate), 'dd MMM yyyy')} –{' '}
-                      {format(new Date(event.endDate), 'dd MMM yyyy')}
-                    </Text>
-                  </HStack>
-                  <HStack spacing={1}>
-                    <FaMapMarkerAlt />
-                    <Text>{event.location}</Text>
-                  </HStack>
-                  {event.isActive && new Date(event.startDate) > new Date() && (
-                    <Badge colorScheme="green">Upcoming</Badge>
-                  )}
-                  {new Date(event.endDate) < new Date() && (
-                    <Badge colorScheme="orange">Past</Badge>
-                  )}
-                </HStack>
-                <HStack>
-                  <Button
-                    size="sm"
-                    colorScheme="blue"
-                    onClick={() => router.push(`/admin/event/${event.id}/edit`)}
-                  >
-                    Edit
-                  </Button>
-                  <Button
-                    size="sm"
-                    colorScheme="red"
-                    onClick={() => {
-                      setDeleteId(event.id);
-                      onOpen();
-                    }}
-                  >
-                    Delete
-                  </Button>
-                </HStack>
-              </VStack>
+              <Heading size="md" mb={2}>
+                Tidak ada acara
+              </Heading>
+              <Text color={muted} mb={4}>
+                {query || statusFilter !== 'all'
+                  ? 'Tidak ada acara yang cocok dengan pencarian/filter.'
+                  : 'Belum ada acara. Buat acara pertama Anda.'}
+              </Text>
+              {!query && statusFilter === 'all' && (
+                <Button colorScheme="green" onClick={toggleForm}>
+                  Buat Acara
+                </Button>
+              )}
             </Box>
-          ))
-        )}
-      </VStack>
+          ) : (
+            <VStack align="stretch" spacing={4}>
+              {filtered.map((event) => {
+                const status = eventStatus(event);
+                const thumb = event.imageUrls?.[0];
+                return (
+                  <Box
+                    key={event.id}
+                    bg={bgColor}
+                    borderRadius="xl"
+                    borderWidth="1px"
+                    borderColor={borderColor}
+                    shadow="sm"
+                    overflow="hidden"
+                  >
+                    <Flex
+                      direction={{ base: 'column', md: 'row' }}
+                      align="stretch"
+                    >
+                      {thumb ? (
+                        <Box
+                          flexShrink={0}
+                          w={{ base: '100%', md: '200px' }}
+                          h={{ base: '160px', md: 'auto' }}
+                          bg="gray.100"
+                          position="relative"
+                        >
+                          <Image
+                            src={thumb}
+                            alt={event.title}
+                            objectFit="cover"
+                            w="100%"
+                            h="100%"
+                          />
+                        </Box>
+                      ) : null}
+                      <VStack
+                        align="stretch"
+                        spacing={2}
+                        p={5}
+                        flex={1}
+                        justify="center"
+                      >
+                        <HStack spacing={2} wrap="wrap">
+                          <Heading size="sm" color={titleColor} flex={1}>
+                            {event.title}
+                          </Heading>
+                          <Badge colorScheme={status.color} variant="subtle">
+                            {status.label}
+                          </Badge>
+                        </HStack>
+                        <HStack
+                          spacing={4}
+                          color={muted}
+                          fontSize="sm"
+                          wrap="wrap"
+                        >
+                          <HStack spacing={1}>
+                            <Icon as={FaCalendarAlt} />
+                            <Text>
+                              {format(
+                                new Date(event.startDate),
+                                'dd MMM yyyy',
+                                {
+                                  locale: localeID,
+                                }
+                              )}
+                              {new Date(event.endDate).getTime() !==
+                                new Date(event.startDate).getTime() &&
+                                ` – ${format(
+                                  new Date(event.endDate),
+                                  'dd MMM yyyy',
+                                  {
+                                    locale: localeID,
+                                  }
+                                )}`}
+                            </Text>
+                          </HStack>
+                          {event.location ? (
+                            <HStack spacing={1}>
+                              <Icon as={FaMapMarkerAlt} />
+                              <Text noOfLines={1}>{event.location}</Text>
+                            </HStack>
+                          ) : null}
+                        </HStack>
+                      </VStack>
+                      <Flex
+                        direction={{ base: 'row', md: 'column' }}
+                        gap={2}
+                        p={4}
+                        align={{ base: 'center', md: 'flex-end' }}
+                        justify={{ base: 'flex-end', md: 'center' }}
+                      >
+                        <Button
+                          size="sm"
+                          colorScheme="blue"
+                          variant="outline"
+                          leftIcon={<FaEdit />}
+                          onClick={() =>
+                            router.push(`/admin/event/${event.id}/edit`)
+                          }
+                        >
+                          Edit
+                        </Button>
+                        <Button
+                          size="sm"
+                          colorScheme="red"
+                          variant="ghost"
+                          leftIcon={<FaTrash />}
+                          onClick={() => {
+                            setDeleteId(event.id);
+                            onOpen();
+                          }}
+                        >
+                          Sembunyikan
+                        </Button>
+                      </Flex>
+                    </Flex>
+                  </Box>
+                );
+              })}
+            </VStack>
+          )}
+        </>
+      )}
 
       <AlertDialog
         isOpen={isOpen}
@@ -362,25 +613,23 @@ export default function EventsAdminPage() {
         <AlertDialogOverlay>
           <AlertDialogContent>
             <AlertDialogHeader fontSize="lg" fontWeight="bold">
-              Delete Event
+              Sembunyikan Acara
             </AlertDialogHeader>
-
             <AlertDialogBody>
-              Are you sure? You can restore this later from Firestore but it
-              will be hidden from users.
+              Acara ini akan disembunyikan dari halaman publik. Anda masih bisa
+              mengubahnya kembali kapan saja.
             </AlertDialogBody>
-
             <AlertDialogFooter>
               <Button ref={cancelRef} onClick={onClose}>
-                Cancel
+                Batal
               </Button>
               <Button colorScheme="red" onClick={handleSoftDelete} ml={3}>
-                Delete
+                Sembunyikan
               </Button>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialogOverlay>
       </AlertDialog>
-    </>
+    </VStack>
   );
 }

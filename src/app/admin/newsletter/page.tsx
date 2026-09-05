@@ -1,5 +1,8 @@
 'use client';
 
+/* eslint-disable no-nested-ternary, sonarjs/cognitive-complexity */
+
+import { Search2Icon } from '@chakra-ui/icons';
 import {
   Box,
   VStack,
@@ -8,22 +11,42 @@ import {
   HStack,
   Button,
   Spinner,
-  useColorModeValue,
+  Badge,
+  Flex,
+  Image,
+  Icon,
+  Divider,
   Input,
   FormControl,
   FormLabel,
   FormHelperText,
   useDisclosure,
+  useToast,
+  useColorModeValue,
   AlertDialog,
   AlertDialogOverlay,
   AlertDialogContent,
   AlertDialogHeader,
   AlertDialogBody,
   AlertDialogFooter,
-  Image,
-  useToast,
+  InputGroup,
+  InputLeftElement,
 } from '@chakra-ui/react';
-import { useCallback, useContext, useEffect, useRef, useState } from 'react';
+import {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
+import {
+  FaEnvelopeOpenText,
+  FaEdit,
+  FaTrash,
+  FaPlus,
+  FaExternalLinkAlt,
+} from 'react-icons/fa';
 
 import { AppContext } from '~/lib/context/app';
 import useAuth from '~/lib/hooks/useAuth';
@@ -43,7 +66,6 @@ interface FormState {
   document_url: string;
 }
 
-const COLLECTION = 'newsletters';
 const emptyForm: FormState = {
   title: '',
   order: '',
@@ -58,6 +80,7 @@ export default function AdminNewsletterPage() {
   const [items, setItems] = useState<NewsletterItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [query, setQuery] = useState('');
   const [showForm, setShowForm] = useState(false);
   const [form, setForm] = useState<FormState>(emptyForm);
   const [editId, setEditId] = useState<string | null>(null);
@@ -68,7 +91,7 @@ export default function AdminNewsletterPage() {
   const cancelRef = useRef<HTMLButtonElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const { bgColor, textColor, borderColor } = useContext(AppContext);
+  const { bgColor, borderColor } = useContext(AppContext);
   const titleColor = useColorModeValue('gray.800', 'white');
   const muted = useColorModeValue('gray.500', 'gray.400');
 
@@ -93,6 +116,12 @@ export default function AdminNewsletterPage() {
     fetchItems();
   }, [fetchItems]);
 
+  const filtered = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    if (!q) return items;
+    return items.filter((item) => item.title.toLowerCase().includes(q));
+  }, [items, query]);
+
   const resetForm = () => {
     setForm(emptyForm);
     setEditId(null);
@@ -101,10 +130,20 @@ export default function AdminNewsletterPage() {
     if (fileInputRef.current) fileInputRef.current.value = '';
   };
 
+  const toggleForm = () => {
+    if (showForm) resetForm();
+    else {
+      setEditId(null);
+      setForm(emptyForm);
+      setImageFile(null);
+      setShowForm(true);
+    }
+  };
+
   const uploadImage = async (file: File): Promise<string> => {
     const formData = new FormData();
     formData.append('files', file);
-    formData.append('category', COLLECTION);
+    formData.append('category', 'newsletters');
     const res = await fetch('/api/upload/images', {
       method: 'POST',
       body: formData,
@@ -153,7 +192,7 @@ export default function AdminNewsletterPage() {
     } catch (err) {
       toast({
         title: 'Gagal menyimpan',
-        description: (err as Error).message,
+        description: err instanceof Error ? err.message : 'Terjadi kesalahan',
         status: 'error',
         duration: 5000,
       });
@@ -183,209 +222,339 @@ export default function AdminNewsletterPage() {
     toast({ title: 'Newsletter dihapus', status: 'success', duration: 3000 });
   };
 
-  if (loading) {
-    return (
-      <HStack justify="center" py={20}>
-        <Spinner />
-        <Text>Loading newsletters...</Text>
-      </HStack>
-    );
-  }
-
   const previewSrc = imageFile
     ? URL.createObjectURL(imageFile)
-    : resolveStorageUrl(form.image_url);
+    : form.image_url
+      ? resolveStorageUrl(form.image_url)
+      : '';
+
+  const formPanel = (
+    <Box
+      p={5}
+      bg={bgColor}
+      borderWidth="1px"
+      borderColor={borderColor}
+      borderRadius="xl"
+      shadow="sm"
+    >
+      <form onSubmit={handleSubmit}>
+        <Heading size="md" mb={1} color={titleColor}>
+          {editId ? 'Edit Newsletter' : 'Buat Newsletter'}
+        </Heading>
+        <Text color={muted} fontSize="sm" mb={5}>
+          {editId
+            ? 'Perbarui detail newsletter ini.'
+            : 'Tambahkan newsletter baru untuk halaman publik.'}
+        </Text>
+
+        <VStack align="stretch" spacing={4}>
+          <Box
+            borderWidth="1px"
+            borderColor={borderColor}
+            borderRadius="lg"
+            p={5}
+            w="100%"
+          >
+            <Heading size="sm" mb={4} color={titleColor}>
+              Informasi
+            </Heading>
+            <VStack align="stretch" spacing={4}>
+              <FormControl isRequired>
+                <FormLabel>Judul</FormLabel>
+                <Input
+                  value={form.title}
+                  placeholder="cth: Juli 2024"
+                  onChange={(e) => setForm({ ...form, title: e.target.value })}
+                />
+              </FormControl>
+
+              <FormControl isRequired>
+                <FormLabel>Urutan</FormLabel>
+                <Input
+                  type="number"
+                  value={form.order}
+                  placeholder="1"
+                  onChange={(e) => setForm({ ...form, order: e.target.value })}
+                />
+                <FormHelperText>
+                  Semakin besar angka, semakin tampil di depan.
+                </FormHelperText>
+              </FormControl>
+
+              <FormControl>
+                <FormLabel>Gambar (upload)</FormLabel>
+                <Input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0] ?? null;
+                    setImageFile(file);
+                  }}
+                />
+              </FormControl>
+
+              <FormControl>
+                <FormLabel>Image URL / path</FormLabel>
+                <Input
+                  value={form.image_url}
+                  placeholder="2024/juli/juli_thumb.png"
+                  onChange={(e) =>
+                    setForm({ ...form, image_url: e.target.value })
+                  }
+                />
+                <FormHelperText>
+                  Path blob (tanpa domain) atau URL lengkap. Diisi manual jika
+                  tidak upload.
+                </FormHelperText>
+              </FormControl>
+
+              {previewSrc && (
+                <Box>
+                  <Image
+                    src={previewSrc}
+                    alt="Preview"
+                    boxSize="96px"
+                    objectFit="contain"
+                    border="1px solid"
+                    borderColor={borderColor}
+                    borderRadius="md"
+                    bg="white"
+                    p={1}
+                  />
+                </Box>
+              )}
+            </VStack>
+          </Box>
+
+          <Box
+            borderWidth="1px"
+            borderColor={borderColor}
+            borderRadius="lg"
+            p={5}
+            w="100%"
+          >
+            <Heading size="sm" mb={4} color={titleColor}>
+              Publikasi
+            </Heading>
+            <FormControl>
+              <FormLabel>Link dokumen</FormLabel>
+              <Input
+                value={form.document_url}
+                placeholder="https://bit.ly/..."
+                onChange={(e) =>
+                  setForm({ ...form, document_url: e.target.value })
+                }
+              />
+              <FormHelperText>Kosongkan jika belum terbit.</FormHelperText>
+            </FormControl>
+          </Box>
+
+          <Flex justify="flex-end" gap={3}>
+            <Button variant="outline" onClick={resetForm} isDisabled={saving}>
+              Batal
+            </Button>
+            <Button
+              colorScheme={editId ? 'blue' : 'green'}
+              type="submit"
+              isLoading={saving}
+              loadingText="Menyimpan..."
+            >
+              {editId ? 'Simpan Perubahan' : 'Tambah Newsletter'}
+            </Button>
+          </Flex>
+        </VStack>
+      </form>
+    </Box>
+  );
 
   return (
-    <>
-      <VStack align="stretch" spacing={4}>
+    <VStack align="stretch" spacing={6}>
+      {/* Header */}
+      <Flex
+        direction={{ base: 'column', md: 'row' }}
+        justify="space-between"
+        align={{ base: 'stretch', md: 'center' }}
+        gap={3}
+      >
+        <Box>
+          <Heading size="lg" color={titleColor}>
+            Newsletter
+          </Heading>
+          <Text color={muted} fontSize="sm" mt={1}>
+            Buat dan kelola newsletter ({items.length} total).
+          </Text>
+        </Box>
         <Button
-          alignSelf="start"
           colorScheme="green"
-          onClick={() => {
-            if (showForm) resetForm();
-            else setShowForm(true);
-          }}
+          leftIcon={<FaPlus />}
+          onClick={toggleForm}
+          alignSelf="flex-start"
         >
-          {showForm ? 'Cancel' : 'Add Newsletter'}
+          {showForm ? 'Tutup Form' : 'Buat Newsletter'}
         </Button>
+      </Flex>
 
-        {showForm && (
-          <Box
-            p={4}
-            mb={8}
-            borderWidth="1px"
-            borderRadius="md"
-            borderColor={borderColor}
-          >
-            <form onSubmit={handleSubmit}>
-              <Heading size="sm" mb={4}>
-                {editId ? 'Edit Newsletter' : 'Tambah Newsletter'}
-              </Heading>
-              <VStack align="stretch" spacing={3}>
-                <FormControl isRequired>
-                  <FormLabel>Judul</FormLabel>
-                  <Input
-                    value={form.title}
-                    placeholder="cth: Juli 2024"
-                    onChange={(e) =>
-                      setForm({ ...form, title: e.target.value })
-                    }
-                  />
-                </FormControl>
+      {showForm && formPanel}
 
-                <FormControl isRequired>
-                  <FormLabel>Urutan</FormLabel>
-                  <Input
-                    type="number"
-                    value={form.order}
-                    placeholder="1"
-                    onChange={(e) =>
-                      setForm({ ...form, order: e.target.value })
-                    }
-                  />
-                  <FormHelperText>
-                    Semakin besar angka, semakin tampil di depan.
-                  </FormHelperText>
-                </FormControl>
+      <Divider />
 
-                <FormControl>
-                  <FormLabel>Gambar (upload)</FormLabel>
-                  <Input
-                    ref={fileInputRef}
-                    type="file"
-                    accept="image/*"
-                    onChange={(e) => {
-                      const file = e.target.files?.[0] ?? null;
-                      setImageFile(file);
-                    }}
-                  />
-                </FormControl>
+      {loading ? (
+        <Box textAlign="center" py={16}>
+          <Spinner size="xl" color="green.500" thickness="3px" />
+          <Text color={muted} mt={4}>
+            Memuat newsletter...
+          </Text>
+        </Box>
+      ) : (
+        <>
+          <InputGroup maxW={{ base: '100%', md: '320px' }}>
+            <InputLeftElement pointerEvents="none">
+              <Search2Icon color="gray.400" />
+            </InputLeftElement>
+            <Input
+              placeholder="Cari newsletter..."
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+            />
+          </InputGroup>
 
-                <FormControl>
-                  <FormLabel>Image URL / path</FormLabel>
-                  <Input
-                    value={form.image_url}
-                    placeholder="2024/juli/juli_thumb.png"
-                    onChange={(e) =>
-                      setForm({ ...form, image_url: e.target.value })
-                    }
-                  />
-                  <FormHelperText>
-                    Path blob (tanpa domain) atau URL lengkap. Diisi manual jika
-                    tidak upload.
-                  </FormHelperText>
-                </FormControl>
-
-                {previewSrc && (
-                  <Box>
-                    <Image
-                      src={previewSrc}
-                      alt="Preview"
-                      boxSize="80px"
-                      objectFit="contain"
-                      border="1px solid"
-                      borderColor={borderColor}
-                      borderRadius="md"
-                      bg="white"
-                      p={1}
-                    />
-                  </Box>
-                )}
-
-                <FormControl>
-                  <FormLabel>Link dokumen</FormLabel>
-                  <Input
-                    value={form.document_url}
-                    placeholder="https://bit.ly/..."
-                    onChange={(e) =>
-                      setForm({ ...form, document_url: e.target.value })
-                    }
-                  />
-                  <FormHelperText>Kosongkan jika belum terbit.</FormHelperText>
-                </FormControl>
-
-                <HStack spacing={2} mt={4}>
-                  <Button
-                    colorScheme={editId ? 'blue' : 'green'}
-                    type="submit"
-                    isLoading={saving}
-                  >
-                    {editId ? 'Save Changes' : 'Add Item'}
-                  </Button>
-                  <Button variant="outline" onClick={resetForm}>
-                    Cancel
-                  </Button>
-                </HStack>
-              </VStack>
-            </form>
-          </Box>
-        )}
-
-        {items.length === 0 ? (
-          <Box textAlign="center" py={10}>
-            <Text color={textColor}>Belum ada newsletter.</Text>
-          </Box>
-        ) : (
-          items.map((item) => (
+          {filtered.length === 0 ? (
             <Box
-              key={item.id}
-              p={4}
+              textAlign="center"
+              py={16}
               bg={bgColor}
+              borderRadius="xl"
               borderWidth="1px"
-              borderRadius="md"
               borderColor={borderColor}
             >
-              <VStack align="stretch" spacing={3}>
-                <HStack spacing={4} align="start">
-                  {item.image_url && (
-                    <Image
-                      src={resolveStorageUrl(item.image_url)}
-                      alt={item.title}
-                      boxSize="60px"
-                      objectFit="contain"
-                      border="1px solid"
-                      borderColor={borderColor}
-                      borderRadius="md"
-                      bg="white"
-                      p={1}
-                    />
-                  )}
-                  <Box minW={0} flex={1}>
-                    <Heading size="md" color={titleColor}>
-                      #{item.order} · {item.title}
-                    </Heading>
-                    <Text color={muted} fontSize="sm" noOfLines={1} mt={1}>
-                      {item.document_url
-                        ? resolveStorageUrl(item.document_url)
-                        : 'Tidak terbit'}
-                    </Text>
-                  </Box>
-                </HStack>
-                <HStack>
-                  <Button
-                    size="sm"
-                    colorScheme="blue"
-                    onClick={() => handleEdit(item)}
-                  >
-                    Edit
-                  </Button>
-                  <Button
-                    size="sm"
-                    colorScheme="red"
-                    onClick={() => {
-                      setDeleteId(item.id);
-                      onOpen();
-                    }}
-                  >
-                    Delete
-                  </Button>
-                </HStack>
-              </VStack>
+              <Icon
+                as={FaEnvelopeOpenText}
+                boxSize={8}
+                color="gray.300"
+                mb={3}
+              />
+              <Heading size="md" mb={2}>
+                {query ? 'Tidak ditemukan' : 'Belum ada newsletter'}
+              </Heading>
+              <Text color={muted} mb={4}>
+                {query
+                  ? 'Tidak ada newsletter yang cocok dengan pencarian.'
+                  : 'Buat newsletter pertama Anda untuk halaman publik.'}
+              </Text>
+              {!query && (
+                <Button colorScheme="green" onClick={toggleForm}>
+                  Buat Newsletter
+                </Button>
+              )}
             </Box>
-          ))
-        )}
-      </VStack>
+          ) : (
+            <VStack align="stretch" spacing={4}>
+              {filtered.map((item) => {
+                const published = Boolean(item.document_url);
+                return (
+                  <Box
+                    key={item.id}
+                    bg={bgColor}
+                    borderWidth="1px"
+                    borderColor={borderColor}
+                    borderRadius="xl"
+                    shadow="sm"
+                    p={4}
+                  >
+                    <Flex
+                      direction={{ base: 'column', md: 'row' }}
+                      align={{ base: 'stretch', md: 'center' }}
+                      gap={4}
+                    >
+                      {item.image_url ? (
+                        <Image
+                          src={resolveStorageUrl(item.image_url)}
+                          alt={item.title}
+                          boxSize={{ base: '100%', md: '64px' }}
+                          h={{ base: '160px', md: '64px' }}
+                          objectFit="contain"
+                          border="1px solid"
+                          borderColor={borderColor}
+                          borderRadius="md"
+                          bg="white"
+                          p={1}
+                          flexShrink={0}
+                        />
+                      ) : null}
+
+                      <VStack align="start" spacing={1} flex={1} minW={0}>
+                        <HStack spacing={2}>
+                          <Badge colorScheme="gray" variant="subtle">
+                            #{item.order}
+                          </Badge>
+                          <Badge colorScheme={published ? 'green' : 'gray'}>
+                            {published ? 'Terbit' : 'Draft'}
+                          </Badge>
+                        </HStack>
+                        <Heading size="sm" color={titleColor}>
+                          {item.title}
+                        </Heading>
+                        {item.document_url && (
+                          <Text
+                            as="span"
+                            fontSize="sm"
+                            color={muted}
+                            noOfLines={1}
+                            wordBreak="break-all"
+                          >
+                            {resolveStorageUrl(item.document_url)}
+                          </Text>
+                        )}
+                      </VStack>
+
+                      <HStack
+                        spacing={2}
+                        justify={{ base: 'flex-start', md: 'flex-end' }}
+                      >
+                        {item.document_url && (
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            as="a"
+                            href={resolveStorageUrl(item.document_url)}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            leftIcon={<FaExternalLinkAlt />}
+                          >
+                            Lihat
+                          </Button>
+                        )}
+                        <Button
+                          size="sm"
+                          colorScheme="blue"
+                          variant="outline"
+                          leftIcon={<FaEdit />}
+                          onClick={() => handleEdit(item)}
+                        >
+                          Edit
+                        </Button>
+                        <Button
+                          size="sm"
+                          colorScheme="red"
+                          variant="ghost"
+                          leftIcon={<FaTrash />}
+                          onClick={() => {
+                            setDeleteId(item.id);
+                            onOpen();
+                          }}
+                        >
+                          Hapus
+                        </Button>
+                      </HStack>
+                    </Flex>
+                  </Box>
+                );
+              })}
+            </VStack>
+          )}
+        </>
+      )}
 
       <AlertDialog
         isOpen={isOpen}
@@ -400,23 +569,21 @@ export default function AdminNewsletterPage() {
             <AlertDialogHeader fontSize="lg" fontWeight="bold">
               Hapus Newsletter
             </AlertDialogHeader>
-
             <AlertDialogBody>
               Yakin ingin menghapus newsletter ini? Tindakan ini tidak dapat
               dibatalkan.
             </AlertDialogBody>
-
             <AlertDialogFooter>
               <Button ref={cancelRef} onClick={onClose}>
-                Cancel
+                Batal
               </Button>
               <Button colorScheme="red" onClick={handleConfirmDelete} ml={3}>
-                Delete
+                Hapus
               </Button>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialogOverlay>
       </AlertDialog>
-    </>
+    </VStack>
   );
 }
