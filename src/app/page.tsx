@@ -35,6 +35,7 @@ import rawKalender from '~/lib/data/kalender_posku.json';
 import { listEvents, listNews } from '~/lib/services/contentService';
 import type { EventItem } from '~/lib/types/event';
 import type { NewsItem } from '~/lib/types/news';
+import { contentDetailHref, MENU_HREF } from '~/lib/utils/homeLinks';
 import type {
   KalenderData,
   KalenderEvent,
@@ -233,7 +234,7 @@ const NewsSection = ({
             <VStack>
               {publishedNews.map((news) => (
                 <Link
-                  href={`/news/${news.slug}`}
+                  href={contentDetailHref('/news', news.slug)}
                   key={news.id}
                   style={{ width: '100%' }}
                 >
@@ -307,7 +308,7 @@ const EventsSection = ({
 
                 return (
                   <Link
-                    href={`/events/${event.slug}`}
+                    href={contentDetailHref('/events', event.slug)}
                     key={event.id}
                     style={{ width: '100%' }}
                   >
@@ -372,37 +373,37 @@ const Home = () => {
           items={[
             {
               label: 'Tentang POSKU',
-              href: '/tentang',
+              href: MENU_HREF.tentang,
               imageUrl: `${storageUrl}/logo_posku.png`,
             },
             {
               label: 'Muslimah Center',
-              href: '/muslimah_center',
+              href: MENU_HREF.muslimah_center,
               imageUrl: `${storageUrl}/mc_light.png`,
             },
             {
               label: 'Pengurus',
-              href: '/pengurus',
+              href: MENU_HREF.pengurus,
               icon: FaUsers,
             },
             {
               label: 'Kalender POSKU',
-              href: '/kalender_posku',
+              href: MENU_HREF.kalender,
               icon: FaCalendarAlt,
             },
             {
               label: 'Newsletter',
-              href: '/newsletter',
+              href: MENU_HREF.newsletter,
               icon: FaEnvelopeOpenText,
             },
             {
               label: 'Quiz',
-              href: '/quiz',
+              href: MENU_HREF.quiz,
               icon: FiHelpCircle,
             },
             {
               label: 'Kehadiran',
-              href: '/kehadiran',
+              href: MENU_HREF.kehadiran,
               icon: FaUserCheck,
             },
           ]}

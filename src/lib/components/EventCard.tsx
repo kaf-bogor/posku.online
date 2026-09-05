@@ -16,6 +16,7 @@ import { FaMapMarkerAlt, FaCalendarAlt } from 'react-icons/fa';
 
 import { AppContext } from '../context/app';
 import type { EventItem } from '~/lib/types/event';
+import { contentDetailHref } from '~/lib/utils/homeLinks';
 
 interface EventCardProps {
   event: EventItem;
@@ -51,7 +52,7 @@ const EventCard = ({ event, isCompact = false }: EventCardProps) => {
   }, [event.startDate, event.endDate, startDate, endDate]);
 
   return (
-    <Link href={`/events/${event.slug}`} passHref>
+    <Link href={contentDetailHref('/events', event.slug)} passHref>
       <Box
         borderRadius="xl"
         overflow="hidden"
