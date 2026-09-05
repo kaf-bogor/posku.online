@@ -38,6 +38,7 @@ import {
   InputGroup,
   InputLeftElement,
 } from '@chakra-ui/react';
+import { useRouter } from 'next/navigation';
 import {
   useCallback,
   useContext,
@@ -54,7 +55,6 @@ import {
   createNewsletter,
   deleteNewsletter,
   listNewsletters,
-  updateNewsletter,
 } from '~/lib/services/contentService';
 import { uploadImage } from '~/lib/services/uploadService';
 import type { NewsletterItem } from '~/lib/types/newsletter';
@@ -64,7 +64,6 @@ import {
   MONTHS_ID,
   monthToOrder,
   monthToTitle,
-  parseNewsletterMonth,
 } from '~/lib/utils/adminNewsletter';
 import { resolveStorageUrl } from '~/lib/utils/newsletter';
 
@@ -88,6 +87,7 @@ const makeEmptyForm = (): FormState => {
 export default function AdminNewsletterPage() {
   useAuth('admin');
   const toast = useToast();
+  const router = useRouter();
 
   const [items, setItems] = useState<NewsletterItem[]>([]);
   const [loading, setLoading] = useState(true);
@@ -95,7 +95,6 @@ export default function AdminNewsletterPage() {
   const [query, setQuery] = useState('');
   const [showForm, setShowForm] = useState(false);
   const [form, setForm] = useState<FormState>(makeEmptyForm);
-  const [editId, setEditId] = useState<string | null>(null);
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imageTab, setImageTab] = useState<'upload' | 'url'>('upload');
   const [deleteId, setDeleteId] = useState<string | null>(null);
@@ -136,7 +135,6 @@ export default function AdminNewsletterPage() {
 
   const resetForm = () => {
     setForm(makeEmptyForm());
-    setEditId(null);
     setImageFile(null);
     setImageTab('upload');
     setShowForm(false);
@@ -146,7 +144,6 @@ export default function AdminNewsletterPage() {
   const toggleForm = () => {
     if (showForm) resetForm();
     else {
-      setEditId(null);
       setForm(makeEmptyForm());
       setImageFile(null);
       setImageTab('upload');
@@ -165,29 +162,19 @@ export default function AdminNewsletterPage() {
         imageUrl = await uploadImage(imageFile);
       }
 
-      const title = monthToTitle(form.month, form.year);
       const payload = {
-        title,
+        title: monthToTitle(form.month, form.year),
         order: monthToOrder(form.month, form.year),
         image_url: imageUrl,
         document_url: form.document_url.trim() || null,
       };
 
-      if (editId) {
-        await updateNewsletter(editId, payload);
-        toast({
-          title: 'Newsletter diperbarui',
-          status: 'success',
-          duration: 3000,
-        });
-      } else {
-        await createNewsletter(payload);
-        toast({
-          title: 'Newsletter ditambahkan',
-          status: 'success',
-          duration: 3000,
-        });
-      }
+      await createNewsletter(payload);
+      toast({
+        title: 'Newsletter ditambahkan',
+        status: 'success',
+        duration: 3000,
+      });
 
       resetForm();
       fetchItems();
@@ -201,21 +188,6 @@ export default function AdminNewsletterPage() {
     } finally {
       setSaving(false);
     }
-  };
-
-  const handleEdit = (item: NewsletterItem) => {
-    const parsed = parseNewsletterMonth(item.title);
-    const now = new Date();
-    setEditId(item.id);
-    setForm({
-      month: parsed?.month ?? now.getMonth() + 1,
-      year: parsed?.year ?? now.getFullYear(),
-      image_url: item.image_url,
-      document_url: item.document_url ?? '',
-    });
-    setImageFile(null);
-    setImageTab('upload');
-    setShowForm(true);
   };
 
   const handleConfirmDelete = async () => {
@@ -251,12 +223,10 @@ export default function AdminNewsletterPage() {
     >
       <form onSubmit={handleSubmit}>
         <Heading size="md" mb={1} color={titleColor}>
-          {editId ? 'Edit Newsletter' : 'Buat Newsletter'}
+          Buat Newsletter
         </Heading>
         <Text color={muted} fontSize="sm" mb={5}>
-          {editId
-            ? 'Perbarui detail newsletter ini.'
-            : 'Pilih bulan terbit untuk newsletter baru.'}
+          Pilih bulan terbit untuk newsletter baru.
         </Text>
 
         <VStack align="stretch" spacing={4}>
@@ -270,42 +240,40 @@ export default function AdminNewsletterPage() {
             <Heading size="sm" mb={4} color={titleColor}>
               Informasi
             </Heading>
-            <VStack align="stretch" spacing={4}>
-              <FormControl isRequired>
-                <FormLabel>Bulan / Tahun Terbit</FormLabel>
-                <Flex direction={{ base: 'column', md: 'row' }} gap={3}>
-                  <Select
-                    value={form.month}
-                    onChange={(e) =>
-                      setForm({ ...form, month: Number(e.target.value) })
-                    }
-                    maxW={{ base: '100%', md: '220px' }}
-                  >
-                    {MONTHS_ID.map((m, idx) => (
-                      <option key={m} value={idx + 1}>
-                        {m}
-                      </option>
-                    ))}
-                  </Select>
-                  <Select
-                    value={form.year}
-                    onChange={(e) =>
-                      setForm({ ...form, year: Number(e.target.value) })
-                    }
-                    maxW={{ base: '100%', md: '160px' }}
-                  >
-                    {years.map((y) => (
-                      <option key={y} value={y}>
-                        {y}
-                      </option>
-                    ))}
-                  </Select>
-                </Flex>
-                <FormHelperText>
-                  Judul otomatis: <b>{monthToTitle(form.month, form.year)}</b>
-                </FormHelperText>
-              </FormControl>
-            </VStack>
+            <FormControl isRequired>
+              <FormLabel>Bulan / Tahun Terbit</FormLabel>
+              <Flex direction={{ base: 'column', md: 'row' }} gap={3}>
+                <Select
+                  value={form.month}
+                  onChange={(e) =>
+                    setForm({ ...form, month: Number(e.target.value) })
+                  }
+                  maxW={{ base: '100%', md: '220px' }}
+                >
+                  {MONTHS_ID.map((m, idx) => (
+                    <option key={m} value={idx + 1}>
+                      {m}
+                    </option>
+                  ))}
+                </Select>
+                <Select
+                  value={form.year}
+                  onChange={(e) =>
+                    setForm({ ...form, year: Number(e.target.value) })
+                  }
+                  maxW={{ base: '100%', md: '160px' }}
+                >
+                  {years.map((y) => (
+                    <option key={y} value={y}>
+                      {y}
+                    </option>
+                  ))}
+                </Select>
+              </Flex>
+              <FormHelperText>
+                Judul otomatis: <b>{monthToTitle(form.month, form.year)}</b>
+              </FormHelperText>
+            </FormControl>
           </Box>
 
           <Box
@@ -419,12 +387,12 @@ export default function AdminNewsletterPage() {
               Batal
             </Button>
             <Button
-              colorScheme={editId ? 'blue' : 'green'}
+              colorScheme="green"
               type="submit"
               isLoading={saving}
               loadingText="Menyimpan..."
             >
-              {editId ? 'Simpan Perubahan' : 'Tambah Newsletter'}
+              Tambah Newsletter
             </Button>
           </Flex>
         </VStack>
@@ -588,7 +556,9 @@ export default function AdminNewsletterPage() {
                           colorScheme="blue"
                           variant="outline"
                           leftIcon={<FaEdit />}
-                          onClick={() => handleEdit(item)}
+                          onClick={() =>
+                            router.push(`/admin/newsletter/${item.id}/edit`)
+                          }
                         >
                           Edit
                         </Button>
