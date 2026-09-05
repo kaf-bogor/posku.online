@@ -103,6 +103,12 @@ service cloud.firestore {
       allow update, delete: if isAdmin();
     }
 
+    /* ------------ newsletters ------------ */
+    match /newsletters/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
     /* ------------ default deny ------------ */
     match /{document=**} {
       allow read, write: if false;

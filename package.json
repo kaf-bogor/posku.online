@@ -26,6 +26,7 @@
   "dependencies": {
     "@ai-sdk/google": "^3.0.79",
     "@ai-sdk/react": "^3.0.193",
+    "@aws-sdk/client-s3": "^3.1127.0",
     "@canvasjs/react-charts": "^1.0.2",
     "@chakra-ui/icons": "^2.1.1",
     "@chakra-ui/next-js": "^2.2.0",
@@ -44,6 +45,7 @@
     "date-fns": "^4.1.0",
     "dompurify": "^3.2.6",
     "firebase": "^11.10.0",
+    "firebase-admin": "^14.3.0",
     "formidable": "^3.5.4",
     "framer-motion": "^11.3.18",
     "html5-qrcode": "^2.3.8",

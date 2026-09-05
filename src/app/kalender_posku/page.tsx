@@ -15,9 +15,14 @@ import {
   useColorModeValue,
   Divider,
   Icon,
+  IconButton,
+  Input,
+  InputGroup,
+  InputLeftElement,
+  InputRightElement,
 } from '@chakra-ui/react';
 import { useMemo, useState } from 'react';
-import { FaCalendarAlt, FaListUl } from 'react-icons/fa';
+import { FaCalendarAlt, FaListUl, FaSearch, FaTimes } from 'react-icons/fa';
 import { FiRepeat } from 'react-icons/fi';
 
 import KalenderMonthView from '../components/KalenderMonthView';
@@ -169,8 +174,42 @@ const KalenderPoskuPage = () => {
   const headingColor = useColorModeValue('gray.900', 'white');
   const subColor = useColorModeValue('gray.600', 'gray.400');
   const [tab, setTab] = useState(0);
+  const [query, setQuery] = useState('');
 
-  const grouped = useMemo(() => groupByMonth(data.events), []);
+  const searchTerm = query.trim().toLowerCase();
+
+  const matches = useMemo(() => {
+    if (!searchTerm) return data.events;
+    return data.events.filter(
+      (ev) =>
+        ev.name.toLowerCase().includes(searchTerm) ||
+        (ev.desc ?? '').toLowerCase().includes(searchTerm)
+    );
+  }, [searchTerm]);
+
+  const ongoingFiltered = useMemo(() => {
+    if (!searchTerm) return data.ongoing_programs;
+    return data.ongoing_programs.filter(
+      (o) =>
+        o.name.toLowerCase().includes(searchTerm) ||
+        (o.desc ?? '').toLowerCase().includes(searchTerm)
+    );
+  }, [searchTerm]);
+
+  const firstMatch = useMemo(() => {
+    if (!searchTerm || matches.length === 0) return null;
+    return [...matches].sort(
+      (a, b) =>
+        parseDateISO(a.start).getTime() - parseDateISO(b.start).getTime()
+    )[0];
+  }, [matches, searchTerm]);
+
+  const highlightKeys = useMemo(() => {
+    if (!searchTerm) return undefined;
+    return new Set(matches.map((ev) => `${ev.name}-${ev.start}`));
+  }, [matches, searchTerm]);
+
+  const grouped = useMemo(() => groupByMonth(matches), [matches]);
 
   return (
     <Box maxW="3xl" mx="auto" px={{ base: 4, sm: 6 }} py={{ base: 6, sm: 10 }}>
@@ -183,6 +222,29 @@ const KalenderPoskuPage = () => {
             {data.subtitle} · {data.range}
           </Text>
         </VStack>
+
+        <InputGroup size="md">
+          <InputLeftElement pointerEvents="none">
+            <Icon as={FaSearch} color="gray.400" />
+          </InputLeftElement>
+          <Input
+            placeholder="Cari kegiatan..."
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            borderRadius="xl"
+          />
+          {query && (
+            <InputRightElement>
+              <IconButton
+                aria-label="Hapus pencarian"
+                icon={<FaTimes />}
+                size="sm"
+                variant="ghost"
+                onClick={() => setQuery('')}
+              />
+            </InputRightElement>
+          )}
+        </InputGroup>
 
         <Tabs
           index={tab}
@@ -210,21 +272,25 @@ const KalenderPoskuPage = () => {
               <KalenderMonthView
                 events={data.events}
                 holidays={data.holidays}
+                targetDate={firstMatch?.start}
+                highlightKeys={highlightKeys}
               />
             </TabPanel>
 
             <TabPanel px={0}>
               <VStack align="stretch" spacing={5}>
-                <Box>
-                  <Heading size="sm" mb={2} color={headingColor}>
-                    Program Rutin &amp; Berjalan
-                  </Heading>
-                  <VStack spacing={2} align="stretch">
-                    {data.ongoing_programs.map((o) => (
-                      <OngoingRow key={o.name} o={o} />
-                    ))}
-                  </VStack>
-                </Box>
+                {ongoingFiltered.length > 0 && (
+                  <Box>
+                    <Heading size="sm" mb={2} color={headingColor}>
+                      Program Rutin &amp; Berjalan
+                    </Heading>
+                    <VStack spacing={2} align="stretch">
+                      {ongoingFiltered.map((o) => (
+                        <OngoingRow key={o.name} o={o} />
+                      ))}
+                    </VStack>
+                  </Box>
+                )}
 
                 {grouped.map((g) => (
                   <Box key={g.label}>
@@ -238,6 +304,16 @@ const KalenderPoskuPage = () => {
                     </VStack>
                   </Box>
                 ))}
+
+                {searchTerm &&
+                  matches.length === 0 &&
+                  ongoingFiltered.length === 0 && (
+                    <Box textAlign="center" py={8}>
+                      <Text color={subColor}>
+                        Tidak ada kegiatan yang cocok.
+                      </Text>
+                    </Box>
+                  )}
               </VStack>
             </TabPanel>
           </TabPanels>

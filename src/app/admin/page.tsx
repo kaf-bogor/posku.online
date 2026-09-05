@@ -29,6 +29,7 @@ import {
   FaChalkboardTeacher,
   FaGoogle,
   FaShieldAlt,
+  FaEnvelopeOpenText,
 } from 'react-icons/fa';
 import { FiHelpCircle } from 'react-icons/fi';
 
@@ -355,6 +356,13 @@ export default function AdminPage() {
                 icon={FaClipboardCheck}
                 href="/admin/kehadiran"
                 color="cyan"
+              />
+              <QuickActionCard
+                title="Kelola Newsletter"
+                description="Tambah, edit, dan kelola buletin yang ditampilkan di halaman newsletter"
+                icon={FaEnvelopeOpenText}
+                href="/admin/newsletter"
+                color="pink"
               />
             </SimpleGrid>
           </VStack>

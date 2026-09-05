@@ -12,7 +12,7 @@ const manifest = (): MetadataRoute.Manifest => ({
   prefer_related_applications: false,
   icons: [
     {
-      src: 'https://gtxkitey0g3yotdg.public.blob.vercel-storage.com/logo_posku.png?alt=media',
+      src: 'https://files.rifkifauzi.id/logo_posku.png',
       type: 'image/png',
       sizes: '512x512',
     },

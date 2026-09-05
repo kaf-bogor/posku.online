@@ -10,7 +10,7 @@ import {
   Badge,
   Divider,
 } from '@chakra-ui/react';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
 import type {
@@ -46,9 +46,13 @@ type Cell = {
 export default function KalenderMonthView({
   events,
   holidays,
+  targetDate,
+  highlightKeys,
 }: {
   events: KalenderEvent[];
   holidays: KalenderHoliday[];
+  targetDate?: string;
+  highlightKeys?: Set<string>;
 }) {
   const today = useMemo(() => startOfDay(new Date()), []);
   const [cursor, setCursor] = useState({
@@ -56,6 +60,13 @@ export default function KalenderMonthView({
     month: today.getMonth(),
   });
   const [selected, setSelected] = useState<Date | null>(today);
+
+  useEffect(() => {
+    if (!targetDate) return;
+    const d = parseDateISO(targetDate);
+    setCursor({ year: d.getFullYear(), month: d.getMonth() });
+    setSelected(startOfDay(d));
+  }, [targetDate]);
 
   const gridBg = useColorModeValue('white', 'gray.800');
   const borderColor = useColorModeValue('gray.200', 'gray.600');
@@ -302,24 +313,28 @@ export default function KalenderMonthView({
                 {cell.inMonth &&
                   cell.events
                     .slice(0, Math.max(0, 2 - cell.holidays.length))
-                    .map((e) => (
-                      <Badge
-                        key={`${e.name}-${e.start}`}
-                        fontSize="8.5px"
-                        lineHeight="1.2"
-                        colorScheme={
-                          KATEGORI_COLOR[e.category as KalenderKategori]
-                        }
-                        variant="subtle"
-                        overflow="hidden"
-                        whiteSpace="nowrap"
-                        textOverflow="ellipsis"
-                        display="block"
-                        maxW="100%"
-                      >
-                        {e.name}
-                      </Badge>
-                    ))}
+                    .map((e) => {
+                      const key = `${e.name}-${e.start}`;
+                      const highlighted = highlightKeys?.has(key);
+                      return (
+                        <Badge
+                          key={key}
+                          fontSize="8.5px"
+                          lineHeight="1.2"
+                          colorScheme={
+                            KATEGORI_COLOR[e.category as KalenderKategori]
+                          }
+                          variant={highlighted ? 'solid' : 'subtle'}
+                          overflow="hidden"
+                          whiteSpace="nowrap"
+                          textOverflow="ellipsis"
+                          display="block"
+                          maxW="100%"
+                        >
+                          {e.name}
+                        </Badge>
+                      );
+                    })}
                 {cell.inMonth &&
                   cell.holidays.length + cell.events.length > 2 && (
                     <Text fontSize="8.5px" color={dimmed} noOfLines={1}>

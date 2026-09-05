@@ -54,7 +54,7 @@ export default function WakafAtsPage() {
       },
       {
         type: 'image',
-        src: `${storageUrl}/wakaf_ats%2Fgallery_1.png?alt=media`,
+        src: `${storageUrl}/wakaf_ats/gallery_1.png`,
         alt: 'Wakaf Gedung Sekolah Kuttab Al Fatih Bogor',
       },
     ],
