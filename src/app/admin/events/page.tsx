@@ -54,11 +54,14 @@ import {
   updateEvent,
 } from '~/lib/services/contentService';
 import type { EventItem } from '~/lib/types/event';
+import {
+  filterEvents,
+  getEventStatus,
+  type EventStatusFilter,
+} from '~/lib/utils/adminEvents';
 import { generateSlug } from '~/lib/utils/slug';
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
-
-type StatusFilter = 'all' | 'upcoming' | 'active' | 'past' | 'hidden';
 
 export default function EventsAdminPage() {
   const router = useRouter();
@@ -71,7 +74,7 @@ export default function EventsAdminPage() {
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [query, setQuery] = useState('');
-  const [statusFilter, setStatusFilter] = useState<StatusFilter>('all');
+  const [statusFilter, setStatusFilter] = useState<EventStatusFilter>('all');
   const [showForm, setShowForm] = useState(false);
   const [form, setForm] = useState<Omit<EventItem, 'id'>>({
     title: '',
@@ -119,45 +122,10 @@ export default function EventsAdminPage() {
     return data.imageUrls as string[];
   };
 
-  const eventStatus = (event: EventItem) => {
-    const now = new Date();
-    if (!event.isActive)
-      return { label: 'Disembunyikan', color: 'gray' as const };
-    if (new Date(event.startDate) > now)
-      return { label: 'Akan datang', color: 'blue' as const };
-    if (new Date(event.endDate) < now)
-      return { label: 'Selesai', color: 'orange' as const };
-    return { label: 'Berlangsung', color: 'green' as const };
-  };
-
-  const filtered = useMemo(() => {
-    const q = query.trim().toLowerCase();
-    return events.filter((event) => {
-      const matchQ =
-        !q ||
-        event.title.toLowerCase().includes(q) ||
-        (event.location ?? '').toLowerCase().includes(q);
-      if (!matchQ) return false;
-
-      const now = new Date();
-      switch (statusFilter) {
-        case 'upcoming':
-          return event.isActive && new Date(event.startDate) > now;
-        case 'active':
-          return (
-            event.isActive &&
-            new Date(event.startDate) <= now &&
-            new Date(event.endDate) >= now
-          );
-        case 'past':
-          return new Date(event.endDate) < now;
-        case 'hidden':
-          return !event.isActive;
-        default:
-          return true;
-      }
-    });
-  }, [events, query, statusFilter]);
+  const filtered = useMemo(
+    () => filterEvents(events, query, statusFilter),
+    [events, query, statusFilter]
+  );
 
   const activeCount = useMemo(
     () => events.filter((e) => e.isActive).length,
@@ -443,7 +411,9 @@ export default function EventsAdminPage() {
             <Select
               maxW={{ base: '100%', md: '200px' }}
               value={statusFilter}
-              onChange={(e) => setStatusFilter(e.target.value as StatusFilter)}
+              onChange={(e) =>
+                setStatusFilter(e.target.value as EventStatusFilter)
+              }
             >
               <option value="all">Semua status</option>
               <option value="upcoming">Akan datang</option>
@@ -479,7 +449,7 @@ export default function EventsAdminPage() {
           ) : (
             <VStack align="stretch" spacing={4}>
               {filtered.map((event) => {
-                const status = eventStatus(event);
+                const status = getEventStatus(event);
                 const thumb = event.imageUrls?.[0];
                 return (
                   <Box

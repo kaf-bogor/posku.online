@@ -57,6 +57,10 @@ import {
   updateNewsletter,
 } from '~/lib/services/contentService';
 import type { NewsletterItem } from '~/lib/types/newsletter';
+import {
+  filterNewsletters,
+  isNewsletterPublished,
+} from '~/lib/utils/adminNewsletter';
 import { resolveStorageUrl } from '~/lib/utils/newsletter';
 
 interface FormState {
@@ -116,11 +120,10 @@ export default function AdminNewsletterPage() {
     fetchItems();
   }, [fetchItems]);
 
-  const filtered = useMemo(() => {
-    const q = query.trim().toLowerCase();
-    if (!q) return items;
-    return items.filter((item) => item.title.toLowerCase().includes(q));
-  }, [items, query]);
+  const filtered = useMemo(
+    () => filterNewsletters(items, query),
+    [items, query]
+  );
 
   const resetForm = () => {
     setForm(emptyForm);
@@ -451,7 +454,7 @@ export default function AdminNewsletterPage() {
           ) : (
             <VStack align="stretch" spacing={4}>
               {filtered.map((item) => {
-                const published = Boolean(item.document_url);
+                const published = isNewsletterPublished(item);
                 return (
                   <Box
                     key={item.id}
