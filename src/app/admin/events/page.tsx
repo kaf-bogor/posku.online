@@ -53,6 +53,7 @@ import {
   listEvents,
   updateEvent,
 } from '~/lib/services/contentService';
+import { uploadImages } from '~/lib/services/uploadService';
 import type { EventItem } from '~/lib/types/event';
 import {
   filterEvents,
@@ -109,18 +110,8 @@ export default function EventsAdminPage() {
     reload();
   }, []);
 
-  const uploadImagesToServer = async (files: File[], category: string) => {
-    const formData = new FormData();
-    files.forEach((file) => formData.append('files', file));
-    formData.append('category', category);
-    const response = await fetch('/api/upload/images', {
-      method: 'POST',
-      body: formData,
-    });
-    if (!response.ok) throw new Error('Failed to upload images');
-    const data = await response.json();
-    return data.imageUrls as string[];
-  };
+  const uploadImagesToServer = async (files: File[], category: string) =>
+    uploadImages(files, category);
 
   const filtered = useMemo(
     () => filterEvents(events, query, statusFilter),

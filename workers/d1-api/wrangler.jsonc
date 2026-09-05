@@ -10,6 +10,12 @@
       "database_id": "6f84665d-dbb6-43bd-b530-f002e6ea9f34"
     }
   ],
+  "r2_buckets": [
+    {
+      "binding": "IMAGES",
+      "bucket_name": "kuttab"
+    }
+  ],
   "observability": {
     "enabled": true
   }

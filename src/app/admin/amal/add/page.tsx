@@ -17,6 +17,7 @@ import { useContext, useState } from 'react';
 import ManagerForm from '~/app/admin/ManagerForm';
 import { AppContext } from '~/lib/context/app';
 import { createDonation, getAdminToken } from '~/lib/services/donationService';
+import { uploadImages } from '~/lib/services/uploadService';
 import type { DonationPage } from '~/lib/types/donation';
 import { initialDonationState } from '~/lib/types/donation';
 import { generateSlug } from '~/lib/utils/slug';
@@ -37,22 +38,8 @@ export default function AddDonationPage() {
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [isSaving, setIsSaving] = useState(false);
 
-  const uploadImagesToServer = async (files: File[], category: string) => {
-    const formData = new FormData();
-    files.forEach((file) => formData.append('files', file));
-    formData.append('category', category);
-    const response = await fetch('/api/upload/images', {
-      method: 'POST',
-      body: formData,
-    });
-
-    if (!response.ok) {
-      throw new Error('Failed to upload images');
-    }
-
-    const data = await response.json();
-    return data.imageUrls as string[];
-  };
+  const uploadImagesToServer = async (files: File[], category: string) =>
+    uploadImages(files, category);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

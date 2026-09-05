@@ -56,6 +56,7 @@ import {
   listNewsletters,
   updateNewsletter,
 } from '~/lib/services/contentService';
+import { uploadImage } from '~/lib/services/uploadService';
 import type { NewsletterItem } from '~/lib/types/newsletter';
 import {
   filterNewsletters,
@@ -141,19 +142,6 @@ export default function AdminNewsletterPage() {
       setImageFile(null);
       setShowForm(true);
     }
-  };
-
-  const uploadImage = async (file: File): Promise<string> => {
-    const formData = new FormData();
-    formData.append('files', file);
-    formData.append('category', 'newsletters');
-    const res = await fetch('/api/upload/images', {
-      method: 'POST',
-      body: formData,
-    });
-    if (!res.ok) throw new Error('Upload gambar gagal');
-    const data = await res.json();
-    return data.imageUrls[0] as string;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {

@@ -11,6 +11,7 @@ import { handleContent } from './content';
 import { handleDonations } from './donations';
 import { handleKelas } from './kelas';
 import { handleQuizzes } from './quizzes';
+import { handleUpload } from './uploads';
 import { json } from './json';
 
 export default {
@@ -23,8 +24,11 @@ export default {
     }
 
     try {
-      if (path.startsWith('/api/attendance/')) {
-        return await handleAttendance(request, env, url);
+      if (path.startsWith('/api/upload')) {
+        return await handleUpload(request, env, url);
+      }
+      if (path.startsWith('/api/comments')) {
+        return await handleComments(request, env, url);
       }
       if (path.startsWith('/api/comments')) {
         return await handleComments(request, env, url);
