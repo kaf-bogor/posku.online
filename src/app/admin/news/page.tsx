@@ -1,5 +1,7 @@
 'use client';
 
+/* eslint-disable no-nested-ternary */
+
 import {
   Box,
   VStack,
@@ -9,12 +11,8 @@ import {
   Button,
   Spinner,
   Badge,
+  Flex,
   useColorModeValue,
-  Input,
-  Textarea,
-  Checkbox,
-  FormControl,
-  FormLabel,
   useDisclosure,
   useToast,
   AlertDialog,
@@ -27,73 +25,33 @@ import {
 import { format } from 'date-fns';
 import { useRouter } from 'next/navigation';
 import { useContext, useEffect, useRef, useState } from 'react';
-import { FaCalendarAlt } from 'react-icons/fa';
+import { FaPlus, FaEdit, FaTrash } from 'react-icons/fa';
 
-import ManagerForm from '~/app/admin/ManagerForm';
 import { AppContext } from '~/lib/context/app';
 import useAuth from '~/lib/hooks/useAuth';
-import {
-  createNews,
-  listNews,
-  updateNews,
-} from '~/lib/services/contentService';
-import { uploadImages } from '~/lib/services/uploadService';
+import { listNews, updateNews } from '~/lib/services/contentService';
 import type { NewsItem } from '~/lib/types/news';
-import { generateSlug } from '~/lib/utils/slug';
 
 export default function NewsAdminPage() {
+  useAuth('admin');
   const router = useRouter();
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef<HTMLButtonElement>(null);
   const [deleteId, setDeleteId] = useState<string | null>(null);
 
-  const { user } = useAuth('admin');
-
   const [news, setNews] = useState<NewsItem[]>([]);
   const [loading, setLoading] = useState(true);
-  const [showForm, setShowForm] = useState(false);
-  const [form, setForm] = useState<Omit<NewsItem, 'id'>>({
-    title: '',
-    slug: '',
-    summary: '',
-    imageUrls: [],
-    publishDate: new Date().toISOString(),
-    author: user?.displayName || '',
-    isPublished: false,
-  });
-  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
-  const editForm: NewsItem | null = null;
-  const toggleForm = () => setShowForm((prev) => !prev);
 
-  const reload = async () => {
-    const data = await listNews();
-    setNews(data);
-    setLoading(false);
-  };
+  const { bgColor, borderColor } = useContext(AppContext);
+  const titleColor = useColorModeValue('gray.800', 'white');
+  const muted = useColorModeValue('gray.500', 'gray.400');
 
   useEffect(() => {
-    reload();
+    listNews()
+      .then(setNews)
+      .finally(() => setLoading(false));
   }, []);
-
-  const uploadImagesToServer = async (files: File[], category: string) =>
-    uploadImages(files, category);
-
-  const { bgColor, textColor } = useContext(AppContext);
-
-  const borderColor = useColorModeValue('gray.200', 'gray.600');
-  const titleColor = useColorModeValue('gray.800', 'white');
-
-  if (loading) {
-    return (
-      <HStack justify="center" py={20}>
-        <Spinner />
-        <Text>Loading news...</Text>
-      </HStack>
-    );
-  }
-
-  const isEditing = !!editForm;
 
   const handleSoftDelete = async () => {
     if (!deleteId) return;
@@ -103,175 +61,113 @@ export default function NewsAdminPage() {
         prev.map((n) => (n.id === deleteId ? { ...n, isPublished: false } : n))
       );
       toast({
-        title: 'Berhasil',
-        description: 'Berita disembunyikan dari publik.',
+        title: 'Berita disembunyikan',
         status: 'success',
         duration: 3000,
       });
     } catch (err) {
-      // eslint-disable-next-line no-console
-      console.error(err);
       toast({
         title: 'Error',
-        description: 'Gagal menambahkan berita.',
+        description: err instanceof Error ? err.message : 'Gagal menyimpan.',
         status: 'error',
         duration: 4000,
       });
+    } finally {
+      setDeleteId(null);
+      onClose();
     }
-  };
-
-  const handleAdd = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      const slug = form.slug || generateSlug(form.title);
-      const imageUrls = await uploadImagesToServer(selectedFiles, 'news');
-      await createNews({ ...form, slug, imageUrls });
-      toast({
-        title: 'Sukses',
-        description: 'Berita berhasil ditambahkan.',
-        status: 'success',
-        duration: 3000,
-      });
-      setForm({
-        title: '',
-        slug: '',
-        summary: '',
-        imageUrls: [],
-        publishDate: new Date().toISOString(),
-        author: user?.displayName || '',
-        isPublished: false,
-      });
-      setSelectedFiles([]);
-      setShowForm(false);
-      reload();
-    } catch (err) {
-      // eslint-disable-next-line no-console
-      console.error(err);
-      toast({
-        title: 'Error',
-        description: 'Gagal menambahkan berita.',
-        status: 'error',
-        duration: 4000,
-      });
-    }
-  };
-
-  const handleAddNews = async (e: React.FormEvent) => {
-    await handleAdd(e);
   };
 
   return (
-    <>
-      <VStack align="stretch" spacing={4} bg={bgColor}>
-        <Button alignSelf="start" colorScheme="green" onClick={toggleForm}>
-          Add News
+    <VStack align="stretch" spacing={6}>
+      <Flex
+        direction={{ base: 'column', md: 'row' }}
+        justify="space-between"
+        align={{ base: 'stretch', md: 'center' }}
+        gap={3}
+      >
+        <Box>
+          <Heading size="lg" color={titleColor}>
+            Berita
+          </Heading>
+          <Text color={muted} fontSize="sm" mt={1}>
+            Kelola berita ({news.length} total).
+          </Text>
+        </Box>
+        <Button
+          colorScheme="green"
+          leftIcon={<FaPlus />}
+          onClick={() => router.push('/admin/news/add')}
+          alignSelf="flex-start"
+        >
+          Buat Berita
         </Button>
+      </Flex>
 
-        {showForm && !isEditing && (
-          <ManagerForm
-            formState={form}
-            onSubmit={handleAddNews}
-            onCancel={toggleForm}
-            title="Add New News"
+      {loading ? (
+        <Box textAlign="center" py={16}>
+          <Spinner size="xl" color="green.500" thickness="3px" />
+        </Box>
+      ) : news.length === 0 ? (
+        <Box
+          textAlign="center"
+          py={16}
+          bg={bgColor}
+          borderWidth="1px"
+          borderColor={borderColor}
+          borderRadius="xl"
+        >
+          <Heading size="md" mb={2}>
+            Belum ada berita
+          </Heading>
+          <Text color={muted} mb={4}>
+            Buat berita pertama Anda.
+          </Text>
+          <Button
+            colorScheme="green"
+            onClick={() => router.push('/admin/news/add')}
           >
-            <FormControl isRequired>
-              <FormLabel>Title</FormLabel>
-              <Input
-                name="title"
-                value={form.title}
-                onChange={(e) => {
-                  const newTitle = e.target.value;
-                  setForm({
-                    ...form,
-                    title: newTitle,
-                    slug: generateSlug(newTitle),
-                  });
-                }}
-              />
-            </FormControl>
-
-            <FormControl isRequired>
-              <FormLabel>Slug (auto-generated)</FormLabel>
-              <Input
-                name="slug"
-                value={form.slug}
-                isReadOnly
-                placeholder="url-friendly-slug"
-                bg="gray.50"
-              />
-            </FormControl>
-
-            <FormControl isRequired>
-              <FormLabel>Summary</FormLabel>
-              <Textarea
-                name="summary"
-                value={form.summary}
-                onChange={(e) => setForm({ ...form, summary: e.target.value })}
-              />
-            </FormControl>
-
-            <FormControl>
-              <Checkbox
-                isChecked={form.isPublished}
-                onChange={(e) =>
-                  setForm({ ...form, isPublished: e.target.checked })
-                }
-              >
-                Published
-              </Checkbox>
-            </FormControl>
-
-            <FormControl isRequired={selectedFiles.length === 0}>
-              <FormLabel>Images</FormLabel>
-              <Input
-                type="file"
-                multiple
-                accept="image/*"
-                onChange={(e) =>
-                  setSelectedFiles(Array.from(e.target.files || []))
-                }
-              />
-            </FormControl>
-          </ManagerForm>
-        )}
-
-        {news.length === 0 ? (
-          <Box textAlign="center" py={10}>
-            <Text color={textColor}>Belum ada berita.</Text>
-          </Box>
-        ) : (
-          news.map((item) => (
+            Buat Berita
+          </Button>
+        </Box>
+      ) : (
+        <VStack align="stretch" spacing={4}>
+          {news.map((item) => (
             <Box
               key={item.id}
               p={4}
               bg={bgColor}
               borderWidth="1px"
-              borderRadius="md"
               borderColor={borderColor}
+              borderRadius="xl"
+              shadow="sm"
             >
               <VStack align="stretch" spacing={3}>
-                <Heading size="md" color={titleColor}>
-                  {item.title}
-                </Heading>
-                <Text color={textColor} noOfLines={2}>
+                <HStack spacing={2}>
+                  <Heading size="sm" color={titleColor} flex={1}>
+                    {item.title}
+                  </Heading>
+                  {item.isPublished && (
+                    <Badge colorScheme="green">Published</Badge>
+                  )}
+                </HStack>
+                <Text color={muted} fontSize="sm" noOfLines={2}>
                   {item.summary}
                 </Text>
-                <HStack fontSize="sm" color={textColor} spacing={3}>
-                  <HStack spacing={1}>
-                    <FaCalendarAlt />
+                <HStack fontSize="sm" color={muted} spacing={3}>
+                  {item.publishDate && (
                     <Text>
                       {format(new Date(item.publishDate), 'dd MMM yyyy')}
                     </Text>
-                  </HStack>
-                  <Text>By {item.author}</Text>
-                  {item.isPublished && (
-                    <Badge colorScheme="purple">Published</Badge>
                   )}
+                  {item.author && <Text>By {item.author}</Text>}
                 </HStack>
                 <HStack>
                   <Button
                     size="sm"
                     colorScheme="blue"
+                    variant="outline"
+                    leftIcon={<FaEdit />}
                     onClick={() => router.push(`/admin/news/${item.id}/edit`)}
                   >
                     Edit
@@ -279,19 +175,21 @@ export default function NewsAdminPage() {
                   <Button
                     size="sm"
                     colorScheme="red"
+                    variant="ghost"
+                    leftIcon={<FaTrash />}
                     onClick={() => {
                       setDeleteId(item.id);
                       onOpen();
                     }}
                   >
-                    Delete
+                    Sembunyikan
                   </Button>
                 </HStack>
               </VStack>
             </Box>
-          ))
-        )}
-      </VStack>
+          ))}
+        </VStack>
+      )}
 
       <AlertDialog
         isOpen={isOpen}
@@ -304,25 +202,23 @@ export default function NewsAdminPage() {
         <AlertDialogOverlay>
           <AlertDialogContent>
             <AlertDialogHeader fontSize="lg" fontWeight="bold">
-              Delete News
+              Sembunyikan Berita
             </AlertDialogHeader>
-
             <AlertDialogBody>
-              Are you sure? You can restore this later from Firestore but it
-              will be hidden from users.
+              Berita ini akan disembunyikan dari halaman publik. Anda masih bisa
+              mengubahnya kembali kapan saja.
             </AlertDialogBody>
-
             <AlertDialogFooter>
               <Button ref={cancelRef} onClick={onClose}>
-                Cancel
+                Batal
               </Button>
               <Button colorScheme="red" onClick={handleSoftDelete} ml={3}>
-                Delete
+                Sembunyikan
               </Button>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialogOverlay>
       </AlertDialog>
-    </>
+    </VStack>
   );
 }

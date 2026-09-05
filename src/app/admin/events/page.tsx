@@ -17,9 +17,6 @@ import {
   Icon,
   Divider,
   Input,
-  Checkbox,
-  FormControl,
-  FormLabel,
   InputGroup,
   InputLeftElement,
   Select,
@@ -35,7 +32,6 @@ import {
 } from '@chakra-ui/react';
 import { format } from 'date-fns';
 import { id as localeID } from 'date-fns/locale';
-import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
 import { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import {
@@ -46,23 +42,16 @@ import {
   FaPlus,
 } from 'react-icons/fa';
 
-import ManagerForm from '~/app/admin/ManagerForm';
 import { AppContext } from '~/lib/context/app';
-import {
-  createEvent,
-  listEvents,
-  updateEvent,
-} from '~/lib/services/contentService';
-import { uploadImages } from '~/lib/services/uploadService';
+import { listEvents, updateEvent } from '~/lib/services/contentService';
 import type { EventItem } from '~/lib/types/event';
 import {
   filterEvents,
   getEventStatus,
   type EventStatusFilter,
 } from '~/lib/utils/adminEvents';
-import { generateSlug } from '~/lib/utils/slug';
 
-const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
+type StatusFilter = EventStatusFilter;
 
 export default function EventsAdminPage() {
   const router = useRouter();
@@ -75,19 +64,7 @@ export default function EventsAdminPage() {
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [query, setQuery] = useState('');
-  const [statusFilter, setStatusFilter] = useState<EventStatusFilter>('all');
-  const [showForm, setShowForm] = useState(false);
-  const [form, setForm] = useState<Omit<EventItem, 'id'>>({
-    title: '',
-    slug: '',
-    summary: '',
-    imageUrls: [],
-    startDate: new Date().toISOString(),
-    endDate: new Date().toISOString(),
-    location: '',
-    isActive: false,
-  });
-  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+  const [statusFilter, setStatusFilter] = useState<StatusFilter>('all');
 
   const { bgColor, borderColor } = useContext(AppContext);
   const titleColor = useColorModeValue('gray.800', 'white');
@@ -110,9 +87,6 @@ export default function EventsAdminPage() {
     reload();
   }, []);
 
-  const uploadImagesToServer = async (files: File[], category: string) =>
-    uploadImages(files, category);
-
   const filtered = useMemo(
     () => filterEvents(events, query, statusFilter),
     [events, query, statusFilter]
@@ -122,21 +96,6 @@ export default function EventsAdminPage() {
     () => events.filter((e) => e.isActive).length,
     [events]
   );
-
-  const toggleForm = () => {
-    setShowForm((prev) => !prev);
-    setForm({
-      title: '',
-      slug: '',
-      summary: '',
-      imageUrls: [],
-      startDate: new Date().toISOString(),
-      endDate: new Date().toISOString(),
-      location: '',
-      isActive: false,
-    });
-    setSelectedFiles([]);
-  };
 
   const handleSoftDelete = async () => {
     if (!deleteId) return;
@@ -164,172 +123,8 @@ export default function EventsAdminPage() {
     }
   };
 
-  const handleAdd = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      const slug = form.slug || generateSlug(form.title);
-      const imageUrls = await uploadImagesToServer(selectedFiles, 'events');
-      await createEvent({ ...form, slug, imageUrls });
-      toast({
-        title: 'Acara ditambahkan',
-        status: 'success',
-        duration: 3000,
-      });
-      toggleForm();
-      reload();
-    } catch (err) {
-      toast({
-        title: 'Error',
-        description:
-          err instanceof Error ? err.message : 'Gagal menambahkan acara.',
-        status: 'error',
-        duration: 4000,
-      });
-    }
-  };
-
-  const createForm = (
-    <Box
-      bg={bgColor}
-      borderRadius="xl"
-      borderWidth="1px"
-      borderColor={borderColor}
-      shadow="sm"
-    >
-      <ManagerForm
-        formState={form}
-        onSubmit={handleAdd}
-        onCancel={toggleForm}
-        title="Buat Acara Baru"
-      >
-        <Box
-          borderWidth="1px"
-          borderColor={borderColor}
-          borderRadius="lg"
-          p={5}
-          w="100%"
-        >
-          <Heading size="sm" mb={4} color={titleColor}>
-            Informasi Acara
-          </Heading>
-          <VStack align="stretch" spacing={4}>
-            <FormControl isRequired>
-              <FormLabel>Judul Acara</FormLabel>
-              <Input
-                name="title"
-                value={form.title}
-                placeholder="cth: Kajian Bulanan Orang Tua"
-                onChange={(e) => {
-                  const newTitle = e.target.value;
-                  setForm({
-                    ...form,
-                    title: newTitle,
-                    slug: generateSlug(newTitle),
-                  });
-                }}
-              />
-            </FormControl>
-
-            <FormControl>
-              <FormLabel>Slug (otomatis)</FormLabel>
-              <Input
-                name="slug"
-                value={form.slug}
-                isReadOnly
-                placeholder="url-friendly-slug"
-                bg="gray.50"
-              />
-            </FormControl>
-
-            <FormControl isRequired>
-              <FormLabel>Deskripsi</FormLabel>
-              <ReactQuill
-                theme="snow"
-                value={form.summary}
-                onChange={(value) => setForm({ ...form, summary: value })}
-              />
-            </FormControl>
-
-            <FormControl isRequired={selectedFiles.length === 0}>
-              <FormLabel>Gambar Sampul</FormLabel>
-              <Input
-                type="file"
-                multiple
-                accept="image/*"
-                onChange={(e) =>
-                  setSelectedFiles(Array.from(e.target.files || []))
-                }
-              />
-            </FormControl>
-          </VStack>
-        </Box>
-
-        <Box
-          borderWidth="1px"
-          borderColor={borderColor}
-          borderRadius="lg"
-          p={5}
-          w="100%"
-        >
-          <Heading size="sm" mb={4} color={titleColor}>
-            Detail & Publikasi
-          </Heading>
-          <VStack align="stretch" spacing={4}>
-            <Flex direction={{ base: 'column', md: 'row' }} gap={4}>
-              <FormControl isRequired>
-                <FormLabel>Mulai</FormLabel>
-                <Input
-                  type="datetime-local"
-                  name="startDate"
-                  value={form.startDate}
-                  onChange={(e) =>
-                    setForm({ ...form, startDate: e.target.value })
-                  }
-                />
-              </FormControl>
-
-              <FormControl isRequired>
-                <FormLabel>Selesai</FormLabel>
-                <Input
-                  type="date"
-                  name="endDate"
-                  value={form.endDate.split('T')[0]}
-                  onChange={(e) =>
-                    setForm({
-                      ...form,
-                      endDate: new Date(e.target.value).toISOString(),
-                    })
-                  }
-                />
-              </FormControl>
-            </Flex>
-
-            <FormControl isRequired>
-              <FormLabel>Lokasi</FormLabel>
-              <Input
-                name="location"
-                value={form.location}
-                placeholder="cth: Masjid Jami' At-Taqwa AURI"
-                onChange={(e) => setForm({ ...form, location: e.target.value })}
-              />
-            </FormControl>
-
-            <Checkbox
-              isChecked={form.isActive}
-              onChange={(e) => setForm({ ...form, isActive: e.target.checked })}
-              colorScheme="green"
-            >
-              Tampilkan di publik
-            </Checkbox>
-          </VStack>
-        </Box>
-      </ManagerForm>
-    </Box>
-  );
-
   return (
     <VStack align="stretch" spacing={6}>
-      {/* Header */}
       <Flex
         direction={{ base: 'column', md: 'row' }}
         justify="space-between"
@@ -348,14 +143,12 @@ export default function EventsAdminPage() {
         <Button
           colorScheme="green"
           leftIcon={<FaPlus />}
-          onClick={toggleForm}
+          onClick={() => router.push('/admin/events/add')}
           alignSelf="flex-start"
         >
           Buat Acara
         </Button>
       </Flex>
-
-      {showForm && createForm}
 
       <Divider />
 
@@ -387,7 +180,6 @@ export default function EventsAdminPage() {
         </Box>
       ) : (
         <>
-          {/* Toolbar */}
           <Flex direction={{ base: 'column', md: 'row' }} gap={3}>
             <InputGroup maxW={{ base: '100%', md: '320px' }}>
               <InputLeftElement pointerEvents="none">
@@ -402,9 +194,7 @@ export default function EventsAdminPage() {
             <Select
               maxW={{ base: '100%', md: '200px' }}
               value={statusFilter}
-              onChange={(e) =>
-                setStatusFilter(e.target.value as EventStatusFilter)
-              }
+              onChange={(e) => setStatusFilter(e.target.value as StatusFilter)}
             >
               <option value="all">Semua status</option>
               <option value="upcoming">Akan datang</option>
@@ -432,7 +222,10 @@ export default function EventsAdminPage() {
                   : 'Belum ada acara. Buat acara pertama Anda.'}
               </Text>
               {!query && statusFilter === 'all' && (
-                <Button colorScheme="green" onClick={toggleForm}>
+                <Button
+                  colorScheme="green"
+                  onClick={() => router.push('/admin/events/add')}
+                >
                   Buat Acara
                 </Button>
               )}
@@ -462,7 +255,6 @@ export default function EventsAdminPage() {
                           w={{ base: '100%', md: '200px' }}
                           h={{ base: '160px', md: 'auto' }}
                           bg="gray.100"
-                          position="relative"
                         >
                           <Image
                             src={thumb}
@@ -504,15 +296,6 @@ export default function EventsAdminPage() {
                                   locale: localeID,
                                 }
                               )}
-                              {new Date(event.endDate).getTime() !==
-                                new Date(event.startDate).getTime() &&
-                                ` – ${format(
-                                  new Date(event.endDate),
-                                  'dd MMM yyyy',
-                                  {
-                                    locale: localeID,
-                                  }
-                                )}`}
                             </Text>
                           </HStack>
                           {event.location ? (
