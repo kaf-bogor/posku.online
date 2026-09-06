@@ -1,7 +1,6 @@
 import { Box, SimpleGrid, Image, Text, Link } from '@chakra-ui/react';
 
 import ContentWrapper from '~/app/components/ContentWrapper';
-import newsletterSeed from '~/lib/data/newsletter.json';
 import { listNewsletters } from '~/lib/services/contentService';
 import { sortNewslettersByDateDesc } from '~/lib/utils/adminNewsletter';
 import { resolveStorageUrl } from '~/lib/utils/newsletter';
@@ -18,18 +17,24 @@ type NewsletterItem = {
 
 async function getNewsletters(): Promise<NewsletterItem[]> {
   try {
-    const list = await listNewsletters();
-    if (list.length > 0) {
-      return list as NewsletterItem[];
-    }
+    return (await listNewsletters()) as NewsletterItem[];
   } catch {
-    // worker tidak terjangkau — fallback ke seed
+    return [];
   }
-  return newsletterSeed as NewsletterItem[];
 }
 
 export default async function Page() {
   const newsletters = await getNewsletters();
+
+  if (newsletters.length === 0) {
+    return (
+      <ContentWrapper>
+        <Text textAlign="center" color="gray.500" py={12}>
+          Belum ada newsletter.
+        </Text>
+      </ContentWrapper>
+    );
+  }
 
   return (
     <ContentWrapper>
