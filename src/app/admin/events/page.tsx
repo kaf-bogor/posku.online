@@ -32,7 +32,6 @@ import {
 } from '@chakra-ui/react';
 import { format } from 'date-fns';
 import { id as localeID } from 'date-fns/locale';
-import { useRouter } from 'next/navigation';
 import { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import {
   FaCalendarAlt,
@@ -42,6 +41,7 @@ import {
   FaPlus,
 } from 'react-icons/fa';
 
+import NavButton from '~/lib/components/NavButton';
 import { AppContext } from '~/lib/context/app';
 import { listEvents, updateEvent } from '~/lib/services/contentService';
 import type { EventItem } from '~/lib/types/event';
@@ -54,7 +54,6 @@ import {
 type StatusFilter = EventStatusFilter;
 
 export default function EventsAdminPage() {
-  const router = useRouter();
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef<HTMLButtonElement>(null);
@@ -140,14 +139,14 @@ export default function EventsAdminPage() {
             {events.length} total.
           </Text>
         </Box>
-        <Button
+        <NavButton
           colorScheme="green"
           leftIcon={<FaPlus />}
-          onClick={() => router.push('/admin/events/add')}
           alignSelf="flex-start"
+          href="/admin/events/add"
         >
           Buat Acara
-        </Button>
+        </NavButton>
       </Flex>
 
       <Divider />
@@ -222,12 +221,9 @@ export default function EventsAdminPage() {
                   : 'Belum ada acara. Buat acara pertama Anda.'}
               </Text>
               {!query && statusFilter === 'all' && (
-                <Button
-                  colorScheme="green"
-                  onClick={() => router.push('/admin/events/add')}
-                >
+                <NavButton colorScheme="green" href="/admin/events/add">
                   Buat Acara
-                </Button>
+                </NavButton>
               )}
             </Box>
           ) : (
@@ -313,17 +309,15 @@ export default function EventsAdminPage() {
                         align={{ base: 'center', md: 'flex-end' }}
                         justify={{ base: 'flex-end', md: 'center' }}
                       >
-                        <Button
+                        <NavButton
                           size="sm"
                           colorScheme="blue"
                           variant="outline"
                           leftIcon={<FaEdit />}
-                          onClick={() =>
-                            router.push(`/admin/event/${event.id}/edit`)
-                          }
+                          href={`/admin/event/${event.id}/edit`}
                         >
                           Edit
-                        </Button>
+                        </NavButton>
                         <Button
                           size="sm"
                           colorScheme="red"

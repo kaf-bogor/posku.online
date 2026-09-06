@@ -19,6 +19,7 @@ import { useRouter } from 'next/navigation';
 import { useContext, useState } from 'react';
 import { FaArrowLeft } from 'react-icons/fa';
 
+import NavButton from '~/lib/components/NavButton';
 import { AppContext } from '~/lib/context/app';
 import useAuth from '~/lib/hooks/useAuth';
 import { createNews } from '~/lib/services/contentService';
@@ -88,15 +89,15 @@ export default function AddNewsPage() {
   return (
     <VStack align="stretch" spacing={6}>
       <Box>
-        <Button
+        <NavButton
           variant="link"
           leftIcon={<FaArrowLeft />}
           colorScheme="blue"
           mb={1}
-          onClick={() => router.push(LIST_PATH)}
+          href={LIST_PATH}
         >
           Kembali
-        </Button>
+        </NavButton>
         <Heading size="lg" color={titleColor}>
           Buat Berita
         </Heading>
@@ -174,13 +175,9 @@ export default function AddNewsPage() {
             </FormControl>
 
             <Flex justify="flex-end" gap={3}>
-              <Button
-                variant="outline"
-                onClick={() => router.push(LIST_PATH)}
-                isDisabled={saving}
-              >
+              <NavButton variant="outline" isDisabled={saving} href={LIST_PATH}>
                 Batal
-              </Button>
+              </NavButton>
               <Button
                 colorScheme="green"
                 type="submit"

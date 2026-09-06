@@ -19,6 +19,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { useCallback, useContext, useEffect, useState } from 'react';
 import { FaArrowLeft } from 'react-icons/fa';
 
+import NavButton from '~/lib/components/NavButton';
 import { AppContext } from '~/lib/context/app';
 import useAuth from '~/lib/hooks/useAuth';
 import {
@@ -121,15 +122,15 @@ export default function EditAttendanceEventPage() {
   return (
     <VStack align="stretch" spacing={6}>
       <Box>
-        <Button
+        <NavButton
           variant="link"
           leftIcon={<FaArrowLeft />}
           colorScheme="blue"
           mb={1}
-          onClick={() => router.push(ADMIN_PATH)}
+          href={ADMIN_PATH}
         >
           Kembali
-        </Button>
+        </NavButton>
         <Heading size="lg" color={titleColor}>
           Edit Event Kehadiran
         </Heading>
@@ -176,13 +177,13 @@ export default function EditAttendanceEventPage() {
             </FormControl>
 
             <Flex justify="flex-end" gap={3}>
-              <Button
+              <NavButton
                 variant="outline"
-                onClick={() => router.push(ADMIN_PATH)}
                 isDisabled={saving}
+                href={ADMIN_PATH}
               >
                 Batal
-              </Button>
+              </NavButton>
               <Button
                 colorScheme="blue"
                 type="submit"

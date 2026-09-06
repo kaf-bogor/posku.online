@@ -24,10 +24,10 @@ import {
 } from '@chakra-ui/react';
 import { format } from 'date-fns';
 import { id as localeID } from 'date-fns/locale';
-import { useRouter } from 'next/navigation';
 import { useContext, useEffect, useRef, useState, useCallback } from 'react';
 import { FaCalendarAlt, FaEdit, FaTrash, FaPlus } from 'react-icons/fa';
 
+import NavButton from '~/lib/components/NavButton';
 import { AppContext } from '~/lib/context/app';
 import useAuth from '~/lib/hooks/useAuth';
 import {
@@ -47,7 +47,6 @@ const isPastEvent = (date: string) => new Date(date).getTime() < Date.now();
 
 export default function AdminKehadiranPage() {
   useAuth('admin');
-  const router = useRouter();
   const toast = useToast();
 
   const [items, setItems] = useState<AttendanceEvent[]>([]);
@@ -107,14 +106,14 @@ export default function AdminKehadiranPage() {
             Kelola event kehadiran ({items.length} total).
           </Text>
         </Box>
-        <Button
+        <NavButton
           colorScheme="green"
           leftIcon={<FaPlus />}
-          onClick={() => router.push('/admin/kehadiran/add')}
           alignSelf="flex-start"
+          href="/admin/kehadiran/add"
         >
           Buat Event
-        </Button>
+        </NavButton>
       </Flex>
 
       {loading ? (
@@ -136,12 +135,9 @@ export default function AdminKehadiranPage() {
           <Text color={muted} mb={4}>
             Buat event pertama untuk pencatatan kehadiran.
           </Text>
-          <Button
-            colorScheme="green"
-            onClick={() => router.push('/admin/kehadiran/add')}
-          >
+          <NavButton colorScheme="green" href="/admin/kehadiran/add">
             Buat Event
-          </Button>
+          </NavButton>
         </Box>
       ) : (
         <VStack align="stretch" spacing={4}>
@@ -181,18 +177,16 @@ export default function AdminKehadiranPage() {
                   <Text>By {item.createdBy || '-'}</Text>
                 </HStack>
                 <HStack>
-                  <Button
+                  <NavButton
                     size="sm"
                     colorScheme="blue"
                     variant="outline"
                     leftIcon={<FaEdit />}
                     isDisabled={isPastEvent(item.date)}
-                    onClick={() =>
-                      router.push(`/admin/kehadiran/${item.id}/edit`)
-                    }
+                    href={`/admin/kehadiran/${item.id}/edit`}
                   >
                     Edit
-                  </Button>
+                  </NavButton>
                   <Button
                     size="sm"
                     colorScheme="red"

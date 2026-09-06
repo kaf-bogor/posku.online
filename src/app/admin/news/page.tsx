@@ -23,10 +23,10 @@ import {
   AlertDialogFooter,
 } from '@chakra-ui/react';
 import { format } from 'date-fns';
-import { useRouter } from 'next/navigation';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { FaPlus, FaEdit, FaTrash } from 'react-icons/fa';
 
+import NavButton from '~/lib/components/NavButton';
 import { AppContext } from '~/lib/context/app';
 import useAuth from '~/lib/hooks/useAuth';
 import { listNews, updateNews } from '~/lib/services/contentService';
@@ -34,7 +34,6 @@ import type { NewsItem } from '~/lib/types/news';
 
 export default function NewsAdminPage() {
   useAuth('admin');
-  const router = useRouter();
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef<HTMLButtonElement>(null);
@@ -94,14 +93,14 @@ export default function NewsAdminPage() {
             Kelola berita ({news.length} total).
           </Text>
         </Box>
-        <Button
+        <NavButton
           colorScheme="green"
           leftIcon={<FaPlus />}
-          onClick={() => router.push('/admin/news/add')}
           alignSelf="flex-start"
+          href="/admin/news/add"
         >
           Buat Berita
-        </Button>
+        </NavButton>
       </Flex>
 
       {loading ? (
@@ -123,12 +122,9 @@ export default function NewsAdminPage() {
           <Text color={muted} mb={4}>
             Buat berita pertama Anda.
           </Text>
-          <Button
-            colorScheme="green"
-            onClick={() => router.push('/admin/news/add')}
-          >
+          <NavButton colorScheme="green" href="/admin/news/add">
             Buat Berita
-          </Button>
+          </NavButton>
         </Box>
       ) : (
         <VStack align="stretch" spacing={4}>
@@ -163,15 +159,15 @@ export default function NewsAdminPage() {
                   {item.author && <Text>By {item.author}</Text>}
                 </HStack>
                 <HStack>
-                  <Button
+                  <NavButton
                     size="sm"
                     colorScheme="blue"
                     variant="outline"
                     leftIcon={<FaEdit />}
-                    onClick={() => router.push(`/admin/news/${item.id}/edit`)}
+                    href={`/admin/news/${item.id}/edit`}
                   >
                     Edit
-                  </Button>
+                  </NavButton>
                   <Button
                     size="sm"
                     colorScheme="red"

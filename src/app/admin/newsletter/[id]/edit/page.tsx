@@ -36,6 +36,7 @@ import {
 } from 'react';
 import { FaArrowLeft } from 'react-icons/fa';
 
+import NavButton from '~/lib/components/NavButton';
 import { AppContext } from '~/lib/context/app';
 import useAuth from '~/lib/hooks/useAuth';
 import {
@@ -190,15 +191,15 @@ export default function EditNewsletterPage() {
     <VStack align="stretch" spacing={6}>
       <HStack justify="space-between" align="center">
         <Box>
-          <Button
+          <NavButton
             variant="link"
             leftIcon={<FaArrowLeft />}
             colorScheme="blue"
             mb={1}
-            onClick={() => router.push(ADMIN_PATH)}
+            href={ADMIN_PATH}
           >
             Kembali
-          </Button>
+          </NavButton>
           <Heading size="lg" color={titleColor}>
             Edit Newsletter
           </Heading>
@@ -372,13 +373,13 @@ export default function EditNewsletterPage() {
             </Box>
 
             <Flex justify="flex-end" gap={3}>
-              <Button
+              <NavButton
                 variant="outline"
-                onClick={() => router.push(ADMIN_PATH)}
                 isDisabled={saving}
+                href={ADMIN_PATH}
               >
                 Batal
-              </Button>
+              </NavButton>
               <Button
                 colorScheme="blue"
                 type="submit"

@@ -27,7 +27,6 @@ import {
   InputGroup,
   InputLeftElement,
 } from '@chakra-ui/react';
-import { useRouter } from 'next/navigation';
 import {
   useCallback,
   useContext,
@@ -38,6 +37,7 @@ import {
 } from 'react';
 import { FaEnvelopeOpenText, FaEdit, FaTrash, FaPlus } from 'react-icons/fa';
 
+import NavButton from '~/lib/components/NavButton';
 import { AppContext } from '~/lib/context/app';
 import useAuth from '~/lib/hooks/useAuth';
 import {
@@ -53,7 +53,6 @@ import { resolveStorageUrl } from '~/lib/utils/newsletter';
 
 export default function AdminNewsletterPage() {
   useAuth('admin');
-  const router = useRouter();
   const toast = useToast();
 
   const [items, setItems] = useState<NewsletterItem[]>([]);
@@ -119,14 +118,14 @@ export default function AdminNewsletterPage() {
             Buat dan kelola newsletter ({items.length} total).
           </Text>
         </Box>
-        <Button
+        <NavButton
           colorScheme="green"
           leftIcon={<FaPlus />}
-          onClick={() => router.push('/admin/newsletter/add')}
           alignSelf="flex-start"
+          href="/admin/newsletter/add"
         >
           Buat Newsletter
-        </Button>
+        </NavButton>
       </Flex>
 
       <Divider />
@@ -175,12 +174,9 @@ export default function AdminNewsletterPage() {
                   : 'Buat newsletter pertama Anda untuk halaman publik.'}
               </Text>
               {!query && (
-                <Button
-                  colorScheme="green"
-                  onClick={() => router.push('/admin/newsletter/add')}
-                >
+                <NavButton colorScheme="green" href="/admin/newsletter/add">
                   Buat Newsletter
-                </Button>
+                </NavButton>
               )}
             </Box>
           ) : (
@@ -252,17 +248,15 @@ export default function AdminNewsletterPage() {
                         spacing={2}
                         justify={{ base: 'flex-start', md: 'flex-end' }}
                       >
-                        <Button
+                        <NavButton
                           size="sm"
                           colorScheme="blue"
                           variant="outline"
                           leftIcon={<FaEdit />}
-                          onClick={() =>
-                            router.push(`/admin/newsletter/${item.id}/edit`)
-                          }
+                          href={`/admin/newsletter/${item.id}/edit`}
                         >
                           Edit
-                        </Button>
+                        </NavButton>
                         <Button
                           size="sm"
                           colorScheme="red"
