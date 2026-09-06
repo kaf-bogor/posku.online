@@ -24,6 +24,7 @@ CREATE TABLE IF NOT EXISTS fs_event (
   end_date        TEXT,
   is_active       INTEGER,     -- 0/1
   published       INTEGER,     -- 0/1 (nullable)
+  is_delete       INTEGER DEFAULT 0
   created_at_iso  TEXT,
   created_at_epoch INTEGER
 );
@@ -47,6 +48,7 @@ CREATE TABLE IF NOT EXISTS fs_news_item (
   type            TEXT,
   author          TEXT,
   is_published    INTEGER,     -- 0/1
+  is_delete       INTEGER DEFAULT 0
   image_urls      TEXT,        -- JSON array
   publish_date    TEXT,
   created_at_iso  TEXT,
@@ -101,6 +103,7 @@ CREATE TABLE IF NOT EXISTS fs_quiz (
   time_limit      INTEGER,     -- menit
   level           TEXT,
   created_by      TEXT,
+  is_delete       INTEGER DEFAULT 0,
   created_at_iso  TEXT,
   updated_at_iso  TEXT
 );

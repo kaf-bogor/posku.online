@@ -8,4 +8,5 @@ export interface EventItem {
   endDate: string;
   location: string;
   isActive: boolean;
+  is_delete?: boolean;
 }

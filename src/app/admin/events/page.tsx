@@ -96,23 +96,20 @@ export default function EventsAdminPage() {
     [events]
   );
 
-  const handleSoftDelete = async () => {
+  const handleDelete = async () => {
     if (!deleteId) return;
     try {
-      await updateEvent(deleteId, { isActive: false });
-      setEvents((prev) =>
-        prev.map((ev) => (ev.id === deleteId ? { ...ev, isActive: false } : ev))
-      );
+      await updateEvent(deleteId, { is_delete: true });
+      setEvents((prev) => prev.filter((ev) => ev.id !== deleteId));
       toast({
-        title: 'Acara disembunyikan',
-        description: 'Acara tidak lagi tampil di halaman publik.',
+        title: 'Acara dihapus',
         status: 'success',
         duration: 3000,
       });
     } catch (err) {
       toast({
         title: 'Error',
-        description: err instanceof Error ? err.message : 'Gagal menyimpan.',
+        description: err instanceof Error ? err.message : 'Gagal menghapus.',
         status: 'error',
         duration: 4000,
       });
@@ -328,7 +325,7 @@ export default function EventsAdminPage() {
                             onOpen();
                           }}
                         >
-                          Sembunyikan
+                          Hapus
                         </Button>
                       </Flex>
                     </Flex>
@@ -351,18 +348,18 @@ export default function EventsAdminPage() {
         <AlertDialogOverlay>
           <AlertDialogContent>
             <AlertDialogHeader fontSize="lg" fontWeight="bold">
-              Sembunyikan Acara
+              Hapus Acara
             </AlertDialogHeader>
             <AlertDialogBody>
-              Acara ini akan disembunyikan dari halaman publik. Anda masih bisa
-              mengubahnya kembali kapan saja.
+              Yakin ingin menghapus acara ini? (soft delete, data tetap
+              tersimpan)
             </AlertDialogBody>
             <AlertDialogFooter>
               <Button ref={cancelRef} onClick={onClose}>
                 Batal
               </Button>
-              <Button colorScheme="red" onClick={handleSoftDelete} ml={3}>
-                Sembunyikan
+              <Button colorScheme="red" onClick={handleDelete} ml={3}>
+                Hapus
               </Button>
             </AlertDialogFooter>
           </AlertDialogContent>

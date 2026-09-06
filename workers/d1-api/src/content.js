@@ -84,6 +84,7 @@ async function resolveNews(env, ref) {
 
   const all = await env.DB.prepare('SELECT * FROM fs_news_item').all();
   for (const r of all.results) {
+    if (r.is_delete) continue;
     if (r.title && slugify(r.title) === ref) return r;
   }
   return null;
@@ -102,6 +103,7 @@ async function resolveEvent(env, ref) {
 
   const all = await env.DB.prepare('SELECT * FROM fs_event').all();
   for (const r of all.results) {
+    if (r.is_delete) continue;
     if (r.title && slugify(r.title) === ref) return r;
   }
   return null;
@@ -111,6 +113,7 @@ async function resolveEvent(env, ref) {
 async function listNews(env) {
   const { results } = await env.DB.prepare(
     `SELECT * FROM fs_news_item
+     WHERE (is_delete IS NULL OR is_delete = 0)
      ORDER BY (publish_date IS NULL), publish_date DESC`
   ).all();
   return json({ data: results.map(newsRow), count: results.length });
@@ -119,6 +122,7 @@ async function listNews(env) {
 async function listEvents(env) {
   const { results } = await env.DB.prepare(
     `SELECT * FROM fs_event
+     WHERE (is_delete IS NULL OR is_delete = 0)
      ORDER BY (start_date IS NULL), start_date DESC`
   ).all();
   return json({ data: results.map(eventRow), count: results.length });
@@ -181,6 +185,7 @@ async function createItem(env, kind, body, user) {
     publish_date: body.publishDate ?? now,
     author: body.author ?? null,
     is_published: body.isPublished ? 1 : 0,
+    is_delete: 0,
   };
   const eventCols = {
     slug: body.slug ?? null,
@@ -192,6 +197,7 @@ async function createItem(env, kind, body, user) {
     location: body.location ?? null,
     is_active: body.isActive ? 1 : 0,
     published: body.published === undefined ? 1 : body.published ? 1 : 0,
+    is_delete: 0,
   };
 
   const cols = kind === 'news' ? newsCols : eventCols;
@@ -234,6 +240,7 @@ async function updateItem(env, kind, id, body, user) {
           publish_date:
             body.publishDate !== undefined ? body.publishDate : row.publish_date,
           author: body.author !== undefined ? body.author : row.author,
+          is_delete: body.is_delete !== undefined ? (body.is_delete ? 1 : 0) : row.is_delete,
           is_published:
             body.isPublished !== undefined
               ? body.isPublished
@@ -259,6 +266,7 @@ async function updateItem(env, kind, id, body, user) {
                 ? 1
                 : 0
               : row.is_active,
+          is_delete: body.is_delete !== undefined ? (body.is_delete ? 1 : 0) : row.is_delete,
           published:
             body.published !== undefined
               ? body.published
@@ -299,7 +307,7 @@ function newsletterRow(r) {
 
 async function listNewsletters(env) {
   const { results } = await env.DB.prepare(
-    'SELECT * FROM fs_newsletter ORDER BY (sort_order IS NULL), sort_order ASC'
+    'SELECT * FROM fs_newsletter WHERE (is_delete IS NULL OR is_delete = 0) ORDER BY (sort_order IS NULL), sort_order ASC'
   ).all();
   return json({ data: results.map(newsletterRow), count: results.length });
 }
@@ -334,7 +342,7 @@ async function updateNewsletter(env, id, body) {
 }
 
 async function removeNewsletter(env, id) {
-  await env.DB.prepare('DELETE FROM fs_newsletter WHERE id = ?').bind(id).run();
+  await env.DB.prepare('UPDATE fs_newsletter SET is_delete = 1 WHERE id = ?').bind(id).run();
   return json({ ok: true });
 }
 

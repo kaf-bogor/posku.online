@@ -85,6 +85,7 @@ async function attemptToRow(row) {
 async function listQuizzes(env) {
   const { results } = await env.DB.prepare(
     `SELECT * FROM fs_quiz
+     WHERE (is_delete IS NULL OR is_delete = 0)
      ORDER BY (created_at_iso IS NULL), created_at_iso DESC`
   ).all();
   const data = [];
@@ -101,7 +102,7 @@ async function getOne(env, id) {
 }
 
 async function submitAttempt(env, id, body, user) {
-  const exists = await env.DB.prepare('SELECT id FROM fs_quiz WHERE id = ?')
+  const exists = await env.DB.prepare('SELECT id FROM fs_quiz WHERE id = ? AND (is_delete IS NULL OR is_delete = 0)')
     .bind(id)
     .all();
   if (exists.results.length === 0) return json({ error: 'Not found' }, 404);
@@ -177,16 +178,12 @@ async function attemptsForQuiz(env, id) {
 }
 
 async function removeQuiz(env, id) {
-  const exists = await env.DB.prepare('SELECT id FROM fs_quiz WHERE id = ?')
+  const exists = await env.DB.prepare('SELECT id FROM fs_quiz WHERE id = ? AND (is_delete IS NULL OR is_delete = 0)')
     .bind(id)
     .all();
   if (exists.results.length === 0) return json({ error: 'Not found' }, 404);
 
-  await env.DB.batch([
-    env.DB.prepare('DELETE FROM fs_quiz_attempt WHERE quiz_id = ?').bind(id),
-    env.DB.prepare('DELETE FROM fs_quiz_question WHERE quiz_id = ?').bind(id),
-    env.DB.prepare('DELETE FROM fs_quiz WHERE id = ?').bind(id),
-  ]);
+  await env.DB.prepare('UPDATE fs_quiz SET is_delete = 1 WHERE id = ?').bind(id).run();
   return json({ ok: true });
 }
 

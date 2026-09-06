@@ -58,7 +58,9 @@ function recordToDto(row, fallbackEventId = '') {
 // ---------- events ----------
 async function listEvents(env) {
   const { results } = await env.DB.prepare('SELECT * FROM fs_attendanceEvents').all();
-  const items = results.map(eventToDto);
+  const items = results
+    .filter((r) => !(parseJson(r.data).is_delete))
+    .map(eventToDto);
   items.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
   return json({ data: items });
 }
@@ -70,6 +72,7 @@ async function getEvent(env, id) {
     .bind(id)
     .all();
   if (!results.length) return json({ error: 'Event tidak ditemukan' }, 404);
+  if (parseJson(results[0].data).is_delete) return json({ error: 'Event tidak ditemukan' }, 404);
   return json(eventToDto(results[0]));
 }
 
@@ -120,11 +123,14 @@ async function updateEvent(env, id, body) {
 }
 
 async function removeEvent(env, id) {
-  await env.DB.prepare('DELETE FROM fs_attendanceEvents WHERE id = ?').bind(id).run();
-  await env.DB.prepare(
-    "DELETE FROM fs_attendanceRecords WHERE json_extract(data, '$.eventId') = ?"
-  )
+  const { results } = await env.DB.prepare('SELECT data FROM fs_attendanceEvents WHERE id = ?')
     .bind(id)
+    .all();
+  if (results.length === 0) return json({ error: 'Event tidak ditemukan' }, 404);
+  const data = parseJson(results[0].data);
+  data.is_delete = true;
+  await env.DB.prepare('UPDATE fs_attendanceEvents SET data = ? WHERE id = ?')
+    .bind(JSON.stringify(data), id)
     .run();
   return json({ ok: true });
 }

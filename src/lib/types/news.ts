@@ -7,4 +7,5 @@ export interface NewsItem {
   publishDate: string;
   author: string;
   isPublished: boolean;
+  is_delete?: boolean;
 }
