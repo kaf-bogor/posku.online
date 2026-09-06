@@ -1,4 +1,4 @@
--- Seed fs_newsletter dari src/lib/data/newsletter.json
+-- Seed awal fs_newsletter (sumber data asli)
 DELETE FROM fs_newsletter;
 
 INSERT INTO fs_newsletter (id,title,sort_order,image_url,document_url) VALUES ('seed-1','Juli 2024',1,'2024/juli/juli_thumb.png','https://bit.ly/n0724');
