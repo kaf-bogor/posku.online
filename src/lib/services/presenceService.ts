@@ -11,6 +11,31 @@ async function getToken(): Promise<string | null> {
   }
 }
 
+const VISITOR_KEY = 'posku_visitor_id';
+
+function makeVisitorId(): string {
+  const chars =
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let id = '';
+  for (let i = 0; i < 16; i += 1) {
+    id += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return id;
+}
+
+function getVisitorId(): string {
+  try {
+    let id = window.localStorage.getItem(VISITOR_KEY);
+    if (!id) {
+      id = makeVisitorId();
+      window.localStorage.setItem(VISITOR_KEY, id);
+    }
+    return id;
+  } catch {
+    return makeVisitorId();
+  }
+}
+
 export interface OnlineUser {
   uid: string;
   email: string;
@@ -18,36 +43,45 @@ export interface OnlineUser {
   lastSeen: number;
 }
 
-export const getOnlineUsers = async (minutes = 5): Promise<OnlineUser[]> => {
+export interface OnlineStatus {
+  users: OnlineUser[];
+  anonymous: number;
+}
+
+export const getOnlineUsers = async (minutes = 5): Promise<OnlineStatus> => {
   try {
     const res = await fetch(
       `${D1_API_URL}/api/presence/online?minutes=${minutes}`,
-      {
-        headers: { Accept: 'application/json' },
-      }
+      { headers: { Accept: 'application/json' } }
     );
-    if (!res.ok) return [];
-    const data = (await res.json()) as { data?: OnlineUser[] };
-    return data.data ?? [];
+    if (!res.ok) return { users: [], anonymous: 0 };
+    const data = (await res.json()) as {
+      data?: OnlineUser[];
+      anonymous?: number;
+    };
+    return { users: data.data ?? [], anonymous: data.anonymous ?? 0 };
   } catch {
-    return [];
+    return { users: [], anonymous: 0 };
   }
 };
 
 export const presenceHeartbeat = async (): Promise<void> => {
   const token = await getToken();
-  if (!token) return;
-  await fetch(`${D1_API_URL}/api/presence/heartbeat`, {
+  const path = token ? '/api/presence/heartbeat' : '/api/presence/anon';
+  await fetch(`${D1_API_URL}${path}`, {
     method: 'POST',
-    headers: { Authorization: `Bearer ${token}` },
+    headers: token ? { Authorization: `Bearer ${token}` } : undefined,
+    body: token ? undefined : JSON.stringify({ visitorId: getVisitorId() }),
   }).catch(() => {});
 };
 
 export const presenceLeave = async (): Promise<void> => {
   const token = await getToken();
-  if (!token) return;
   await fetch(`${D1_API_URL}/api/presence/leave`, {
     method: 'POST',
-    headers: { Authorization: `Bearer ${token}` },
+    headers: token
+      ? { Authorization: `Bearer ${token}` }
+      : { 'Content-Type': 'application/json' },
+    body: token ? undefined : JSON.stringify({ visitorId: getVisitorId() }),
   }).catch(() => {});
 };

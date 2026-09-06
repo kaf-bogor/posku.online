@@ -3,26 +3,21 @@
 import type React from 'react';
 import { useEffect } from 'react';
 
-import useAuth from '~/lib/hooks/useAuth';
 import {
   presenceHeartbeat,
   presenceLeave,
 } from '~/lib/services/presenceService';
 
 /**
- * Mengirim heartbeat "sedang online" selama user login & halaman terbuka,
- * agar namanya muncul pada daftar online di homepage.
+ * Mengirim heartbeat "sedang online" selama halaman terbuka (login maupun
+ * pengunjung anonim), agar badge online di homepage akurat.
  */
 export default function PresenceProvider({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const { user } = useAuth();
-
   useEffect(() => {
-    if (!user) return undefined;
-
     const send = () => {
       presenceHeartbeat();
     };
@@ -43,7 +38,7 @@ export default function PresenceProvider({
       window.removeEventListener('beforeunload', onUnload);
       presenceLeave();
     };
-  }, [user]);
+  }, []);
 
   return children;
 }

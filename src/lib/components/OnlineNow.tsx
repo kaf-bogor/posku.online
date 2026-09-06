@@ -1,24 +1,33 @@
 'use client';
 
-import { Box, HStack, Avatar, Text, useColorModeValue } from '@chakra-ui/react';
+import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons';
+import {
+  Box,
+  HStack,
+  Avatar,
+  Text,
+  Button,
+  useColorModeValue,
+} from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { FaUsers } from 'react-icons/fa';
 
-import SectionHeader from '~/lib/components/SectionHeader';
 import {
   getOnlineUsers,
-  type OnlineUser,
+  type OnlineStatus,
 } from '~/lib/services/presenceService';
 
+const EMPTY: OnlineStatus = { users: [], anonymous: 0 };
+
 export default function OnlineNow() {
-  const [online, setOnline] = useState<OnlineUser[]>([]);
+  const [status, setStatus] = useState<OnlineStatus>(EMPTY);
+  const [open, setOpen] = useState(false);
   const muted = useColorModeValue('gray.500', 'gray.400');
 
   useEffect(() => {
     let active = true;
     const load = async () => {
       const data = await getOnlineUsers(5);
-      if (active) setOnline(data);
+      if (active) setStatus(data);
     };
     load();
     const interval = setInterval(load, 15000);
@@ -28,43 +37,51 @@ export default function OnlineNow() {
     };
   }, []);
 
-  if (online.length === 0) return null;
+  const total = status.users.length + status.anonymous;
+  if (total === 0) return null;
 
   return (
     <Box>
-      <SectionHeader title="Sedang Online" icon={FaUsers} />
-      <Text color={muted} fontSize="sm" mb={3}>
-        {online.length} pengguna sedang membuka situs.
-      </Text>
-      <HStack spacing={3} flexWrap="wrap">
-        {online.map((u) => (
-          <HStack
-            key={u.uid}
-            spacing={2}
-            borderWidth="1px"
-            borderRadius="full"
-            px={3}
-            py={1}
-          >
-            <Box position="relative">
-              <Avatar size="sm" name={u.name || u.email} />
-              <Box
-                position="absolute"
-                bottom="0"
-                right="0"
-                w="10px"
-                h="10px"
-                borderRadius="full"
-                bg="green.400"
-                border="1px solid white"
-              />
-            </Box>
-            <Text fontWeight="medium" fontSize="sm">
-              {u.name || u.email}
+      <Button
+        variant="outline"
+        size="sm"
+        borderRadius="full"
+        rightIcon={open ? <ChevronUpIcon /> : <ChevronDownIcon />}
+        onClick={() => setOpen((prev) => !prev)}
+      >
+        <Box w="8px" h="8px" borderRadius="full" bg="green.400" mr={2} />
+        {total} sedang online
+      </Button>
+
+      {open && (
+        <Box mt={3} w="100%">
+          {status.users.length > 0 && (
+            <HStack spacing={3} flexWrap="wrap">
+              {status.users.map((u) => (
+                <HStack
+                  key={u.uid}
+                  spacing={2}
+                  borderWidth="1px"
+                  borderRadius="full"
+                  px={3}
+                  py={1}
+                >
+                  <Avatar size="sm" name={u.name || u.email} />
+                  <Text fontWeight="medium" fontSize="sm">
+                    {u.name || u.email}
+                  </Text>
+                </HStack>
+              ))}
+            </HStack>
+          )}
+
+          {status.anonymous > 0 && (
+            <Text color={muted} fontSize="sm" mt={status.users.length ? 3 : 0}>
+              {status.anonymous} orang yang belum terdaftar juga online
             </Text>
-          </HStack>
-        ))}
-      </HStack>
+          )}
+        </Box>
+      )}
     </Box>
   );
 }
