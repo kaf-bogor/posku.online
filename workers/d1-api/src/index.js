@@ -10,6 +10,7 @@ import { handleComments } from './comments';
 import { handleContent } from './content';
 import { handleDonations } from './donations';
 import { handleKelas } from './kelas';
+import { handlePresence } from './presence';
 import { handleQuizzes } from './quizzes';
 import { handleUpload } from './uploads';
 import { json } from './json';
@@ -24,6 +25,9 @@ export default {
     }
 
     try {
+      if (path.startsWith('/api/presence')) {
+        return await handlePresence(request, env, url);
+      }
       if (path.startsWith('/api/upload')) {
         return await handleUpload(request, env, url);
       }

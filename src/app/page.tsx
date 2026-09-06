@@ -28,6 +28,7 @@ import {
 import { FiHelpCircle } from 'react-icons/fi';
 
 import HeroSection from '~/lib/components/HeroSection';
+import OnlineNow from '~/lib/components/OnlineNow';
 import SectionHeader from '~/lib/components/SectionHeader';
 import { AppContext } from '~/lib/context/app';
 import { storageUrl } from '~/lib/context/baseUrl';
@@ -410,6 +411,7 @@ const Home = () => {
         />
       </Box>
 
+      <OnlineNow />
       <NewsSection newsItems={newsItems} loading={newsLoading} />
       <EventsSection eventItems={eventItems} loading={eventsLoading} />
 
