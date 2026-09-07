@@ -87,6 +87,51 @@ function err(message, status = 400) {
   return json({ error: message }, status);
 }
 
+// ---------- pencarian keluarga (wali) utk melengkapi data santri ----------
+const normName = (s) =>
+  String(s || '')
+    .toLowerCase()
+    .replace(/[^a-z0-9 ]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+function buildWaliIndex(rows) {
+  const byId = new Map();
+  const byAyah = new Map();
+  const byIbu = new Map();
+  const byChild = new Map();
+  const add = (m, key, id) => {
+    if (!key) return;
+    const arr = m.get(key) || [];
+    arr.push(id);
+    m.set(key, arr);
+  };
+  for (const w of rows) {
+    byId.set(w.id, w);
+    add(byAyah, normName(w.nama_ayah), w.id);
+    add(byIbu, normName(w.nama_ibu), w.id);
+    for (const child of String(w.nama_anak_raw || '').split(','))
+      add(byChild, normName(child), w.id);
+  }
+  return { byId, byAyah, byIbu, byChild };
+}
+
+function findWali(index, st) {
+  const cand = st.id_wali != null ? index.byId.get(st.id_wali) : null;
+  if (cand) return cand;
+  const pick = (m, key) => {
+    if (!key) return null;
+    const ids = m.get(key) || [];
+    return ids.length === 1 ? index.byId.get(ids[0]) : null;
+  };
+  return (
+    pick(index.byAyah, normName(st.ayah)) ||
+    pick(index.byIbu, normName(st.bunda)) ||
+    pick(index.byChild, normName(st.nama)) ||
+    null
+  );
+}
+
 // ---------- /api/tahun-ajaran ----------
 async function handleTahunAjaran(env, url) {
   const tahun = url.searchParams.get('tahun') || null;
@@ -97,6 +142,14 @@ async function handleTahunAjaran(env, url) {
     'SELECT id, nama FROM tahun_ajaran ORDER BY tahun_mulai'
   ).all();
   const tahunList = taRows.results;
+
+  // indeks keluarga (wali santri) utk fallback nama ortu + bidang pekerjaan
+  const waliRows = await env.DB.prepare(
+    `SELECT id, nama_ayah, nama_ibu, pekerjaan_utama_ayah,
+            bidang_pekerjaan_ayah, instansi, nama_anak_raw
+     FROM wali_santri`
+  ).all();
+  const waliIndex = buildWaliIndex(waliRows.results);
 
   const result = [];
   for (const ta of tahunList) {
@@ -127,7 +180,7 @@ async function handleTahunAjaran(env, url) {
       // santri
       const studentRows = await env.DB.prepare(
         `SELECT s.id AS santri_id, s.nama, s.nama_ayah AS ayah, s.nama_bunda AS bunda,
-                s.kode_registrasi, s.tahun_masuk AS academic_year,
+                s.kode_registrasi, s.tahun_masuk AS academic_year, s.id_wali,
                 e.status_akademik AS status
          FROM enrollment e
          JOIN santri s ON s.id = e.santri_id
@@ -145,10 +198,18 @@ async function handleTahunAjaran(env, url) {
         )
           .bind(st.santri_id)
           .all();
+
+        // lengkapi orang tua dari keluarga (bila kolom santri kosong) + bidang
+        const w = findWali(waliIndex, st);
+        const ayah = st.ayah || (w && w.nama_ayah) || null;
+        const bunda = st.bunda || (w && w.nama_ibu) || null;
         students.push({
           name: st.nama,
-          ayah: st.ayah,
-          bunda: st.bunda,
+          ayah,
+          bunda,
+          pekerjaanAyah: (w && w.pekerjaan_utama_ayah) || null,
+          bidangAyah: (w && w.bidang_pekerjaan_ayah) || null,
+          instansiAyah: (w && w.instansi) || null,
           academic_year: st.academic_year,
           kode_registrasi: st.kode_registrasi,
           siblings: sibRows.results.length ? sibRows.results : null,

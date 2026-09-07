@@ -51,9 +51,13 @@ interface Student {
   name: string;
   ayah: string | null;
   bunda: string | null;
+  pekerjaanAyah?: string | null;
+  bidangAyah?: string | null;
+  instansiAyah?: string | null;
   kode_registrasi: string | null;
   academic_year: string | null;
   siblings: Sibling[] | null;
+  status?: 'naik_kelas' | 'lulus' | 'pindah';
 }
 
 interface ClassInfo {
@@ -149,6 +153,54 @@ function DataStateFallback({
     );
   }
   return null;
+}
+
+function StudentParentInfo({
+  student,
+  labelColor,
+  valueColor,
+}: {
+  student?: Student;
+  labelColor: string;
+  valueColor: string;
+}) {
+  if (!student) return null;
+  const kerja = [
+    student.pekerjaanAyah,
+    student.bidangAyah,
+    student.instansiAyah,
+  ]
+    .filter(Boolean)
+    .join(' — ');
+  const hasData = Boolean(student.ayah || student.bunda || kerja);
+  return (
+    <Box>
+      <Divider mb={2} />
+      <Text fontSize="sm" color={labelColor} mb={2}>
+        Orang Tua
+      </Text>
+      {student.ayah && (
+        <Text fontSize="sm" fontWeight="medium" color={valueColor}>
+          Ayah: {student.ayah}
+        </Text>
+      )}
+      {kerja && (
+        <Text fontSize="xs" color={labelColor} mt={0.5}>
+          Pekerjaan/Bidang Ayah: {kerja}
+        </Text>
+      )}
+      {student.bunda && (
+        <Text fontSize="sm" fontWeight="medium" color={valueColor} mt={1}>
+          Bunda: {student.bunda}
+        </Text>
+      )}
+      {!hasData && (
+        <Text fontSize="xs" color={labelColor}>
+          Data orang tua belum terisi.
+        </Text>
+      )}
+    </Box>
+  );
 }
 
 export default function DataSantriTA20262027Page() {
@@ -720,39 +772,11 @@ export default function DataSantriTA20262027Page() {
                   {selected?.className}
                 </Text>
               </HStack>
-              {(selected?.student.ayah || selected?.student.bunda) && (
-                <>
-                  <Divider />
-                  {selected?.student.ayah && (
-                    <HStack>
-                      <Text fontSize="sm" color={modalLabelColor} minW="110px">
-                        Ayah
-                      </Text>
-                      <Text
-                        fontSize="sm"
-                        fontWeight="medium"
-                        color={headingColor}
-                      >
-                        {selected.student.ayah}
-                      </Text>
-                    </HStack>
-                  )}
-                  {selected?.student.bunda && (
-                    <HStack>
-                      <Text fontSize="sm" color={modalLabelColor} minW="110px">
-                        Bunda
-                      </Text>
-                      <Text
-                        fontSize="sm"
-                        fontWeight="medium"
-                        color={headingColor}
-                      >
-                        {selected.student.bunda}
-                      </Text>
-                    </HStack>
-                  )}
-                </>
-              )}
+              <StudentParentInfo
+                student={selected?.student}
+                labelColor={modalLabelColor}
+                valueColor={headingColor}
+              />
               {selected?.student.siblings &&
                 selected.student.siblings.length > 0 && (
                   <>
