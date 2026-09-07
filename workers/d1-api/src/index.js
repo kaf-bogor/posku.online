@@ -16,7 +16,7 @@ import { handleUpload } from './uploads';
 import { json } from './json';
 
 export default {
-  async fetch(request, env) {
+  async fetch(request, env, ctx) {
     const url = new URL(request.url);
     const path = url.pathname;
 
@@ -59,10 +59,14 @@ export default {
         return listAdmins(env);
       }
       if (path === '/api/tahun-ajaran') {
-        return await handleTahunAjaran(env, url);
+        return await serveCached(request, ctx, 300, () =>
+          handleTahunAjaran(env, url)
+        );
       }
       if (path === '/api/wali') {
-        return await handleWali(env, url);
+        return await serveCached(request, ctx, 300, () =>
+          handleWali(env, url)
+        );
       }
       return json({ error: 'Not found' }, 404);
     } catch (err) {
@@ -80,6 +84,37 @@ function corsHeaders() {
     'Access-Control-Allow-Methods': 'GET, POST, PUT, PATCH, DELETE, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type, Authorization',
   };
+}
+
+// Respons JSON yang di-cache di edge (Cache API). Data santri/wali jarang
+// berubah (di-refresh via ETL), jadi setelah dimuat cukup disajikan dari cache.
+async function serveCached(request, ctx, ttlSeconds, build) {
+  const cache = caches.default;
+  const cacheKey = new Request(request.url, request);
+  try {
+    const cached = await cache.match(cacheKey);
+    if (cached) return cached;
+  } catch {
+    // cache tak tersedia — lanjut hit DB
+  }
+
+  const resp = await build();
+  if (!resp || resp.status !== 200) return resp;
+
+  const body = await resp.text();
+  const headers = {
+    'Content-Type': 'application/json; charset=utf-8',
+    'Cache-Control': `public, max-age=${ttlSeconds}`,
+    ...corsHeaders(),
+  };
+  try {
+    ctx.waitUntil(
+      cache.put(cacheKey, new Response(body, { status: 200, headers }))
+    );
+  } catch {
+    // gagal menulis cache — respons tetap dikembalikan
+  }
+  return new Response(body, { status: 200, headers });
 }
 
 // ---------- helpers ----------
@@ -135,13 +170,20 @@ function findWali(index, st) {
 // ---------- /api/tahun-ajaran ----------
 async function handleTahunAjaran(env, url) {
   const tahun = url.searchParams.get('tahun') || null;
-  const only2025 = tahun === '2025/2026';
-  const only2026 = tahun === '2026/2027';
 
   const taRows = await env.DB.prepare(
     'SELECT id, nama FROM tahun_ajaran ORDER BY tahun_mulai'
   ).all();
   const tahunList = taRows.results;
+  const taIdByName = new Map(tahunList.map((t) => [t.nama, t.id]));
+  const namaTahun = tahun ? [tahun] : tahunList.map((t) => t.nama);
+  const taIds = namaTahun
+    .map((n) => taIdByName.get(n))
+    .filter((id) => id != null);
+  if (taIds.length === 0) {
+    return json({ tahun_ajaran: namaTahun, data: [] });
+  }
+  const inTa = taIds.map(() => '?').join(', ');
 
   // indeks keluarga (wali santri) utk fallback nama ortu + bidang pekerjaan
   const waliRows = await env.DB.prepare(
@@ -151,82 +193,92 @@ async function handleTahunAjaran(env, url) {
   ).all();
   const waliIndex = buildWaliIndex(waliRows.results);
 
-  const result = [];
+  // --- ambil semua data dgn 3 query (tanpa N+1) ---
+  const enrollRes = await env.DB.prepare(
+    `SELECT e.tahun_ajaran_id AS ta_id, k.id AS kelas_id, k.nama AS kelas,
+            e.status_akademik AS status,
+            s.id AS santri_id, s.nama, s.nama_ayah AS ayah, s.nama_bunda AS bunda,
+            s.kode_registrasi, s.tahun_masuk AS academic_year, s.id_wali
+     FROM enrollment e
+     JOIN kelas k ON k.id = e.kelas_id
+     JOIN santri s ON s.id = e.santri_id
+     WHERE e.tahun_ajaran_id IN (${inTa})
+     ORDER BY k.program_id, k.grade, k.letter, s.nama`
+  )
+    .bind(...taIds)
+    .all();
+
+  const guruRes = await env.DB.prepare(
+    `SELECT kg.tahun_ajaran_id AS ta_id, kg.kelas_id, kg.peran,
+            g.nama AS name, g.telepon AS phone
+     FROM kelas_guru kg
+     JOIN guru g ON g.id = kg.guru_id
+     WHERE kg.tahun_ajaran_id IN (${inTa})
+     ORDER BY kg.tahun_ajaran_id, kg.kelas_id, kg.id`
+  )
+    .bind(...taIds)
+    .all();
+
+  const sibRes = await env.DB.prepare(
+    `SELECT santri_id, nama_teks AS name, kelas_teks AS class,
+            tahun_teks AS academic_year
+     FROM saudara ORDER BY santri_id`
+  ).all();
+
+  // saudara dikelompokkan per santri
+  const sibsBySantri = new Map();
+  for (const s of sibRes.results) {
+    const arr = sibsBySantri.get(s.santri_id) || [];
+    arr.push({ name: s.name, class: s.class, academic_year: s.academic_year });
+    sibsBySantri.set(s.santri_id, arr);
+  }
+
+  // kelas per tahun ajaran (urut sesuai kemunculan pertama di enrollment)
+  const classesByKey = new Map();
+  const order = [];
+  for (const r of enrollRes.results) {
+    const key = `${r.ta_id}:${r.kelas_id}`;
+    let c = classesByKey.get(key);
+    if (!c) {
+      c = { taId: r.ta_id, name: r.kelas, teachers: [], students: [] };
+      classesByKey.set(key, c);
+      order.push(key);
+    }
+    const w = findWali(waliIndex, r);
+    const ayah = r.ayah || (w && w.nama_ayah) || null;
+    const bunda = r.bunda || (w && w.nama_ibu) || null;
+    const siblings = sibsBySantri.get(r.santri_id);
+    c.students.push({
+      name: r.nama,
+      ayah,
+      bunda,
+      pekerjaanAyah: (w && w.pekerjaan_utama_ayah) || null,
+      bidangAyah: (w && w.bidang_pekerjaan_ayah) || null,
+      instansiAyah: (w && w.instansi) || null,
+      academic_year: r.academic_year,
+      kode_registrasi: r.kode_registrasi,
+      siblings: siblings && siblings.length ? siblings : null,
+      status: r.status,
+    });
+  }
+
+  for (const r of guruRes.results) {
+    const c = classesByKey.get(`${r.ta_id}:${r.kelas_id}`);
+    if (!c) continue;
+    c.teachers.push({ role: r.peran, name: r.name, phone: r.phone });
+  }
+
+  const data = [];
   for (const ta of tahunList) {
     if (tahun && ta.nama !== tahun) continue;
-
-    // kelas yg punya enrollment di ta ini
-    const kelasRows = await env.DB.prepare(
-      `SELECT DISTINCT k.id AS kelas_id, k.nama, k.grade, k.letter, k.program_id
-       FROM enrollment e
-       JOIN kelas k ON k.id = e.kelas_id
-       WHERE e.tahun_ajaran_id = ?
-       ORDER BY k.program_id, k.grade, k.letter`
-    )
-      .bind(ta.id)
-      .all();
-
-    for (const k of kelasRows.results) {
-      // guru
-      const guruRows = await env.DB.prepare(
-        `SELECT kg.peran, g.nama AS name, g.telepon AS phone
-         FROM kelas_guru kg
-         JOIN guru g ON g.id = kg.guru_id
-         WHERE kg.kelas_id = ? AND kg.tahun_ajaran_id = ?`
-      )
-        .bind(k.kelas_id, ta.id)
-        .all();
-
-      // santri
-      const studentRows = await env.DB.prepare(
-        `SELECT s.id AS santri_id, s.nama, s.nama_ayah AS ayah, s.nama_bunda AS bunda,
-                s.kode_registrasi, s.tahun_masuk AS academic_year, s.id_wali,
-                e.status_akademik AS status
-         FROM enrollment e
-         JOIN santri s ON s.id = e.santri_id
-         WHERE e.kelas_id = ? AND e.tahun_ajaran_id = ?
-         ORDER BY s.nama`
-      )
-        .bind(k.kelas_id, ta.id)
-        .all();
-
-      const students = [];
-      for (const st of studentRows.results) {
-        const sibRows = await env.DB.prepare(
-          `SELECT nama_teks AS name, kelas_teks AS class, tahun_teks AS academic_year
-           FROM saudara WHERE santri_id = ?`
-        )
-          .bind(st.santri_id)
-          .all();
-
-        // lengkapi orang tua dari keluarga (bila kolom santri kosong) + bidang
-        const w = findWali(waliIndex, st);
-        const ayah = st.ayah || (w && w.nama_ayah) || null;
-        const bunda = st.bunda || (w && w.nama_ibu) || null;
-        students.push({
-          name: st.nama,
-          ayah,
-          bunda,
-          pekerjaanAyah: (w && w.pekerjaan_utama_ayah) || null,
-          bidangAyah: (w && w.bidang_pekerjaan_ayah) || null,
-          instansiAyah: (w && w.instansi) || null,
-          academic_year: st.academic_year,
-          kode_registrasi: st.kode_registrasi,
-          siblings: sibRows.results.length ? sibRows.results : null,
-          status: st.status,
-        });
-      }
-
-      result.push({
-        name: k.nama,
-        teachers: guruRows.results,
-        students,
-      });
+    for (const key of order) {
+      if (classesByKey.get(key).taId !== ta.id) continue;
+      const c = classesByKey.get(key);
+      data.push({ name: c.name, teachers: c.teachers, students: c.students });
     }
   }
 
-  // beri nama tahun ajaran utk memudahkan front-end
-  return json({ tahun_ajaran: tahun ? [tahun] : tahunList.map((t) => t.nama), data: result });
+  return json({ tahun_ajaran: namaTahun, data });
 }
 
 // ---------- /api/wali ----------
