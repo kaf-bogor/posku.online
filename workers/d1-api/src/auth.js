@@ -1,13 +1,15 @@
 // Auth bersama untuk API worker D1.
-// Validasi Firebase ID token secara lokal (RS256) terhadap public key project.
+// Validasi Google ID token (RS256) secara lokal terhadap public key Google
+// (https://www.googleapis.com/oauth2/v3/certs), bukan Firebase lagi.
 // - requireUser : token valid (untuk menulis data pengguna biasa)
 // - requireAdmin : token valid + email terdaftar di fs_admin
 
 import { json } from './json';
 
-const PROJECT_ID = 'kaf-bogor';
-const JWKS_URL =
-  'https://www.googleapis.com/service_accounts/v1/jwk/securetoken@system.gserviceaccount.com';
+const GOOGLE_CLIENT_ID =
+  '311474638765-7l6ag4lbkuuelbs0fbdjvf0oqscu8901.apps.googleusercontent.com';
+const JWKS_URL = 'https://www.googleapis.com/oauth2/v3/certs';
+const ALLOWED_ISS = ['https://accounts.google.com', 'accounts.google.com'];
 
 let cachedJwks = null;
 
@@ -29,7 +31,7 @@ function toBytes(s) {
 async function getJwks() {
   if (cachedJwks) return cachedJwks;
   const res = await fetch(JWKS_URL);
-  if (!res.ok) throw new Error('Gagal memuat public key Firebase');
+  if (!res.ok) throw new Error('Gagal memuat public key Google');
   const data = await res.json();
   const keys = {};
   for (const k of data.keys || []) keys[k.kid] = k;
@@ -37,7 +39,7 @@ async function getJwks() {
   return keys;
 }
 
-async function verifyFirebaseToken(token) {
+async function verifyGoogleToken(token) {
   const parts = token.split('.');
   if (parts.length !== 3) return null;
 
@@ -51,9 +53,9 @@ async function verifyFirebaseToken(token) {
     return null;
   }
 
-  // Hanya token untuk project ini
-  if (payload.aud !== PROJECT_ID) return null;
-  if (payload.iss !== `https://securetoken.google.com/${PROJECT_ID}`) return null;
+  // Hanya token OAuth utk client ini
+  if (payload.aud !== GOOGLE_CLIENT_ID) return null;
+  if (!ALLOWED_ISS.includes(payload.iss)) return null;
   if (!payload.exp || payload.exp * 1000 <= Date.now()) return null;
 
   try {
@@ -104,7 +106,7 @@ async function bearerUser(request) {
   if (!token) return { status: 401 };
 
   try {
-    const result = await verifyFirebaseToken(token);
+    const result = await verifyGoogleToken(token);
     if (!result) return { status: 401 };
     return result;
   } catch {
