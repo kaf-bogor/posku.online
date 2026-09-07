@@ -49,6 +49,7 @@ import {
   upcomingEvents,
 } from '~/lib/utils/kalender';
 
+import DataChatBox from './components/DataChatBox';
 import MainMenus from './components/MainMenus';
 
 const KalenderSection = ({
@@ -422,6 +423,28 @@ const Home = () => {
       />
 
       <Box h={{ base: '20px', md: '40px' }} />
+
+      {/* Chat informasi publik POSKU (RAG: modul, kalender, konten situs) */}
+      <DataChatBox
+        api="/api/chat/posku"
+        title="TanyaPOSKU"
+        assistantLabel="Asisten Informasi POSKU"
+        introLine="Tanya kurikulum, kalender & konten"
+        hint="Tanyakan seputar Modul Kuttab & Madrasah, kalender & jadwal kegiatan, donasi/wakaf, berita, podcast, atau konten POSKU lainnya."
+        placeholder="Tanya soal kurikulum, jadwal, kegiatan…"
+        showCount={false}
+        loadingSteps={[
+          'Mencari informasi terkait...',
+          'Merangkum dari modul & kalender...',
+          'Menyusun jawaban...',
+        ]}
+        suggestions={[
+          'Apa isi Modul Kuttab & Madrasah?',
+          'Apa perbedaan Kuttab dan Madrasah?',
+          'Kegiatan POSKU apa yang akan datang?',
+          'Bagaimana program wakaf per kelas berjalan?',
+        ]}
+      />
     </VStack>
   );
 };

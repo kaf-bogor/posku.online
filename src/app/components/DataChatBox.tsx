@@ -79,7 +79,7 @@ const DEFAULT_LOADING_STEPS = [
   'Menyusun jawaban...',
 ];
 
-const SUGGESTIONS = [
+const DEFAULT_SUGGESTIONS = [
   'Siapa saja guru di Kuttab Awal 1A?',
   'Berapa santri kelas Qonuni 2A?',
   'Wali santri yang bisa IT & digital',
@@ -88,20 +88,29 @@ const SUGGESTIONS = [
 /* ----------------------------- component ----------------------------- */
 
 export default function DataChatBox({
+  api = '/api/chat/data-santri',
   title = 'Tanya Data Santri',
   hint = 'Tanyakan apa saja tentang santri, kelas, guru, dan wali santri.',
   placeholder = 'Tanyakan sesuatu tentang data santri…',
   loadingSteps = DEFAULT_LOADING_STEPS,
+  suggestions = DEFAULT_SUGGESTIONS,
+  assistantLabel = 'Asisten Data POSKU',
+  introLine = 'Tanyakan data santri & wali santri',
+  showCount = true,
+  sourceNote = '· sumber data tahun 2025–2027',
 }: {
+  api?: string;
   title?: string;
   hint?: string;
   placeholder?: string;
   loadingSteps?: string[];
+  suggestions?: string[];
+  assistantLabel?: string;
+  introLine?: string;
+  showCount?: boolean;
+  sourceNote?: string;
 }) {
-  const transport = useMemo(
-    () => new TextStreamChatTransport({ api: '/api/chat/data-santri' }),
-    []
-  );
+  const transport = useMemo(() => new TextStreamChatTransport({ api }), [api]);
   const { messages, sendMessage, stop, status, error } = useChat({
     transport,
   });
@@ -125,9 +134,8 @@ export default function DataChatBox({
       lastAssistant.parts as Array<{ type: string; text?: string }>
     );
   }, [messages]);
-  const resultCount = isStreaming
-    ? null
-    : extractResultCount(lastAssistantText);
+  const resultCount =
+    !showCount || isStreaming ? null : extractResultCount(lastAssistantText);
 
   // Rotasi status selama menunggu respons pertama.
   useEffect(() => {
@@ -377,7 +385,7 @@ export default function DataChatBox({
                 letterSpacing="0.08em"
                 textTransform="uppercase"
               >
-                Asisten Data POSKU
+                {assistantLabel}
               </Text>
               <Text
                 fontSize="16px"
@@ -385,7 +393,7 @@ export default function DataChatBox({
                 color={headerText}
                 lineHeight="1.3"
               >
-                Tanyakan data santri &amp; wali santri
+                {introLine}
               </Text>
               <Text fontSize="13px" color={mutedText} lineHeight="1.5">
                 {hint}
@@ -402,7 +410,7 @@ export default function DataChatBox({
               >
                 Coba tanyakan
               </Text>
-              {SUGGESTIONS.map((s) => (
+              {suggestions.map((s) => (
                 <Button
                   key={s}
                   size="sm"
@@ -503,7 +511,7 @@ export default function DataChatBox({
                           {resultCount}
                         </Text>
                         <Text color={mutedText} fontSize="12px">
-                          · sumber data tahun 2025–2027
+                          {sourceNote}
                         </Text>
                       </HStack>
                     )}
