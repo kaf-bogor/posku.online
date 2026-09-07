@@ -1,9 +1,6 @@
-import rawWaliData from '~/lib/data/data_wali_santri.json';
 import type { DataWaliSantriRecord } from '~/lib/types/data_wali_santri';
 
 import { toIntlDigits } from './phone';
-
-const wali = rawWaliData as DataWaliSantriRecord[];
 
 type PicMatch = { label: string; waHref: string | null };
 
@@ -30,7 +27,7 @@ function stripTitle(segment: string): string {
 }
 
 /** Cocokkan segmen nama PIC ke wali santri; kembalikan link wa bila ketemu. */
-function matchWali(segment: string): PicMatch {
+function matchWali(segment: string, wali: DataWaliSantriRecord[]): PicMatch {
   const clean = stripTitle(segment);
   const segTokens = tokens(clean);
   const label = clean || segment.trim();
@@ -61,8 +58,12 @@ function matchWali(segment: string): PicMatch {
 /**
  * Pecah string PIC (mis. "Pak Febri", "Ibu Leni Melvita & Ibu Lela")
  * menjadi segmen; segmen yang cocok dengan walisantri jadi link WhatsApp.
+ * `wali` diambil dari D1 pada runtime (tidak lagi di-bundle dari JSON).
  */
-export function resolvePicToWa(pic: string): PicMatch[] {
+export function resolvePicToWa(
+  pic: string,
+  wali: DataWaliSantriRecord[]
+): PicMatch[] {
   const raw = pic || '';
   if (!raw.trim() || raw === '—') return [];
 
@@ -70,5 +71,5 @@ export function resolvePicToWa(pic: string): PicMatch[] {
     .split(/[&,]+| dan /i)
     .map((s) => s.trim())
     .filter(Boolean)
-    .map(matchWali);
+    .map((s) => matchWali(s, wali));
 }

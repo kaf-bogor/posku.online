@@ -4,6 +4,7 @@ import {
   Badge,
   Box,
   Button,
+  Center,
   Divider,
   FormControl,
   FormErrorMessage,
@@ -22,6 +23,7 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Spinner,
   Text,
   VStack,
   useColorMode,
@@ -31,7 +33,6 @@ import { useContext, useEffect, useMemo, useState } from 'react';
 
 import DataChatBox from '~/app/components/DataChatBox';
 import { AppContext } from '~/lib/context/app';
-import rawData from '~/lib/data/tahun_ajaran_2025_2026.json';
 import { useTahunAjaran } from '~/lib/hooks/useTahunAjaran';
 
 interface Teacher {
@@ -103,6 +104,54 @@ function highlight(text: string, term: string): string {
   );
 }
 
+function DataStateFallback({
+  loading,
+  error,
+  empty,
+  loadingText,
+  titleColor,
+  bodyColor,
+  onRetry,
+}: {
+  loading: boolean;
+  error: boolean;
+  empty: boolean;
+  loadingText: string;
+  titleColor: string;
+  bodyColor: string;
+  onRetry: () => void;
+}) {
+  if (loading) {
+    return (
+      <Center py={24}>
+        <VStack spacing={4}>
+          <Spinner size="lg" color="blue.500" thickness="3px" />
+          <Text color={bodyColor}>{loadingText}</Text>
+        </VStack>
+      </Center>
+    );
+  }
+  if (error || empty) {
+    return (
+      <Center py={24}>
+        <VStack spacing={4} textAlign="center" px={6}>
+          <Heading size="md" color={titleColor}>
+            Data santri tidak dapat dimuat
+          </Heading>
+          <Text color={bodyColor}>
+            Gagal mengambil data dari server. Silakan periksa koneksi lalu coba
+            lagi.
+          </Text>
+          <Button colorScheme="blue" onClick={onRetry}>
+            Coba Lagi
+          </Button>
+        </VStack>
+      </Center>
+    );
+  }
+  return null;
+}
+
 export default function DataSantriTA20252026Page() {
   const { bgColor, borderColor } = useContext(AppContext);
   const { colorMode } = useColorMode();
@@ -126,10 +175,9 @@ export default function DataSantriTA20252026Page() {
   const lockBtnBg = useColorModeValue('gray.100', 'gray.700');
   const lockBtnColor = useColorModeValue('gray.700', 'gray.200');
 
-  const { data: classes } = useTahunAjaran<ClassInfo[]>({
-    tahun: '2025/2026',
-    fallback: rawData as ClassInfo[],
-  });
+  const { data, loading, error, reload } =
+    useTahunAjaran<ClassInfo[]>('2025/2026');
+  const classes = useMemo(() => data ?? [], [data]);
   const [search, setSearch] = useState('');
   const [openIdxs, setOpenIdxs] = useState<number[]>([]);
   const [selected, setSelected] = useState<{
@@ -274,6 +322,17 @@ export default function DataSantriTA20252026Page() {
       setOpenIdxs(filtered.map((_, i) => i));
     }
   }
+
+  const fallback = DataStateFallback({
+    loading,
+    error,
+    empty: classes.length === 0,
+    loadingText: 'Memuat data santri TA 2025/2026…',
+    titleColor: headingColor,
+    bodyColor: subHeadingColor,
+    onRetry: reload,
+  });
+  if (fallback) return fallback;
 
   return (
     <>

@@ -873,26 +873,6 @@
         "status": "naik_kelas"
       },
       {
-        "name": "Aisyah",
-        "ayah": "Slamet Priyadi",
-        "bunda": null,
-        "academic_year": "2025/2026",
-        "kode_registrasi": null,
-        "siblings": [
-          {
-            "name": "Maryam",
-            "class": "Kuttab Awal 3A",
-            "academic_year": "2023/2024"
-          },
-          {
-            "name": "Yahya",
-            "class": "Qonuni 4A",
-            "academic_year": "2019/2020"
-          }
-        ],
-        "status": "naik_kelas"
-      },
-      {
         "name": "Arsyilla Farzana Ayesha",
         "ayah": "Ramadhanul Fajri",
         "bunda": null,

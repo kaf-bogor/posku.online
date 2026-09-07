@@ -2,6 +2,7 @@
 
 import { Link, Text, useColorModeValue } from '@chakra-ui/react';
 
+import { useWaliDirectory } from '~/lib/hooks/useWaliDirectory';
 import { resolvePicToWa } from '~/lib/utils/picWa';
 
 /**
@@ -17,7 +18,8 @@ export default function PicWhatsAppLinks({
 }) {
   const linkColor = useColorModeValue('teal.600', 'teal.300');
   const textColor = useColorModeValue('gray.600', 'gray.300');
-  const matches = resolvePicToWa(value);
+  const { data } = useWaliDirectory();
+  const matches = resolvePicToWa(value, data);
 
   if (matches.length === 0) {
     return (

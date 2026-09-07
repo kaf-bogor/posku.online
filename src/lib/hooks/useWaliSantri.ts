@@ -1,43 +1,50 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { fetchJson } from '~/lib/config/d1';
 import type { DataWaliSantriRecord } from '~/lib/types/data_wali_santri';
 
 type WaliResponse = { data: DataWaliSantriRecord[]; count: number };
 
-export function useWaliSantri(fallback: DataWaliSantriRecord[]): {
+/**
+ * Muat data potensi wali santri dari D1 (worker posku-d1 /api/wali).
+ * Tanpa fallback JSON statis: data murni dari D1.
+ */
+export function useWaliSantri(): {
   data: DataWaliSantriRecord[];
-  source: 'json' | 'd1';
   loading: boolean;
+  error: boolean;
+  reload: () => void;
 } {
-  const [data, setData] = useState<DataWaliSantriRecord[]>(fallback);
-  const [source, setSource] = useState<'json' | 'd1'>('json');
+  const [data, setData] = useState<DataWaliSantriRecord[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+  const [nonce, setNonce] = useState(0);
 
   useEffect(() => {
     let cancelled = false;
+    setLoading(true);
+    setError(false);
 
     async function load() {
-      try {
-        const res = await fetchJson<WaliResponse>('/api/wali');
-        if (!cancelled && res && Array.isArray(res.data) && res.data.length) {
-          setData(res.data);
-          setSource('d1');
-        }
-      } catch {
-        // fallback ke JSON tetap
-      } finally {
-        if (!cancelled) setLoading(false);
+      const res = await fetchJson<WaliResponse>('/api/wali');
+      if (cancelled) return;
+      if (res && Array.isArray(res.data) && res.data.length) {
+        setData(res.data);
+      } else {
+        setError(true);
       }
+      setLoading(false);
     }
 
     load();
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [nonce]);
 
-  return { data, source, loading };
+  const reload = useCallback(() => setNonce((n) => n + 1), []);
+
+  return { data, loading, error, reload };
 }

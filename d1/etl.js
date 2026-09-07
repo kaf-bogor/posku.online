@@ -315,7 +315,16 @@ ins('wali_santri', Object.keys(waliRows[0]), waliRows);
 ins(
   'santri',
   ['id', 'nama', 'nama_ayah', 'nama_bunda', 'kode_registrasi', 'tahun_masuk', 'id_wali', 'dedupe_key'],
-  santriRows
+  santriRows.map((r) => ({
+    id: r.id,
+    nama: r.nama,
+    nama_ayah: r.ayah,
+    nama_bunda: r.bunda,
+    kode_registrasi: r.kode,
+    tahun_masuk: r.tahun_masuk,
+    id_wali: r.id_wali,
+    dedupe_key: r.dedupe_key,
+  }))
 );
 ins('enrollment', ['santri_id', 'kelas_id', 'tahun_ajaran_id', 'status_akademik'], enrollmentRows);
 ins('saudara', ['santri_id', 'nama_teks', 'kelas_teks', 'tahun_teks'], saudaraRows);

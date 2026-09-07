@@ -20,9 +20,11 @@ import {
   Wrap,
   WrapItem,
   Button,
+  Center,
   Icon,
   Select,
   Divider,
+  Spinner,
   useDisclosure,
   Collapse,
   IconButton,
@@ -32,7 +34,6 @@ import { FaListUl, FaFilter, FaTimes } from 'react-icons/fa';
 import { FiSearch, FiMapPin } from 'react-icons/fi';
 
 import DataChatBox from '~/app/components/DataChatBox';
-import rawData from '~/lib/data/data_wali_santri.json';
 import { useWaliSantri } from '~/lib/hooks/useWaliSantri';
 import type {
   KategoriUtama,
@@ -161,7 +162,7 @@ const DataWaliSantriPage = () => {
 
   const { isOpen, onToggle } = useDisclosure();
 
-  const { data } = useWaliSantri(rawData as DataWaliSantriRecord[]);
+  const { data, loading, error, reload } = useWaliSantri();
 
   const [major, setMajor] = useState<KategoriUtama | 'semua'>('semua');
   const [search, setSearch] = useState('');
@@ -243,6 +244,36 @@ const DataWaliSantriPage = () => {
   };
 
   const onMapFilter = (m: KategoriUtama | 'semua') => setMajor(m);
+
+  if (loading) {
+    return (
+      <Center py={24}>
+        <VStack spacing={4}>
+          <Spinner size="lg" color="blue.500" thickness="3px" />
+          <Text color={subHeadingColor}>Memuat data wali santri…</Text>
+        </VStack>
+      </Center>
+    );
+  }
+
+  if (error || data.length === 0) {
+    return (
+      <Center py={24}>
+        <VStack spacing={4} textAlign="center" px={6}>
+          <Heading size="md" color={headingColor}>
+            Data wali santri tidak dapat dimuat
+          </Heading>
+          <Text color={subHeadingColor}>
+            Gagal mengambil data dari server. Silakan periksa koneksi lalu coba
+            lagi.
+          </Text>
+          <Button colorScheme="blue" onClick={reload}>
+            Coba Lagi
+          </Button>
+        </VStack>
+      </Center>
+    );
+  }
 
   return (
     <Box>
