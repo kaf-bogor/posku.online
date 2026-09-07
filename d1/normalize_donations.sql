@@ -1,5 +1,5 @@
 -- =============================================================
--- Normalisasi fs_donations (dump JSON Firestore) -> 3 tabel relasional
+-- Normalisasi fs_donations (dump JSON legacy) -> 3 tabel relasional
 --   fs_donation           : 1 baris per campaign
 --   fs_donor              : 1 baris per donatur (FK ke fs_donation)
 --   fs_donation_activity  : 1 baris per aktivitas edit (FK ke fs_donation)
@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS fs_donation (
 CREATE TABLE IF NOT EXISTS fs_donor (
   id            INTEGER PRIMARY KEY AUTOINCREMENT,
   donation_id   TEXT NOT NULL REFERENCES fs_donation(id) ON DELETE CASCADE,
-  source_id     INTEGER,        -- donor.id asli di Firestore
+  source_id     INTEGER,        -- donor.id asli di dump JSON
   name          TEXT,
   value         INTEGER,        -- nominal (Rp)
   donors_count  INTEGER,        -- agregasi jika 1 entri mewakili banyak donatur

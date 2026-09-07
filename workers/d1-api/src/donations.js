@@ -10,7 +10,7 @@
 //   POST   /api/donations/:id/donors        -> replace daftar donatur         [admin]
 //   POST   /api/donations/reorder           -> set urutan (order) campaign    [admin]
 //
-// Mutasi butuh header: Authorization: Bearer <Firebase ID Token>.
+// Mutasi butuh header: Authorization: Bearer <Google ID Token>.
 // Admin = email (dari token) terdaftar di tabel fs_admin.
 
 import { requireAdmin } from './auth';

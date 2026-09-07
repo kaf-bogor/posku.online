@@ -69,7 +69,7 @@ export const saveUserProfile = async (
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   user: Omit<User, 'createdAt'>
 ): Promise<void> => {
-  // Profil user saat ini tetap dikelola Firebase Auth + fs_admin (untuk admin).
+  // Profil user dikelola Google OAuth; izin admin via fs_admin.
 };
 
 export const getUserProfile = async (

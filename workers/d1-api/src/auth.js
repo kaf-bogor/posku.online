@@ -1,6 +1,6 @@
 // Auth bersama untuk API worker D1.
 // Validasi Google ID token (RS256) secara lokal terhadap public key Google
-// (https://www.googleapis.com/oauth2/v3/certs), bukan Firebase lagi.
+// (https://www.googleapis.com/oauth2/v3/certs).
 // - requireUser : token valid (untuk menulis data pengguna biasa)
 // - requireAdmin : token valid + email terdaftar di fs_admin
 

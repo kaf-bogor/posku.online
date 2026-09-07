@@ -1,5 +1,5 @@
 -- =============================================================
--- Normalisasi collection Firestore lain (dump JSON) -> tabel relasional
+-- Normalisasi collection legacy (dump JSON) -> tabel relasional
 --   fs_events            -> fs_event + fs_event_activity
 --   fs_news              -> fs_news_item + fs_news_activity
 --   fs_kelas (wakaf)     -> fs_wakaf_kelas + fs_wakaf_kelas_participant + fs_wakaf_kelas_activity
@@ -141,7 +141,7 @@ CREATE INDEX IF NOT EXISTS idx_fs_quiz_attempt_user ON fs_quiz_attempt (user_id)
 -- Isi ulang (idempoten)
 -- =============================================================
 
--- helper inline: createdAt yang konsisten (map firestore ATAU teks ISO)
+-- helper inline: createdAt yang konsisten (map JSON ATAU teks ISO)
 -- dipakai berulang sebagai CASE ... END.
 
 DELETE FROM fs_event_activity;

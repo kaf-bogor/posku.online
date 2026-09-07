@@ -42,8 +42,9 @@ Berikut adalah panduan teknis untuk memulai.
 
 - **Next.js**: Framework React untuk production.
 - **Chakra UI**: Komponen UI yang modern dan aksesibel.
-- **Firebase**: Untuk otentikasi dan database (Firestore).
-- **Vercel Blob**: Untuk hosting dan manajemen gambar.
+- **Google OAuth**: Autentikasi admin langsung via Google.
+- **Cloudflare**: Worker API, database D1, vector database (Vectorize), dan R2.
+- **Vercel**: Hosting & deployment aplikasi Next.js.
 - **TypeScript**: Untuk menjaga kualitas dan struktur kode.
 
 ### Cara Setup Proyek Lokal
@@ -77,16 +78,13 @@ Berikut adalah panduan teknis untuk memulai.
 
 Pastikan semua variabel ini telah diatur di dalam file `.env.local` Antum agar aplikasi dapat berjalan dengan baik.
 
-#### Konfigurasi Firebase
-Nilai untuk variabel-variabel ini bisa didapatkan dari Firebase Console project Antum.
+#### Konfigurasi Google OAuth
+Buat OAuth Client (Web application) di Google Cloud Console, lalu daftarkan redirect URI:
+`https://poskubogor.com/api/auth/callback/google` dan `http://localhost:4001/api/auth/callback/google`.
 
 ```
-NEXT_PUBLIC_FIREBASE_API_KEY=...
-NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=...
-NEXT_PUBLIC_FIREBASE_PROJECT_ID=...
-NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=...
-NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=...
-NEXT_PUBLIC_FIREBASE_APP_ID=...
+GOOGLE_CLIENT_ID=isi-dengan-client-id
+GOOGLE_CLIENT_SECRET=isi-dengan-client-secret
 ```
 
 #### Konfigurasi Vercel Blob Storage

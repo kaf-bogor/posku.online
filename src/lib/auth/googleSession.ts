@@ -1,4 +1,4 @@
-// Sesi Google OAuth sisi klien (tanpa Firebase).
+// Sesi Google OAuth sisi klien.
 // id_token disimpan di cookie `posku_id_token` (bisa dibaca JS) supaya bisa
 // dipakai sebagai Authorization: Bearer ke worker D1. Refresh otomatis lewat
 // /api/auth/token memakai refresh_token yang tersimpan httpOnly.

@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { fetchMe, logoutSession } from '~/lib/auth/googleSession';
 import type { AuthUser } from '~/lib/types/auth';
 
-// Autentikasi admin (Google OAuth langsung; tanpa Firebase).
+// Autentikasi admin (Google OAuth langsung).
 export default function useAuth(
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _resourceType?: string

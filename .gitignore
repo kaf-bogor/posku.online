@@ -56,8 +56,5 @@ sitemap*.xml
 .env
 .env*.local
 
-# Hasil dump Firestore (generate ulang via scripts/firestore-export.mjs)
-d1/firestore/
-
 # Hasil generate scripts/load-rag-docs.mjs (ulang via pnpm rag:docs)
 d1/rag_docs_data.sql
