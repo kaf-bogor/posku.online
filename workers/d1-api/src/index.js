@@ -59,12 +59,12 @@ export default {
         return listAdmins(env);
       }
       if (path === '/api/tahun-ajaran') {
-        return await serveCached(request, ctx, 300, () =>
+        return await serveCached(request, ctx, CACHE_7D, () =>
           handleTahunAjaran(env, url)
         );
       }
       if (path === '/api/wali') {
-        return await serveCached(request, ctx, 300, () =>
+        return await serveCached(request, ctx, CACHE_7D, () =>
           handleWali(env, url)
         );
       }
@@ -86,16 +86,30 @@ function corsHeaders() {
   };
 }
 
+const CACHE_7D = 60 * 60 * 24 * 7; // 1 minggu
+const CACHE_CLIENT_MAX_AGE = 300; // browser menyimpan singkat (5 mnt)
+
 // Respons JSON yang di-cache di edge (Cache API). Data santri/wali jarang
-// berubah (di-refresh via ETL), jadi setelah dimuat cukup disajikan dari cache.
+// berubah (di-refresh via ETL), jadi setelah dimuat disajikan dari cache
+// hingga ttlSeconds. Gunakan query `?refresh=1` utk memaksa ambil data baru
+// dan memperbarui cache.
 async function serveCached(request, ctx, ttlSeconds, build) {
+  const bypass = new URL(request.url).searchParams.get('refresh') === '1';
   const cache = caches.default;
   const cacheKey = new Request(request.url, request);
-  try {
-    const cached = await cache.match(cacheKey);
-    if (cached) return cached;
-  } catch {
-    // cache tak tersedia — lanjut hit DB
+
+  if (!bypass) {
+    try {
+      const cached = await cache.match(cacheKey);
+      if (cached) {
+        const ts = Number(cached.headers.get('x-cache-ts') || 0);
+        if (!ts || Date.now() - ts < ttlSeconds * 1000) return cached;
+        // sudah lewat umur — buang lalu ambil ulang
+        ctx.waitUntil(cache.delete(cacheKey).catch(() => {}));
+      }
+    } catch {
+      // cache tak tersedia — lanjut hit DB
+    }
   }
 
   const resp = await build();
@@ -104,15 +118,18 @@ async function serveCached(request, ctx, ttlSeconds, build) {
   const body = await resp.text();
   const headers = {
     'Content-Type': 'application/json; charset=utf-8',
-    'Cache-Control': `public, max-age=${ttlSeconds}`,
+    'Cache-Control': `public, s-maxage=${ttlSeconds}, max-age=${CACHE_CLIENT_MAX_AGE}`,
+    'x-cache-ts': String(Date.now()),
     ...corsHeaders(),
   };
-  try {
-    ctx.waitUntil(
-      cache.put(cacheKey, new Response(body, { status: 200, headers }))
-    );
-  } catch {
-    // gagal menulis cache — respons tetap dikembalikan
+  if (!bypass) {
+    try {
+      ctx.waitUntil(
+        cache.put(cacheKey, new Response(body, { status: 200, headers }))
+      );
+    } catch {
+      // gagal menulis cache — respons tetap dikembalikan
+    }
   }
   return new Response(body, { status: 200, headers });
 }
