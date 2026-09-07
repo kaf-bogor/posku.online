@@ -1,8 +1,7 @@
-import type { User } from 'firebase/auth';
-import { signOut } from 'firebase/auth';
 import { useEffect, useState } from 'react';
 
-import { auth } from '~/lib/firebase';
+import { logoutSession } from '~/lib/auth/googleSession';
+import type { AuthUser } from '~/lib/types/auth';
 
 export type UseAdminAuthorizationResult = {
   adminEmails: string[];
@@ -13,11 +12,11 @@ export type UseAdminAuthorizationResult = {
 
 /**
  * Cek apakah user adalah admin dengan membandingkan email terhadap daftar
- * admin publik dari worker D1 (GET /api/admins). Mirip perilaku lama yang
- * membaca daftar admin. Side-effect: jika bukan admin, signOut otomatis.
+ * admin publik dari worker D1 (GET /api/admins). Side-effect: jika bukan
+ * admin, sesi diakhiri (logout) otomatis.
  */
 export default function useAdminAuthorization(
-  user: User | null
+  user: AuthUser | null
 ): UseAdminAuthorizationResult {
   const [adminEmails, setAdminEmails] = useState<string[]>([]);
   const [adminsLoading, setAdminsLoading] = useState(true);
@@ -76,12 +75,13 @@ export default function useAdminAuthorization(
     }
   }, [user, adminEmails, adminsLoading, error]);
 
-  // Sign out jika user bukan admin
+  // Akhiri sesi jika user bukan admin
   useEffect(() => {
     if (notAllowed) {
-      const timer = setTimeout(() => {
-        signOut(auth);
+      const timer = setTimeout(async () => {
         setNotAllowed(false);
+        await logoutSession();
+        window.location.reload();
       }, 2000);
       return () => clearTimeout(timer);
     }

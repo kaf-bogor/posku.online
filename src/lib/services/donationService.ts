@@ -1,8 +1,7 @@
 // Klien HTTP untuk API donations di worker D1 (posku-d1).
 // Memakai D1_API_URL dari src/lib/config/d1.ts.
-// Tidak mengimpor firebase di top-level agar aman dipakai dari Server Component
-// (/amal/[id]); token Firebase diambil lazy hanya saat dibutuhkan (admin).
 import { D1_API_URL } from '../config/d1';
+import { getGoogleToken } from '~/lib/auth/googleSession';
 import type { DonationPage } from '~/lib/types/donation';
 
 async function request<T>(
@@ -34,12 +33,10 @@ async function request<T>(
   return (await res.json()) as T;
 }
 
-// Token Firebase pengguna yang sedang login (untuk operasi admin).
+// Token user yang sedang login (untuk operasi admin).
 export async function getAdminToken(): Promise<string | null> {
   try {
-    const { getAuth } = await import('firebase/auth');
-    const user = getAuth().currentUser;
-    return user ? await user.getIdToken() : null;
+    return await getGoogleToken();
   } catch {
     return null;
   }

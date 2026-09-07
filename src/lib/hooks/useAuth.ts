@@ -1,50 +1,39 @@
-import {
-  signInWithPopup,
-  GoogleAuthProvider,
-  signOut,
-  onAuthStateChanged,
-} from 'firebase/auth';
-import type { User } from 'firebase/auth';
-import { useEffect, useState, useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
-import { auth } from '~/lib/firebase';
+import { fetchMe, logoutSession } from '~/lib/auth/googleSession';
+import type { AuthUser } from '~/lib/types/auth';
 
-// Custom hook untuk autentikasi (Firebase Auth saja; profil/data tersimpan di D1).
+// Autentikasi admin (Google OAuth langsung; tanpa Firebase).
 export default function useAuth(
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _resourceType?: string
 ) {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<AuthUser | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(
-      auth,
-      (firebaseUser: User | null) => {
-        setUser(firebaseUser);
+    let active = true;
+    fetchMe().then((u) => {
+      if (active) {
+        setUser(u);
         setLoading(false);
       }
-    );
-    return () => unsubscribe();
+    });
+    return () => {
+      active = false;
+    };
   }, []);
 
   const login = useCallback(async () => {
-    try {
-      const provider = new GoogleAuthProvider();
-      await signInWithPopup(auth, provider);
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error('Login error:', error);
-    }
+    const target = window.location.pathname + window.location.search;
+    window.location.assign(
+      `/api/auth/google?next=${encodeURIComponent(target)}`
+    );
   }, []);
 
   const logout = useCallback(async () => {
-    try {
-      await signOut(auth);
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error('Logout error:', error);
-    }
+    await logoutSession();
+    window.location.reload();
   }, []);
 
   return { user, loading, login, logout };

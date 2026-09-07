@@ -1,6 +1,7 @@
 /* eslint-disable no-useless-catch */
 /* eslint-disable sonarjs/no-useless-catch */
 import { D1_API_URL } from '../config/d1';
+import { getGoogleToken } from '~/lib/auth/googleSession';
 import type {
   Quiz,
   Question,
@@ -11,9 +12,7 @@ import type {
 
 async function getToken(): Promise<string | null> {
   try {
-    const { getAuth } = await import('firebase/auth');
-    const user = getAuth().currentUser;
-    return user ? await user.getIdToken() : null;
+    return await getGoogleToken();
   } catch {
     return null;
   }

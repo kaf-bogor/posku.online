@@ -55,9 +55,9 @@ export default function AddNewsPage() {
       let author = form.author.trim();
       if (!author) {
         try {
-          const { getAuth } = await import('firebase/auth');
-          const u = getAuth().currentUser;
-          author = u?.displayName || u?.email || '';
+          const { fetchMe } = await import('~/lib/auth/googleSession');
+          const me = await fetchMe();
+          author = me?.displayName || me?.email || '';
         } catch {
           author = '';
         }

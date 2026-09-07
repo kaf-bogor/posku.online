@@ -1,11 +1,10 @@
 // Klien HTTP presence "sedang online" dari worker D1.
 import { D1_API_URL } from '../config/d1';
+import { getGoogleToken } from '~/lib/auth/googleSession';
 
 async function getToken(): Promise<string | null> {
   try {
-    const { getAuth } = await import('firebase/auth');
-    const user = getAuth().currentUser;
-    return user ? await user.getIdToken() : null;
+    return await getGoogleToken();
   } catch {
     return null;
   }
