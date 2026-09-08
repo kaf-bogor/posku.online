@@ -87,19 +87,6 @@ GOOGLE_CLIENT_ID=isi-dengan-client-id
 GOOGLE_CLIENT_SECRET=isi-dengan-client-secret
 ```
 
-#### Konfigurasi Vercel Blob Storage
-Agar fitur unggah gambar dapat berfungsi, Antum perlu melakukan setup Vercel Blob Storage.
-
-1.  **Buat Vercel Blob Store**: Silakan ikuti [dokumentasi resmi Vercel](https://vercel.com/docs/storage/vercel-blob/quickstart) untuk membuat Blob Store baru di proyek Vercel Antum.
-2.  **Buat Read-Write Token**: Di dasbor proyek Vercel, masuk ke pengaturan Blob Store, lalu buat token *read-write* yang baru.
-3.  **Tambahkan ke .env.local**:
-
-    ```
-    BLOB_READ_WRITE_TOKEN=isi-dengan-token-dari-vercel
-    ```
-
-    Mohon ganti `isi-dengan-token-dari-vercel` dengan token yang baru saja Antum buat.
-
 ---
 
 Jazakumullah khairan katsiran atas kontribusinya. Mari kita bangun platform ini bersama demi mendukung pendidikan generasi rabbani. Barakallahu fiikum.
