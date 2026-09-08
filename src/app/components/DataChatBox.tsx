@@ -199,18 +199,48 @@ export default function DataChatBox({
     stop();
   }
 
-  // ---- palet modern navy/slate ----
-  const panelBg = useColorModeValue('#ffffff', '#10151f');
-  const convBg = useColorModeValue('#f6f8fb', '#0d1118');
-  const surfaceBg = useColorModeValue('#ffffff', '#151b27');
-  const borderColor = useColorModeValue('gray.200', '#263044');
+  // ---- palet liquid glass (iOS) ----
+  const panelBg = useColorModeValue(
+    'rgba(255,255,255,0.72)',
+    'rgba(15,19,28,0.6)'
+  );
+  const convBg = useColorModeValue(
+    'rgba(247,249,252,0.45)',
+    'rgba(8,11,17,0.42)'
+  );
+  const surfaceBg = useColorModeValue(
+    'rgba(255,255,255,0.5)',
+    'rgba(19,25,35,0.5)'
+  );
+  const borderColor = useColorModeValue(
+    'rgba(255,255,255,0.6)',
+    'rgba(150,165,190,0.22)'
+  );
+  const panelShadow = useColorModeValue(
+    '0 20px 60px rgba(15,23,42,0.16)',
+    '0 24px 70px rgba(0,0,0,0.5)'
+  );
+  const fabBg = useColorModeValue(
+    'linear-gradient(135deg, rgba(129,140,248,0.92), rgba(37,99,235,0.88))',
+    'linear-gradient(135deg, rgba(129,140,248,0.6), rgba(37,99,235,0.55))'
+  );
+  const fabBorder = useColorModeValue(
+    'rgba(255,255,255,0.7)',
+    'rgba(255,255,255,0.25)'
+  );
   const headerText = useColorModeValue('#0f172a', '#f1f5f9');
   const mutedText = useColorModeValue('#64748b', '#94a3b8');
   const accent = useColorModeValue('#2563eb', '#60a5fa');
   const accentHover = useColorModeValue('#1d4ed8', '#3b82f6');
   const userBubbleBg = useColorModeValue('#2563eb', '#2f6fed');
-  const assistantBubbleBg = useColorModeValue('#ffffff', '#1a2230');
-  const inputBg = useColorModeValue('#ffffff', '#151b27');
+  const assistantBubbleBg = useColorModeValue(
+    'rgba(255,255,255,0.82)',
+    'rgba(26,34,48,0.6)'
+  );
+  const inputBg = useColorModeValue(
+    'rgba(255,255,255,0.7)',
+    'rgba(21,27,39,0.55)'
+  );
   const scrollTrackColor = useColorModeValue('#cbd5e1', '#334155');
   const scrollbarColor = useColorModeValue(
     '#cbd5e1 transparent',
@@ -219,23 +249,38 @@ export default function DataChatBox({
   const errorText = useColorModeValue('#b91c1c', '#fca5a5');
   const hoverBg = useColorModeValue('blackAlpha.50', 'whiteAlpha.100');
 
-  // Launcher (tombol FAB)
+  // Launcher (tombol FAB) — di atas bottom-nav di mobile
   if (!isOpen) {
     return (
-      <Box position="fixed" bottom={5} right={5} zIndex={1200}>
+      <Box
+        position="fixed"
+        bottom={{
+          base: 'calc(env(safe-area-inset-bottom, 0px) + 86px)',
+          md: 'calc(env(safe-area-inset-bottom, 0px) + 86px)',
+          lg: 6,
+        }}
+        right={{ base: 4, md: 6 }}
+        zIndex={1200}
+      >
         <IconButton
           aria-label="Buka chat"
           onClick={() => setIsOpen(true)}
           borderRadius="full"
           w={14}
           h={14}
-          bg={accent}
           color="white"
-          boxShadow="0 10px 30px rgba(37,99,235,0.35)"
-          _hover={{ bg: accentHover, transform: 'translateY(-2px)' }}
-          _active={{ transform: 'translateY(0)' }}
-          transition="all .18s ease"
+          border="1px solid"
+          borderColor={fabBorder}
           icon={<FiMessageSquare size={24} />}
+          _hover={{ transform: 'translateY(-2px)' }}
+          _active={{ transform: 'translateY(0) scale(0.96)' }}
+          transition="all .18s ease"
+          style={{
+            background: fabBg,
+            backdropFilter: 'blur(18px) saturate(180%)',
+            WebkitBackdropFilter: 'blur(18px) saturate(180%)',
+            boxShadow: '0 10px 34px rgba(0,0,0,0.18)',
+          }}
         />
       </Box>
     );
@@ -253,12 +298,20 @@ export default function DataChatBox({
         borderRadius: { base: 0, md: 0 },
       }
     : {
-        bottom: { base: 0, md: 6 },
+        bottom: {
+          base: 0,
+          md: 'calc(env(safe-area-inset-bottom, 0px) + 88px)',
+          lg: 6,
+        },
         right: 0,
         left: { base: 0, md: 'auto' },
         w: { base: '100vw', md: '420px' },
-        h: { base: '100dvh', md: 'min(640px, calc(100dvh - 48px))' },
-        borderRadius: { base: 0, md: '16px' },
+        h: {
+          base: '100dvh',
+          md: 'min(600px, calc(100dvh - 140px))',
+          lg: 'min(640px, calc(100dvh - 48px))',
+        },
+        borderRadius: { base: 0, md: '20px' },
         pb: { base: 'env(safe-area-inset-bottom)', md: 0 },
       };
 
@@ -269,14 +322,14 @@ export default function DataChatBox({
       bg={panelBg}
       border="1px solid"
       borderColor={borderColor}
-      boxShadow={
-        isFullscreen || !isOpen ? 'none' : '0 20px 60px rgba(15,23,42,.18)'
-      }
+      boxShadow={isFullscreen || !isOpen ? 'none' : panelShadow}
       display="flex"
       flexDirection="column"
       overflow="hidden"
       fontFamily="'Inter', var(--chakra-fonts-body), system-ui, sans-serif"
       sx={{
+        backdropFilter: 'blur(28px) saturate(180%)',
+        WebkitBackdropFilter: 'blur(28px) saturate(180%)',
         '@media (max-width: 767px)': {
           borderRadius: '0 !important',
         },
