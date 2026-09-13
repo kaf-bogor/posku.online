@@ -7,7 +7,7 @@
 import { json } from './json';
 
 const GOOGLE_CLIENT_ID =
-  '311474638765-7l6ag4lbkuuelbs0fbdjvf0oqscu8901.apps.googleusercontent.com';
+  '325348369984-rpksf0799g9atnegvnh42pouuaft5gnt.apps.googleusercontent.com';
 const JWKS_URL = 'https://www.googleapis.com/oauth2/v3/certs';
 const ALLOWED_ISS = ['https://accounts.google.com', 'accounts.google.com'];
 

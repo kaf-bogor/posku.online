@@ -6,7 +6,7 @@ export const GOOGLE_TOKEN_URL = 'https://oauth2.googleapis.com/token';
 
 export const GOOGLE_CLIENT_ID =
   process.env.GOOGLE_CLIENT_ID ||
-  '311474638765-7l6ag4lbkuuelbs0fbdjvf0oqscu8901.apps.googleusercontent.com';
+  '325348369984-rpksf0799g9atnegvnh42pouuaft5gnt.apps.googleusercontent.com';
 
 export const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET || '';
 
