@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 
+import ServiceWorkerCleanup from '~/app/components/ServiceWorkerCleanup';
 import Providers from '~/app/providers';
 import { AppProvider } from '~/lib/context/app';
 import { Layout } from '~/lib/layout';
@@ -49,6 +50,7 @@ const RootLayout = ({ children }: RootLayoutProps) => {
             <Layout>{children}</Layout>
           </AppProvider>
         </Providers>
+        <ServiceWorkerCleanup />
         {CF_ANALYTICS_TOKEN ? (
           <script
             async
