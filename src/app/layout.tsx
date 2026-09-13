@@ -9,7 +9,9 @@ type RootLayoutProps = {
 };
 
 const APP_NAME = 'poskubogor';
-const CF_ANALYTICS_TOKEN = process.env.NEXT_PUBLIC_CF_WEB_ANALYTICS_TOKEN;
+const CF_ANALYTICS_TOKEN =
+  process.env.NEXT_PUBLIC_CF_WEB_ANALYTICS_TOKEN ||
+  '315ac31b5a594fafbae561ca64e15029';
 
 export const metadata: Metadata = {
   title: { default: APP_NAME, template: '%s | poskubogor' },
@@ -49,7 +51,8 @@ const RootLayout = ({ children }: RootLayoutProps) => {
         </Providers>
         {CF_ANALYTICS_TOKEN ? (
           <script
-            defer
+            async
+            type="module"
             src="https://static.cloudflareinsights.com/beacon.min.js"
             data-cf-beacon={JSON.stringify({ token: CF_ANALYTICS_TOKEN })}
           />
