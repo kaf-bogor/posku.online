@@ -60,3 +60,6 @@ sitemap*.xml
 d1/rag_docs_data.sql
 /dist/
 .vinext/
+
+# File generated oleh vinext build
+/next-env.d.ts
