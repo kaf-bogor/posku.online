@@ -1,4 +1,3 @@
-import { Analytics } from '@vercel/analytics/react';
 import type { Metadata, Viewport } from 'next';
 
 import Providers from '~/app/providers';
@@ -10,6 +9,7 @@ type RootLayoutProps = {
 };
 
 const APP_NAME = 'poskubogor';
+const CF_ANALYTICS_TOKEN = process.env.NEXT_PUBLIC_CF_WEB_ANALYTICS_TOKEN;
 
 export const metadata: Metadata = {
   title: { default: APP_NAME, template: '%s | poskubogor' },
@@ -47,7 +47,13 @@ const RootLayout = ({ children }: RootLayoutProps) => {
             <Layout>{children}</Layout>
           </AppProvider>
         </Providers>
-        <Analytics />
+        {CF_ANALYTICS_TOKEN ? (
+          <script
+            defer
+            src="https://static.cloudflareinsights.com/beacon.min.js"
+            data-cf-beacon={JSON.stringify({ token: CF_ANALYTICS_TOKEN })}
+          />
+        ) : null}
       </body>
     </html>
   );
