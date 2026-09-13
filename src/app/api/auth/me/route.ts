@@ -15,7 +15,7 @@ const D1_API_URL =
   process.env.NEXT_PUBLIC_D1_API_URL || 'https://posku-d1.kubido.workers.dev';
 
 async function resolveIdToken() {
-  const store = cookies();
+  const store = await cookies();
   const idToken = store.get(COOKIES.idToken)?.value || '';
 
   const expMs = (token: string): number => {

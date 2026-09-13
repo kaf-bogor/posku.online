@@ -6,7 +6,7 @@ import { COOKIES } from '~/lib/auth/oauth';
 export const dynamic = 'force-dynamic';
 
 export async function POST() {
-  const store = cookies();
+  const store = await cookies();
   store.delete(COOKIES.idToken);
   store.delete(COOKIES.refreshToken);
   store.delete(COOKIES.state);

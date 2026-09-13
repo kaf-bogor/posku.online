@@ -15,7 +15,7 @@ export const dynamic = 'force-dynamic';
  * refresh_token bila mendekati kedaluwarsa). Dipakai klien utk Authorization.
  */
 async function resolveIdToken() {
-  const store = cookies();
+  const store = await cookies();
   const idToken = store.get(COOKIES.idToken)?.value || '';
 
   const expMs = (token: string): number => {

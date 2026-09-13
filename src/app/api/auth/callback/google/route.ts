@@ -11,7 +11,7 @@ export async function GET(request: Request) {
   const code = url.searchParams.get('code');
   const errorParam = url.searchParams.get('error');
   const stateParam = url.searchParams.get('state');
-  const store = cookies();
+  const store = await cookies();
   const stateCookie = store.get(COOKIES.state)?.value;
   store.delete(COOKIES.state);
 

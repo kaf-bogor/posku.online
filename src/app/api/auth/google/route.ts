@@ -22,7 +22,7 @@ export async function GET(request: Request) {
     JSON.stringify({ s: token, r: redirectTo })
   ).toString('base64url');
 
-  const store = cookies();
+  const store = await cookies();
   store.set(COOKIES.state, statePayload, {
     httpOnly: true,
     secure: url.protocol === 'https:',

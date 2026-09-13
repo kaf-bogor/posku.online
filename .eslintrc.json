@@ -4,6 +4,20 @@
     "plugin:react/jsx-runtime",
     "plugin:@next/next/recommended"
   ],
+  "settings": {
+    "import/core-modules": [
+      "next",
+      "next/link",
+      "next/navigation",
+      "next/head",
+      "next/server",
+      "next/cache",
+      "next/image",
+      "next/dynamic",
+      "next/router",
+      "next/font/google"
+    ]
+  },
   "rules": {
     "@typescript-eslint/lines-between-class-members": "off",
     "@typescript-eslint/no-throw-literal": "off",

@@ -32,7 +32,7 @@
     "strictNullChecks": true
   },
   "include": [
-    "next-env.d.ts",
+    "vinext-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
     "src",
