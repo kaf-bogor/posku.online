@@ -1,5 +1,7 @@
+// Konfigurasi ini dibaca oleh vinext (Vite-based Next.js), bukan Next.js.
+// Berisi opsi kompatibilitas: images.
 /** @type {import('next').NextConfig} */
-module.exports = {
+const nextConfig = {
   reactStrictMode: true,
   images: {
     remotePatterns: [
@@ -10,3 +12,5 @@ module.exports = {
     ],
   },
 };
+
+export default nextConfig;
