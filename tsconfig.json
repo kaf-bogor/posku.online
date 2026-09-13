@@ -13,7 +13,7 @@
     "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
@@ -36,8 +36,7 @@
     "**/*.ts",
     "**/*.tsx",
     "src",
-    "commitlint.config.js",
-    ".next/types/**/*.ts"
+    "commitlint.config.js"
   ],
   "exclude": [
     "node_modules"

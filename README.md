@@ -40,11 +40,11 @@ Berikut adalah panduan teknis untuk memulai.
 
 ### Teknologi yang Digunakan
 
-- **Next.js**: Framework React untuk production.
+- **vinext** (Vite-based Next.js): Framework React untuk production.
 - **Chakra UI**: Komponen UI yang modern dan aksesibel.
 - **Google OAuth**: Autentikasi admin langsung via Google.
+- **Cloudflare Workers**: Hosting aplikasi (deploy via `pnpm deploy`).
 - **Cloudflare**: Worker API, database D1, vector database (Vectorize), dan R2.
-- **Vercel**: Hosting & deployment aplikasi Next.js.
 - **TypeScript**: Untuk menjaga kualitas dan struktur kode.
 
 ### Cara Setup Proyek Lokal
@@ -72,7 +72,17 @@ Berikut adalah panduan teknis untuk memulai.
     pnpm dev
     ```
 
-    Silakan buka [http://localhost:3000](http://localhost:3000) di browser Antum untuk melihat hasilnya.
+    Silakan buka [http://localhost:4001](http://localhost:4001) di browser Antum untuk melihat hasilnya.
+
+5.  **Deploy ke Cloudflare Workers**
+
+    ```bash
+    pnpm build   # build vinext
+    pnpm deploy  # build & deploy ke Cloudflare Workers
+    ```
+
+    Secret dibutuhkan di Worker (set via `wrangler secret put`):
+    `GOOGLE_CLIENT_ID` dan `GOOGLE_CLIENT_SECRET`.
 
 ### Kebutuhan Environment Variables
 

@@ -58,3 +58,5 @@ sitemap*.xml
 
 # Hasil generate scripts/load-rag-docs.mjs (ulang via pnpm rag:docs)
 d1/rag_docs_data.sql
+/dist/
+.vinext/
