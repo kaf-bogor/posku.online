@@ -6,13 +6,9 @@ import {
   Button,
   Center,
   Divider,
-  FormControl,
-  FormErrorMessage,
   HStack,
   Heading,
   Input,
-  InputGroup,
-  InputRightElement,
   Link,
   List,
   ListItem,
@@ -20,7 +16,6 @@ import {
   ModalBody,
   ModalCloseButton,
   ModalContent,
-  ModalFooter,
   ModalHeader,
   ModalOverlay,
   Spinner,
@@ -223,9 +218,6 @@ export default function DataSantriTA20252026Page() {
   const modalBg = useColorModeValue('white', 'gray.800');
   const modalLabelColor = useColorModeValue('gray.500', 'gray.400');
 
-  const lockBtnBg = useColorModeValue('gray.100', 'gray.700');
-  const lockBtnColor = useColorModeValue('gray.700', 'gray.200');
-
   const { data, loading, error, reload } =
     useTahunAjaran<ClassInfo[]>('2025/2026');
   const classes = useMemo(() => data ?? [], [data]);
@@ -236,42 +228,8 @@ export default function DataSantriTA20252026Page() {
     className: string;
   } | null>(null);
 
-  const [isUnlocked, setIsUnlocked] = useState(false);
-  const [showLockModal, setShowLockModal] = useState(false);
-  const [pwInput, setPwInput] = useState('');
-  const [pwError, setPwError] = useState('');
-  const [showPw, setShowPw] = useState(false);
-
-  useEffect(() => {
-    if (sessionStorage.getItem('ds_unlocked') === '1') setIsUnlocked(true);
-  }, []);
-
-  function handleUnlock() {
-    if (pwInput === 'qonun1') {
-      sessionStorage.setItem('ds_unlocked', '1');
-      setIsUnlocked(true);
-      setShowLockModal(false);
-      setPwInput('');
-      setPwError('');
-    } else {
-      setPwError('Password salah.');
-    }
-  }
-
-  function handleLock() {
-    sessionStorage.removeItem('ds_unlocked');
-    setIsUnlocked(false);
-    setSelected(null);
-  }
-
   function handleSearch(e: React.ChangeEvent<HTMLInputElement>) {
     setSearch(e.target.value);
-  }
-
-  function handleCloseLockModal() {
-    setShowLockModal(false);
-    setPwInput('');
-    setPwError('');
   }
 
   function toggleCard(idx: number) {
@@ -281,39 +239,17 @@ export default function DataSantriTA20252026Page() {
     });
   }
 
-  function handleLockToggle() {
-    if (isUnlocked) {
-      handleLock();
-    } else {
-      setShowLockModal(true);
-    }
-  }
-
   function handleCardToggle(e: React.MouseEvent<HTMLElement>) {
     toggleCard(Number((e.currentTarget as HTMLElement).dataset.idx));
   }
 
   function handleStudentClick(e: React.MouseEvent<HTMLElement>) {
-    if (!isUnlocked) return;
     const el = e.currentTarget as HTMLElement;
     const studentName = el.dataset.studentName ?? '';
     const cls = el.dataset.className ?? '';
     const classData = classes.find((c) => c.name === cls);
     const student = classData?.students.find((s) => s.name === studentName);
     if (student) setSelected({ student, className: cls });
-  }
-
-  function handlePwInputChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setPwInput(e.target.value);
-    setPwError('');
-  }
-
-  function handlePwKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
-    if (e.key === 'Enter') handleUnlock();
-  }
-
-  function handleTogglePw() {
-    setShowPw((v) => !v);
   }
 
   function handleCloseDetailModal() {
@@ -423,25 +359,6 @@ export default function DataSantriTA20252026Page() {
               </Text>
             </VStack>
             <HStack spacing={2} flexShrink={0}>
-              <Box
-                as="button"
-                type="button"
-                px={3}
-                py={2}
-                bg={lockBtnBg}
-                color={lockBtnColor}
-                borderRadius="lg"
-                fontWeight="medium"
-                fontSize="sm"
-                border="1px solid"
-                borderColor={borderColor}
-                onClick={handleLockToggle}
-                _hover={{ opacity: 0.8 }}
-                transition="opacity 0.15s ease"
-                title={isUnlocked ? 'Kunci info santri' : 'Buka info santri'}
-              >
-                {isUnlocked ? '🔓 Terkunci: Matikan' : '🔒 Info Santri'}
-              </Box>
               <Box
                 as="button"
                 type="button"
@@ -654,20 +571,11 @@ export default function DataSantriTA20252026Page() {
                               >
                                 <HStack spacing={2}>
                                   <Box
-                                    cursor={isUnlocked ? 'pointer' : 'default'}
-                                    _hover={
-                                      isUnlocked
-                                        ? { textDecoration: 'underline' }
-                                        : {}
-                                    }
+                                    cursor="pointer"
+                                    _hover={{ textDecoration: 'underline' }}
                                     data-student-name={student.name}
                                     data-class-name={classInfo.name}
                                     onClick={handleStudentClick}
-                                    title={
-                                      isUnlocked
-                                        ? ''
-                                        : 'Aktifkan info santri untuk melihat detail'
-                                    }
                                     dangerouslySetInnerHTML={{
                                       __html: highlight(
                                         `${sIdx + 1}. ${student.name}`,
@@ -709,50 +617,6 @@ export default function DataSantriTA20252026Page() {
           )}
         </Box>
       </Box>
-
-      {/* Password unlock modal */}
-      <Modal
-        isOpen={showLockModal}
-        onClose={handleCloseLockModal}
-        isCentered
-        size="sm"
-      >
-        <ModalOverlay />
-        <ModalContent bg={modalBg}>
-          <ModalHeader color={headingColor}>Masukkan Password</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody pb={2}>
-            <FormControl isInvalid={!!pwError}>
-              <InputGroup>
-                <Input
-                  type={showPw ? 'text' : 'password'}
-                  placeholder="Password"
-                  value={pwInput}
-                  onChange={handlePwInputChange}
-                  onKeyDown={handlePwKeyDown}
-                  autoFocus
-                />
-                <InputRightElement width="4rem">
-                  <Button
-                    h="1.5rem"
-                    size="xs"
-                    onClick={handleTogglePw}
-                    variant="ghost"
-                  >
-                    {showPw ? 'Hide' : 'Show'}
-                  </Button>
-                </InputRightElement>
-              </InputGroup>
-              <FormErrorMessage>{pwError}</FormErrorMessage>
-            </FormControl>
-          </ModalBody>
-          <ModalFooter>
-            <Button colorScheme="blue" onClick={handleUnlock} w="full">
-              Buka
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
 
       {/* Student detail modal */}
       <Modal
