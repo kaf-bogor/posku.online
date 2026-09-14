@@ -5,4 +5,7 @@ export type AuthUser = {
   photoURL: string | null;
   uid: string;
   admin: boolean;
+  pengurus: boolean;
+  divisi: string | null;
+  nama: string | null;
 };

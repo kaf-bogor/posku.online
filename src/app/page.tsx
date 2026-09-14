@@ -24,6 +24,8 @@ import {
   FaHourglassHalf,
   FaCalendarCheck,
   FaUserCheck,
+  FaUserGraduate,
+  FaAddressBook,
 } from 'react-icons/fa';
 import { FiHelpCircle } from 'react-icons/fi';
 
@@ -33,6 +35,7 @@ import SectionHeader from '~/lib/components/SectionHeader';
 import { AppContext } from '~/lib/context/app';
 import { storageUrl } from '~/lib/context/baseUrl';
 import rawKalender from '~/lib/data/kalender_posku.json';
+import useAuth from '~/lib/hooks/useAuth';
 import { listEvents, listNews } from '~/lib/services/contentService';
 import type { EventItem } from '~/lib/types/event';
 import type { NewsItem } from '~/lib/types/news';
@@ -344,6 +347,7 @@ const EventsSection = ({
 };
 
 const Home = () => {
+  const { user } = useAuth();
   const [newsItems, setNewsItems] = useState<NewsItem[]>([]);
   const [newsLoading, setNewsLoading] = useState(true);
   const [eventItems, setEventItems] = useState<EventItem[]>([]);
@@ -413,6 +417,30 @@ const Home = () => {
       </Box>
 
       <OnlineNow />
+
+      {user?.pengurus && (
+        <Box>
+          <SectionHeader title="Menu Pengurus" />
+          <MainMenus
+            items={[
+              {
+                label: 'Data Santri',
+                href: MENU_HREF.data_santri,
+                icon: FaUserGraduate,
+              },
+              {
+                label: 'Data Wali Santri',
+                href: MENU_HREF.data_wali_santri,
+                icon: FaAddressBook,
+              },
+            ]}
+          />
+          <Text fontSize="xs" color="gray.500" mt={2}>
+            Khusus pengurus POSKU{user.divisi ? ` · ${user.divisi}` : ''}
+          </Text>
+        </Box>
+      )}
+
       <NewsSection newsItems={newsItems} loading={newsLoading} />
       <EventsSection eventItems={eventItems} loading={eventsLoading} />
 

@@ -6,6 +6,8 @@ export const MENU_HREF = {
   newsletter: '/newsletter',
   quiz: '/quiz',
   kehadiran: '/kehadiran',
+  data_santri: '/data_santri',
+  data_wali_santri: '/data_wali_santri',
 } as const;
 
 export interface HomeMenuLink {

@@ -63,6 +63,9 @@ export async function GET(request: Request) {
 
     const data = (await api.json()) as {
       admin?: boolean;
+      pengurus?: boolean;
+      divisi?: string | null;
+      nama?: string | null;
       email?: string;
       name?: string;
       uid?: string;
@@ -77,6 +80,9 @@ export async function GET(request: Request) {
       photoURL: String(payload.picture || '') || null,
       uid: String(data.uid || payload.sub || email),
       admin: Boolean(data.admin),
+      pengurus: Boolean(data.pengurus),
+      divisi: data.divisi ?? null,
+      nama: data.nama ?? null,
     };
     return NextResponse.json({ user });
   } catch {

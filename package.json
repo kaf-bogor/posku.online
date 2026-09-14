@@ -23,6 +23,7 @@
     "prepare": "husky",
     "rag:docs": "node scripts/load-rag-docs.mjs",
     "rag:docs:apply": "node scripts/load-rag-docs.mjs --apply",
+    "pengurus:seed": "node scripts/seed-pengurus.mjs",
     "test": "vitest run"
   },
   "dependencies": {

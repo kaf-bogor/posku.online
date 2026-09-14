@@ -148,18 +148,43 @@ export async function requireAdmin(request, env) {
 export async function meStatus(request, env) {
   const result = await bearerUser(request);
   if (!result.ok) {
-    return json({ error: 'Unauthorized', admin: false }, 401);
+    return json(
+      { error: 'Unauthorized', admin: false, pengurus: false },
+      401
+    );
   }
 
-  const { results } = await env.DB.prepare(
+  const email = result.user.email;
+  const adminRows = await env.DB.prepare(
     'SELECT 1 AS ok FROM fs_admin WHERE LOWER(id) = LOWER(?)'
   )
-    .bind(result.user.email)
+    .bind(email)
     .all();
 
+  const pengRows = await env.DB.prepare(
+    'SELECT email, nama, divisi, role FROM pengurus WHERE LOWER(email) = LOWER(?)'
+  )
+    .bind(email)
+    .all();
+  const pengurus = pengRows.results[0] || null;
+
+  // Saat pengurus login, simpan identitas Google & waktu login terakhir.
+  if (pengurus) {
+    await env.DB.prepare(
+      `UPDATE pengurus
+       SET google_sub = ?, display_name = ?, last_login = ?
+       WHERE LOWER(email) = LOWER(?)`
+    )
+      .bind(result.user.uid, result.user.name, new Date().toISOString(), email)
+      .run();
+  }
+
   return json({
-    admin: results.length > 0,
-    email: result.user.email,
+    admin: adminRows.results.length > 0,
+    pengurus: Boolean(pengurus),
+    divisi: pengurus ? pengurus.divisi : null,
+    nama: pengurus ? pengurus.nama : null,
+    email,
     name: result.user.name,
     uid: result.user.uid,
   });

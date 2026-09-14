@@ -143,6 +143,50 @@ export default function DataSantriLayout({
     );
   }
 
+  // Hanya pengurus POSKU yang boleh mengakses data santri
+  if (!user.pengurus) {
+    return (
+      <Container maxW="md" py={12}>
+        <Stack spacing={8} align="center">
+          <Card
+            w="full"
+            bg={cardBg}
+            border="1px"
+            borderColor={borderColor}
+            shadow={cardShadow}
+            borderRadius="2xl"
+          >
+            <CardBody p={8}>
+              <VStack spacing={6} align="center">
+                <Box p={4} borderRadius="full" bg={iconBg} color={accentColor}>
+                  <FiLock size={36} />
+                </Box>
+                <VStack spacing={2} textAlign="center">
+                  <Heading size="lg" fontWeight="bold">
+                    Khusus Pengurus
+                  </Heading>
+                  <Text color={mutedTextColor} fontSize="sm">
+                    Akun {user.email} tidak terdaftar sebagai pengurus POSKU.
+                    Hubungi admin jika ini keliru.
+                  </Text>
+                </VStack>
+                <Button
+                  colorScheme="red"
+                  variant="outline"
+                  leftIcon={<FiLogOut />}
+                  onClick={logout}
+                  borderRadius="xl"
+                >
+                  Keluar
+                </Button>
+              </VStack>
+            </CardBody>
+          </Card>
+        </Stack>
+      </Container>
+    );
+  }
+
   // Render the children with a top profile status bar if authenticated
   return (
     <Box maxW="2xl" mx="auto" px={{ base: 4, sm: 6 }} py={2}>
