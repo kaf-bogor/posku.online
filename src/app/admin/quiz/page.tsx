@@ -46,6 +46,7 @@ import {
 import { format } from 'date-fns';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect, useMemo } from 'react';
+import { FcGoogle } from 'react-icons/fc';
 import {
   FiPlus,
   FiEdit,
@@ -71,7 +72,7 @@ import type { Quiz, QuizAttempt } from '~/lib/types/quiz';
 const AdminQuizPage = () => {
   const router = useRouter();
   const toast = useToast();
-  const { user, loading: authLoading } = useAuth('admin');
+  const { user, loading: authLoading, login } = useAuth('admin');
   const { notAllowed, adminsLoading } = useAdminAuthorization(user);
 
   const [quizzes, setQuizzes] = useState<Quiz[]>([]);
@@ -201,7 +202,7 @@ const AdminQuizPage = () => {
     };
   }, [quizzes, quizAttempts]);
 
-  if (authLoading || adminsLoading) {
+  if (authLoading) {
     return (
       <Container maxW="container.xl" py={8}>
         <Center minH="400px">
@@ -214,10 +215,27 @@ const AdminQuizPage = () => {
   if (!user) {
     return (
       <Container maxW="container.xl" py={8}>
-        <Alert status="warning" borderRadius="md">
-          <AlertIcon />
-          Please log in to access the admin panel.
-        </Alert>
+        <Center minH="400px">
+          <Button
+            colorScheme="blue"
+            leftIcon={<FcGoogle />}
+            onClick={login}
+            size="lg"
+            borderRadius="xl"
+          >
+            Masuk dengan Google
+          </Button>
+        </Center>
+      </Container>
+    );
+  }
+
+  if (adminsLoading) {
+    return (
+      <Container maxW="container.xl" py={8}>
+        <Center minH="400px">
+          <Spinner size="xl" />
+        </Center>
       </Container>
     );
   }

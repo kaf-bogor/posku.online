@@ -236,13 +236,19 @@ export default function AdminPage() {
   const bgColor = useColorModeValue('gray.50', 'gray.900');
   const cardBg = useColorModeValue('white', 'gray.800');
 
-  // Show loading view while either auth or admin data is loading
-  if (loading || adminsLoading) {
+  // Saat sesi masih dicek, tampilkan loading singkat
+  if (loading) {
     return <LoadingView />;
   }
 
+  // Belum login → langsung tampilkan halaman login Google
   if (!user) {
     return <LoginView onLogin={login} />;
+  }
+
+  // Sudah login → tunggu daftar admin sebelum cek otorisasi
+  if (adminsLoading) {
+    return <LoadingView />;
   }
 
   if (notAllowed) {

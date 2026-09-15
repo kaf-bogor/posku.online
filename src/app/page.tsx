@@ -7,7 +7,6 @@ import {
   Text,
   Spinner,
   Center,
-  Button,
   useColorModeValue,
   Flex,
   Icon,
@@ -28,7 +27,6 @@ import {
   FaUserGraduate,
   FaAddressBook,
 } from 'react-icons/fa';
-import { FcGoogle } from 'react-icons/fc';
 import { FiHelpCircle } from 'react-icons/fi';
 
 import HeroSection from '~/lib/components/HeroSection';
@@ -349,7 +347,7 @@ const EventsSection = ({
 };
 
 const Home = () => {
-  const { user, login } = useAuth();
+  const { user } = useAuth();
   const [newsItems, setNewsItems] = useState<NewsItem[]>([]);
   const [newsLoading, setNewsLoading] = useState(true);
   const [eventItems, setEventItems] = useState<EventItem[]>([]);
@@ -420,7 +418,7 @@ const Home = () => {
 
       <OnlineNow />
 
-      {user?.pengurus ? (
+      {user?.pengurus && (
         <Box>
           <SectionHeader title="Menu Pengurus" />
           <MainMenus
@@ -439,25 +437,6 @@ const Home = () => {
           />
           <Text fontSize="xs" color="gray.500" mt={2}>
             Khusus pengurus POSKU{user.divisi ? ` · ${user.divisi}` : ''}
-          </Text>
-        </Box>
-      ) : (
-        <Box>
-          <SectionHeader title="Menu Pengurus" />
-          <Button
-            size="sm"
-            colorScheme="blue"
-            variant="outline"
-            leftIcon={<FcGoogle />}
-            onClick={login}
-            borderRadius="lg"
-          >
-            {user
-              ? 'Akun ini bukan pengurus — masuk dengan akun lain'
-              : 'Masuk sebagai Pengurus'}
-          </Button>
-          <Text fontSize="xs" color="gray.500" mt={2}>
-            Akses data santri & data wali santri khusus pengurus POSKU.
           </Text>
         </Box>
       )}

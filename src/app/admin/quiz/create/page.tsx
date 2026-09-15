@@ -39,6 +39,7 @@ import {
 } from '@chakra-ui/react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { FcGoogle } from 'react-icons/fc';
 import {
   FiPlus,
   FiTrash2,
@@ -56,7 +57,7 @@ import type { Question, QuizFormData, QuestionImport } from '~/lib/types/quiz';
 const CreateQuizPage = () => {
   const router = useRouter();
   const toast = useToast();
-  const { user, loading: authLoading } = useAuth('admin');
+  const { user, loading: authLoading, login } = useAuth('admin');
   const { notAllowed, adminsLoading } = useAdminAuthorization(user);
 
   const [formData, setFormData] = useState<QuizFormData>({
@@ -307,7 +308,7 @@ const CreateQuizPage = () => {
     }
   };
 
-  if (authLoading || adminsLoading) {
+  if (authLoading) {
     return (
       <Container maxW="container.xl" py={8}>
         <Center minH="400px">
@@ -317,7 +318,35 @@ const CreateQuizPage = () => {
     );
   }
 
-  if (!user || notAllowed) {
+  if (!user) {
+    return (
+      <Container maxW="container.xl" py={8}>
+        <Center minH="400px">
+          <Button
+            colorScheme="blue"
+            leftIcon={<FcGoogle />}
+            onClick={login}
+            size="lg"
+            borderRadius="xl"
+          >
+            Masuk dengan Google
+          </Button>
+        </Center>
+      </Container>
+    );
+  }
+
+  if (adminsLoading) {
+    return (
+      <Container maxW="container.xl" py={8}>
+        <Center minH="400px">
+          <Spinner size="xl" />
+        </Center>
+      </Container>
+    );
+  }
+
+  if (notAllowed) {
     return (
       <Container maxW="container.xl" py={8}>
         <Alert status="error" borderRadius="md">
