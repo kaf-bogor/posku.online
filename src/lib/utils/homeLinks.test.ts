@@ -7,6 +7,7 @@ import {
   DETAIL_BASES,
   HOME_MENU,
   MENU_HREF,
+  PENGURUS_MENU_HREF,
 } from './homeLinks';
 
 const APP_DIR = path.join(process.cwd(), 'src', 'app');
@@ -35,8 +36,10 @@ describe('homeLinks#HOME_MENU', () => {
     });
   });
 
-  it('HOME_MENU konsisten dengan MENU_HREF', () => {
-    const fromMap = Object.values(MENU_HREF);
+  it('HOME_MENU konsisten dengan MENU_HREF (kecuali menu pengurus)', () => {
+    const fromMap = Object.values(MENU_HREF).filter(
+      (href) => !PENGURUS_MENU_HREF.includes(href)
+    );
     expect(HOME_MENU.map((l) => l.href).sort()).toEqual(fromMap.sort());
   });
 

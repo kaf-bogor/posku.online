@@ -54,6 +54,21 @@ const categorizedLinks = [
     ],
   },
   {
+    category: 'Belajar',
+    description: 'Materi & latihan interaktif untuk anak-anak',
+    icon: FaBookOpen,
+    color: 'teal',
+    links: [
+      {
+        label: 'Belajar Yuk!',
+        description:
+          'SPOK Bahasa Indonesia & matematika dasar (tambah, kurang, kali, bagi)',
+        href: '/belajar',
+        icon: FaBookOpen,
+      },
+    ],
+  },
+  {
     category: 'Feedback',
     description: 'Berikan saran dan masukan untuk perbaikan',
     icon: FaRegCommentDots,

@@ -16,6 +16,16 @@
   "cache": {
     "enabled": true
   },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "posku-db",
+      "database_id": "6f84665d-dbb6-43bd-b530-f002e6ea9f34"
+    }
+  ],
+  "ai": {
+    "binding": "AI"
+  },
   "vars": {
     "TURNSTILE_HOSTNAMES": "poskubogor.com",
     "TURNSTILE_ACTION": "site-access"

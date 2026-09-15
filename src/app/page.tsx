@@ -26,6 +26,7 @@ import {
   FaUserCheck,
   FaUserGraduate,
   FaAddressBook,
+  FaBookOpen,
 } from 'react-icons/fa';
 import { FiHelpCircle } from 'react-icons/fi';
 
@@ -411,6 +412,11 @@ const Home = () => {
               label: 'Kehadiran',
               href: MENU_HREF.kehadiran,
               icon: FaUserCheck,
+            },
+            {
+              label: 'Belajar',
+              href: MENU_HREF.belajar,
+              icon: FaBookOpen,
             },
           ]}
         />

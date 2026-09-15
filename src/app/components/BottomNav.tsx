@@ -8,7 +8,7 @@ import {
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useContext } from 'react';
-import { FaHome, FaHandsHelping, FaLink, FaUser } from 'react-icons/fa';
+import { FaHome, FaHandsHelping, FaLink, FaUser, FaBook } from 'react-icons/fa';
 
 import { AppContext } from '~/lib/context/app';
 
@@ -27,6 +27,11 @@ const navItems = [
     label: 'Links',
     href: '/links',
     icon: 'links',
+  },
+  {
+    label: 'Belajar',
+    href: '/belajar',
+    icon: 'book',
   },
   {
     label: 'Admin',
@@ -112,6 +117,9 @@ export default function BottomNav() {
                 )}
                 {icon === 'links' && (
                   <FaLink fontSize={20} style={{ marginBottom: 2 }} />
+                )}
+                {icon === 'book' && (
+                  <FaBook fontSize={20} style={{ marginBottom: 2 }} />
                 )}
                 {icon === 'admin' && (
                   <FaUser fontSize={20} style={{ marginBottom: 2 }} />

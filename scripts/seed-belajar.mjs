@@ -1,0 +1,360 @@
+// =============================================================
+// Generate d1/belajar.sql: tabel materi belajar + seed materi.
+// Soal TIDAK disimpan di sini (digenerate AI saat runtime, lalu di-cache).
+//
+// Pemakaian: node scripts/seed-belajar.mjs
+//   lalu: npx wrangler d1 execute posku-db --remote --file=d1/belajar.sql
+// =============================================================
+
+import { writeFileSync } from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const root = fileURLToPath(new URL('..', import.meta.url));
+
+const LEVELS = ['mudah', 'sedang', 'sulit'];
+
+// steps: { title, body, contoh?: string[], tips?: string }
+const MODULES = [
+  {
+    modul: 'spok',
+    levels: {
+      mudah: [
+        {
+          title: 'Apa itu Subjek?',
+          body: 'Subjek adalah orang atau benda yang menjadi pokok pembicaraan. Biasanya menjawab pertanyaan "siapa" atau "apa".',
+          contoh: ['Adik bermain.', 'Subjek: Adik'],
+          tips: 'Cari kata yang menjadi pelaku di kalimat.',
+        },
+        {
+          title: 'Apa itu Predikat?',
+          body: 'Predikat adalah kata kerja atau keadaan yang menjelaskan apa yang dilakukan subjek.',
+          contoh: ['Adik bermain.', 'Predikat: bermain'],
+        },
+        {
+          title: 'Subjek + Predikat',
+          body: 'Kalimat paling sederhana terdiri dari Subjek dan Predikat.',
+          contoh: ['Ibu memasak.', 'Ayah membaca.', 'Burung terbang.'],
+          tips: 'Coba buat 3 kalimat S-P sendiri!',
+        },
+      ],
+      sedang: [
+        {
+          title: 'Apa itu Objek?',
+          body: 'Objek adalah sasaran dari predikat. Biasanya menjawab "apa" yang dikenai pekerjaan.',
+          contoh: ['Ibu memasak nasi.', 'Objek: nasi'],
+        },
+        {
+          title: 'Subjek + Predikat + Objek',
+          body: 'Kalimat lengkap dengan objek memberi informasi lebih jelas.',
+          contoh: ['Kakak membeli buku.', 'Adik menyapu lantai.'],
+        },
+        {
+          title: 'Latihan menandai SPO',
+          body: 'Tentukan mana S, P, dan O pada kalimat berikut.',
+          contoh: ['Ayah mencuci mobil.', 'S: Ayah · P: mencuci · O: mobil'],
+          tips: 'Objek biasanya berupa benda.',
+        },
+      ],
+      sulit: [
+        {
+          title: 'Apa itu Keterangan?',
+          body: 'Keterangan menjelaskan tempat, waktu, atau cara. Bisa di awal atau akhir kalimat.',
+          contoh: ['Ayah mencuci mobil di halaman.', 'Keterangan tempat: di halaman'],
+        },
+        {
+          title: 'SPOK lengkap',
+          body: 'Subjek, Predikat, Objek, dan Keterangan membuat kalimat makin lengkap.',
+          contoh: ['Ibu memasak nasi di dapur pada pagi hari.'],
+        },
+        {
+          title: 'Urutan yang luwes',
+          body: 'Keterangan boleh dipindah ke depan tanpa mengubah makna.',
+          contoh: ['Pada pagi hari, Ibu memasak nasi di dapur.'],
+          tips: 'Perhatikan tanda koma bila keterangan di depan.',
+        },
+      ],
+    },
+  },
+  {
+    modul: 'penjumlahan',
+    levels: {
+      mudah: [
+        {
+          title: 'Menjumlah satu angka',
+          body: 'Menjumlah berarti menggabungkan dua bilangan.',
+          contoh: ['3 + 4 = 7', '2 + 5 = 7'],
+        },
+        {
+          title: 'Berhitung dengan jari',
+          body: 'Gunakan jari untuk menghitung bilangan kecil.',
+          contoh: ['4 + 3 → hitung 4, lanjut 5, 6, 7'],
+        },
+        {
+          title: 'Tukar tempat',
+          body: 'Urutan tidak mengubah hasil.',
+          contoh: ['3 + 4 = 4 + 3'],
+        },
+      ],
+      sedang: [
+        {
+          title: 'Menjumlah puluhan',
+          body: 'Jumlahkan satuan dulu, lalu puluhan.',
+          contoh: ['23 + 14 → 3+4=7, 20+10=30 → 37'],
+        },
+        {
+          title: 'Menyimpan',
+          body: 'Jika satuan lebih dari 9, simpan 1 ke puluhan.',
+          contoh: ['27 + 15 → 7+5=12, simpan 1 → 42'],
+        },
+        {
+          title: 'Soal cerita',
+          body: 'Ubah cerita menjadi operasi hitung.',
+          contoh: ['Ani punya 12 kelereng, diberi 9 → 12 + 9 = 21'],
+        },
+      ],
+      sulit: [
+        {
+          title: 'Ratusan',
+          body: 'Susun bersusun: satuan, puluhan, ratusan.',
+          contoh: ['148 + 76 → 8+6=14 simpan 1 → 224'],
+        },
+        {
+          title: 'Tiga bilangan',
+          body: 'Jumlahkan berurutan dari kiri ke kanan.',
+          contoh: ['45 + 30 + 25 = 100'],
+        },
+        {
+          title: 'Menaksir',
+          body: 'Bulatkan untuk memperkirakan hasil.',
+          contoh: ['98 + 41 ≈ 100 + 40 = 140'],
+        },
+      ],
+    },
+  },
+  {
+    modul: 'pengurangan',
+    levels: {
+      mudah: [
+        {
+          title: 'Mengurangi bilangan kecil',
+          body: 'Mengurangi berarti mengambil sebagian.',
+          contoh: ['7 − 3 = 4', '9 − 5 = 4'],
+        },
+        {
+          title: 'Hitung mundur',
+          body: 'Kurangi dengan menghitung mundur.',
+          contoh: ['8 − 2 → 7, 6'],
+        },
+        {
+          title: 'Nol',
+          body: 'Mengurangi nol tidak mengubah nilai.',
+          contoh: ['6 − 0 = 6'],
+        },
+      ],
+      sedang: [
+        {
+          title: 'Pengurangan puluhan',
+          body: 'Kurangi satuan, lalu puluhan.',
+          contoh: ['48 − 15 → 8−5=3, 40−10=30 → 33'],
+        },
+        {
+          title: 'Meminjam',
+          body: 'Jika satuan kurang, pinjam 1 dari puluhan.',
+          contoh: ['52 − 17 → 12−7=5, 40−10=30 → 35'],
+        },
+        {
+          title: 'Soal cerita',
+          body: 'Tentukan mana yang dikurangi.',
+          contoh: ['Budi punya 20 permen, dimakan 6 → 20 − 6 = 14'],
+        },
+      ],
+      sulit: [
+        {
+          title: 'Ratusan',
+          body: 'Gunakan susun dengan meminjam bila perlu.',
+          contoh: ['304 − 128 = 176'],
+        },
+        {
+          title: 'Pengurangan beruntun',
+          body: 'Kurangi berurutan dari kiri ke kanan.',
+          contoh: ['100 − 25 − 25 = 50'],
+        },
+        {
+          title: 'Selisih',
+          body: 'Selisih adalah hasil pengurangan dua bilangan.',
+          contoh: ['Selisih 90 dan 65 → 90 − 65 = 25'],
+        },
+      ],
+    },
+  },
+  {
+    modul: 'perkalian',
+    levels: {
+      mudah: [
+        {
+          title: 'Perkalian = penjumlahan berulang',
+          body: '3 × 4 artinya 4 + 4 + 4.',
+          contoh: ['3 × 4 = 12', '2 × 5 = 10'],
+        },
+        {
+          title: 'Tabel 1–5',
+          body: 'Hafalkan perkalian kecil agar cepat.',
+          contoh: ['2×3=6', '4×4=16', '5×5=25'],
+        },
+        {
+          title: 'Kelompok benda',
+          body: 'Bayangkan benda dalam beberapa kelompok sama banyak.',
+          contoh: ['3 kelompok isi 2 → 3 × 2 = 6'],
+        },
+      ],
+      sedang: [
+        {
+          title: 'Tabel 6–9',
+          body: 'Latih terus agar hafal.',
+          contoh: ['6×7=42', '8×9=72'],
+        },
+        {
+          title: 'Perkalian puluhan',
+          body: 'Pisahkan puluhan dan satuan.',
+          contoh: ['12 × 3 = (10×3)+(2×3) = 30+6 = 36'],
+        },
+        {
+          title: 'Soal cerita',
+          body: 'Cari jumlah kelompok × isi tiap kelompok.',
+          contoh: ['4 kotak isi 6 pensil → 4 × 6 = 24'],
+        },
+      ],
+      sulit: [
+        {
+          title: 'Dua angka × dua angka',
+          body: 'Gunakan susun panjang atau distributif.',
+          contoh: ['23 × 14 = 23×10 + 23×4 = 230 + 92 = 322'],
+        },
+        {
+          title: 'Sifat distributif',
+          body: 'Pecah bilangan agar mudah dihitung.',
+          contoh: ['19 × 6 = (20×6) − 6 = 114'],
+        },
+        {
+          title: 'Soal cerita bertingkat',
+          body: 'Kerjakan bertahap sesuai cerita.',
+          contoh: ['5 dus isi 12 buku, tiap buku 2 lembar → 5×12×2 = 120'],
+        },
+      ],
+    },
+  },
+  {
+    modul: 'pembagian',
+    levels: {
+      mudah: [
+        {
+          title: 'Membagi rata',
+          body: 'Pembagian berarti membagi sama banyak.',
+          contoh: ['6 ÷ 2 = 3', '8 ÷ 4 = 2'],
+        },
+        {
+          title: 'Kebalikan perkalian',
+          body: 'Jika 2 × 3 = 6 maka 6 ÷ 2 = 3.',
+          contoh: ['3 × 4 = 12 → 12 ÷ 3 = 4'],
+        },
+        {
+          title: 'Bagi dengan 1',
+          body: 'Bilangan dibagi 1 hasilnya bilangan itu sendiri.',
+          contoh: ['7 ÷ 1 = 7'],
+        },
+      ],
+      sedang: [
+        {
+          title: 'Pembagian puluhan',
+          body: 'Cari berapa kali pembagi masuk ke bilangan.',
+          contoh: ['48 ÷ 4 = 12'],
+        },
+        {
+          title: 'Pembagian bersisa',
+          body: 'Sisa selalu lebih kecil dari pembagi.',
+          contoh: ['17 ÷ 5 = 3 sisa 2'],
+        },
+        {
+          title: 'Soal cerita',
+          body: 'Bagi jumlah ke dalam kelompok sama banyak.',
+          contoh: ['24 kue untuk 6 anak → 24 ÷ 6 = 4'],
+        },
+      ],
+      sulit: [
+        {
+          title: 'Pembagian bersusun',
+          body: 'Bagi dari angka paling depan, turunkan angka berikutnya.',
+          contoh: ['96 ÷ 8 = 12'],
+        },
+        {
+          title: 'Pembagian ratusan',
+          body: 'Perhatikan sisa di setiap langkah.',
+          contoh: ['144 ÷ 12 = 12'],
+        },
+        {
+          title: 'Soal cerita bertingkat',
+          body: 'Bagi lalu gunakan hasilnya untuk langkah berikut.',
+          contoh: ['120 roti dibagi 8 kotak, tiap kotak 3 baris → 120÷8=15, 15÷3=5'],
+        },
+      ],
+    },
+  },
+];
+
+const sqlStr = (s) => `'${String(s ?? '').replace(/'/g, "''")}'`;
+
+const rows = [];
+const now = new Date().toISOString();
+for (const m of MODULES) {
+  LEVELS.forEach((level, idx) => {
+    const steps = m.levels[level];
+    if (!steps || steps.length === 0) return;
+    const id = `${m.modul}-${level}`;
+    const judul = `${m.modul} - ${level}`;
+    rows.push(
+      `  (${sqlStr(id)}, ${sqlStr(m.modul)}, ${sqlStr(level)}, ${idx + 1}, ${sqlStr(
+        judul
+      )}, ${sqlStr(JSON.stringify(steps))}, ${sqlStr(now)})`
+    );
+  });
+}
+
+const sql = `-- =============================================================
+-- Modul belajar anak: tabel materi + cache soal (AI).
+-- Dibuat oleh scripts/seed-belajar.mjs (jangan edit manual).
+-- Idempoten: aman dijalankan ulang (UPSERT by id).
+-- Jalankan: npx wrangler d1 execute posku-db --remote --file=d1/belajar.sql
+-- =============================================================
+
+CREATE TABLE IF NOT EXISTS belajar_materi (
+  id         TEXT PRIMARY KEY,
+  modul      TEXT NOT NULL,
+  level      TEXT NOT NULL,
+  urutan     INTEGER NOT NULL,
+  judul      TEXT NOT NULL,
+  isi        TEXT NOT NULL,
+  created_at TEXT
+);
+CREATE INDEX IF NOT EXISTS idx_belajar_materi
+  ON belajar_materi (modul, level, urutan);
+
+CREATE TABLE IF NOT EXISTS belajar_soal_cache (
+  cache_key  TEXT PRIMARY KEY,
+  payload    TEXT NOT NULL,
+  created_at TEXT
+);
+
+INSERT INTO belajar_materi (id, modul, level, urutan, judul, isi, created_at) VALUES
+${rows.join(',\n')}
+ON CONFLICT(id) DO UPDATE SET
+  modul = excluded.modul,
+  level = excluded.level,
+  urutan = excluded.urutan,
+  judul = excluded.judul,
+  isi = excluded.isi,
+  created_at = excluded.created_at;
+`;
+
+writeFileSync(path.join(root, 'd1', 'belajar.sql'), sql, 'utf8');
+console.log(`d1/belajar.sql -> ${rows.length} materi`);

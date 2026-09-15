@@ -6,6 +6,7 @@ export const MENU_HREF = {
   newsletter: '/newsletter',
   quiz: '/quiz',
   kehadiran: '/kehadiran',
+  belajar: '/belajar',
   data_santri: '/data_santri',
   data_wali_santri: '/data_wali_santri',
 } as const;
@@ -23,6 +24,13 @@ export const HOME_MENU: HomeMenuLink[] = [
   { label: 'Newsletter', href: MENU_HREF.newsletter },
   { label: 'Quiz', href: MENU_HREF.quiz },
   { label: 'Kehadiran', href: MENU_HREF.kehadiran },
+  { label: 'Belajar', href: MENU_HREF.belajar },
+];
+
+/** Menu yang hanya tampil untuk pengurus POSKU (bukan menu publik). */
+export const PENGURUS_MENU_HREF: string[] = [
+  MENU_HREF.data_santri,
+  MENU_HREF.data_wali_santri,
 ];
 
 export type DetailBase = '/news' | '/events' | '/amal';
