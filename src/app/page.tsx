@@ -363,12 +363,18 @@ const Home = () => {
       .finally(() => setEventsLoading(false));
   }, []);
 
+  // `today` dihitung setelah mount agar hasil render server (UTC) dan klien
+  // (zona waktu pengguna) konsisten — menghindari hydration mismatch.
+  const [today, setToday] = useState<Date | null>(null);
+  useEffect(() => {
+    setToday(new Date());
+  }, []);
+
   const kalender = useMemo(() => {
     const data = rawKalender as KalenderData;
-    const today = new Date();
-    const upcoming = upcomingEvents(data.events, today, 4);
+    const upcoming = today ? upcomingEvents(data.events, today, 4) : [];
     return { data, upcoming };
-  }, []);
+  }, [today]);
 
   return (
     <VStack spacing={6} align="stretch" w="100%">

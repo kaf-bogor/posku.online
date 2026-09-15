@@ -49,8 +49,8 @@ const RootLayout = async ({ children }: RootLayoutProps) => {
   const passed = await verifyGate(store.get(GATE_COOKIE)?.value);
 
   return (
-    <html lang="id">
-      <body style={{ minHeight: '100vh' }}>
+    <html lang="id" suppressHydrationWarning>
+      <body style={{ minHeight: '100vh' }} suppressHydrationWarning>
         <Providers>
           <AppProvider>
             {passed ? <Layout>{children}</Layout> : <TurnstileGate />}
