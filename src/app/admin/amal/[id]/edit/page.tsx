@@ -24,7 +24,7 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import dynamic from 'next/dynamic';
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { useContext, useEffect, useState } from 'react';
 import type React from 'react';
 
@@ -45,8 +45,8 @@ import { generateSlug } from '~/lib/utils/slug';
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
-const DonationDetailPage = ({ params }: { params: { id: string } }) => {
-  const { id } = params;
+const DonationDetailPage = () => {
+  const { id } = useParams<{ id: string }>();
   const router = useRouter();
   const toast = useToast();
 
