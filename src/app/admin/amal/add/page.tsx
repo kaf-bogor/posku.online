@@ -22,7 +22,7 @@ import type { DonationPage } from '~/lib/types/donation';
 import { initialDonationState } from '~/lib/types/donation';
 import { generateSlug } from '~/lib/utils/slug';
 
-const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
+const ReactQuill = dynamic(() => import('react-quill-new'), { ssr: false });
 
 const ADMIN_DONATIONS_PATH = '/admin/amal';
 

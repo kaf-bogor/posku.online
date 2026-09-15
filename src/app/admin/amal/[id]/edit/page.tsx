@@ -43,7 +43,7 @@ import type { Activity, DonationPage } from '~/lib/types/donation';
 import { formatIDR } from '~/lib/utils/currency';
 import { generateSlug } from '~/lib/utils/slug';
 
-const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
+const ReactQuill = dynamic(() => import('react-quill-new'), { ssr: false });
 
 const DonationDetailPage = () => {
   const { id } = useParams<{ id: string }>();

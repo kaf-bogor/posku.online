@@ -24,7 +24,7 @@ import { getEvent, updateEvent } from '~/lib/services/contentService';
 import type { EventItem } from '~/lib/types/event';
 import { generateSlug } from '~/lib/utils/slug';
 
-const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
+const ReactQuill = dynamic(() => import('react-quill-new'), { ssr: false });
 
 const ADMIN_EVENT_PATH = '/admin/events';
 

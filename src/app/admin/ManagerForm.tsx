@@ -3,7 +3,7 @@
 import { VStack, Button, HStack, Box, Heading } from '@chakra-ui/react';
 import { type ReactNode, type FormEvent, useContext } from 'react';
 
-import 'react-quill/dist/quill.snow.css';
+import 'react-quill-new/dist/quill.snow.css';
 import { AppContext } from '~/lib/context/app';
 import type { DonationPage } from '~/lib/types/donation';
 import type { EventItem } from '~/lib/types/event';

@@ -26,7 +26,7 @@ import { createEvent } from '~/lib/services/contentService';
 import { uploadImages } from '~/lib/services/uploadService';
 import { generateSlug } from '~/lib/utils/slug';
 
-const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
+const ReactQuill = dynamic(() => import('react-quill-new'), { ssr: false });
 
 const LIST_PATH = '/admin/events';
 
