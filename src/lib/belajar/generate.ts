@@ -4,7 +4,7 @@ import type { LevelId, ModulId, Soal, SoalSet } from '~/lib/types/belajar';
 
 const MODEL = '@cf/qwen/qwen3-30b-a3b-fp8';
 const CACHE_TTL_MS = 6 * 60 * 60 * 1000; // 6 jam
-const CACHE_VERSION = 'v5';
+const CACHE_VERSION = 'v6';
 
 // ---------- util ----------
 function randInt(min: number, max: number): number {
@@ -148,10 +148,35 @@ function makeSubtraction(level: LevelId): MathSoal {
 }
 
 function makeMultiplication(level: LevelId): MathSoal {
-  const a = pick(level, randInt(2, 5), randInt(2, 9), randInt(3, 12));
-  const b = pick(level, randInt(2, 5), randInt(2, 9), randInt(4, 15));
   const box = BOXES[randInt(0, BOXES.length - 1)];
   const thing = THINGS[randInt(0, THINGS.length - 1)];
+  let a: number;
+  let b: number;
+
+  if (level === 'mudah') {
+    // Tabel 2, 5, 10 (kelompok umur 5–7)
+    const tables = [2, 5, 10];
+    a = tables[randInt(0, tables.length - 1)];
+    b = randInt(2, 5);
+  } else if (level === 'sedang') {
+    // Tabel sampai 12 & perkalian 2 angka × 1 angka (kelompok umur 7–9)
+    if (randInt(0, 1) === 0) {
+      a = randInt(2, 12);
+      b = randInt(2, 9);
+    } else {
+      a = randInt(12, 49);
+      b = randInt(2, 9);
+    }
+  } else if (randInt(0, 1) === 0) {
+    // Perkalian 2 angka × 2 angka (kelompok umur 9–11)
+    a = randInt(11, 29);
+    b = randInt(11, 19);
+  } else {
+    // Perkalian 3 angka × 1 angka (kelompok umur 9–11)
+    a = randInt(101, 499);
+    b = randInt(2, 9);
+  }
+
   return {
     expr: `${a} × ${b}`,
     answer: a * b,
@@ -160,16 +185,30 @@ function makeMultiplication(level: LevelId): MathSoal {
 }
 
 function makeDivision(level: LevelId): MathSoal {
-  const b = pick(level, randInt(2, 5), randInt(2, 9), randInt(3, 12));
-  const q = pick(level, randInt(2, 5), randInt(3, 12), randInt(5, 20));
-  const r = level === 'sulit' ? randInt(0, b - 1) : 0;
-  const total = b * q + r;
   const thing = THINGS[randInt(0, THINGS.length - 1)];
-  const sisa = r > 0 ? ' (ada sisa)' : '';
+  let divisor: number;
+  let quotient: number;
+
+  if (level === 'mudah') {
+    // Membagi rata dengan 2, 5, 10 (kelompok umur 5–7)
+    const divisors = [2, 5, 10];
+    divisor = divisors[randInt(0, divisors.length - 1)];
+    quotient = randInt(2, 10);
+  } else if (level === 'sedang') {
+    // Pembagian 2 angka ÷ 1 angka (kelompok umur 7–9)
+    divisor = randInt(2, 9);
+    quotient = randInt(3, 12);
+  } else {
+    // Pembagian 3–4 angka ÷ 1–2 angka (kelompok umur 9–11)
+    divisor = randInt(0, 1) === 0 ? randInt(2, 12) : randInt(11, 19);
+    quotient = randInt(12, 60);
+  }
+
+  const total = divisor * quotient;
   return {
-    expr: `${total} ÷ ${b}`,
-    answer: q,
-    story: `${total} ${thing} dibagi rata ke ${b} anak${sisa}.`,
+    expr: `${total} ÷ ${divisor}`,
+    answer: quotient,
+    story: `${total} ${thing} dibagi rata ke ${divisor} anak.`,
   };
 }
 
@@ -204,12 +243,22 @@ function distractors(answer: number, count: number): number[] {
   return Array.from(set).slice(0, count);
 }
 
-async function mathStories(items: MathSoal[]): Promise<string[]> {
+function levelContext(level: LevelId): string {
+  if (level === 'mudah') return 'anak usia 5–7 tahun (benda & angka kecil)';
+  if (level === 'sedang') return 'anak usia 7–9 tahun (kegiatan sehari-hari)';
+  return 'anak usia 9–11 tahun (situasi bertingkat)';
+}
+
+async function mathStories(
+  items: MathSoal[],
+  level: LevelId
+): Promise<string[]> {
   const fallback = items.map((i) => i.story);
   try {
     const ops = items.map((i) => `${i.expr} (${i.answer})`).join('; ');
+    const konteks = levelContext(level);
     const prompt = [
-      'Kamu bercerita kepada anak TK/SD (gaya "explain like I am 5").',
+      `Kamu bercerita kepada ${konteks} dengan gaya "explain like I am 5".`,
       `Buat ${items.length} kalimat cerita singkat (maksimal 15 kata) dalam Bahasa Indonesia yang mudah dibayangkan anak, sesuai operasi berikut.`,
       'Gunakan angka persis seperti yang diberikan. Pakai benda/aktivitas sehari-hari.',
       'Balas JSON array of string, contoh: ["...", "..."].',
@@ -227,14 +276,24 @@ async function mathStories(items: MathSoal[]): Promise<string[]> {
   }
 }
 
-function mathPetunjuk(modul: ModulId): string {
+function mathPetunjuk(modul: ModulId, level: LevelId): string {
+  if (modul === 'perkalian') {
+    if (level === 'mudah')
+      return 'Kali = tambah berulang. Contoh 3 × 2 = 2 + 2 + 2.';
+    if (level === 'sedang')
+      return 'Hafalkan tabel 2–12; pecah jadi puluhan + satuan.';
+    return 'Kalikan bertahap (puluhan & satuan), lalu jumlahkan hasilnya.';
+  }
+  if (modul === 'pembagian') {
+    if (level === 'mudah')
+      return 'Bagi = membagi rata ke beberapa kelompok sama banyak.';
+    if (level === 'sedang')
+      return 'Cek dengan perkalian: jika 4 × 6 = 24 maka 24 ÷ 4 = 6.';
+    return 'Pembagian bersusun: bagi angka depan dulu, lalu turunkan angka berikutnya.';
+  }
   if (modul === 'penjumlahan')
     return 'Tambah = menggabungkan, hitung semuanya ya!';
-  if (modul === 'pengurangan')
-    return 'Kurang = mengambil sebagian dari jumlah awal.';
-  if (modul === 'perkalian')
-    return 'Kali = tambah berulang. Contoh 3 × 4 = 4 + 4 + 4.';
-  return 'Bagi = membagi rata ke beberapa kelompok sama banyak.';
+  return 'Kurang = mengambil sebagian dari jumlah awal.';
 }
 
 async function generateMathSoal(
@@ -243,7 +302,7 @@ async function generateMathSoal(
   jumlah: number
 ): Promise<Soal[]> {
   const items = Array.from({ length: jumlah }, () => buildMath(modul, level));
-  const stories = await mathStories(items);
+  const stories = await mathStories(items, level);
 
   return items.map((item, idx) => {
     const options = shuffle([item.answer, ...distractors(item.answer, 3)]);
@@ -253,7 +312,7 @@ async function generateMathSoal(
       pertanyaan: `${stories[idx]} Berapa hasil dari ${item.expr}?`,
       pilihan: options.map(String),
       jawaban,
-      petunjuk: mathPetunjuk(modul),
+      petunjuk: mathPetunjuk(modul, level),
       pembahasan: `${item.expr} = ${item.answer}`,
     };
   });
