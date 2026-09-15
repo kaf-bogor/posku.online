@@ -135,7 +135,21 @@ const DonationDetailPage = ({ params }: { params: { id: string } }) => {
   const handleEditFormChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    if (editForm) setEditForm({ ...editForm, [e.target.name]: e.target.value });
+    if (!editForm) return;
+    const { name, value } = e.target;
+    // Field organizer memakai nama "organizer.avatar" / "organizer.name" /
+    // "organizer.tagline" — harus diperbarui ke objek organizer, bukan field datar.
+    if (name.startsWith('organizer.')) {
+      const key = name.slice(
+        'organizer.'.length
+      ) as keyof DonationPage['organizer'];
+      setEditForm({
+        ...editForm,
+        organizer: { ...editForm.organizer, [key]: value },
+      });
+      return;
+    }
+    setEditForm({ ...editForm, [name]: value });
   };
 
   const handleEditNumberChange = (value: string) => {

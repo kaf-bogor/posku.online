@@ -6,7 +6,7 @@ import {
   FormLabel,
   Input,
 } from '@chakra-ui/react';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import type React from 'react';
 
 import { AppContext } from '~/lib/context/app';
@@ -26,6 +26,15 @@ function OrganizerFormSection({ organizer, onFormChange }: OrganizerFormProps) {
     tagline: organizer?.tagline || '',
   });
   const { bgColor, textColor, borderColor } = useContext(AppContext);
+
+  // Sinkronkan input saat data organizer berubah (mis. setelah simpan/muat ulang)
+  useEffect(() => {
+    setLocalOrganizer({
+      avatar: organizer?.avatar || '',
+      name: organizer?.name || '',
+      tagline: organizer?.tagline || '',
+    });
+  }, [organizer]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
