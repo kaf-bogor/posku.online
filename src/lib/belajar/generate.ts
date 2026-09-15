@@ -4,7 +4,7 @@ import type { LevelId, ModulId, Soal, SoalSet } from '~/lib/types/belajar';
 
 const MODEL = '@cf/qwen/qwen3-30b-a3b-fp8';
 const CACHE_TTL_MS = 6 * 60 * 60 * 1000; // 6 jam
-const CACHE_VERSION = 'v4';
+const CACHE_VERSION = 'v5';
 
 // ---------- util ----------
 function randInt(min: number, max: number): number {
@@ -209,8 +209,9 @@ async function mathStories(items: MathSoal[]): Promise<string[]> {
   try {
     const ops = items.map((i) => `${i.expr} (${i.answer})`).join('; ');
     const prompt = [
-      `Buat ${items.length} kalimat cerita singkat (maksimal 15 kata) dalam Bahasa Indonesia untuk anak SD, sesuai operasi berikut.`,
-      'Gunakan angka persis seperti yang diberikan.',
+      'Kamu bercerita kepada anak TK/SD (gaya "explain like I am 5").',
+      `Buat ${items.length} kalimat cerita singkat (maksimal 15 kata) dalam Bahasa Indonesia yang mudah dibayangkan anak, sesuai operasi berikut.`,
+      'Gunakan angka persis seperti yang diberikan. Pakai benda/aktivitas sehari-hari.',
       'Balas JSON array of string, contoh: ["...", "..."].',
       `Operasi: ${ops}`,
     ].join('\n');
@@ -224,6 +225,16 @@ async function mathStories(items: MathSoal[]): Promise<string[]> {
   } catch {
     return fallback;
   }
+}
+
+function mathPetunjuk(modul: ModulId): string {
+  if (modul === 'penjumlahan')
+    return 'Tambah = menggabungkan, hitung semuanya ya!';
+  if (modul === 'pengurangan')
+    return 'Kurang = mengambil sebagian dari jumlah awal.';
+  if (modul === 'perkalian')
+    return 'Kali = tambah berulang. Contoh 3 × 4 = 4 + 4 + 4.';
+  return 'Bagi = membagi rata ke beberapa kelompok sama banyak.';
 }
 
 async function generateMathSoal(
@@ -242,64 +253,132 @@ async function generateMathSoal(
       pertanyaan: `${stories[idx]} Berapa hasil dari ${item.expr}?`,
       pilihan: options.map(String),
       jawaban,
+      petunjuk: mathPetunjuk(modul),
       pembahasan: `${item.expr} = ${item.answer}`,
     };
   });
 }
 
 // ---------- SPOK (AI) ----------
-type SpokSeed = [string, string[], number];
+// [pertanyaan, pilihan, jawaban, petunjuk, pembahasan]
+type SpokSeed = [string, string[], number, string, string];
+
+const HINT_SUBJEK = 'Subjek = pelaku, yaitu yang melakukan kegiatan.';
+const HINT_PREDIKAT = 'Predikat = kegiatan yang dilakukan pelaku.';
+const HINT_OBJEK =
+  'Objek = yang dikenai kegiatan, seperti "yang jadi sasaran".';
+const HINT_KETERANGAN = 'Keterangan = info tempat, waktu, atau cara.';
 
 const SPOK_BANK: Record<LevelId, SpokSeed[]> = {
   mudah: [
     [
-      'Pada kalimat "Adik bermain.", manakah subjeknya?',
+      'Kalimat: "Adik bermain." Manakah yang menjadi pelaku (subjek)?',
       ['Adik', 'bermain', 'bola', 'rumah'],
       0,
+      HINT_SUBJEK,
+      'Subjek itu pelakunya. "Adik" yang melakukan kegiatan bermain.',
     ],
     [
-      'Pada kalimat "Ibu memasak.", manakah predikatnya?',
+      'Kalimat: "Ibu memasak." Kegiatan apa yang dilakukan Ibu (predikat)?',
       ['Ibu', 'memasak', 'nasi', 'dapur'],
       1,
+      HINT_PREDIKAT,
+      'Predikat itu kegiatannya. Ibu melakukan kegiatan "memasak".',
     ],
     [
-      'Pada kalimat "Burung terbang.", manakah subjeknya?',
+      'Kalimat: "Burung terbang." Manakah yang menjadi pelaku (subjek)?',
       ['terbang', 'langit', 'Burung', 'sayap'],
       2,
+      HINT_SUBJEK,
+      'Subjek itu pelakunya. "Burung" yang melakukan kegiatan terbang.',
+    ],
+    [
+      'Kalimat: "Ayah membaca." Manakah yang menjadi pelaku (subjek)?',
+      ['membaca', 'buku', 'Ayah', 'kursi'],
+      2,
+      HINT_SUBJEK,
+      'Subjek itu pelakunya. "Ayah" yang melakukan kegiatan membaca.',
+    ],
+    [
+      'Kalimat: "Kucing tidur." Kegiatan apa yang dilakukan Kucing (predikat)?',
+      ['Kucing', 'tidur', 'kasur', 'rumah'],
+      1,
+      HINT_PREDIKAT,
+      'Predikat itu kegiatannya. Kucing melakukan kegiatan "tidur".',
     ],
   ],
   sedang: [
     [
-      'Pada kalimat "Kakak membeli buku.", manakah objeknya?',
+      'Kalimat: "Kakak membeli buku." Kata mana yang jadi sasaran (objek)?',
       ['Kakak', 'membeli', 'buku', 'toko'],
       2,
+      HINT_OBJEK,
+      'Objek itu sasarannya. Yang dibeli adalah "buku".',
     ],
     [
-      'Pada kalimat "Adik menyapu lantai.", manakah predikatnya?',
+      'Kalimat: "Adik menyapu lantai." Kegiatan apa yang dilakukan (predikat)?',
       ['Adik', 'menyapu', 'lantai', 'sapu'],
       1,
+      HINT_PREDIKAT,
+      'Predikat itu kegiatannya. Adik melakukan kegiatan "menyapu".',
     ],
     [
-      'Pada kalimat "Ayah mencuci mobil.", manakah objeknya?',
+      'Kalimat: "Ayah mencuci mobil." Kata mana yang jadi sasaran (objek)?',
       ['Ayah', 'mencuci', 'mobil', 'halaman'],
       2,
+      HINT_OBJEK,
+      'Objek itu sasarannya. Yang dicuci adalah "mobil".',
+    ],
+    [
+      'Kalimat: "Ibu menyiram bunga." Kata mana yang jadi sasaran (objek)?',
+      ['Ibu', 'menyiram', 'bunga', 'taman'],
+      2,
+      HINT_OBJEK,
+      'Objek itu sasarannya. Yang disiram adalah "bunga".',
+    ],
+    [
+      'Kalimat: "Budi menulis buku." Kata mana yang jadi sasaran (objek)?',
+      ['Budi', 'menulis', 'buku', 'meja'],
+      2,
+      HINT_OBJEK,
+      'Objek itu sasarannya. Yang ditulis adalah "buku".',
     ],
   ],
   sulit: [
     [
-      'Pada kalimat "Ibu memasak nasi di dapur.", manakah keterangannya?',
+      'Kalimat: "Ibu memasak nasi di dapur." Kata mana yang memberi info tempat (keterangan)?',
       ['Ibu', 'memasak', 'nasi', 'di dapur'],
       3,
+      HINT_KETERANGAN,
+      'Keterangan memberi info tempat. "di dapur" menjelaskan di mana memasaknya.',
     ],
     [
-      'Pada kalimat "Ayah mencuci mobil di halaman.", manakah objeknya?',
+      'Kalimat: "Ayah mencuci mobil di halaman." Kata mana yang jadi sasaran (objek)?',
       ['Ayah', 'mencuci', 'mobil', 'di halaman'],
       2,
+      HINT_OBJEK,
+      'Objek itu sasarannya. Yang dicuci adalah "mobil".',
     ],
     [
-      'Pada kalimat "Pada pagi hari, Ibu memasak nasi.", manakah subjeknya?',
+      'Kalimat: "Pada pagi hari, Ibu memasak nasi." Manakah pelakunya (subjek)?',
       ['Pada pagi hari', 'Ibu', 'memasak', 'nasi'],
       1,
+      HINT_SUBJEK,
+      'Subjek itu pelakunya. "Ibu" yang melakukan kegiatan memasak.',
+    ],
+    [
+      'Kalimat: "Kakak membaca buku di kamar." Kata mana yang memberi info tempat (keterangan)?',
+      ['Kakak', 'membaca', 'buku', 'di kamar'],
+      3,
+      HINT_KETERANGAN,
+      'Keterangan memberi info tempat. "di kamar" menjelaskan di mana membacanya.',
+    ],
+    [
+      'Kalimat: "Setiap sore, Adik menyiram bunga." Kata mana yang memberi info waktu (keterangan)?',
+      ['Setiap sore', 'Adik', 'menyiram', 'bunga'],
+      0,
+      HINT_KETERANGAN,
+      'Keterangan memberi info waktu. "Setiap sore" menjelaskan kapan menyiramnya.',
     ],
   ],
 };
@@ -307,13 +386,15 @@ const SPOK_BANK: Record<LevelId, SpokSeed[]> = {
 function fallbackSpok(level: LevelId, jumlah: number): Soal[] {
   const base = SPOK_BANK[level];
   return Array.from({ length: jumlah }, (_, i) => {
-    const [pertanyaan, pilihan, jawaban] = base[i % base.length];
+    const [pertanyaan, pilihan, jawaban, petunjuk, pembahasan] =
+      base[i % base.length];
     return {
       id: `spok-fallback-${level}-${i}`,
       pertanyaan,
       pilihan,
       jawaban,
-      pembahasan: `Jawaban: ${pilihan[jawaban]}`,
+      petunjuk,
+      pembahasan,
     };
   });
 }
@@ -339,6 +420,10 @@ function sanitizeSpok(items: unknown[], level: LevelId): Soal[] {
       pertanyaan,
       pilihan,
       jawaban,
+      petunjuk:
+        typeof o.petunjuk === 'string' && o.petunjuk.trim()
+          ? o.petunjuk.trim()
+          : undefined,
       pembahasan:
         typeof o.pembahasan === 'string' ? o.pembahasan.trim() : undefined,
     });
@@ -357,14 +442,30 @@ async function generateSpokSoal(
   jumlah: number
 ): Promise<Soal[]> {
   try {
-    const prompt = `Buat ${jumlah} soal pilihan ganda Bahasa Indonesia tentang unsur SPOK (${spokFocus(
-      level
-    )}) untuk anak SD.
-Setiap soal: satu kalimat pendek, lalu tanya salah satu unsur (subjek/predikat/objek/keterangan).
+    const prompt = `Kamu guru Bahasa Indonesia untuk anak TK/SD. Gaya "explain like I am 5".
+Buat ${jumlah} soal pilihan ganda tentang unsur SPOK (${spokFocus(level)}).
+
+Analogi untuk anak:
+- Subjek = PELAKU (yang melakukan kegiatan), "seperti pemain utama".
+- Predikat = KEGIATAN yang dilakukan pelaku.
+- Objek = SASARAN / yang dikenai kegiatan, "seperti yang jadi sasaran".
+- Keterangan = info TEMPAT, WAKTU, atau CARA.
+
+Aturan soal:
+- Pakai satu kalimat pendek yang jelas dan mudah dibayangkan anak.
+- Tulis kalimatnya di dalam pertanyaan dengan format: Kalimat: "...." lalu tanya.
+- Pertanyaan menyebut istilah resmi + analogi, contoh: "Manakah yang menjadi pelaku (subjek)?", "Kata mana yang jadi sasaran (objek)?", "Kegiatan apa yang dilakukan (predikat)?", atau "Kata mana yang memberi info tempat/waktu (keterangan)?".
+- Tepat 4 pilihan kata/frasa berbeda; hanya satu yang benar.
+- "petunjuk": satu kalimat singkat pengingat, contoh "Subjek = pelaku (yang melakukan)".
+- "pembahasan": jelaskan memakai analogi anak.
+
 Balas JSON array dengan bentuk:
-[{"pertanyaan":"...","pilihan":["...","...","...","..."],"jawaban":0,"pembahasan":"..."}]
-Aturan: tepat 4 pilihan, "jawaban" adalah index (0-3) pilihan yang benar, bahasa sederhana.`;
-    const text = await runAi(prompt, 2048);
+[{"pertanyaan":"...","pilihan":["...","...","...","..."],"jawaban":0,"petunjuk":"...","pembahasan":"..."}]
+"jawaban" adalah index (0-3) pilihan yang benar.
+
+Contoh:
+[{"pertanyaan":"Kalimat: \\"Budi menulis buku.\\" Manakah yang menjadi pelaku (subjek)?","pilihan":["Budi","menulis","buku","meja"],"jawaban":0,"petunjuk":"Subjek = pelaku, yaitu yang melakukan kegiatan.","pembahasan":"Subjek itu pelakunya. Budi yang melakukan kegiatan menulis."}]`;
+    const text = await runAi(prompt, 4096);
     const arr = extractJsonArray(text);
     const soal = arr ? sanitizeSpok(arr, level) : [];
     if (soal.length >= Math.min(3, jumlah)) {

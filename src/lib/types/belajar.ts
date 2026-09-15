@@ -28,6 +28,7 @@ export interface Soal {
   pertanyaan: string;
   pilihan: string[];
   jawaban: number; // index pilihan yang benar
+  petunjuk?: string; // hint singkat sebelum menjawab
   pembahasan?: string;
 }
 

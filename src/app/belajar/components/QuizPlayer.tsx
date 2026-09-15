@@ -175,9 +175,23 @@ export default function QuizPlayer({
         p={{ base: 4, sm: 6 }}
         boxShadow="sm"
       >
-        <Heading size="sm" mb={4}>
+        <Heading size="sm" mb={3}>
           {s.pertanyaan}
         </Heading>
+        {s.petunjuk && (
+          <Box
+            bg="yellow.50"
+            _dark={{ bg: 'whiteAlpha.100' }}
+            borderRadius="lg"
+            px={3}
+            py={2}
+            mb={4}
+          >
+            <Text fontSize="xs">
+              💡 <b>Petunjuk:</b> {s.petunjuk}
+            </Text>
+          </Box>
+        )}
         <VStack align="stretch" spacing={2}>
           {s.pilihan.map((p, i) => {
             const isCorrect = i === s.jawaban;
