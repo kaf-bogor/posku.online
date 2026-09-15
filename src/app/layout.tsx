@@ -1,9 +1,12 @@
 import type { Metadata, Viewport } from 'next';
+import { cookies } from 'next/headers';
 
 import ServiceWorkerCleanup from '~/app/components/ServiceWorkerCleanup';
+import TurnstileGate from '~/app/components/TurnstileGate';
 import Providers from '~/app/providers';
 import { AppProvider } from '~/lib/context/app';
 import { Layout } from '~/lib/layout';
+import { GATE_COOKIE, verifyGate } from '~/lib/turnstile';
 
 type RootLayoutProps = {
   children: React.ReactNode;
@@ -41,13 +44,16 @@ export const viewport: Viewport = {
   themeColor: '#FFFFFF',
 };
 
-const RootLayout = ({ children }: RootLayoutProps) => {
+const RootLayout = async ({ children }: RootLayoutProps) => {
+  const store = await cookies();
+  const passed = await verifyGate(store.get(GATE_COOKIE)?.value);
+
   return (
     <html lang="id">
       <body style={{ minHeight: '100vh' }}>
         <Providers>
           <AppProvider>
-            <Layout>{children}</Layout>
+            {passed ? <Layout>{children}</Layout> : <TurnstileGate />}
           </AppProvider>
         </Providers>
         <ServiceWorkerCleanup />
