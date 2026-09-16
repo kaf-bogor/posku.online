@@ -95,6 +95,23 @@ export async function signGate(): Promise<string> {
   return `${exp}.${sig}`;
 }
 
+/** true bila host adalah localhost — gerbang Turnstile dinonaktifkan saat dev. */
+export function isLocalHost(host?: string | null): boolean {
+  if (!host) return false;
+  let hostname = host.toLowerCase();
+  try {
+    hostname = new URL(`http://${host}`).hostname;
+  } catch {
+    hostname = host.split(':')[0].toLowerCase();
+  }
+  return (
+    hostname === 'localhost' ||
+    hostname === '127.0.0.1' ||
+    hostname === '::1' ||
+    hostname === '0.0.0.0'
+  );
+}
+
 /** Verifikasi nilai cookie gerbang (kedaluwarsa + tanda tangan). */
 export async function verifyGate(value?: string | null): Promise<boolean> {
   if (!value) return false;

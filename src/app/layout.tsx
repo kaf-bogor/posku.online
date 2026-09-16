@@ -1,12 +1,12 @@
 import type { Metadata, Viewport } from 'next';
-import { cookies } from 'next/headers';
+import { cookies, headers } from 'next/headers';
 
 import ServiceWorkerCleanup from '~/app/components/ServiceWorkerCleanup';
 import TurnstileGate from '~/app/components/TurnstileGate';
 import Providers from '~/app/providers';
 import { AppProvider } from '~/lib/context/app';
 import { Layout } from '~/lib/layout';
-import { GATE_COOKIE, verifyGate } from '~/lib/turnstile';
+import { GATE_COOKIE, isLocalHost, verifyGate } from '~/lib/turnstile';
 
 type RootLayoutProps = {
   children: React.ReactNode;
@@ -45,8 +45,10 @@ export const viewport: Viewport = {
 };
 
 const RootLayout = async ({ children }: RootLayoutProps) => {
-  const store = await cookies();
-  const passed = await verifyGate(store.get(GATE_COOKIE)?.value);
+  const [store, headerStore] = await Promise.all([cookies(), headers()]);
+  const passed =
+    isLocalHost(headerStore.get('host')) ||
+    (await verifyGate(store.get(GATE_COOKIE)?.value));
 
   return (
     <html lang="id" suppressHydrationWarning>
