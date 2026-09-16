@@ -8,8 +8,13 @@ import {
   Center,
   useColorModeValue,
   IconButton,
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
 } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { FaArrowLeft, FaHandsHelping } from 'react-icons/fa';
 
 import DonationCard from '../admin/components/DonationCard';
@@ -57,33 +62,61 @@ const AmalPage = () => {
 
   useEffect(() => {
     setMounted(true);
+
+    // Tampilkan cache dulu agar instan, tapi tetap revalidasi ke API supaya
+    // perubahan dari admin (aktif/arsip) tidak tertinggal.
+    const cached = readCache();
+    if (cached) {
+      setCampaigns(cached);
+      setLoading(false);
+    }
+
     const fetchCampaigns = async () => {
       try {
         setError(null);
 
-        const cached = readCache();
-        if (cached) {
-          setCampaigns(cached);
-          setLoading(false);
-          return;
-        }
-
-        // Ambil hanya campaign aktif dari worker D1 (data ternormalisasi)
-        const data = await listDonations({ active: true });
+        // Ambil semua campaign dari worker D1 (data ternormalisasi), lalu
+        // dipisah menjadi amal aktif dan arsip di sisi klien.
+        const data = await listDonations();
 
         writeCache(data);
         setCampaigns(data);
       } catch (err) {
         // eslint-disable-next-line no-console
         console.error('Failed to fetch donations for /amal', err);
-        setCampaigns([]);
-        setError(err instanceof Error ? err.message : 'Unknown error');
+        // Bila cache tersedia, biarkan tampil; hanya tampilkan error tanpa data.
+        if (!cached) {
+          setCampaigns([]);
+          setError(err instanceof Error ? err.message : 'Unknown error');
+        }
       } finally {
         setLoading(false);
       }
     };
     fetchCampaigns();
   }, []);
+
+  const activeCampaigns = useMemo(
+    () => campaigns.filter((campaign) => campaign.is_active === true),
+    [campaigns]
+  );
+  const archivedCampaigns = useMemo(
+    () => campaigns.filter((campaign) => campaign.is_active !== true),
+    [campaigns]
+  );
+
+  const renderCampaigns = (items: DonationPage[]) =>
+    items.length > 0 ? (
+      <VStack spacing={6} align="stretch">
+        {items.map((campaign) => (
+          <DonationCard key={campaign.id} donation={campaign} />
+        ))}
+      </VStack>
+    ) : (
+      <Center py={10}>
+        <Text color={textColor}>Belum ada amal pada kategori ini.</Text>
+      </Center>
+    );
 
   // Prevent hydration mismatch by not rendering until mounted
   if (!mounted) {
@@ -174,12 +207,17 @@ const AmalPage = () => {
           </Text>
         </VStack>
 
-        {/* Campaigns List - Single Column */}
-        <VStack spacing={6} align="stretch">
-          {campaigns.map((campaign) => {
-            return <DonationCard key={campaign.id} donation={campaign} />;
-          })}
-        </VStack>
+        <Tabs variant="soft-rounded" colorScheme="green" isLazy>
+          <TabList>
+            <Tab>Amal Aktif ({activeCampaigns.length})</Tab>
+            <Tab>Arsip ({archivedCampaigns.length})</Tab>
+          </TabList>
+
+          <TabPanels>
+            <TabPanel px={0}>{renderCampaigns(activeCampaigns)}</TabPanel>
+            <TabPanel px={0}>{renderCampaigns(archivedCampaigns)}</TabPanel>
+          </TabPanels>
+        </Tabs>
       </VStack>
     </ContentWrapper>
   );
