@@ -479,10 +479,15 @@ const Home = () => {
           'Menyusun jawaban...',
         ]}
         suggestions={[
+          'Apa itu POSKU dan apa tujuannya?',
           'Apa isi Modul Kuttab & Madrasah?',
           'Apa perbedaan Kuttab dan Madrasah?',
+          'Materi apa saja yang diajarkan di Kuttab?',
           'Kegiatan POSKU apa yang akan datang?',
-          'Bagaimana program wakaf per kelas berjalan?',
+          'Apa saja program rutin POSKU?',
+          'Berita terbaru POSKU apa?',
+          'Episode podcast POSKU apa saja?',
+          'Modul atau kuis belajar apa yang tersedia?',
         ]}
       />
     </VStack>

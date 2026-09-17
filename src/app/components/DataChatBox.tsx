@@ -85,6 +85,10 @@ const DEFAULT_SUGGESTIONS = [
   'Wali santri yang bisa IT & digital',
 ];
 
+// Tampilkan saran per 3 pertanyaan, lalu rotasi ke kelompok berikutnya.
+const SUGGESTION_PAGE_SIZE = 3;
+const SUGGESTION_ROTATE_MS = 8000;
+
 /* ----------------------------- component ----------------------------- */
 
 export default function DataChatBox({
@@ -136,6 +140,37 @@ export default function DataChatBox({
   }, [messages]);
   const resultCount =
     !showCount || isStreaming ? null : extractResultCount(lastAssistantText);
+
+  // Kelompokkan saran jadi beberapa halaman (3 pertanyaan per halaman).
+  const suggestionPages = useMemo(() => {
+    if (suggestions.length <= SUGGESTION_PAGE_SIZE) return [suggestions];
+    const pages: string[][] = [];
+    for (let i = 0; i < suggestions.length; i += SUGGESTION_PAGE_SIZE) {
+      pages.push(
+        Array.from(
+          { length: SUGGESTION_PAGE_SIZE },
+          (_, j) => suggestions[(i + j) % suggestions.length]
+        )
+      );
+    }
+    return pages;
+  }, [suggestions]);
+
+  const [suggestionPage, setSuggestionPage] = useState(0);
+
+  // Rotasi kelompok saran selama percakapan masih kosong.
+  useEffect(() => {
+    if (suggestionPages.length <= 1 || !isOpen || messages.length > 0) {
+      return undefined;
+    }
+    const id = setInterval(() => {
+      setSuggestionPage((p) => (p + 1) % suggestionPages.length);
+    }, SUGGESTION_ROTATE_MS);
+    return () => clearInterval(id);
+  }, [suggestionPages.length, isOpen, messages.length]);
+
+  const visibleSuggestions =
+    suggestionPages[suggestionPage % suggestionPages.length] ?? [];
 
   // Rotasi status selama menunggu respons pertama.
   useEffect(() => {
@@ -463,9 +498,9 @@ export default function DataChatBox({
               >
                 Coba tanyakan
               </Text>
-              {suggestions.map((s) => (
+              {visibleSuggestions.map((s) => (
                 <Button
-                  key={s}
+                  key={`${suggestionPage}-${s}`}
                   size="sm"
                   justifyContent="flex-start"
                   textAlign="left"
@@ -480,6 +515,7 @@ export default function DataChatBox({
                   py={2}
                   px={3}
                   whiteSpace="normal"
+                  sx={{ animation: `${fadeUpAnim} 0.28s ease-out both` }}
                   _hover={{ borderColor: accent, color: accent, bg: surfaceBg }}
                   isDisabled={isBusy}
                   onClick={() => runSuggestion(s)}
